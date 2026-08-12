@@ -21,6 +21,10 @@ export const metadata: Metadata = {
   title: "Cocktale — Learn, collect, and taste",
   description:
     "Discover cocktails matched to weather, popularity, and your taste history. Collect favorites and keep a tasting journal.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

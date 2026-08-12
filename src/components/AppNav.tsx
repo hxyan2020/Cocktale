@@ -14,6 +14,7 @@ import {
   Library,
 } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
+import { BrandLogo } from "@/components/BrandLogo";
 import { useCart } from "@/components/CartProvider";
 import { useI18n } from "@/components/LanguageProvider";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
@@ -103,9 +104,10 @@ export function AppNav() {
         <div className="flex min-w-0 items-center justify-between gap-2">
           <Link
             href="/feed"
-            className="shrink-0 font-[family-name:var(--font-display)] text-xl text-[var(--ink)] sm:text-2xl"
+            className="inline-flex min-w-0 shrink-0 items-center gap-2 font-[family-name:var(--font-display)] text-xl text-[var(--ink)] sm:text-2xl"
           >
-            {t("brand")}
+            <BrandLogo size={36} className="h-8 w-8 sm:h-9 sm:w-9" priority alt="" />
+            <span className="truncate">{t("brand")}</span>
           </Link>
           <div className="flex min-w-0 items-center gap-1.5">
             <UnitSwitcher />

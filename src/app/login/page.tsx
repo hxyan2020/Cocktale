@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
+import { BrandLogo } from "@/components/BrandLogo";
 import { useI18n } from "@/components/LanguageProvider";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { AuthForm } from "@/components/AuthForm";
@@ -23,7 +24,8 @@ export default function LoginPage() {
       </div>
       <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center px-4 py-10 lg:grid lg:grid-cols-2 lg:items-center lg:gap-16">
         <section className="mb-10 lg:mb-0">
-          <p className="text-xs font-medium tracking-[0.22em] uppercase text-[var(--accent-deep)]">
+          <BrandLogo size={72} className="h-16 w-16 sm:h-[4.5rem] sm:w-[4.5rem]" priority />
+          <p className="mt-5 text-xs font-medium tracking-[0.22em] uppercase text-[var(--accent-deep)]">
             {t("login.eyebrow")}
           </p>
           <h1 className="mt-4 font-[family-name:var(--font-display)] text-4xl leading-[1.05] text-[var(--ink)] sm:text-6xl">
