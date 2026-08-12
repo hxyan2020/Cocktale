@@ -40,8 +40,8 @@ export function AppNav() {
           {t("brand")}
         </Link>
         <div className="flex items-center gap-1 sm:gap-2">
-          <UnitSwitcher className="hidden sm:inline-flex" />
-          <LanguageSwitcher compact className="hidden lg:inline-flex" />
+          <UnitSwitcher />
+          <LanguageSwitcher compact />
           <nav className="flex items-center gap-1 sm:gap-1.5">
             {links.map(({ href, label, icon: Icon }) => {
               const active = pathname === href || pathname.startsWith(href + "/");
@@ -89,10 +89,6 @@ export function AppNav() {
             )}
           </nav>
         </div>
-      </div>
-      <div className="mx-auto flex max-w-6xl items-center justify-end gap-3 px-4 pb-2 lg:hidden">
-        <UnitSwitcher />
-        <LanguageSwitcher compact />
       </div>
     </header>
   );
