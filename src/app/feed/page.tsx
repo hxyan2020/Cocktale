@@ -9,6 +9,7 @@ import { useI18n } from "@/components/LanguageProvider";
 import { CocktailDetail } from "@/components/CocktailDetail";
 import { SwipeDeck } from "@/components/SwipeDeck";
 import { TriedModal } from "@/components/TriedModal";
+import { getRankOffset, maybeAdvanceRankOffset, setRankOffset } from "@/lib/rank-rotation";
 import type { BrowseEvent, Cocktail, WeatherBucket } from "@/lib/types";
 
 type WeatherPayload = {
@@ -44,6 +45,8 @@ export default function FeedPage() {
   const loadingMore = useRef(false);
   const historyRef = useRef<BrowseEvent[]>(data.history);
   const moodRef = useRef(data.moodPreference);
+  const startCursorRef = useRef(0);
+  const totalRef = useRef(0);
 
   historyRef.current = data.history;
   moodRef.current = data.moodPreference;
@@ -72,7 +75,7 @@ export default function FeedPage() {
           body: JSON.stringify({
             history: historyRef.current,
             moodPreference: moodRef.current,
-            excludeIds: replace ? [] : [...seenIds.current],
+            excludeIds: [],
             lat: coords.lat,
             lon: coords.lon,
             cursor: nextCursor,
@@ -83,9 +86,11 @@ export default function FeedPage() {
           weather: WeatherPayload;
           cocktails: Cocktail[];
           nextCursor: number;
+          total?: number;
         };
         setWeather(json.weather);
         setCursor(json.nextCursor);
+        if (typeof json.total === "number") totalRef.current = json.total;
         setQueue((prev) => {
           const incoming = json.cocktails.filter(
             (c) => replace || !seenIds.current.has(c.id),
@@ -107,10 +112,15 @@ export default function FeedPage() {
 
   useEffect(() => {
     if (!user) return;
+    startCursorRef.current = getRankOffset(user.id, "feed");
+  }, [user?.id]);
+
+  useEffect(() => {
+    if (!user) return;
     setLoading(true);
     setIndex(0);
     seenIds.current = new Set();
-    void fetchRecommendations(0, true);
+    void fetchRecommendations(startCursorRef.current, true);
   }, [user, data.moodPreference, coords.lat, coords.lon, fetchRecommendations]);
 
   const current = queue[index] ?? null;
@@ -119,6 +129,14 @@ export default function FeedPage() {
     if (current) browse(current.id, "view");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current?.id]);
+
+  useEffect(() => {
+    if (!user || totalRef.current <= 0) return;
+    maybeAdvanceRankOffset(user.id, "feed", 25, totalRef.current);
+    const pos = startCursorRef.current + index + 1;
+    const stored = getRankOffset(user.id, "feed");
+    if (pos > stored) setRankOffset(user.id, "feed", pos % totalRef.current);
+  }, [user, index, queue.length]);
 
   useEffect(() => {
     if (index >= queue.length - 5 && queue.length > 0) {
@@ -134,7 +152,9 @@ export default function FeedPage() {
       const next = i + 1;
       if (next >= queue.length) {
         seenIds.current = new Set();
-        void fetchRecommendations(0, true);
+        const wrap = totalRef.current > 0 ? (startCursorRef.current + next) % totalRef.current : 0;
+        startCursorRef.current = wrap;
+        void fetchRecommendations(wrap, true);
         return 0;
       }
       return next;

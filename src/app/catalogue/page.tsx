@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
@@ -10,26 +10,106 @@ import { useI18n } from "@/components/LanguageProvider";
 import { CocktailDetail } from "@/components/CocktailDetail";
 import { TriedModal } from "@/components/TriedModal";
 import { cocktailCategories, searchCocktails } from "@/lib/cocktails";
-import type { Cocktail } from "@/lib/types";
+import { maybeAdvanceRankOffset, getRankOffset, rotateRanked } from "@/lib/rank-rotation";
+import type { Cocktail, WeatherBucket } from "@/lib/types";
+
+const SHIFT_PER_VISIT = 36;
 
 export default function CataloguePage() {
-  const { user, ready, collect, markTried, isCollected } = useAuth();
+  const { user, ready, data, collect, markTried, isCollected } = useAuth();
   const { t } = useI18n();
   const router = useRouter();
   const [q, setQ] = useState("");
   const [category, setCategory] = useState("all");
   const [selected, setSelected] = useState<Cocktail | null>(null);
   const [triedOpen, setTriedOpen] = useState(false);
+  const [ranked, setRanked] = useState<Cocktail[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [visitOffset, setVisitOffset] = useState(0);
+  const shifted = useRef(false);
 
   useEffect(() => {
     if (ready && !user) router.replace("/login");
   }, [ready, user, router]);
 
+  useEffect(() => {
+    if (!user) return;
+    setVisitOffset(getRankOffset(user.id, "catalogue"));
+    shifted.current = false;
+  }, [user?.id]);
+
+  useEffect(() => {
+    if (!user) return;
+    let cancelled = false;
+    setLoading(true);
+
+    const load = async () => {
+      let lat: number | undefined;
+      let lon: number | undefined;
+      if (navigator.geolocation) {
+        const pos = await new Promise<GeolocationPosition | null>((resolve) => {
+          navigator.geolocation.getCurrentPosition(
+            resolve,
+            () => resolve(null),
+            { timeout: 4000 },
+          );
+        });
+        lat = pos?.coords.latitude;
+        lon = pos?.coords.longitude;
+      }
+
+      const res = await fetch("/api/recommend", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          history: data.history,
+          moodPreference: data.moodPreference,
+          lat,
+          lon,
+          cursor: 0,
+          limit: 500,
+        }),
+      });
+      const json = (await res.json()) as {
+        cocktails: Cocktail[];
+        weather?: { bucket: WeatherBucket };
+      };
+      if (cancelled) return;
+      setRanked(json.cocktails ?? []);
+      setLoading(false);
+    };
+
+    void load();
+    return () => {
+      cancelled = true;
+    };
+    // Rank once per visit; history updates from opening cards shouldn't reshuffle the grid.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id, data.moodPreference]);
+
+  useEffect(() => {
+    if (!user || shifted.current || ranked.length === 0) return;
+    shifted.current = true;
+    maybeAdvanceRankOffset(user.id, "catalogue", SHIFT_PER_VISIT, ranked.length);
+  }, [user, ranked.length]);
+
   const categories = useMemo(() => cocktailCategories(), []);
+
   const list = useMemo(() => {
-    const found = searchCocktails(q, category);
-    return [...found].sort((a, b) => a.name.localeCompare(b.name));
-  }, [q, category]);
+    const filtered =
+      q.trim() || category !== "all"
+        ? searchCocktails(q, category)
+        : ranked.length
+          ? ranked
+          : searchCocktails(q, category);
+
+    if (q.trim() || category !== "all") {
+      const order = new Map(ranked.map((c, i) => [c.id, i]));
+      return [...filtered].sort((a, b) => (order.get(a.id) ?? 9999) - (order.get(b.id) ?? 9999));
+    }
+
+    return rotateRanked(filtered, visitOffset);
+  }, [q, category, ranked, visitOffset]);
 
   if (!ready || !user) return null;
 
@@ -83,10 +163,14 @@ export default function CataloguePage() {
         </div>
 
         <p className="mt-4 text-xs text-[var(--ink-muted)]">
-          {t("catalogue.count", { n: list.length })}
+          {loading ? t("feed.shaking") : t("catalogue.count", { n: list.length })}
         </p>
 
-        {list.length === 0 ? (
+        {loading ? (
+          <div className="mt-10 rounded-[1.5rem] bg-[var(--surface)] p-10 text-center ring-1 ring-[var(--line)]">
+            <p className="text-[var(--ink-soft)]">{t("feed.shaking")}</p>
+          </div>
+        ) : list.length === 0 ? (
           <div className="mt-10 rounded-[1.5rem] bg-[var(--surface)] p-10 text-center ring-1 ring-[var(--line)]">
             <p className="text-[var(--ink-soft)]">{t("catalogue.empty")}</p>
           </div>

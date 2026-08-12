@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAllCocktails } from "@/lib/cocktails";
-import { recommendCocktails } from "@/lib/recommend";
+import { rankCocktails } from "@/lib/recommend";
 import { fetchWeather } from "@/lib/weather";
 import type { BrowseEvent, WeatherBucket } from "@/lib/types";
 
@@ -27,27 +27,31 @@ export async function POST(req: Request) {
         }
       : await fetchWeather(body.lat, body.lon);
 
-  const limit = Math.min(body.limit ?? 30, 80);
-  const cursor = body.cursor ?? 0;
+  const all = getAllCocktails();
+  const limit = Math.min(Math.max(body.limit ?? 30, 1), all.length);
+  const cursor = Math.max(0, body.cursor ?? 0);
 
-  const ranked = recommendCocktails({
-    cocktails: getAllCocktails(),
+  const ranked = rankCocktails({
+    cocktails: all,
     weather: weather.bucket,
     history: body.history ?? [],
     moodPreference: body.moodPreference,
     excludeIds: body.excludeIds ?? [],
-    limit: cursor + limit + 40,
   });
 
-  const page = ranked.slice(cursor, cursor + limit);
-  const nextCursor = cursor + page.length;
+  const start = cursor % Math.max(ranked.length, 1);
+  const rotated = ranked.length
+    ? [...ranked.slice(start), ...ranked.slice(0, start)]
+    : [];
+  const page = rotated.slice(0, limit);
+  const nextCursor = (start + page.length) % Math.max(ranked.length, 1);
 
   return NextResponse.json({
     weather,
     cocktails: page,
     nextCursor,
-    hasMore: nextCursor < ranked.length || nextCursor < getAllCocktails().length,
-    total: getAllCocktails().length,
+    hasMore: ranked.length > page.length,
+    total: ranked.length,
   });
 }
 

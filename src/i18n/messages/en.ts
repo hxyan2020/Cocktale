@@ -243,7 +243,7 @@ export const en: Messages = {
   },
   catalogue: {
     title: "Catalogue",
-    subtitle: "Browse every pour in the library — search by name, ingredient, glass, or origin.",
+    subtitle: "Every pour, ranked for you — a different slice each visit, most relevant first.",
     searchPlaceholder: "Search cocktails…",
     count: "{n} cocktails",
     empty: "No cocktails match that search.",

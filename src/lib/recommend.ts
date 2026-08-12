@@ -99,30 +99,25 @@ export function scoreCocktail(
   return score;
 }
 
-export function recommendCocktails(input: RecommendInput): Cocktail[] {
-  const {
-    cocktails,
-    weather,
-    history,
-    moodPreference,
-    excludeIds = [],
-    limit = 50,
-  } = input;
-
+export function rankCocktails(input: Omit<RecommendInput, "limit">): Cocktail[] {
+  const { cocktails, weather, history, moodPreference, excludeIds = [] } = input;
   const excluded = new Set(excludeIds);
   const signals = enrichHistorySignals(history, cocktails);
 
-  // Strongly deprioritize items already collected/tried heavily unless infinite feed needs them later
-  const ranked = cocktails
+  return cocktails
     .filter((c) => !excluded.has(c.id))
     .map((c) => ({
       cocktail: c,
       score: scoreCocktail(c, weather, signals, moodPreference),
     }))
-    .sort((a, b) => b.score - a.score || b.cocktail.popularity - a.cocktail.popularity);
+    .sort((a, b) => b.score - a.score || b.cocktail.popularity - a.cocktail.popularity)
+    .map((r) => r.cocktail);
+}
 
-  // Infinite feel: after top slice, continue with remaining by score
-  return ranked.slice(0, limit).map((r) => r.cocktail);
+export function recommendCocktails(input: RecommendInput): Cocktail[] {
+  const ranked = rankCocktails(input);
+  const limit = input.limit ?? 50;
+  return ranked.slice(0, limit);
 }
 
 export function weatherBucketFromTemp(
