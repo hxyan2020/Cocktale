@@ -600,3 +600,9 @@ const catalogs: Partial<Record<LocaleCode, Catalog>> = {
 export function equipmentLabel(locale: LocaleCode, id: EquipmentId): string {
   return catalogs[locale]?.[id] ?? en[id];
 }
+
+export function getEquipmentMessages(locale: LocaleCode): Catalog {
+  return catalogs[locale] ?? en;
+}
+
+export const EQUIPMENT_IDS = Object.keys(en) as EquipmentId[];

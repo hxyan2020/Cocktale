@@ -133,3 +133,5 @@ const catalogs: Partial<Record<LocaleCode, ShopMessages>> = {
 export function getShopMessages(locale: LocaleCode): ShopMessages {
   return catalogs[locale] ?? en;
 }
+
+export const SHOP_KEYS = Object.keys(en) as (keyof ShopMessages)[];

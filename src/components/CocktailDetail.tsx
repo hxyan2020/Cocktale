@@ -8,7 +8,6 @@ import type { Cocktail } from "@/lib/types";
 import { useI18n } from "@/components/LanguageProvider";
 import { useShop } from "@/components/useShop";
 import { useCart } from "@/components/CartProvider";
-import { equipmentLabel } from "@/i18n/equipment";
 import { expandMakeSteps, inferEquipment } from "@/lib/make-guide";
 import { formatMoney, productsForCocktailIngredients } from "@/lib/products";
 import { getCocktailGallery } from "@/lib/cocktail-gallery";
@@ -211,7 +210,7 @@ export function CocktailDetail({
               </p>
               <ul className="grid gap-2 sm:grid-cols-2">
                 {equipment.map((item) => {
-                  const label = equipmentLabel(locale, item.id);
+                  const label = t(`equipment.${item.id}`);
                   return (
                     <li
                       key={item.id}

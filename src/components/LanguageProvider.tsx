@@ -18,7 +18,11 @@ import {
   type LocaleCode,
 } from "@/i18n/locales";
 import { getMessages, interpolate } from "@/i18n";
+import { getShopMessages } from "@/i18n/shop";
+import { equipmentLabel } from "@/i18n/equipment";
+import { I18N_UPDATED_EVENT, readPath } from "@/lib/i18n-catalog";
 import type { Messages } from "@/i18n/messages/en";
+import type { EquipmentId } from "@/lib/make-guide";
 
 type TranslateFn = (path: string, vars?: Record<string, string | number>) => string;
 
@@ -32,19 +36,23 @@ type LanguageContextValue = {
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
-function readPath(obj: unknown, path: string): string | undefined {
-  const parts = path.split(".");
-  let cur: unknown = obj;
-  for (const part of parts) {
-    if (cur == null || typeof cur !== "object") return undefined;
-    cur = (cur as Record<string, unknown>)[part];
-  }
-  return typeof cur === "string" ? cur : undefined;
-}
-
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<LocaleCode>(DEFAULT_LOCALE);
   const [ready, setReady] = useState(false);
+  const [overridesAll, setOverridesAll] = useState<Record<string, Record<string, string>>>({});
+
+  const refreshOverrides = useCallback(() => {
+    fetch("/api/i18n/overrides", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && typeof data === "object" && !Array.isArray(data)) {
+          setOverridesAll(data as Record<string, Record<string, string>>);
+        }
+      })
+      .catch(() => {
+        // keep built-in catalogs if the overlay API is unreachable
+      });
+  }, []);
 
   useEffect(() => {
     const stored = localStorage.getItem(LOCALE_STORAGE_KEY);
@@ -53,6 +61,12 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     setLocaleState(initial);
     setReady(true);
   }, []);
+
+  useEffect(() => {
+    refreshOverrides();
+    window.addEventListener(I18N_UPDATED_EVENT, refreshOverrides);
+    return () => window.removeEventListener(I18N_UPDATED_EVENT, refreshOverrides);
+  }, [refreshOverrides]);
 
   useEffect(() => {
     if (!ready) return;
@@ -68,13 +82,28 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const messages = useMemo(() => getMessages(locale), [locale]);
   const dir = getLocaleMeta(locale).dir;
+  const overrides = overridesAll[locale] ?? {};
 
   const t = useCallback<TranslateFn>(
     (path, vars) => {
+      const over = overrides[path];
+      if (typeof over === "string") return interpolate(over, vars);
+
+      if (path.startsWith("shop.")) {
+        const key = path.slice(5) as keyof ReturnType<typeof getShopMessages>;
+        const value = getShopMessages(locale)[key] ?? getShopMessages("en")[key];
+        if (typeof value === "string") return interpolate(value, vars);
+      }
+
+      if (path.startsWith("equipment.")) {
+        const id = path.slice("equipment.".length) as EquipmentId;
+        return interpolate(equipmentLabel(locale, id), vars);
+      }
+
       const value = readPath(messages, path) ?? readPath(getMessages("en"), path) ?? path;
       return interpolate(value, vars);
     },
-    [messages],
+    [locale, messages, overrides],
   );
 
   const value = useMemo(

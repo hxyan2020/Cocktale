@@ -8,6 +8,7 @@ import {
   NotebookPen,
   LogIn,
   LogOut,
+  PencilLine,
   Store,
   ShoppingCart,
   Package,
@@ -65,6 +66,14 @@ export function AppNav() {
             {count}
           </span>
         )}
+      </Link>
+      <Link
+        href="/admin"
+        className="inline-flex items-center justify-center rounded-full px-2 py-2 text-sm text-[var(--ink-muted)] hover:bg-[var(--chip)] sm:px-3"
+        title="Translations"
+        aria-label="Translations"
+      >
+        <PencilLine className="h-4 w-4" />
       </Link>
       {user ? (
         <button
