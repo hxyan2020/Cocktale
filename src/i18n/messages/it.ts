@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const it: Messages = {
   brand: "Cocktale",
   tagline: "Storie di cocktail, versate per te",
-  nav: { discover: "Scopri", catalogue: "Catalogo", book: "Libro", journal: "Diario", signOut: "Esci" },
+  nav: { discover: "Scopri", catalogue: "Catalogo", journey: "Viaggio", book: "Libro", journal: "Diario", signOut: "Esci" },
   login: {
     eyebrow: "Storie di cocktail, versate per te",
     title: "Cocktale",
@@ -115,6 +115,11 @@ export const it: Messages = {
     saveNote: "Salva nota",
     cancel: "Annulla",
     deleteEntry: "Elimina voce",
+  },
+  journey: {
+    title: "Il mio viaggio nei cocktail",
+    collected: "Collezione",
+    tried: "Cocktail che ho assaggiato",
   },
   language: { label: "Lingua", choose: "Scegli lingua" },
   content: {

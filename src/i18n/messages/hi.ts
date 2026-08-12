@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const hi: Messages = {
   brand: "Cocktale",
   tagline: "कॉकटेल की कहानियाँ, आपके लिए परोसी गईं",
-  nav: { discover: "खोजें", catalogue: "सूची", book: "किताब", journal: "जर्नल", signOut: "साइन आउट" },
+  nav: { discover: "खोजें", catalogue: "सूची", journey: "यात्रा", book: "किताब", journal: "जर्नल", signOut: "साइन आउट" },
   login: {
     eyebrow: "कॉकटेल की कहानियाँ, आपके लिए परोसी गईं",
     title: "Cocktale",
@@ -115,6 +115,11 @@ export const hi: Messages = {
     saveNote: "नोट सहेजें",
     cancel: "रद्द करें",
     deleteEntry: "एंट्री हटाएँ",
+  },
+  journey: {
+    title: "मेरी कॉकटेल यात्रा",
+    collected: "संग्रह",
+    tried: "कॉकटेल जो मैंने चखे",
   },
   language: { label: "भाषा", choose: "भाषा चुनें" },
   content: { recipeNote: "रेसिपी विवरण डेटाबेस की मूल भाषा में दिखाए जाते हैं।" },

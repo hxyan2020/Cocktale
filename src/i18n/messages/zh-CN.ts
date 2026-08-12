@@ -6,6 +6,7 @@ export const zhCN: Messages = {
   nav: {
     discover: "发现",
     catalogue: "图鉴",
+    journey: "旅程",
     book: "收藏",
     journal: "手账",
     signOut: "退出登录",
@@ -120,6 +121,11 @@ export const zhCN: Messages = {
     saveNote: "保存备注",
     cancel: "取消",
     deleteEntry: "删除记录",
+  },
+  journey: {
+    title: "我的鸡尾酒旅程",
+    collected: "收藏",
+    tried: "我尝过的鸡尾酒",
   },
   language: { label: "语言", choose: "选择语言" },
   content: {

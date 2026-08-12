@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const ko: Messages = {
   brand: "Cocktale",
   tagline: "당신을 위해 따른 칵테일 이야기",
-  nav: { discover: "발견", catalogue: "도감", book: "북", journal: "저널", signOut: "로그아웃" },
+  nav: { discover: "발견", catalogue: "도감", journey: "여정", book: "북", journal: "저널", signOut: "로그아웃" },
   login: {
     eyebrow: "당신을 위해 따른 칵테일 이야기",
     title: "Cocktale",
@@ -114,6 +114,11 @@ export const ko: Messages = {
     saveNote: "메모 저장",
     cancel: "취소",
     deleteEntry: "기록 삭제",
+  },
+  journey: {
+    title: "나의 칵테일 여정",
+    collected: "수집",
+    tried: "마셔 본 칵테일",
   },
   language: { label: "언어", choose: "언어 선택" },
   content: { recipeNote: "레시피 세부 정보는 데이터베이스 원문으로 표시됩니다." },

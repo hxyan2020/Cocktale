@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const nl: Messages = {
   brand: "Cocktale",
   tagline: "Cocktailverhalen, voor jou ingeschonken",
-  nav: { discover: "Ontdekken", catalogue: "Catalogus", book: "Boek", journal: "Dagboek", signOut: "Uitloggen" },
+  nav: { discover: "Ontdekken", catalogue: "Catalogus", journey: "Reis", book: "Boek", journal: "Dagboek", signOut: "Uitloggen" },
   login: {
     eyebrow: "Cocktailverhalen, voor jou ingeschonken",
     title: "Cocktale",
@@ -116,6 +116,11 @@ export const nl: Messages = {
     cancel: "Annuleren",
     deleteEntry: "Item verwijderen",
   },
+  journey: {
+    title: "Mijn cocktailreis",
+    collected: "Verzameld",
+    tried: "Cocktails die ik proefde",
+  },
   language: { label: "Taal", choose: "Taal kiezen" },
   content: {
     recipeNote: "Receptdetails komen uit onze database en staan in de brontaal.",
@@ -130,7 +135,7 @@ export const nl: Messages = {
 export const pl: Messages = {
   brand: "Cocktale",
   tagline: "Historie koktajli — nalane dla Ciebie",
-  nav: { discover: "Odkrywaj", catalogue: "Katalog", book: "Książka", journal: "Dziennik", signOut: "Wyloguj" },
+  nav: { discover: "Odkrywaj", catalogue: "Katalog", journey: "Podróż", book: "Książka", journal: "Dziennik", signOut: "Wyloguj" },
   login: {
     eyebrow: "Historie koktajli — nalane dla Ciebie",
     title: "Cocktale",
@@ -243,6 +248,11 @@ export const pl: Messages = {
     cancel: "Anuluj",
     deleteEntry: "Usuń wpis",
   },
+  journey: {
+    title: "Moja koktajlowa podróż",
+    collected: "Kolekcja",
+    tried: "Koktajle, które próbowałem",
+  },
   language: { label: "Język", choose: "Wybierz język" },
   content: {
     recipeNote: "Szczegóły przepisu z bazy są pokazywane w oryginalnym języku.",
@@ -257,7 +267,7 @@ export const pl: Messages = {
 export const bn: Messages = {
   brand: "Cocktale",
   tagline: "ককটেলের গল্প, আপনার জন্য ঢেলে দেওয়া",
-  nav: { discover: "আবিষ্কার", catalogue: "তালিকা", book: "বই", journal: "জার্নাল", signOut: "সাইন আউট" },
+  nav: { discover: "আবিষ্কার", catalogue: "তালিকা", journey: "যাত্রা", book: "বই", journal: "জার্নাল", signOut: "সাইন আউট" },
   login: {
     eyebrow: "ককটেলের গল্প, আপনার জন্য ঢেলে দেওয়া",
     title: "Cocktale",
@@ -369,6 +379,11 @@ export const bn: Messages = {
     saveNote: "নোট সংরক্ষণ",
     cancel: "বাতিল",
     deleteEntry: "এন্ট্রি মুছুন",
+  },
+  journey: {
+    title: "আমার ককটেল যাত্রা",
+    collected: "সংগ্রহ",
+    tried: "যে ককটেলগুলো চেখেছি",
   },
   language: { label: "ভাষা", choose: "ভাষা বেছে নিন" },
   content: { recipeNote: "রেসিপির বিবরণ ডেটাবেস থেকে মূল ভাষায় দেখানো হয়।" },

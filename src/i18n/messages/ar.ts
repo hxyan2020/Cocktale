@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const ar: Messages = {
   brand: "Cocktale",
   tagline: "قصص كوكتيل تُسكب من أجلك",
-  nav: { discover: "اكتشف", catalogue: "الدليل", book: "الكتاب", journal: "المفكرة", signOut: "تسجيل الخروج" },
+  nav: { discover: "اكتشف", catalogue: "الدليل", journey: "رحلتي", book: "الكتاب", journal: "المفكرة", signOut: "تسجيل الخروج" },
   login: {
     eyebrow: "قصص كوكتيل تُسكب من أجلك",
     title: "Cocktale",
@@ -115,6 +115,11 @@ export const ar: Messages = {
     saveNote: "حفظ الملاحظة",
     cancel: "إلغاء",
     deleteEntry: "حذف السجل",
+  },
+  journey: {
+    title: "رحلتي مع الكوكتيل",
+    collected: "المجموعة",
+    tried: "كوكتيلات تذوقتُها",
   },
   language: { label: "اللغة", choose: "اختر اللغة" },
   content: {

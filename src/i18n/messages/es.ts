@@ -6,6 +6,7 @@ export const es: Messages = {
   nav: {
     discover: "Descubrir",
     catalogue: "Catálogo",
+    journey: "Viaje",
     book: "Libro",
     journal: "Diario",
     signOut: "Cerrar sesión",
@@ -121,6 +122,11 @@ export const es: Messages = {
     saveNote: "Guardar nota",
     cancel: "Cancelar",
     deleteEntry: "Eliminar entrada",
+  },
+  journey: {
+    title: "Mi viaje de cócteles",
+    collected: "Colección",
+    tried: "Cócteles que probé",
   },
   language: { label: "Idioma", choose: "Elegir idioma" },
   content: {

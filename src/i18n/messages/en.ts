@@ -4,6 +4,7 @@ export type Messages = {
   nav: {
     discover: string;
     catalogue: string;
+    journey: string;
     book: string;
     journal: string;
     signOut: string;
@@ -103,6 +104,11 @@ export type Messages = {
     empty: string;
     collectedOn: string;
   };
+  journey: {
+    title: string;
+    collected: string;
+    tried: string;
+  };
   catalogue: {
     title: string;
     subtitle: string;
@@ -141,6 +147,7 @@ export const en: Messages = {
   nav: {
     discover: "Discover",
     catalogue: "Catalogue",
+    journey: "Journey",
     book: "Book",
     journal: "Journal",
     signOut: "Sign out",
@@ -240,6 +247,11 @@ export const en: Messages = {
     subtitle: "Cocktails you collected to revisit, shop for, and make.",
     empty: "Nothing collected yet. Swipe the feed and tap Collect on pours you love.",
     collectedOn: "Collected {date}",
+  },
+  journey: {
+    title: "My cocktail journey",
+    collected: "Collected",
+    tried: "Cocktails I tried",
   },
   catalogue: {
     title: "Catalogue",

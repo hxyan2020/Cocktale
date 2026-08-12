@@ -6,6 +6,7 @@ export const zhTW: Messages = {
   nav: {
     discover: "探索",
     catalogue: "圖鑑",
+    journey: "旅程",
     book: "收藏",
     journal: "手札",
     signOut: "登出",
@@ -120,6 +121,11 @@ export const zhTW: Messages = {
     saveNote: "儲存備註",
     cancel: "取消",
     deleteEntry: "刪除紀錄",
+  },
+  journey: {
+    title: "我的雞尾酒旅程",
+    collected: "收藏",
+    tried: "我嚐過的雞尾酒",
   },
   language: { label: "語言", choose: "選擇語言" },
   content: {

@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const uk: Messages = {
   brand: "Cocktale",
   tagline: "Історії коктейлів — налиті для вас",
-  nav: { discover: "Відкрити", catalogue: "Каталог", book: "Книга", journal: "Щоденник", signOut: "Вийти" },
+  nav: { discover: "Відкрити", catalogue: "Каталог", journey: "Подорож", book: "Книга", journal: "Щоденник", signOut: "Вийти" },
   login: {
     eyebrow: "Історії коктейлів — налиті для вас",
     title: "Cocktale",
@@ -116,6 +116,11 @@ export const uk: Messages = {
     cancel: "Скасувати",
     deleteEntry: "Видалити запис",
   },
+  journey: {
+    title: "Моя коктейльна подорож",
+    collected: "Зібране",
+    tried: "Коктейлі, які я спробував",
+  },
   language: { label: "Мова", choose: "Обрати мову" },
   content: {
     recipeNote: "Деталі рецепта з бази показано мовою оригіналу.",
@@ -130,7 +135,7 @@ export const uk: Messages = {
 export const ms: Messages = {
   brand: "Cocktale",
   tagline: "Kisah koktel, dituangkan untuk anda",
-  nav: { discover: "Teroka", catalogue: "Katalog", book: "Buku", journal: "Jurnal", signOut: "Log keluar" },
+  nav: { discover: "Teroka", catalogue: "Katalog", journey: "Perjalanan", book: "Buku", journal: "Jurnal", signOut: "Log keluar" },
   login: {
     eyebrow: "Kisah koktel, dituangkan untuk anda",
     title: "Cocktale",
@@ -243,6 +248,11 @@ export const ms: Messages = {
     cancel: "Batal",
     deleteEntry: "Padam entri",
   },
+  journey: {
+    title: "Perjalanan koktel saya",
+    collected: "Koleksi",
+    tried: "Koktel yang saya cuba",
+  },
   language: { label: "Bahasa", choose: "Pilih bahasa" },
   content: {
     recipeNote: "Butiran resipi daripada pangkalan data dipaparkan dalam bahasa asal.",
@@ -257,7 +267,7 @@ export const ms: Messages = {
 export const fa: Messages = {
   brand: "Cocktale",
   tagline: "داستان‌های کوکتل، برای شما ریخته می‌شود",
-  nav: { discover: "کشف", catalogue: "فهرست", book: "کتاب", journal: "دفترچه", signOut: "خروج" },
+  nav: { discover: "کشف", catalogue: "فهرست", journey: "سفر", book: "کتاب", journal: "دفترچه", signOut: "خروج" },
   login: {
     eyebrow: "داستان‌های کوکتل، برای شما ریخته می‌شود",
     title: "Cocktale",
@@ -370,6 +380,11 @@ export const fa: Messages = {
     cancel: "لغو",
     deleteEntry: "حذف ورودی",
   },
+  journey: {
+    title: "سفر کوکتل من",
+    collected: "مجموعه",
+    tried: "کوکتل‌هایی که چشیدم",
+  },
   language: { label: "زبان", choose: "انتخاب زبان" },
   content: {
     recipeNote: "جزئیات دستور از پایگاه‌داده به زبان اصلی نمایش داده می‌شود.",
@@ -384,7 +399,7 @@ export const fa: Messages = {
 export const he: Messages = {
   brand: "Cocktale",
   tagline: "סיפורי קוקטיילים, מוגשים עבורך",
-  nav: { discover: "גלה", catalogue: "קטלוג", book: "ספר", journal: "יומן", signOut: "התנתק" },
+  nav: { discover: "גלה", catalogue: "קטלוג", journey: "מסע", book: "ספר", journal: "יומן", signOut: "התנתק" },
   login: {
     eyebrow: "סיפורי קוקטיילים, מוגשים עבורך",
     title: "Cocktale",
@@ -497,6 +512,11 @@ export const he: Messages = {
     cancel: "ביטול",
     deleteEntry: "מחק רשומה",
   },
+  journey: {
+    title: "מסע הקוקטיילים שלי",
+    collected: "אוסף",
+    tried: "קוקטיילים שטעמתי",
+  },
   language: { label: "שפה", choose: "בחרו שפה" },
   content: {
     recipeNote: "פרטי המתכון ממסד הנתונים מוצגים בשפת המקור.",
@@ -511,7 +531,7 @@ export const he: Messages = {
 export const sv: Messages = {
   brand: "Cocktale",
   tagline: "Cocktailberättelser, hällts för dig",
-  nav: { discover: "Upptäck", catalogue: "Katalog", book: "Bok", journal: "Dagbok", signOut: "Logga ut" },
+  nav: { discover: "Upptäck", catalogue: "Katalog", journey: "Resa", book: "Bok", journal: "Dagbok", signOut: "Logga ut" },
   login: {
     eyebrow: "Cocktailberättelser, hällts för dig",
     title: "Cocktale",
@@ -623,6 +643,11 @@ export const sv: Messages = {
     saveNote: "Spara anteckning",
     cancel: "Avbryt",
     deleteEntry: "Ta bort post",
+  },
+  journey: {
+    title: "Min cocktailresa",
+    collected: "Samlade",
+    tried: "Cocktails jag har provat",
   },
   language: { label: "Språk", choose: "Välj språk" },
   content: {

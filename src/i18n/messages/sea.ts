@@ -42,7 +42,7 @@ const detailExtras = {
 export const vi: Messages = {
   brand: "Cocktale",
   tagline: "Câu chuyện cocktail, rót dành cho bạn",
-  nav: { discover: "Khám phá", catalogue: "Danh mục", book: "Sổ", journal: "Nhật ký", signOut: "Đăng xuất" },
+  nav: { discover: "Khám phá", catalogue: "Danh mục", journey: "Hành trình", book: "Sổ", journal: "Nhật ký", signOut: "Đăng xuất" },
   login: {
     eyebrow: "Câu chuyện cocktail, rót dành cho bạn",
     title: "Cocktale",
@@ -146,6 +146,11 @@ export const vi: Messages = {
     cancel: "Hủy",
     deleteEntry: "Xóa mục",
   },
+  journey: {
+    title: "Hành trình cocktail của tôi",
+    collected: "Đã lưu",
+    tried: "Cocktail tôi đã thử",
+  },
   language: { label: "Ngôn ngữ", choose: "Chọn ngôn ngữ" },
   content: { recipeNote: "Chi tiết công thức từ cơ sở dữ liệu, hiển thị bằng ngôn ngữ gốc." },
   errors: {
@@ -158,7 +163,7 @@ export const vi: Messages = {
 export const th: Messages = {
   brand: "Cocktale",
   tagline: "เรื่องราวค็อกเทล รินให้คุณ",
-  nav: { discover: "ค้นพบ", catalogue: "สารบัญ", book: "สมุด", journal: "บันทึก", signOut: "ออกจากระบบ" },
+  nav: { discover: "ค้นพบ", catalogue: "สารบัญ", journey: "การเดินทาง", book: "สมุด", journal: "บันทึก", signOut: "ออกจากระบบ" },
   login: {
     eyebrow: "เรื่องราวค็อกเทล รินให้คุณ",
     title: "Cocktale",
@@ -262,6 +267,11 @@ export const th: Messages = {
     cancel: "ยกเลิก",
     deleteEntry: "ลบรายการ",
   },
+  journey: {
+    title: "การเดินทางค็อกเทลของฉัน",
+    collected: "ที่เก็บไว้",
+    tried: "ค็อกเทลที่ฉันลอง",
+  },
   language: { label: "ภาษา", choose: "เลือกภาษา" },
   content: { recipeNote: "รายละเอียดสูตรมาจากฐานข้อมูลและแสดงเป็นภาษาต้นฉบับ" },
   errors: {
@@ -274,7 +284,7 @@ export const th: Messages = {
 export const id: Messages = {
   brand: "Cocktale",
   tagline: "Kisah koktail, dituangkan untuk Anda",
-  nav: { discover: "Temukan", catalogue: "Katalog", book: "Buku", journal: "Jurnal", signOut: "Keluar" },
+  nav: { discover: "Temukan", catalogue: "Katalog", journey: "Perjalanan", book: "Buku", journal: "Jurnal", signOut: "Keluar" },
   login: {
     eyebrow: "Kisah koktail, dituangkan untuk Anda",
     title: "Cocktale",
@@ -378,6 +388,11 @@ export const id: Messages = {
     saveNote: "Simpan catatan",
     cancel: "Batal",
     deleteEntry: "Hapus entri",
+  },
+  journey: {
+    title: "Perjalanan cocktail saya",
+    collected: "Koleksi",
+    tried: "Cocktail yang saya coba",
   },
   language: { label: "Bahasa", choose: "Pilih bahasa" },
   content: {

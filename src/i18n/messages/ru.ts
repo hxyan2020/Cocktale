@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const ru: Messages = {
   brand: "Cocktale",
   tagline: "Истории коктейлей — налиты для вас",
-  nav: { discover: "Открыть", catalogue: "Каталог", book: "Книга", journal: "Дневник", signOut: "Выйти" },
+  nav: { discover: "Открыть", catalogue: "Каталог", journey: "Путь", book: "Книга", journal: "Дневник", signOut: "Выйти" },
   login: {
     eyebrow: "Истории коктейлей — налиты для вас",
     title: "Cocktale",
@@ -115,6 +115,11 @@ export const ru: Messages = {
     saveNote: "Сохранить заметку",
     cancel: "Отмена",
     deleteEntry: "Удалить запись",
+  },
+  journey: {
+    title: "Моё коктейльное путешествие",
+    collected: "Коллекция",
+    tried: "Коктейли, которые я пробовал",
   },
   language: { label: "Язык", choose: "Выбрать язык" },
   content: {

@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import {
   BookMarked,
   Compass,
-  NotebookPen,
   LogIn,
   LogOut,
   PencilLine,
@@ -32,8 +31,7 @@ export function AppNav() {
     { href: "/feed", label: t("nav.discover"), icon: Compass },
     { href: "/catalogue", label: t("nav.catalogue"), icon: Library },
     { href: "/market", label: shop.market, icon: Store },
-    { href: "/book", label: t("nav.book"), icon: BookMarked },
-    { href: "/journal", label: t("nav.journal"), icon: NotebookPen },
+    { href: "/journey", label: t("nav.journey"), icon: BookMarked },
     { href: "/orders", label: shop.orders, icon: Package },
   ];
 
