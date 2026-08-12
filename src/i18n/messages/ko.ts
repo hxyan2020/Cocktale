@@ -58,7 +58,7 @@ export const ko: Messages = {
     collected: "수집됨",
     tried: "마셔 봄",
     openFullTale: "전체 이야기 열기 →",
-    swipeHint: "오른쪽으로 스와이프해 다음 추천으로",
+    swipeHint: "오른쪽은 다음, 왼쪽은 이전 칵테일",
     loadingPours: "불러오는 중…",
   },
   detail: {

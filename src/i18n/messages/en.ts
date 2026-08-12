@@ -192,7 +192,7 @@ export const en: Messages = {
     collected: "Collected",
     tried: "Tried",
     openFullTale: "Open full tale →",
-    swipeHint: "Swipe right for the next most relevant pour",
+    swipeHint: "Swipe right for the next pour · left to go back",
     loadingPours: "Loading pours…",
   },
   detail: {

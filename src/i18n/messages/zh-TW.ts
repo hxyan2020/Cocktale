@@ -63,7 +63,7 @@ export const zhTW: Messages = {
     collected: "已收藏",
     tried: "喝過",
     openFullTale: "開啟完整故事 →",
-    swipeHint: "向右滑動，查看下一個最相關推薦",
+    swipeHint: "向右滑動看下一杯，向左返回上一杯",
     loadingPours: "正在載入特調……",
   },
   detail: {

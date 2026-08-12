@@ -1,0 +1,21 @@
+---
+description: Always ship completed product changes to production
+alwaysApply: true
+---
+
+# Deploy to production
+
+After finishing user-requested product work, ship it without waiting to be asked.
+
+1. Commit the relevant files (never `.env`, credentials, or secrets).
+2. Push `master` to `origin`.
+3. Deploy **Vercel production**: `npx vercel --prod --yes`
+4. Update the **DigitalOcean droplet** (`root@188.166.214.47`, key `~/.ssh/haixiang-bio_ed25519`):
+   - `git fetch && git reset --hard origin/master` in `/var/www/cocktale`
+   - `npm ci && npm run build`
+   - `pm2 restart cocktale`
+5. Confirm both URLs respond:
+   - https://cocktale.vercel.app
+   - http://cocktale.188.166.214.47.nip.io
+
+Skip only if the user explicitly says not to deploy, or if there is nothing to ship.

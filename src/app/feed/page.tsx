@@ -129,6 +129,7 @@ export default function FeedPage() {
   const swipeNext = () => {
     if (current) browse(current.id, "skip");
     setDetailOpen(false);
+    setTriedOpen(false);
     setIndex((i) => {
       const next = i + 1;
       if (next >= queue.length) {
@@ -138,6 +139,12 @@ export default function FeedPage() {
       }
       return next;
     });
+  };
+
+  const swipePrev = () => {
+    setDetailOpen(false);
+    setTriedOpen(false);
+    setIndex((i) => Math.max(0, i - 1));
   };
 
   if (!ready || !user) {
@@ -230,7 +237,9 @@ export default function FeedPage() {
           <SwipeDeck
             cocktail={current}
             collected={current ? isCollected(current.id) : false}
+            canGoBack={index > 0}
             onSwipeNext={swipeNext}
+            onSwipePrev={swipePrev}
             onOpen={() => {
               if (current) {
                 browse(current.id, "open");

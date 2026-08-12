@@ -59,7 +59,7 @@ export const ru: Messages = {
     collected: "В коллекции",
     tried: "Пробовал(а)",
     openFullTale: "Открыть историю →",
-    swipeHint: "Свайпните вправо к следующему релевантному коктейлю",
+    swipeHint: "Вправо — следующий, влево — предыдущий",
     loadingPours: "Загрузка…",
   },
   detail: {

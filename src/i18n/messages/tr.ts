@@ -59,7 +59,7 @@ export const tr: Messages = {
     collected: "Eklendi",
     tried: "Denendi",
     openFullTale: "Tam hikâyeyi aç →",
-    swipeHint: "Sonraki en uygun içki için sağa kaydırın",
+    swipeHint: "Sağa kaydırın sonraki için, sola önceki için",
     loadingPours: "Yükleniyor…",
   },
   detail: {

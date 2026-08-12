@@ -3,6 +3,7 @@ import { Fraunces, Outfit } from "next/font/google";
 import { AuthProvider } from "@/components/AuthProvider";
 import { CartProvider } from "@/components/CartProvider";
 import { LanguageProvider } from "@/components/LanguageProvider";
+import { MeasureUnitProvider } from "@/components/MeasureUnitProvider";
 import "./globals.css";
 
 const display = Fraunces({
@@ -36,9 +37,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         }}
       >
         <LanguageProvider>
-          <AuthProvider>
-            <CartProvider>{children}</CartProvider>
-          </AuthProvider>
+          <MeasureUnitProvider>
+            <AuthProvider>
+              <CartProvider>{children}</CartProvider>
+            </AuthProvider>
+          </MeasureUnitProvider>
         </LanguageProvider>
       </body>
     </html>

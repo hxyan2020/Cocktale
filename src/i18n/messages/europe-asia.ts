@@ -59,7 +59,7 @@ export const nl: Messages = {
     collected: "Verzameld",
     tried: "Geproefd",
     openFullTale: "Volledig verhaal openen →",
-    swipeHint: "Veeg rechts voor de volgende meest relevante drank",
+    swipeHint: "Veeg rechts voor de volgende, links om terug te gaan",
     loadingPours: "Laden…",
   },
   detail: {
@@ -178,7 +178,7 @@ export const pl: Messages = {
     collected: "Zapisano",
     tried: "Spróbowane",
     openFullTale: "Otwórz pełną historię →",
-    swipeHint: "Przesuń w prawo do kolejnego trafnego drinka",
+    swipeHint: "Przesuń w prawo do kolejnego, w lewo aby wrócić",
     loadingPours: "Ładowanie…",
   },
   detail: {
@@ -297,7 +297,7 @@ export const bn: Messages = {
     collected: "সংগৃহীত",
     tried: "চেষ্টা করেছি",
     openFullTale: "সম্পূর্ণ গল্প খুলুন →",
-    swipeHint: "পরবর্তী সবচেয়ে প্রাসঙ্গিক পানীয়ের জন্য ডানে সোয়াইপ করুন",
+    swipeHint: "ডানে সোয়াইপ করুন পরবর্তীর জন্য, বামে ফিরতে",
     loadingPours: "লোড হচ্ছে…",
   },
   detail: {

@@ -42,6 +42,7 @@ export type ShopMessages = {
   brand: string;
   unit: string;
   shopFromCocktail: string;
+  gallery: string;
 };
 
 const en: ShopMessages = {
@@ -86,6 +87,7 @@ const en: ShopMessages = {
   brand: "Brand",
   unit: "Unit",
   shopFromCocktail: "Buy ingredients & tools for this drink",
+  gallery: "More photos",
 };
 
 const catalogs: Partial<Record<LocaleCode, ShopMessages>> = {
@@ -124,6 +126,7 @@ const catalogs: Partial<Record<LocaleCode, ShopMessages>> = {
     demoPaid: "演示结账已完成（配置 Stripe 密钥后可真实收款）。",
     stripeMissing: "未配置 Stripe 密钥 — 使用演示结账。",
     shopFromCocktail: "购买这杯所需的原料与工具",
+    gallery: "更多图片",
   },
 };
 

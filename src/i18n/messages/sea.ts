@@ -97,7 +97,7 @@ export const vi: Messages = {
     collected: "Đã thu thập",
     tried: "Đã thử",
     openFullTale: "Mở câu chuyện đầy đủ →",
-    swipeHint: "Vuốt phải để xem ly phù hợp tiếp theo",
+    swipeHint: "Vuốt phải để xem ly tiếp theo, vuốt trái để quay lại",
     loadingPours: "Đang tải…",
   },
   detail: {
@@ -205,7 +205,7 @@ export const th: Messages = {
     collected: "เก็บแล้ว",
     tried: "ลองแล้ว",
     openFullTale: "เปิดเรื่องเต็ม →",
-    swipeHint: "ปัดขวาเพื่อเครื่องดื่มที่เกี่ยวข้องถัดไป",
+    swipeHint: "ปัดขวาสำหรับแก้วถัดไป ปัดซ้ายเพื่อย้อนกลับ",
     loadingPours: "กำลังโหลด…",
   },
   detail: {
@@ -314,7 +314,7 @@ export const id: Messages = {
     collected: "Terkumpul",
     tried: "Sudah coba",
     openFullTale: "Buka kisah lengkap →",
-    swipeHint: "Geser kanan untuk minuman paling relevan berikutnya",
+    swipeHint: "Geser kanan untuk berikutnya, kiri untuk kembali",
     loadingPours: "Memuat…",
   },
   detail: {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { X, Bookmark, Check, GlassWater, Wrench, ShoppingBag } from "lucide-react";
@@ -11,6 +11,12 @@ import { useCart } from "@/components/CartProvider";
 import { equipmentLabel } from "@/i18n/equipment";
 import { expandMakeSteps, inferEquipment } from "@/lib/make-guide";
 import { formatMoney, productsForCocktailIngredients } from "@/lib/products";
+import { getCocktailGallery } from "@/lib/cocktail-gallery";
+import { convertMeasure } from "@/lib/units";
+import { equipmentInfo, glassInfo, ingredientInfo } from "@/lib/item-info";
+import { useMeasureUnit } from "@/components/MeasureUnitProvider";
+import { UnitSwitcher } from "@/components/UnitSwitcher";
+import { ItemInfoTrigger } from "@/components/ItemInfoTrigger";
 
 type Props = {
   cocktail: Cocktail;
@@ -30,9 +36,17 @@ export function CocktailDetail({
   const { t, locale } = useI18n();
   const shop = useShop();
   const { addItem } = useCart();
+  const { unit } = useMeasureUnit();
+  const [galleryIndex, setGalleryIndex] = useState(0);
 
   const equipment = useMemo(() => inferEquipment(cocktail), [cocktail]);
   const recipeSteps = useMemo(() => expandMakeSteps(cocktail), [cocktail]);
+  const gallery = useMemo(() => getCocktailGallery(cocktail, 6), [cocktail]);
+
+  useEffect(() => {
+    setGalleryIndex(0);
+  }, [cocktail.id]);
+
   const shopProducts = useMemo(
     () =>
       productsForCocktailIngredients(
@@ -52,6 +66,8 @@ export function CocktailDetail({
     ];
   }, [cocktail.glass, recipeSteps, t]);
 
+  const activeGallery = gallery[galleryIndex] ?? gallery[0];
+
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-[rgba(20,16,12,0.55)] p-0 sm:items-center sm:p-6">
       <button
@@ -61,13 +77,14 @@ export function CocktailDetail({
         onClick={onClose}
       />
       <div className="relative z-10 max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-t-[1.75rem] bg-[var(--surface)] shadow-2xl sm:rounded-[1.75rem]">
-        <div className="relative h-56 w-full">
+        <div className="relative aspect-[4/3] w-full min-h-72 sm:min-h-80">
           <Image
             src={cocktail.image || "/cocktail-fallback.svg"}
             alt={cocktail.name}
             fill
             className="object-cover"
-            sizes="512px"
+            sizes="(max-width: 640px) 100vw, 512px"
+            priority
           />
           <button
             type="button"
@@ -91,6 +108,49 @@ export function CocktailDetail({
             <p className="mt-1 text-sm text-[var(--ink-soft)]">{cocktail.origin}</p>
           </header>
 
+          {gallery.length > 0 && (
+            <section>
+              <h3 className="text-sm font-semibold text-[var(--ink)]">{shop.gallery}</h3>
+              <div className="relative mt-3 aspect-[4/3] overflow-hidden rounded-2xl bg-[#efe8dc] ring-1 ring-[var(--line)]">
+                {activeGallery && (
+                  <Image
+                    src={activeGallery.url}
+                    alt={activeGallery.alt}
+                    fill
+                    className="object-contain p-3"
+                    sizes="512px"
+                  />
+                )}
+                {activeGallery && (
+                  <span className="absolute bottom-3 start-3 rounded-full bg-[rgba(28,22,16,0.7)] px-3 py-1 text-xs text-[var(--foam)] backdrop-blur">
+                    {activeGallery.label}
+                  </span>
+                )}
+              </div>
+              <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
+                {gallery.map((img, i) => (
+                  <button
+                    key={img.id}
+                    type="button"
+                    onClick={() => setGalleryIndex(i)}
+                    className={`relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-[#efe8dc] ring-2 transition ${
+                      galleryIndex === i ? "ring-[var(--accent)]" : "ring-transparent"
+                    }`}
+                    aria-label={img.label}
+                  >
+                    <Image
+                      src={img.url}
+                      alt={img.alt}
+                      fill
+                      className="object-cover"
+                      sizes="80px"
+                    />
+                  </button>
+                ))}
+              </div>
+            </section>
+          )}
+
           <section>
             <h3 className="text-sm font-semibold text-[var(--ink)]">{t("detail.theTale")}</h3>
             <p className="mt-2 text-[15px] leading-relaxed text-[var(--ink-soft)]">
@@ -99,16 +159,23 @@ export function CocktailDetail({
           </section>
 
           <section>
-            <h3 className="text-sm font-semibold text-[var(--ink)]">{t("detail.ingredients")}</h3>
+            <div className="flex items-center justify-between gap-3">
+              <h3 className="text-sm font-semibold text-[var(--ink)]">{t("detail.ingredients")}</h3>
+              <UnitSwitcher />
+            </div>
             <ul className="mt-2 space-y-2">
               {cocktail.ingredients.map((ing) => (
                 <li
                   key={ing.name}
                   className="flex items-baseline justify-between gap-4 border-b border-[var(--line)] pb-2 text-sm"
                 >
-                  <span className="text-[var(--ink)]">{ing.name}</span>
-                  <span className="text-[var(--ink-muted)]">
-                    {ing.measure || t("detail.toTaste")}
+                  <ItemInfoTrigger info={ingredientInfo(ing.name)}>
+                    <span className="text-[var(--ink)]">{ing.name}</span>
+                  </ItemInfoTrigger>
+                  <span className="shrink-0 text-[var(--ink-muted)]">
+                    {ing.measure
+                      ? convertMeasure(ing.measure, unit)
+                      : t("detail.toTaste")}
                   </span>
                 </li>
               ))}
@@ -129,9 +196,11 @@ export function CocktailDetail({
                 <GlassWater className="h-3.5 w-3.5" />
                 {t("detail.servingVessel")}
               </div>
-              <p className="rounded-xl bg-[var(--surface)] px-3 py-2 text-sm text-[var(--ink)] ring-1 ring-[var(--line)]">
-                {cocktail.glass}
-              </p>
+              <div className="rounded-xl bg-[var(--surface)] px-3 py-2 text-sm text-[var(--ink)] ring-1 ring-[var(--line)]">
+                <ItemInfoTrigger info={glassInfo(cocktail.glass)} className="w-full">
+                  <span>{cocktail.glass}</span>
+                </ItemInfoTrigger>
+              </div>
             </div>
 
             <div className="mt-4">
@@ -139,14 +208,19 @@ export function CocktailDetail({
                 {t("detail.utensils")}
               </p>
               <ul className="grid gap-2 sm:grid-cols-2">
-                {equipment.map((item) => (
-                  <li
-                    key={item.id}
-                    className="rounded-xl bg-[var(--surface)] px-3 py-2 text-sm text-[var(--ink)] ring-1 ring-[var(--line)]"
-                  >
-                    {equipmentLabel(locale, item.id)}
-                  </li>
-                ))}
+                {equipment.map((item) => {
+                  const label = equipmentLabel(locale, item.id);
+                  return (
+                    <li
+                      key={item.id}
+                      className="rounded-xl bg-[var(--surface)] px-3 py-2 text-sm text-[var(--ink)] ring-1 ring-[var(--line)]"
+                    >
+                      <ItemInfoTrigger info={equipmentInfo(item.id, label)} className="w-full">
+                        <span>{label}</span>
+                      </ItemInfoTrigger>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </section>

@@ -59,7 +59,7 @@ export const hi: Messages = {
     collected: "संग्रहित",
     tried: "आज़माया",
     openFullTale: "पूरी कहानी खोलें →",
-    swipeHint: "अगले सबसे प्रासंगिक पेय के लिए दाएँ स्वाइप करें",
+    swipeHint: "दाएँ स्वाइप करें अगले के लिए, बाएँ पिछले के लिए",
     loadingPours: "लोड हो रहा है…",
   },
   detail: {

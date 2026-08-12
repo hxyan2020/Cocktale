@@ -64,7 +64,7 @@ export const de: Messages = {
     collected: "Gesammelt",
     tried: "Probiert",
     openFullTale: "Ganze Geschichte öffnen →",
-    swipeHint: "Nach rechts wischen für den nächsten passenden Drink",
+    swipeHint: "Rechts wischen für den nächsten, links für den vorherigen",
     loadingPours: "Drinks werden geladen…",
   },
   detail: {

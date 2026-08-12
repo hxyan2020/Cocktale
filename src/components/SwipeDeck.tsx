@@ -14,7 +14,9 @@ import { useI18n } from "@/components/LanguageProvider";
 type Props = {
   cocktail: Cocktail | null;
   collected: boolean;
+  canGoBack?: boolean;
   onSwipeNext: () => void;
+  onSwipePrev: () => void;
   onOpen: () => void;
   onCollect: () => void;
   onTried: () => void;
@@ -23,7 +25,9 @@ type Props = {
 export function SwipeDeck({
   cocktail,
   collected,
+  canGoBack = false,
   onSwipeNext,
+  onSwipePrev,
   onOpen,
   onCollect,
   onTried,
@@ -35,20 +39,31 @@ export function SwipeDeck({
   const [exitX, setExitX] = useState(0);
   const forward = dir === "rtl" ? -1 : 1;
 
+  const finishSwipe = useCallback(
+    (direction: 1 | -1, action: () => void) => {
+      setExitX(420 * forward * direction);
+      action();
+      requestAnimationFrame(() => {
+        setExitX(0);
+        x.set(0);
+      });
+    },
+    [forward, x],
+  );
+
   const handleDragEnd = useCallback(
     (_: unknown, info: PanInfo) => {
-      const shouldNext =
-        info.offset.x * forward > 110 || info.velocity.x * forward > 700;
-      if (shouldNext) {
-        setExitX(420 * forward);
-        onSwipeNext();
-        requestAnimationFrame(() => {
-          setExitX(0);
-          x.set(0);
-        });
+      const offset = info.offset.x * forward;
+      const velocity = info.velocity.x * forward;
+      if (offset > 110 || velocity > 700) {
+        finishSwipe(1, onSwipeNext);
+        return;
+      }
+      if (canGoBack && (offset < -110 || velocity < -700)) {
+        finishSwipe(-1, onSwipePrev);
       }
     },
-    [onSwipeNext, x, forward],
+    [canGoBack, finishSwipe, forward, onSwipeNext, onSwipePrev],
   );
 
   if (!cocktail) {

@@ -58,7 +58,7 @@ export const ja: Messages = {
     collected: "追加済み",
     tried: "飲んだ",
     openFullTale: "物語を開く →",
-    swipeHint: "右にスワイプして、次に関連する一杯へ",
+    swipeHint: "右にスワイプで次へ、左で前の一杯へ",
     loadingPours: "読み込み中…",
   },
   detail: {

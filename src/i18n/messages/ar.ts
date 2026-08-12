@@ -59,7 +59,7 @@ export const ar: Messages = {
     collected: "تم الجمع",
     tried: "جرّبت",
     openFullTale: "افتح القصة كاملة ←",
-    swipeHint: "اسحب يمينًا للكوكتيل التالي الأكثر ملاءمة",
+    swipeHint: "اسحب يمينًا للتالي ويسارًا للسابق",
     loadingPours: "جارٍ التحميل…",
   },
   detail: {

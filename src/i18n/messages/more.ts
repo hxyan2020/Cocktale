@@ -59,7 +59,7 @@ export const uk: Messages = {
     collected: "Збережено",
     tried: "Спробував(ла)",
     openFullTale: "Відкрити повну історію →",
-    swipeHint: "Свайпніть праворуч до наступного релевантного коктейлю",
+    swipeHint: "Вправо — наступний, вліво — попередній",
     loadingPours: "Завантаження…",
   },
   detail: {
@@ -178,7 +178,7 @@ export const ms: Messages = {
     collected: "Dikumpul",
     tried: "Sudah cuba",
     openFullTale: "Buka kisah penuh →",
-    swipeHint: "Leret kanan untuk minuman paling relevan seterusnya",
+    swipeHint: "Leret kanan untuk seterusnya, kiri untuk kembali",
     loadingPours: "Memuatkan…",
   },
   detail: {
@@ -297,7 +297,7 @@ export const fa: Messages = {
     collected: "جمع‌آوری شد",
     tried: "چشیدم",
     openFullTale: "باز کردن داستان کامل ←",
-    swipeHint: "برای نوشیدنی مرتبط بعدی به راست بکشید",
+    swipeHint: "راست برای بعدی، چپ برای قبلی",
     loadingPours: "در حال بارگذاری…",
   },
   detail: {
@@ -416,7 +416,7 @@ export const he: Messages = {
     collected: "נאסף",
     tried: "ניסיתי",
     openFullTale: "פתח את הסיפור המלא ←",
-    swipeHint: "החליקו ימינה למשקה הרלוונטי הבא",
+    swipeHint: "החליקו ימינה לבא, שמאלה לקודם",
     loadingPours: "טוען…",
   },
   detail: {
@@ -535,7 +535,7 @@ export const sv: Messages = {
     collected: "Samlad",
     tried: "Provad",
     openFullTale: "Öppna hela berättelsen →",
-    swipeHint: "Svep höger för nästa mest relevanta drink",
+    swipeHint: "Svep höger för nästa, vänster för föregående",
     loadingPours: "Laddar…",
   },
   detail: {

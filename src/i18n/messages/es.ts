@@ -64,7 +64,7 @@ export const es: Messages = {
     collected: "Guardado",
     tried: "Probado",
     openFullTale: "Abrir historia completa →",
-    swipeHint: "Desliza a la derecha para el siguiente cóctel más relevante",
+    swipeHint: "Desliza a la derecha para el siguiente, a la izquierda para volver",
     loadingPours: "Cargando copas…",
   },
   detail: {

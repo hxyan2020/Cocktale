@@ -59,7 +59,7 @@ export const pt: Messages = {
     collected: "Coletado",
     tried: "Experimentei",
     openFullTale: "Abrir história completa →",
-    swipeHint: "Deslize para a direita para o próximo drink mais relevante",
+    swipeHint: "Deslize para a direita para o próximo, para a esquerda para voltar",
     loadingPours: "Carregando drinks…",
   },
   detail: {
