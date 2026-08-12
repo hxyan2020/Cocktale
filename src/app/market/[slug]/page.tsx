@@ -9,7 +9,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
 import { useI18n } from "@/components/LanguageProvider";
 import { useShop } from "@/components/useShop";
-import { formatMoney, getProductBySlug } from "@/lib/products";
+import { formatMoney, getProductBySlug, productImageClass, productImageUnoptimized } from "@/lib/products";
 import { getCocktail } from "@/lib/cocktails";
 
 export default function ProductDetailPage() {
@@ -54,9 +54,9 @@ export default function ProductDetailPage() {
                 src={product.images[active]?.url || "/cocktail-fallback.svg"}
                 alt={product.images[active]?.alt || product.name}
                 fill
-                className="object-contain p-6"
+                className={productImageClass(product.images[active]?.url || "", "hero")}
                 sizes="560px"
-                unoptimized={product.images[active]?.url.startsWith("/api/")}
+                unoptimized={productImageUnoptimized(product.images[active]?.url || "")}
                 priority
               />
             </div>
@@ -77,9 +77,9 @@ export default function ProductDetailPage() {
                     src={img.url}
                     alt={img.alt}
                     fill
-                    className="object-contain bg-[#f3efe6] p-1"
+                    className={productImageClass(img.url, "thumb")}
                     sizes="80px"
-                    unoptimized={img.url.startsWith("/api/")}
+                    unoptimized={productImageUnoptimized(img.url)}
                   />
                 </button>
               ))}

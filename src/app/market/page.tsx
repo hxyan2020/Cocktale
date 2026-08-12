@@ -8,7 +8,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
 import { useI18n } from "@/components/LanguageProvider";
 import { useShop } from "@/components/useShop";
-import { formatMoney, searchProducts } from "@/lib/products";
+import { formatMoney, productImageClass, productImageUnoptimized, searchProducts } from "@/lib/products";
 
 const CATEGORIES = ["all", "ingredient", "utensil", "glassware", "accessory"] as const;
 
@@ -80,9 +80,9 @@ export default function MarketPage() {
                   src={p.images[0]?.url || "/cocktail-fallback.svg"}
                   alt={p.images[0]?.alt || p.name}
                   fill
-                  className="object-contain bg-[#f3efe6] p-4"
+                  className={productImageClass(p.images[0]?.url || "")}
                   sizes="260px"
-                  unoptimized={p.images[0]?.url.startsWith("/api/")}
+                  unoptimized={productImageUnoptimized(p.images[0]?.url || "")}
                 />
               </Link>
               <div className="flex flex-1 flex-col gap-2 p-4">

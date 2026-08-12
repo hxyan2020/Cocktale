@@ -9,7 +9,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
 import { useI18n } from "@/components/LanguageProvider";
 import { useShop } from "@/components/useShop";
-import { formatMoney, getProduct } from "@/lib/products";
+import { formatMoney, getProduct, productImageClass, productImageUnoptimized } from "@/lib/products";
 import type { Order, OrderLine } from "@/lib/commerce-types";
 
 export default function CartPage() {
@@ -149,9 +149,9 @@ export default function CartPage() {
                     src={product.images[0]?.url || "/cocktail-fallback.svg"}
                     alt={product.name}
                     fill
-                    className="object-contain p-1"
+                    className={productImageClass(product.images[0]?.url || "", "thumb")}
                     sizes="80px"
-                    unoptimized={product.images[0]?.url.startsWith("/api/")}
+                    unoptimized={productImageUnoptimized(product.images[0]?.url || "")}
                   />
                 </div>
                 <div className="min-w-0 flex-1">

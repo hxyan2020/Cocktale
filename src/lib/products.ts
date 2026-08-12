@@ -18,6 +18,20 @@ export function getProductBySlug(slug: string): Product | undefined {
   return bySlug.get(slug);
 }
 
+export function productImageClass(url: string, kind: "card" | "hero" | "thumb" = "card") {
+  const packShot = url.includes("thecocktaildb.com/images/ingredients");
+  if (packShot) {
+    if (kind === "thumb") return "object-contain bg-[#f3efe6] p-1";
+    if (kind === "hero") return "object-contain p-6";
+    return "object-contain bg-[#f3efe6] p-4";
+  }
+  return "object-cover";
+}
+
+export function productImageUnoptimized(url: string) {
+  return url.includes("commons.wikimedia.org") || url.includes("upload.wikimedia.org");
+}
+
 export function formatMoney(cents: number, currency = "usd", locale = "en") {
   return new Intl.NumberFormat(locale, {
     style: "currency",
