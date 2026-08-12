@@ -10,7 +10,7 @@ import { useShop } from "@/components/useShop";
 import { useCart } from "@/components/CartProvider";
 import { expandMakeSteps, inferEquipment } from "@/lib/make-guide";
 import { formatMoney, productsForCocktailIngredients } from "@/lib/products";
-import { getCocktailGallery } from "@/lib/cocktail-gallery";
+import { getCocktailGallery, mergeCocktailGallery, type GalleryImage } from "@/lib/cocktail-gallery";
 import { convertMeasure } from "@/lib/units";
 import { equipmentInfo, glassInfo, ingredientInfo } from "@/lib/item-info";
 import { useMeasureUnit } from "@/components/MeasureUnitProvider";
@@ -38,15 +38,29 @@ export function CocktailDetail({
   const { unit } = useMeasureUnit();
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [shopOpen, setShopOpen] = useState(false);
+  const [extraGallery, setExtraGallery] = useState<GalleryImage[]>([]);
 
   const equipment = useMemo(() => inferEquipment(cocktail), [cocktail]);
   const recipeSteps = useMemo(() => expandMakeSteps(cocktail), [cocktail]);
-  const gallery = useMemo(() => getCocktailGallery(cocktail, 6), [cocktail]);
+  const localGallery = useMemo(() => getCocktailGallery(cocktail, 6), [cocktail]);
+  const gallery = useMemo(
+    () => mergeCocktailGallery(localGallery, extraGallery, 6),
+    [localGallery, extraGallery],
+  );
 
   useEffect(() => {
     setGalleryIndex(0);
     setShopOpen(false);
-  }, [cocktail.id]);
+    setExtraGallery([]);
+    const ac = new AbortController();
+    fetch(`/api/cocktail-photos?name=${encodeURIComponent(cocktail.name)}`, { signal: ac.signal })
+      .then((r) => (r.ok ? r.json() : { photos: [] }))
+      .then((data: { photos?: GalleryImage[] }) => {
+        setExtraGallery(Array.isArray(data.photos) ? data.photos : []);
+      })
+      .catch(() => {});
+    return () => ac.abort();
+  }, [cocktail.id, cocktail.name]);
 
   const shopProducts = useMemo(
     () =>
@@ -118,7 +132,7 @@ export function CocktailDetail({
                     src={activeGallery.url}
                     alt={activeGallery.alt}
                     fill
-                    className="object-contain p-3"
+                    className="object-cover"
                     sizes="512px"
                   />
                 )}
