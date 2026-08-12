@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { X, Bookmark, Check, GlassWater, Wrench, ShoppingBag } from "lucide-react";
+import { X, Bookmark, Check, GlassWater, Wrench, ShoppingBag, ChevronDown } from "lucide-react";
 import type { Cocktail } from "@/lib/types";
 import { useI18n } from "@/components/LanguageProvider";
 import { useShop } from "@/components/useShop";
@@ -38,6 +38,7 @@ export function CocktailDetail({
   const { addItem } = useCart();
   const { unit } = useMeasureUnit();
   const [galleryIndex, setGalleryIndex] = useState(0);
+  const [shopOpen, setShopOpen] = useState(false);
 
   const equipment = useMemo(() => inferEquipment(cocktail), [cocktail]);
   const recipeSteps = useMemo(() => expandMakeSteps(cocktail), [cocktail]);
@@ -45,6 +46,7 @@ export function CocktailDetail({
 
   useEffect(() => {
     setGalleryIndex(0);
+    setShopOpen(false);
   }, [cocktail.id]);
 
   const shopProducts = useMemo(
@@ -254,40 +256,54 @@ export function CocktailDetail({
 
           {shopProducts.length > 0 && (
             <section className="rounded-2xl bg-[var(--bg)] p-4 ring-1 ring-[var(--line)]">
-              <div className="flex items-center gap-2">
-                <ShoppingBag className="h-4 w-4 text-[var(--accent-deep)]" />
-                <h3 className="text-sm font-semibold text-[var(--ink)]">
+              <button
+                type="button"
+                onClick={() => setShopOpen((open) => !open)}
+                className="flex w-full items-center gap-2 text-start"
+                aria-expanded={shopOpen}
+              >
+                <ShoppingBag className="h-4 w-4 shrink-0 text-[var(--accent-deep)]" />
+                <h3 className="min-w-0 flex-1 text-sm font-semibold text-[var(--ink)]">
                   {shop.shopFromCocktail}
                 </h3>
-              </div>
-              <ul className="mt-3 space-y-2">
-                {shopProducts.map((p) => (
-                  <li
-                    key={p.id}
-                    className="flex items-center justify-between gap-3 rounded-xl bg-[var(--surface)] px-3 py-2 ring-1 ring-[var(--line)]"
+                <ChevronDown
+                  className={`h-4 w-4 shrink-0 text-[var(--ink-muted)] transition-transform ${
+                    shopOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              {shopOpen && (
+                <>
+                  <ul className="mt-3 space-y-2">
+                    {shopProducts.map((p) => (
+                      <li
+                        key={p.id}
+                        className="flex items-center justify-between gap-3 rounded-xl bg-[var(--surface)] px-3 py-2 ring-1 ring-[var(--line)]"
+                      >
+                        <Link href={`/market/${p.slug}`} className="min-w-0 flex-1">
+                          <p className="truncate text-sm text-[var(--ink)]">{p.name}</p>
+                          <p className="text-xs text-[var(--ink-muted)]">
+                            {formatMoney(p.priceCents, p.currency, locale)}
+                          </p>
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => addItem(p.id, 1)}
+                          className="shrink-0 rounded-full bg-[var(--ink)] px-3 py-1.5 text-[11px] text-[var(--foam)]"
+                        >
+                          {shop.addToCart}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href="/market"
+                    className="mt-3 inline-block text-xs font-medium text-[var(--accent-deep)]"
                   >
-                    <Link href={`/market/${p.slug}`} className="min-w-0 flex-1">
-                      <p className="truncate text-sm text-[var(--ink)]">{p.name}</p>
-                      <p className="text-xs text-[var(--ink-muted)]">
-                        {formatMoney(p.priceCents, p.currency, locale)}
-                      </p>
-                    </Link>
-                    <button
-                      type="button"
-                      onClick={() => addItem(p.id, 1)}
-                      className="shrink-0 rounded-full bg-[var(--ink)] px-3 py-1.5 text-[11px] text-[var(--foam)]"
-                    >
-                      {shop.addToCart}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href="/market"
-                className="mt-3 inline-block text-xs font-medium text-[var(--accent-deep)]"
-              >
-                {shop.market} →
-              </Link>
+                    {shop.market} →
+                  </Link>
+                </>
+              )}
             </section>
           )}
 
