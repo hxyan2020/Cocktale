@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Outfit } from "next/font/google";
 import { AuthProvider } from "@/components/AuthProvider";
+import { AuthPromptHost } from "@/components/AuthPromptHost";
 import { CartProvider } from "@/components/CartProvider";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { MeasureUnitProvider } from "@/components/MeasureUnitProvider";
@@ -39,7 +40,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <LanguageProvider>
           <MeasureUnitProvider>
             <AuthProvider>
-              <CartProvider>{children}</CartProvider>
+              <CartProvider>
+                {children}
+                <AuthPromptHost />
+              </CartProvider>
             </AuthProvider>
           </MeasureUnitProvider>
         </LanguageProvider>

@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
+import { useParams } from "next/navigation";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
@@ -14,8 +14,7 @@ import { getCocktail } from "@/lib/cocktails";
 
 export default function ProductDetailPage() {
   const params = useParams<{ slug: string }>();
-  const { user, ready } = useAuth();
-  const router = useRouter();
+  const { ready } = useAuth();
   const shop = useShop();
   const { locale } = useI18n();
   const { addItem } = useCart();
@@ -23,11 +22,7 @@ export default function ProductDetailPage() {
   const [active, setActive] = useState(0);
   const [added, setAdded] = useState(false);
 
-  useEffect(() => {
-    if (ready && !user) router.replace("/login");
-  }, [ready, user, router]);
-
-  if (!ready || !user) return null;
+  if (!ready) return null;
 
   if (!product) {
     return (

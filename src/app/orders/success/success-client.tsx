@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
@@ -11,7 +11,6 @@ import type { Order } from "@/lib/commerce-types";
 
 export default function OrderSuccessClient() {
   const { user, ready } = useAuth();
-  const router = useRouter();
   const shop = useShop();
   const search = useSearchParams();
   const { clearCart, saveOrder, updateOrder, getOrder, orders } = useCart();
@@ -22,11 +21,7 @@ export default function OrderSuccessClient() {
   const orderId = search.get("orderId");
 
   useEffect(() => {
-    if (ready && !user) router.replace("/login");
-  }, [ready, user, router]);
-
-  useEffect(() => {
-    if (!user || ran.current) return;
+    if (!ready || ran.current) return;
 
     async function finalize() {
       if (demo && orderId) {
@@ -60,7 +55,7 @@ export default function OrderSuccessClient() {
         } else {
           const order: Order = {
             id: data.metadata?.orderDraftId || `ord_${Date.now().toString(36)}`,
-            userId: user!.id,
+            userId: user?.id ?? "guest",
             createdAt: new Date().toISOString(),
             status: data.paymentStatus === "paid" ? "paid" : "pending",
             currency: "usd",
@@ -94,7 +89,7 @@ export default function OrderSuccessClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, sessionId, demo, orderId]);
 
-  if (!ready || !user) return null;
+  if (!ready) return null;
 
   const linked =
     (orderId && getOrder(orderId)) ||

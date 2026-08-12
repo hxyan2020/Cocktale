@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
@@ -11,17 +9,12 @@ import { useShop } from "@/components/useShop";
 import { formatMoney } from "@/lib/products";
 
 export default function OrdersPage() {
-  const { user, ready } = useAuth();
-  const router = useRouter();
+  const { ready } = useAuth();
   const shop = useShop();
   const { locale } = useI18n();
   const { orders } = useCart();
 
-  useEffect(() => {
-    if (ready && !user) router.replace("/login");
-  }, [ready, user, router]);
-
-  if (!ready || !user) return null;
+  if (!ready) return null;
 
   return (
     <>

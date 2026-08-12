@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
@@ -13,18 +12,13 @@ import { formatMoney } from "@/lib/products";
 
 export default function OrderDetailPage() {
   const params = useParams<{ id: string }>();
-  const { user, ready } = useAuth();
-  const router = useRouter();
+  const { ready } = useAuth();
   const shop = useShop();
   const { locale } = useI18n();
   const { getOrder } = useCart();
   const order = getOrder(params.id);
 
-  useEffect(() => {
-    if (ready && !user) router.replace("/login");
-  }, [ready, user, router]);
-
-  if (!ready || !user) return null;
+  if (!ready) return null;
 
   if (!order) {
     return (

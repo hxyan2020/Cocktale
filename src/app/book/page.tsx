@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
 import { useI18n } from "@/components/LanguageProvider";
@@ -12,15 +11,10 @@ import { getCocktail } from "@/lib/cocktails";
 import type { Cocktail } from "@/lib/types";
 
 export default function BookPage() {
-  const { user, ready, data, collect, markTried, isCollected } = useAuth();
+  const { ready, data, collect, markTried, isCollected, requireAuth } = useAuth();
   const { t, locale } = useI18n();
-  const router = useRouter();
   const [selected, setSelected] = useState<Cocktail | null>(null);
   const [triedOpen, setTriedOpen] = useState(false);
-
-  useEffect(() => {
-    if (ready && !user) router.replace("/login");
-  }, [ready, user, router]);
 
   const items = useMemo(
     () =>
@@ -37,7 +31,7 @@ export default function BookPage() {
       day: "numeric",
     });
 
-  if (!ready || !user) return null;
+  if (!ready) return null;
 
   return (
     <>
@@ -93,7 +87,7 @@ export default function BookPage() {
           collected={isCollected(selected.id)}
           onClose={() => setSelected(null)}
           onCollect={() => collect(selected.id)}
-          onTried={() => setTriedOpen(true)}
+          onTried={() => requireAuth(() => setTriedOpen(true))}
         />
       )}
 

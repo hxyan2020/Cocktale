@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { Trash2 } from "lucide-react";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
@@ -11,15 +10,10 @@ import { getCocktail } from "@/lib/cocktails";
 import type { Cocktail, JournalEntry } from "@/lib/types";
 
 export default function JournalPage() {
-  const { user, ready, data, editJournal, deleteJournal } = useAuth();
+  const { ready, data, editJournal, deleteJournal } = useAuth();
   const { t, locale } = useI18n();
-  const router = useRouter();
   const [editing, setEditing] = useState<string | null>(null);
   const [draft, setDraft] = useState("");
-
-  useEffect(() => {
-    if (ready && !user) router.replace("/login");
-  }, [ready, user, router]);
 
   const entries = useMemo(
     () =>
@@ -38,7 +32,7 @@ export default function JournalPage() {
       day: "numeric",
     });
 
-  if (!ready || !user) return null;
+  if (!ready) return null;
 
   return (
     <>

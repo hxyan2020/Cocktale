@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import { CloudSun, Sparkles } from "lucide-react";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
@@ -30,9 +29,9 @@ const MOODS = [
 ] as const;
 
 export default function FeedPage() {
-  const { user, ready, data, browse, collect, markTried, isCollected, setMood } = useAuth();
+  const { user, ready, data, browse, collect, markTried, isCollected, setMood, requireAuth } = useAuth();
   const { t } = useI18n();
-  const router = useRouter();
+  const accountId = user?.id ?? "guest";
   const [queue, setQueue] = useState<Cocktail[]>([]);
   const [index, setIndex] = useState(0);
   const [weather, setWeather] = useState<WeatherPayload | null>(null);
@@ -50,10 +49,6 @@ export default function FeedPage() {
 
   historyRef.current = data.history;
   moodRef.current = data.moodPreference;
-
-  useEffect(() => {
-    if (ready && !user) router.replace("/login");
-  }, [ready, user, router]);
 
   useEffect(() => {
     if (!navigator.geolocation) return;
@@ -111,17 +106,16 @@ export default function FeedPage() {
   );
 
   useEffect(() => {
-    if (!user) return;
-    startCursorRef.current = getRankOffset(user.id, "feed");
-  }, [user?.id]);
+    startCursorRef.current = getRankOffset(accountId, "feed");
+  }, [accountId]);
 
   useEffect(() => {
-    if (!user) return;
+    if (!ready) return;
     setLoading(true);
     setIndex(0);
     seenIds.current = new Set();
     void fetchRecommendations(startCursorRef.current, true);
-  }, [user, data.moodPreference, coords.lat, coords.lon, fetchRecommendations]);
+  }, [ready, accountId, data.moodPreference, coords.lat, coords.lon, fetchRecommendations]);
 
   const current = queue[index] ?? null;
 
@@ -131,12 +125,12 @@ export default function FeedPage() {
   }, [current?.id]);
 
   useEffect(() => {
-    if (!user || totalRef.current <= 0) return;
-    maybeAdvanceRankOffset(user.id, "feed", 25, totalRef.current);
+    if (totalRef.current <= 0) return;
+    maybeAdvanceRankOffset(accountId, "feed", 25, totalRef.current);
     const pos = startCursorRef.current + index + 1;
-    const stored = getRankOffset(user.id, "feed");
-    if (pos > stored) setRankOffset(user.id, "feed", pos % totalRef.current);
-  }, [user, index, queue.length]);
+    const stored = getRankOffset(accountId, "feed");
+    if (pos > stored) setRankOffset(accountId, "feed", pos % totalRef.current);
+  }, [accountId, index, queue.length]);
 
   useEffect(() => {
     if (index >= queue.length - 5 && queue.length > 0) {
@@ -167,7 +161,7 @@ export default function FeedPage() {
     setIndex((i) => Math.max(0, i - 1));
   };
 
-  if (!ready || !user) {
+  if (!ready) {
     return (
       <main className="flex flex-1 items-center justify-center">
         <p className="text-[var(--ink-soft)]">{t("feed.openingBar")}</p>
@@ -198,7 +192,7 @@ export default function FeedPage() {
         <div className="mb-3 flex flex-wrap items-end justify-between gap-2 sm:mb-6 sm:gap-4">
           <div className="min-w-0">
             <p className="text-[10px] font-medium tracking-[0.18em] uppercase text-[var(--accent-deep)] sm:text-xs">
-              {t("feed.forUser", { name: user.name })}
+              {t("feed.forUser", { name: user?.name ?? t("brand") })}
             </p>
             <h1 className="mt-1 font-[family-name:var(--font-display)] text-2xl text-[var(--ink)] sm:text-3xl">
               {t("feed.title")}
@@ -267,7 +261,7 @@ export default function FeedPage() {
               }
             }}
             onCollect={() => current && collect(current.id)}
-            onTried={() => setTriedOpen(true)}
+            onTried={() => requireAuth(() => setTriedOpen(true))}
           />
         )}
       </main>
@@ -279,8 +273,10 @@ export default function FeedPage() {
           onClose={() => setDetailOpen(false)}
           onCollect={() => collect(current.id)}
           onTried={() => {
-            setDetailOpen(false);
-            setTriedOpen(true);
+            requireAuth(() => {
+              setDetailOpen(false);
+              setTriedOpen(true);
+            });
           }}
         />
       )}

@@ -3,30 +3,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
 import { useI18n } from "@/components/LanguageProvider";
 import { useShop } from "@/components/useShop";
 import { formatMoney, searchProducts } from "@/lib/products";
-import { useEffect } from "react";
 
 const CATEGORIES = ["all", "ingredient", "utensil", "glassware", "accessory"] as const;
 
 export default function MarketPage() {
-  const { user, ready } = useAuth();
-  const router = useRouter();
+  const { ready } = useAuth();
   const shop = useShop();
   const { locale } = useI18n();
   const { addItem } = useCart();
   const [q, setQ] = useState("");
   const [category, setCategory] = useState<(typeof CATEGORIES)[number]>("all");
   const [addedId, setAddedId] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (ready && !user) router.replace("/login");
-  }, [ready, user, router]);
 
   const list = useMemo(() => searchProducts(q, category), [q, category]);
 
@@ -38,7 +31,7 @@ export default function MarketPage() {
     return shop.accessories;
   };
 
-  if (!ready || !user) return null;
+  if (!ready) return null;
 
   return (
     <>

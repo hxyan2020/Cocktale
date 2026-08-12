@@ -56,31 +56,26 @@ function writeOrders(userId: string, orders: Order[]) {
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
+  const accountId = user?.id ?? "guest";
   const [items, setItems] = useState<CartItem[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
-    if (!user) {
-      setItems([]);
-      setOrders([]);
-      return;
-    }
-    setItems(readCart(user.id));
-    setOrders(readOrders(user.id));
-  }, [user]);
+    setItems(readCart(accountId));
+    setOrders(readOrders(accountId));
+  }, [accountId]);
 
   const persistCart = useCallback(
     (next: CartItem[]) => {
       setItems(next);
-      if (user) writeCart(user.id, next);
+      writeCart(accountId, next);
     },
-    [user],
+    [accountId],
   );
 
   const addItem = useCallback(
     (productId: string, qty = 1) => {
-      if (!user) return;
-      const current = readCart(user.id);
+      const current = readCart(accountId);
       const existing = current.find((i) => i.productId === productId);
       const next = existing
         ? current.map((i) =>
@@ -89,58 +84,53 @@ export function CartProvider({ children }: { children: ReactNode }) {
         : [...current, { productId, quantity: qty }];
       persistCart(next);
     },
-    [user, persistCart],
+    [accountId, persistCart],
   );
 
   const removeItem = useCallback(
     (productId: string) => {
-      if (!user) return;
-      persistCart(readCart(user.id).filter((i) => i.productId !== productId));
+      persistCart(readCart(accountId).filter((i) => i.productId !== productId));
     },
-    [user, persistCart],
+    [accountId, persistCart],
   );
 
   const setQty = useCallback(
     (productId: string, qty: number) => {
-      if (!user) return;
       if (qty <= 0) {
-        persistCart(readCart(user.id).filter((i) => i.productId !== productId));
+        persistCart(readCart(accountId).filter((i) => i.productId !== productId));
         return;
       }
       persistCart(
-        readCart(user.id).map((i) =>
+        readCart(accountId).map((i) =>
           i.productId === productId ? { ...i, quantity: qty } : i,
         ),
       );
     },
-    [user, persistCart],
+    [accountId, persistCart],
   );
 
   const clearCart = useCallback(() => {
-    if (!user) return;
     persistCart([]);
-  }, [user, persistCart]);
+  }, [persistCart]);
 
   const saveOrder = useCallback(
     (order: Order) => {
-      if (!user) return;
-      const next = [order, ...readOrders(user.id).filter((o) => o.id !== order.id)];
-      writeOrders(user.id, next);
+      const next = [order, ...readOrders(accountId).filter((o) => o.id !== order.id)];
+      writeOrders(accountId, next);
       setOrders(next);
     },
-    [user],
+    [accountId],
   );
 
   const updateOrder = useCallback(
     (orderId: string, patch: Partial<Order>) => {
-      if (!user) return;
-      const next = readOrders(user.id).map((o) =>
+      const next = readOrders(accountId).map((o) =>
         o.id === orderId ? { ...o, ...patch } : o,
       );
-      writeOrders(user.id, next);
+      writeOrders(accountId, next);
       setOrders(next);
     },
-    [user],
+    [accountId],
   );
 
   const getOrder = useCallback(

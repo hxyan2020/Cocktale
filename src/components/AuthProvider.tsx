@@ -6,6 +6,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -41,6 +42,9 @@ type AuthContextValue = {
   browse: (cocktailId: string, action: "view" | "open" | "skip") => void;
   setMood: (mood: string | null) => void;
   isCollected: (cocktailId: string) => boolean;
+  requireAuth: (then?: () => void) => boolean;
+  authPromptOpen: boolean;
+  closeAuthPrompt: () => void;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -49,6 +53,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<SessionUser | null>(null);
   const [data, setData] = useState<UserData>(emptyUserData());
   const [ready, setReady] = useState(false);
+  const [authPromptOpen, setAuthPromptOpen] = useState(false);
+  const pendingRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     ensureDemoUser();
@@ -81,20 +87,52 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setData(emptyUserData());
   }, []);
 
-  const collect = useCallback(
-    (cocktailId: string) => {
-      if (!user) return;
-      setData(toggleCollect(user.id, cocktailId));
+  const closeAuthPrompt = useCallback(() => {
+    pendingRef.current = null;
+    setAuthPromptOpen(false);
+  }, []);
+
+  const requireAuth = useCallback(
+    (then?: () => void) => {
+      if (user) {
+        then?.();
+        return true;
+      }
+      pendingRef.current = then ?? null;
+      setAuthPromptOpen(true);
+      return false;
     },
     [user],
   );
 
+  useEffect(() => {
+    if (!user || !pendingRef.current) return;
+    const fn = pendingRef.current;
+    pendingRef.current = null;
+    setAuthPromptOpen(false);
+    fn();
+  }, [user]);
+
+  const collect = useCallback(
+    (cocktailId: string) => {
+      requireAuth(() => {
+        const session = getSession();
+        if (!session) return;
+        setData(toggleCollect(session.id, cocktailId));
+      });
+    },
+    [requireAuth],
+  );
+
   const markTried = useCallback(
     (cocktailId: string, triedAt: string, note: string) => {
-      if (!user) return;
-      setData(addJournalEntry(user.id, cocktailId, triedAt, note));
+      requireAuth(() => {
+        const session = getSession();
+        if (!session) return;
+        setData(addJournalEntry(session.id, cocktailId, triedAt, note));
+      });
     },
-    [user],
+    [requireAuth],
   );
 
   const editJournal = useCallback(
@@ -115,7 +153,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const browse = useCallback(
     (cocktailId: string, action: "view" | "open" | "skip") => {
-      if (!user) return;
+      if (!user) {
+        setData((d) => ({
+          ...d,
+          history: [
+            { cocktailId, action, at: new Date().toISOString() },
+            ...d.history,
+          ].slice(0, 500),
+        }));
+        return;
+      }
       setData(trackBrowse(user.id, { cocktailId, action }));
     },
     [user],
@@ -123,7 +170,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const setMood = useCallback(
     (mood: string | null) => {
-      if (!user) return;
+      if (!user) {
+        setData((d) => ({ ...d, moodPreference: mood }));
+        return;
+      }
       setData(setMoodPreference(user.id, mood));
     },
     [user],
@@ -150,6 +200,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       browse,
       setMood,
       isCollected,
+      requireAuth,
+      authPromptOpen,
+      closeAuthPrompt,
     }),
     [
       user,
@@ -166,6 +219,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       browse,
       setMood,
       isCollected,
+      requireAuth,
+      authPromptOpen,
+      closeAuthPrompt,
     ],
   );
 

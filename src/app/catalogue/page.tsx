@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
@@ -16,9 +15,9 @@ import type { Cocktail, WeatherBucket } from "@/lib/types";
 const SHIFT_PER_VISIT = 36;
 
 export default function CataloguePage() {
-  const { user, ready, data, collect, markTried, isCollected } = useAuth();
+  const { user, ready, data, collect, markTried, isCollected, requireAuth } = useAuth();
   const { t } = useI18n();
-  const router = useRouter();
+  const accountId = user?.id ?? "guest";
   const [q, setQ] = useState("");
   const [category, setCategory] = useState("all");
   const [selected, setSelected] = useState<Cocktail | null>(null);
@@ -29,17 +28,12 @@ export default function CataloguePage() {
   const shifted = useRef(false);
 
   useEffect(() => {
-    if (ready && !user) router.replace("/login");
-  }, [ready, user, router]);
-
-  useEffect(() => {
-    if (!user) return;
-    setVisitOffset(getRankOffset(user.id, "catalogue"));
+    setVisitOffset(getRankOffset(accountId, "catalogue"));
     shifted.current = false;
-  }, [user?.id]);
+  }, [accountId]);
 
   useEffect(() => {
-    if (!user) return;
+    if (!ready) return;
     let cancelled = false;
     setLoading(true);
 
@@ -85,13 +79,13 @@ export default function CataloguePage() {
     };
     // Rank once per visit; history updates from opening cards shouldn't reshuffle the grid.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.id, data.moodPreference]);
+  }, [ready, accountId, data.moodPreference]);
 
   useEffect(() => {
-    if (!user || shifted.current || ranked.length === 0) return;
+    if (shifted.current || ranked.length === 0) return;
     shifted.current = true;
-    maybeAdvanceRankOffset(user.id, "catalogue", SHIFT_PER_VISIT, ranked.length);
-  }, [user, ranked.length]);
+    maybeAdvanceRankOffset(accountId, "catalogue", SHIFT_PER_VISIT, ranked.length);
+  }, [accountId, ranked.length]);
 
   const categories = useMemo(() => cocktailCategories(), []);
 
@@ -111,7 +105,7 @@ export default function CataloguePage() {
     return rotateRanked(filtered, visitOffset);
   }, [q, category, ranked, visitOffset]);
 
-  if (!ready || !user) return null;
+  if (!ready) return null;
 
   return (
     <>
@@ -213,7 +207,7 @@ export default function CataloguePage() {
           collected={isCollected(selected.id)}
           onClose={() => setSelected(null)}
           onCollect={() => collect(selected.id)}
-          onTried={() => setTriedOpen(true)}
+          onTried={() => requireAuth(() => setTriedOpen(true))}
         />
       )}
 

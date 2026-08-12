@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
@@ -22,10 +22,6 @@ export default function CartPage() {
   const [error, setError] = useState("");
   const [hint, setHint] = useState("");
 
-  useEffect(() => {
-    if (ready && !user) router.replace("/login");
-  }, [ready, user, router]);
-
   const lines = useMemo(
     () =>
       items
@@ -44,19 +40,20 @@ export default function CartPage() {
   );
 
   async function checkout() {
-    if (!user || lines.length === 0) return;
+    if (lines.length === 0) return;
     setBusy(true);
     setError("");
     setHint("");
+    const buyer = user ?? { id: "guest", email: "guest@cocktale.app", name: "Guest" };
     try {
       const origin = window.location.origin;
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          userId: user.id,
-          email: user.email,
-          name: user.name,
+          userId: buyer.id,
+          email: buyer.email,
+          name: buyer.name,
           items: lines.map((l) => ({
             productId: l.product.id,
             quantity: l.item.quantity,
@@ -73,15 +70,15 @@ export default function CartPage() {
         const orderLines: OrderLine[] = data.lineItems;
         const order: Order = {
           id: data.orderId,
-          userId: user.id,
+          userId: buyer.id,
           createdAt: new Date().toISOString(),
           status: "paid",
           currency: "usd",
           subtotalCents: data.subtotalCents,
           totalCents: data.subtotalCents,
           items: orderLines,
-          shippingEmail: user.email,
-          shippingName: user.name,
+          shippingEmail: buyer.email,
+          shippingName: buyer.name,
           demo: true,
         };
         saveOrder(order);
@@ -93,7 +90,7 @@ export default function CartPage() {
       // Persist a pending order before redirect
       const pending: Order = {
         id: data.orderId,
-        userId: user.id,
+        userId: buyer.id,
         createdAt: new Date().toISOString(),
         status: "pending",
         currency: "usd",
@@ -107,8 +104,8 @@ export default function CartPage() {
           image: l.product.images[0]?.url || "",
         })),
         stripeSessionId: data.sessionId,
-        shippingEmail: user.email,
-        shippingName: user.name,
+        shippingEmail: buyer.email,
+        shippingName: buyer.name,
       };
       saveOrder(pending);
       if (data.url) window.location.href = data.url;
@@ -120,7 +117,7 @@ export default function CartPage() {
     }
   }
 
-  if (!ready || !user) return null;
+  if (!ready) return null;
 
   return (
     <>

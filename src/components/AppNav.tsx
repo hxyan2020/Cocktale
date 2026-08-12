@@ -6,6 +6,7 @@ import {
   BookMarked,
   Compass,
   NotebookPen,
+  LogIn,
   LogOut,
   Store,
   ShoppingCart,
@@ -21,7 +22,7 @@ import { useShop } from "@/components/useShop";
 
 export function AppNav() {
   const pathname = usePathname();
-  const { user, logout } = useAuth();
+  const { user, logout, requireAuth } = useAuth();
   const { t } = useI18n();
   const shop = useShop();
   const { count } = useCart();
@@ -65,7 +66,7 @@ export function AppNav() {
           </span>
         )}
       </Link>
-      {user && (
+      {user ? (
         <button
           type="button"
           onClick={logout}
@@ -74,6 +75,16 @@ export function AppNav() {
           aria-label={t("nav.signOut")}
         >
           <LogOut className="h-4 w-4" />
+        </button>
+      ) : (
+        <button
+          type="button"
+          onClick={() => requireAuth()}
+          className="inline-flex items-center justify-center rounded-full px-2 py-2 text-sm text-[var(--ink-muted)] hover:bg-[var(--chip)] sm:px-3"
+          title={t("login.signIn")}
+          aria-label={t("login.signIn")}
+        >
+          <LogIn className="h-4 w-4" />
         </button>
       )}
     </>
