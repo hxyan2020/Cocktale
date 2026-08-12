@@ -14,7 +14,6 @@ import { getCocktailGallery, mergeCocktailGallery, type GalleryImage } from "@/l
 import { convertMeasure } from "@/lib/units";
 import { equipmentInfo, glassInfo, ingredientInfo } from "@/lib/item-info";
 import { useMeasureUnit } from "@/components/MeasureUnitProvider";
-import { UnitSwitcher } from "@/components/UnitSwitcher";
 import { ItemInfoTrigger } from "@/components/ItemInfoTrigger";
 
 type Props = {
@@ -174,10 +173,7 @@ export function CocktailDetail({
           </section>
 
           <section>
-            <div className="flex items-center justify-between gap-3">
-              <h3 className="text-sm font-semibold text-[var(--ink)]">{t("detail.ingredients")}</h3>
-              <UnitSwitcher />
-            </div>
+            <h3 className="text-sm font-semibold text-[var(--ink)]">{t("detail.ingredients")}</h3>
             <ul className="mt-2 space-y-2">
               {cocktail.ingredients.map((ing) => (
                 <li
