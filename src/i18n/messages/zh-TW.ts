@@ -5,6 +5,7 @@ export const zhTW: Messages = {
   tagline: "為你斟上的雞尾酒故事",
   nav: {
     discover: "探索",
+    catalogue: "圖鑑",
     book: "收藏",
     journal: "手札",
     signOut: "登出",
@@ -101,6 +102,14 @@ export const zhTW: Messages = {
     subtitle: "收藏起來，方便回看、採買與調製。",
     empty: "還沒有收藏。到探索頁滑動，點「收藏」留下喜歡的特調。",
     collectedOn: "收藏於 {date}",
+  },
+  catalogue: {
+    title: "雞尾酒圖鑑",
+    subtitle: "瀏覽全部酒單，可依名稱、原料、杯型或產地搜尋。",
+    searchPlaceholder: "搜尋雞尾酒…",
+    count: "{n} 款雞尾酒",
+    empty: "沒有符合條件的雞尾酒。",
+    all: "全部",
   },
   journal: {
     title: "雞尾酒手札",

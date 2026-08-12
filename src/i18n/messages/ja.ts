@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const ja: Messages = {
   brand: "Cocktale",
   tagline: "あなたのために注ぐ、カクテルの物語",
-  nav: { discover: "見つける", book: "ブック", journal: "ジャーナル", signOut: "ログアウト" },
+  nav: { discover: "見つける", catalogue: "図鑑", book: "ブック", journal: "ジャーナル", signOut: "ログアウト" },
   login: {
     eyebrow: "あなたのために注ぐ、カクテルの物語",
     title: "Cocktale",
@@ -96,6 +96,14 @@ export const ja: Messages = {
     subtitle: "見返し、買い出し、作るために集めたカクテル。",
     empty: "まだありません。フィードでスワイプし、「コレクション」をタップ。",
     collectedOn: "{date} に追加",
+  },
+  catalogue: {
+    title: "図鑑",
+    subtitle: "全レシピを閲覧。名前・材料・グラス・産地で検索できます。",
+    searchPlaceholder: "カクテルを検索…",
+    count: "{n} 杯",
+    empty: "該当するカクテルがありません。",
+    all: "すべて",
   },
   journal: {
     title: "カクテル・ジャーナル",

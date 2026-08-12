@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const pt: Messages = {
   brand: "Cocktale",
   tagline: "Histórias de coquetéis, servidas para você",
-  nav: { discover: "Descobrir", book: "Livro", journal: "Diário", signOut: "Sair" },
+  nav: { discover: "Descobrir", catalogue: "Catálogo", book: "Livro", journal: "Diário", signOut: "Sair" },
   login: {
     eyebrow: "Histórias de coquetéis, servidas para você",
     title: "Cocktale",
@@ -97,6 +97,14 @@ export const pt: Messages = {
     subtitle: "Coquetéis coletados para revisitar, comprar e preparar.",
     empty: "Nada coletado ainda. Deslize o feed e toque em Coletar.",
     collectedOn: "Coletado em {date}",
+  },
+  catalogue: {
+    title: "Catálogo",
+    subtitle: "Veja todas as receitas — busque por nome, ingrediente, copo ou origem.",
+    searchPlaceholder: "Buscar coquetéis…",
+    count: "{n} coquetéis",
+    empty: "Nenhum coquetel corresponde à busca.",
+    all: "Todos",
   },
   journal: {
     title: "Diário de coquetéis",

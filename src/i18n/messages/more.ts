@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const uk: Messages = {
   brand: "Cocktale",
   tagline: "Історії коктейлів — налиті для вас",
-  nav: { discover: "Відкрити", book: "Книга", journal: "Щоденник", signOut: "Вийти" },
+  nav: { discover: "Відкрити", catalogue: "Каталог", book: "Книга", journal: "Щоденник", signOut: "Вийти" },
   login: {
     eyebrow: "Історії коктейлів — налиті для вас",
     title: "Cocktale",
@@ -98,6 +98,14 @@ export const uk: Messages = {
     empty: "Поки порожньо. Гортайте стрічку й натискайте «Зберегти».",
     collectedOn: "Збережено {date}",
   },
+  catalogue: {
+    title: "Каталог",
+    subtitle: "Уся бібліотека — шукайте за назвою, інгредієнтом, келихом чи походженням.",
+    searchPlaceholder: "Шукати коктейлі…",
+    count: "{n} коктейлів",
+    empty: "Нічого не знайдено.",
+    all: "Усі",
+  },
   journal: {
     title: "Щоденник коктейлів",
     subtitle: "Дати, нотатки та все, що ви справді скуштували.",
@@ -122,7 +130,7 @@ export const uk: Messages = {
 export const ms: Messages = {
   brand: "Cocktale",
   tagline: "Kisah koktel, dituangkan untuk anda",
-  nav: { discover: "Teroka", book: "Buku", journal: "Jurnal", signOut: "Log keluar" },
+  nav: { discover: "Teroka", catalogue: "Katalog", book: "Buku", journal: "Jurnal", signOut: "Log keluar" },
   login: {
     eyebrow: "Kisah koktel, dituangkan untuk anda",
     title: "Cocktale",
@@ -217,6 +225,14 @@ export const ms: Messages = {
     empty: "Belum ada. Leret suapan lalu ketik Kumpul.",
     collectedOn: "Dikumpul pada {date}",
   },
+  catalogue: {
+    title: "Katalog",
+    subtitle: "Lihat seluruh perpustakaan — cari nama, bahan, gelas atau asal.",
+    searchPlaceholder: "Cari koktel…",
+    count: "{n} koktel",
+    empty: "Tiada padanan.",
+    all: "Semua",
+  },
   journal: {
     title: "Jurnal koktel",
     subtitle: "Tarikh, nota dan semua yang benar-benar anda rasa.",
@@ -241,7 +257,7 @@ export const ms: Messages = {
 export const fa: Messages = {
   brand: "Cocktale",
   tagline: "داستان‌های کوکتل، برای شما ریخته می‌شود",
-  nav: { discover: "کشف", book: "کتاب", journal: "دفترچه", signOut: "خروج" },
+  nav: { discover: "کشف", catalogue: "فهرست", book: "کتاب", journal: "دفترچه", signOut: "خروج" },
   login: {
     eyebrow: "داستان‌های کوکتل، برای شما ریخته می‌شود",
     title: "Cocktale",
@@ -336,6 +352,14 @@ export const fa: Messages = {
     empty: "هنوز چیزی نیست. در فید بکشید و جمع‌آوری را بزنید.",
     collectedOn: "جمع‌آوری در {date}",
   },
+  catalogue: {
+    title: "فهرست",
+    subtitle: "تمام دستورها را ببینید — با نام، ماده، لیوان یا خاستگاه جستجو کنید.",
+    searchPlaceholder: "جستجوی کوکتل…",
+    count: "{n} کوکتل",
+    empty: "موردی پیدا نشد.",
+    all: "همه",
+  },
   journal: {
     title: "دفترچه کوکتل",
     subtitle: "تاریخ‌ها، یادداشت‌ها و هر آنچه واقعاً چشیده‌اید.",
@@ -360,7 +384,7 @@ export const fa: Messages = {
 export const he: Messages = {
   brand: "Cocktale",
   tagline: "סיפורי קוקטיילים, מוגשים עבורך",
-  nav: { discover: "גלה", book: "ספר", journal: "יומן", signOut: "התנתק" },
+  nav: { discover: "גלה", catalogue: "קטלוג", book: "ספר", journal: "יומן", signOut: "התנתק" },
   login: {
     eyebrow: "סיפורי קוקטיילים, מוגשים עבורך",
     title: "Cocktale",
@@ -455,6 +479,14 @@ export const he: Messages = {
     empty: "עדיין ריק. החליקו בפיד ולחצו על אסוף.",
     collectedOn: "נאסף ב-{date}",
   },
+  catalogue: {
+    title: "קטלוג",
+    subtitle: "עיינו בכל המתכונים — חפשו לפי שם, מרכיב, כוס או מקור.",
+    searchPlaceholder: "חיפוש קוקטיילים…",
+    count: "{n} קוקטיילים",
+    empty: "אין תוצאות.",
+    all: "הכול",
+  },
   journal: {
     title: "יומן קוקטיילים",
     subtitle: "תאריכים, הערות וכל מה שבאמת טעמתם.",
@@ -479,7 +511,7 @@ export const he: Messages = {
 export const sv: Messages = {
   brand: "Cocktale",
   tagline: "Cocktailberättelser, hällts för dig",
-  nav: { discover: "Upptäck", book: "Bok", journal: "Dagbok", signOut: "Logga ut" },
+  nav: { discover: "Upptäck", catalogue: "Katalog", book: "Bok", journal: "Dagbok", signOut: "Logga ut" },
   login: {
     eyebrow: "Cocktailberättelser, hällts för dig",
     title: "Cocktale",
@@ -573,6 +605,14 @@ export const sv: Messages = {
     subtitle: "Samlade cocktails att återbesöka, handla till och blanda.",
     empty: "Inget ännu. Svep i flödet och tryck Samla.",
     collectedOn: "Samlad {date}",
+  },
+  catalogue: {
+    title: "Katalog",
+    subtitle: "Bläddra i hela biblioteket — sök på namn, ingrediens, glas eller ursprung.",
+    searchPlaceholder: "Sök cocktails…",
+    count: "{n} cocktails",
+    empty: "Inga träffar.",
+    all: "Alla",
   },
   journal: {
     title: "Cocktaildagbok",

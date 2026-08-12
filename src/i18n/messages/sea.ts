@@ -42,7 +42,7 @@ const detailExtras = {
 export const vi: Messages = {
   brand: "Cocktale",
   tagline: "Câu chuyện cocktail, rót dành cho bạn",
-  nav: { discover: "Khám phá", book: "Sổ", journal: "Nhật ký", signOut: "Đăng xuất" },
+  nav: { discover: "Khám phá", catalogue: "Danh mục", book: "Sổ", journal: "Nhật ký", signOut: "Đăng xuất" },
   login: {
     eyebrow: "Câu chuyện cocktail, rót dành cho bạn",
     title: "Cocktale",
@@ -128,6 +128,14 @@ export const vi: Messages = {
     empty: "Chưa có gì. Vuốt feed và chạm Thu thập.",
     collectedOn: "Thu thập ngày {date}",
   },
+  catalogue: {
+    title: "Danh mục",
+    subtitle: "Xem toàn bộ thư viện — tìm theo tên, nguyên liệu, ly hoặc xuất xứ.",
+    searchPlaceholder: "Tìm cocktail…",
+    count: "{n} cocktail",
+    empty: "Không có cocktail phù hợp.",
+    all: "Tất cả",
+  },
   journal: {
     title: "Nhật ký cocktail",
     subtitle: "Ngày tháng, ghi chú và những gì bạn thực sự đã nếm.",
@@ -150,7 +158,7 @@ export const vi: Messages = {
 export const th: Messages = {
   brand: "Cocktale",
   tagline: "เรื่องราวค็อกเทล รินให้คุณ",
-  nav: { discover: "ค้นพบ", book: "สมุด", journal: "บันทึก", signOut: "ออกจากระบบ" },
+  nav: { discover: "ค้นพบ", catalogue: "สารบัญ", book: "สมุด", journal: "บันทึก", signOut: "ออกจากระบบ" },
   login: {
     eyebrow: "เรื่องราวค็อกเทล รินให้คุณ",
     title: "Cocktale",
@@ -236,6 +244,14 @@ export const th: Messages = {
     empty: "ยังไม่มีรายการ ปัดในฟีดแล้วแตะ เก็บ",
     collectedOn: "เก็บเมื่อ {date}",
   },
+  catalogue: {
+    title: "สารบัญ",
+    subtitle: "ดูสูตรทั้งหมด — ค้นหาด้วยชื่อ ส่วนผสม แก้ว หรือแหล่งกำเนิด",
+    searchPlaceholder: "ค้นหาค็อกเทล…",
+    count: "{n} รายการ",
+    empty: "ไม่พบค็อกเทลที่ตรงกัน",
+    all: "ทั้งหมด",
+  },
   journal: {
     title: "บันทึกค็อกเทล",
     subtitle: "วัน โน้ต และทุกอย่างที่คุณได้ชิมจริง",
@@ -258,7 +274,7 @@ export const th: Messages = {
 export const id: Messages = {
   brand: "Cocktale",
   tagline: "Kisah koktail, dituangkan untuk Anda",
-  nav: { discover: "Temukan", book: "Buku", journal: "Jurnal", signOut: "Keluar" },
+  nav: { discover: "Temukan", catalogue: "Katalog", book: "Buku", journal: "Jurnal", signOut: "Keluar" },
   login: {
     eyebrow: "Kisah koktail, dituangkan untuk Anda",
     title: "Cocktale",
@@ -344,6 +360,14 @@ export const id: Messages = {
     subtitle: "Koktail tersimpan untuk dilihat lagi, dibeli, dan dibuat.",
     empty: "Belum ada. Geser feed lalu ketuk Kumpulkan.",
     collectedOn: "Dikumpulkan {date}",
+  },
+  catalogue: {
+    title: "Katalog",
+    subtitle: "Jelajahi semua resep — cari nama, bahan, gelas, atau asal.",
+    searchPlaceholder: "Cari koktail…",
+    count: "{n} koktail",
+    empty: "Tidak ada yang cocok.",
+    all: "Semua",
   },
   journal: {
     title: "Jurnal koktail",

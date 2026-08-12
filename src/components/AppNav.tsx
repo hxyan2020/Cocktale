@@ -10,6 +10,7 @@ import {
   Store,
   ShoppingCart,
   Package,
+  Library,
 } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
@@ -27,6 +28,7 @@ export function AppNav() {
 
   const links = [
     { href: "/feed", label: t("nav.discover"), icon: Compass },
+    { href: "/catalogue", label: t("nav.catalogue"), icon: Library },
     { href: "/market", label: shop.market, icon: Store },
     { href: "/book", label: t("nav.book"), icon: BookMarked },
     { href: "/journal", label: t("nav.journal"), icon: NotebookPen },

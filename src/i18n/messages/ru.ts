@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const ru: Messages = {
   brand: "Cocktale",
   tagline: "Истории коктейлей — налиты для вас",
-  nav: { discover: "Открыть", book: "Книга", journal: "Дневник", signOut: "Выйти" },
+  nav: { discover: "Открыть", catalogue: "Каталог", book: "Книга", journal: "Дневник", signOut: "Выйти" },
   login: {
     eyebrow: "Истории коктейлей — налиты для вас",
     title: "Cocktale",
@@ -97,6 +97,14 @@ export const ru: Messages = {
     subtitle: "Собранные коктейли — чтобы вернуться, купить и смешать.",
     empty: "Пока пусто. Листайте ленту и нажимайте «В коллекцию».",
     collectedOn: "Добавлено {date}",
+  },
+  catalogue: {
+    title: "Каталог",
+    subtitle: "Все рецепты библиотеки — ищите по имени, ингредиенту, бокалу или происхождению.",
+    searchPlaceholder: "Искать коктейли…",
+    count: "{n} коктейлей",
+    empty: "Ничего не найдено.",
+    all: "Все",
   },
   journal: {
     title: "Дневник коктейлей",

@@ -5,6 +5,7 @@ export const es: Messages = {
   tagline: "Historias de cócteles, servidas para ti",
   nav: {
     discover: "Descubrir",
+    catalogue: "Catálogo",
     book: "Libro",
     journal: "Diario",
     signOut: "Cerrar sesión",
@@ -102,6 +103,14 @@ export const es: Messages = {
     subtitle: "Cócteles guardados para volver a verlos, comprarlos y prepararlos.",
     empty: "Aún no hay nada guardado. Desliza el feed y toca Guardar en los que te gusten.",
     collectedOn: "Guardado el {date}",
+  },
+  catalogue: {
+    title: "Catálogo",
+    subtitle: "Explora todas las recetas: busca por nombre, ingrediente, vaso u origen.",
+    searchPlaceholder: "Buscar cócteles…",
+    count: "{n} cócteles",
+    empty: "Ningún cóctel coincide con esa búsqueda.",
+    all: "Todos",
   },
   journal: {
     title: "Diario de cócteles",

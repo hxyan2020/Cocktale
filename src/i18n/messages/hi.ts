@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const hi: Messages = {
   brand: "Cocktale",
   tagline: "कॉकटेल की कहानियाँ, आपके लिए परोसी गईं",
-  nav: { discover: "खोजें", book: "किताब", journal: "जर्नल", signOut: "साइन आउट" },
+  nav: { discover: "खोजें", catalogue: "सूची", book: "किताब", journal: "जर्नल", signOut: "साइन आउट" },
   login: {
     eyebrow: "कॉकटेल की कहानियाँ, आपके लिए परोसी गईं",
     title: "Cocktale",
@@ -97,6 +97,14 @@ export const hi: Messages = {
     subtitle: "दोबारा देखने, खरीदने और बनाने के लिए संग्रहित कॉकटेल।",
     empty: "अभी कुछ नहीं। फ़ीड स्वाइप करें और संग्रह करें टैप करें।",
     collectedOn: "{date} को संग्रहित",
+  },
+  catalogue: {
+    title: "सूची",
+    subtitle: "पूरी लाइब्रेरी देखें — नाम, सामग्री, गिलास या मूल से खोजें।",
+    searchPlaceholder: "कॉकटेल खोजें…",
+    count: "{n} कॉकटेल",
+    empty: "कोई मेल नहीं मिला।",
+    all: "सभी",
   },
   journal: {
     title: "कॉकटेल जर्नल",

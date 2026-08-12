@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const ko: Messages = {
   brand: "Cocktale",
   tagline: "당신을 위해 따른 칵테일 이야기",
-  nav: { discover: "발견", book: "북", journal: "저널", signOut: "로그아웃" },
+  nav: { discover: "발견", catalogue: "도감", book: "북", journal: "저널", signOut: "로그아웃" },
   login: {
     eyebrow: "당신을 위해 따른 칵테일 이야기",
     title: "Cocktale",
@@ -96,6 +96,14 @@ export const ko: Messages = {
     subtitle: "다시 보고, 사고, 만들기 위해 모은 칵테일.",
     empty: "아직 없습니다. 피드에서 스와이프한 뒤 수집을 눌러 보세요.",
     collectedOn: "{date}에 수집",
+  },
+  catalogue: {
+    title: "도감",
+    subtitle: "전체 레시피를 둘러보세요. 이름, 재료, 잔, 원산지로 검색할 수 있습니다.",
+    searchPlaceholder: "칵테일 검색…",
+    count: "{n}잔",
+    empty: "검색과 일치하는 칵테일이 없습니다.",
+    all: "전체",
   },
   journal: {
     title: "칵테일 저널",

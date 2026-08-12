@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const ar: Messages = {
   brand: "Cocktale",
   tagline: "قصص كوكتيل تُسكب من أجلك",
-  nav: { discover: "اكتشف", book: "الكتاب", journal: "المفكرة", signOut: "تسجيل الخروج" },
+  nav: { discover: "اكتشف", catalogue: "الدليل", book: "الكتاب", journal: "المفكرة", signOut: "تسجيل الخروج" },
   login: {
     eyebrow: "قصص كوكتيل تُسكب من أجلك",
     title: "Cocktale",
@@ -97,6 +97,14 @@ export const ar: Messages = {
     subtitle: "كوكتيلات جمعتها لتراجعها وتشتري مكوناتها وتعدّها.",
     empty: "لا شيء بعد. مرّر في الاكتشاف واضغط «اجمع» على ما يعجبك.",
     collectedOn: "جُمع في {date}",
+  },
+  catalogue: {
+    title: "الدليل",
+    subtitle: "تصفّح كل الوصفات — ابحث بالاسم أو المكوّن أو الكأس أو المنشأ.",
+    searchPlaceholder: "ابحث عن كوكتيلات…",
+    count: "{n} كوكتيل",
+    empty: "لا توجد نتائج.",
+    all: "الكل",
   },
   journal: {
     title: "مفكرة الكوكتيل",

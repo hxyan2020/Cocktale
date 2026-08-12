@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const nl: Messages = {
   brand: "Cocktale",
   tagline: "Cocktailverhalen, voor jou ingeschonken",
-  nav: { discover: "Ontdekken", book: "Boek", journal: "Dagboek", signOut: "Uitloggen" },
+  nav: { discover: "Ontdekken", catalogue: "Catalogus", book: "Boek", journal: "Dagboek", signOut: "Uitloggen" },
   login: {
     eyebrow: "Cocktailverhalen, voor jou ingeschonken",
     title: "Cocktale",
@@ -98,6 +98,14 @@ export const nl: Messages = {
     empty: "Nog niets. Veeg door de feed en tik op Verzamelen.",
     collectedOn: "Verzameld op {date}",
   },
+  catalogue: {
+    title: "Catalogus",
+    subtitle: "Bekijk de hele bibliotheek — zoek op naam, ingrediënt, glas of herkomst.",
+    searchPlaceholder: "Cocktails zoeken…",
+    count: "{n} cocktails",
+    empty: "Geen cocktails gevonden.",
+    all: "Alle",
+  },
   journal: {
     title: "Cocktaildagboek",
     subtitle: "Datums, notities en alles wat je echt geproefd hebt.",
@@ -122,7 +130,7 @@ export const nl: Messages = {
 export const pl: Messages = {
   brand: "Cocktale",
   tagline: "Historie koktajli — nalane dla Ciebie",
-  nav: { discover: "Odkrywaj", book: "Książka", journal: "Dziennik", signOut: "Wyloguj" },
+  nav: { discover: "Odkrywaj", catalogue: "Katalog", book: "Książka", journal: "Dziennik", signOut: "Wyloguj" },
   login: {
     eyebrow: "Historie koktajli — nalane dla Ciebie",
     title: "Cocktale",
@@ -217,6 +225,14 @@ export const pl: Messages = {
     empty: "Na razie pusto. Przesuwaj feed i stuknij Zapisz.",
     collectedOn: "Zapisano {date}",
   },
+  catalogue: {
+    title: "Katalog",
+    subtitle: "Przeglądaj całą bibliotekę — szukaj po nazwie, składniku, szklance lub pochodzeniu.",
+    searchPlaceholder: "Szukaj koktajli…",
+    count: "{n} koktajli",
+    empty: "Brak pasujących koktajli.",
+    all: "Wszystkie",
+  },
   journal: {
     title: "Dziennik koktajli",
     subtitle: "Daty, notatki i wszystko, co naprawdę spróbowałeś.",
@@ -241,7 +257,7 @@ export const pl: Messages = {
 export const bn: Messages = {
   brand: "Cocktale",
   tagline: "ককটেলের গল্প, আপনার জন্য ঢেলে দেওয়া",
-  nav: { discover: "আবিষ্কার", book: "বই", journal: "জার্নাল", signOut: "সাইন আউট" },
+  nav: { discover: "আবিষ্কার", catalogue: "তালিকা", book: "বই", journal: "জার্নাল", signOut: "সাইন আউট" },
   login: {
     eyebrow: "ককটেলের গল্প, আপনার জন্য ঢেলে দেওয়া",
     title: "Cocktale",
@@ -335,6 +351,14 @@ export const bn: Messages = {
     subtitle: "আবার দেখা, কেনা ও বানানোর জন্য সংগৃহীত ককটেল।",
     empty: "এখনও কিছু নেই। ফিড সোয়াইপ করে সংগ্রহ চাপুন।",
     collectedOn: "{date}-এ সংগৃহীত",
+  },
+  catalogue: {
+    title: "তালিকা",
+    subtitle: "পুরো লাইব্রেরি দেখুন — নাম, উপাদান, গ্লাস বা উৎস দিয়ে খুঁজুন।",
+    searchPlaceholder: "ককটেল খুঁজুন…",
+    count: "{n} ককটেল",
+    empty: "কোনো মিল নেই।",
+    all: "সব",
   },
   journal: {
     title: "ককটেল জার্নাল",

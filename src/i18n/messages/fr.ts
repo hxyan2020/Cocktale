@@ -5,6 +5,7 @@ export const fr: Messages = {
   tagline: "Des histoires de cocktails, versées pour vous",
   nav: {
     discover: "Découvrir",
+    catalogue: "Catalogue",
     book: "Carnet",
     journal: "Journal",
     signOut: "Se déconnecter",
@@ -102,6 +103,14 @@ export const fr: Messages = {
     subtitle: "Cocktails collectionnés pour les revoir, les acheter et les préparer.",
     empty: "Rien pour l’instant. Parcourez le fil et touchez Collectionner sur vos coups de cœur.",
     collectedOn: "Collectionné le {date}",
+  },
+  catalogue: {
+    title: "Catalogue",
+    subtitle: "Parcourez toute la bibliothèque — recherchez par nom, ingrédient, verre ou origine.",
+    searchPlaceholder: "Rechercher des cocktails…",
+    count: "{n} cocktails",
+    empty: "Aucun cocktail ne correspond.",
+    all: "Tous",
   },
   journal: {
     title: "Journal des cocktails",

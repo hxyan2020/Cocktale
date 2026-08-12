@@ -3,6 +3,7 @@ export type Messages = {
   tagline: string;
   nav: {
     discover: string;
+    catalogue: string;
     book: string;
     journal: string;
     signOut: string;
@@ -102,6 +103,14 @@ export type Messages = {
     empty: string;
     collectedOn: string;
   };
+  catalogue: {
+    title: string;
+    subtitle: string;
+    searchPlaceholder: string;
+    count: string;
+    empty: string;
+    all: string;
+  };
   journal: {
     title: string;
     subtitle: string;
@@ -131,6 +140,7 @@ export const en: Messages = {
   tagline: "Cocktail stories, poured for you",
   nav: {
     discover: "Discover",
+    catalogue: "Catalogue",
     book: "Book",
     journal: "Journal",
     signOut: "Sign out",
@@ -230,6 +240,14 @@ export const en: Messages = {
     subtitle: "Cocktails you collected to revisit, shop for, and make.",
     empty: "Nothing collected yet. Swipe the feed and tap Collect on pours you love.",
     collectedOn: "Collected {date}",
+  },
+  catalogue: {
+    title: "Catalogue",
+    subtitle: "Browse every pour in the library — search by name, ingredient, glass, or origin.",
+    searchPlaceholder: "Search cocktails…",
+    count: "{n} cocktails",
+    empty: "No cocktails match that search.",
+    all: "All",
   },
   journal: {
     title: "Cocktail journal",

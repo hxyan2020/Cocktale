@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const it: Messages = {
   brand: "Cocktale",
   tagline: "Storie di cocktail, versate per te",
-  nav: { discover: "Scopri", book: "Libro", journal: "Diario", signOut: "Esci" },
+  nav: { discover: "Scopri", catalogue: "Catalogo", book: "Libro", journal: "Diario", signOut: "Esci" },
   login: {
     eyebrow: "Storie di cocktail, versate per te",
     title: "Cocktale",
@@ -97,6 +97,14 @@ export const it: Messages = {
     subtitle: "Cocktail collezionati da rivedere, comprare e preparare.",
     empty: "Ancora vuoto. Scorri il feed e tocca Colleziona.",
     collectedOn: "Collezionato il {date}",
+  },
+  catalogue: {
+    title: "Catalogo",
+    subtitle: "Sfoglia tutte le ricette — cerca per nome, ingrediente, bicchiere o origine.",
+    searchPlaceholder: "Cerca cocktail…",
+    count: "{n} cocktail",
+    empty: "Nessun cocktail corrisponde.",
+    all: "Tutti",
   },
   journal: {
     title: "Diario dei cocktail",

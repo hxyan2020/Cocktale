@@ -5,6 +5,7 @@ export const zhCN: Messages = {
   tagline: "为你斟上的鸡尾酒故事",
   nav: {
     discover: "发现",
+    catalogue: "图鉴",
     book: "收藏",
     journal: "手账",
     signOut: "退出登录",
@@ -101,6 +102,14 @@ export const zhCN: Messages = {
     subtitle: "收藏起来，方便回头看、买原料、动手调。",
     empty: "还没有收藏。去发现页滑动，点「收藏」留下喜欢的特调。",
     collectedOn: "收藏于 {date}",
+  },
+  catalogue: {
+    title: "鸡尾酒图鉴",
+    subtitle: "浏览全部酒单，可按名称、原料、杯型或产地搜索。",
+    searchPlaceholder: "搜索鸡尾酒…",
+    count: "{n} 款鸡尾酒",
+    empty: "没有符合条件的鸡尾酒。",
+    all: "全部",
   },
   journal: {
     title: "鸡尾酒手账",
