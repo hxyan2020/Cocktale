@@ -16,11 +16,11 @@ type Props = {
 
 export function UnitSwitcher({ className = "", size = "sm" }: Props) {
   const { unit, setUnit, units } = useMeasureUnit();
-  const pad = size === "sm" ? "px-2.5 py-1 text-[11px]" : "px-3 py-1.5 text-xs";
+  const pad = size === "sm" ? "px-2 py-0.5 text-[10px] sm:px-2.5 sm:py-1 sm:text-[11px]" : "px-3 py-1.5 text-xs";
 
   return (
     <div
-      className={`inline-flex items-center rounded-full bg-[var(--chip)] p-0.5 ${className}`}
+      className={`inline-flex shrink-0 items-center rounded-full bg-[var(--chip)] p-0.5 ${className}`}
       role="group"
       aria-label="Measurement units"
     >

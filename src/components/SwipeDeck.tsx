@@ -68,36 +68,38 @@ export function SwipeDeck({
 
   if (!cocktail) {
     return (
-      <div className="flex h-[min(680px,78vh)] items-center justify-center rounded-[1.75rem] bg-[var(--surface)]/70 ring-1 ring-[var(--line)]">
+      <div className="flex h-[min(680px,78vh)] items-center justify-center rounded-[1.75rem] bg-[var(--surface)]/70 ring-1 ring-[var(--line)] max-md:h-[min(560px,calc(100dvh-16.5rem))]">
         <p className="text-[var(--ink-soft)]">{t("card.loadingPours")}</p>
       </div>
     );
   }
 
   return (
-    <div className="relative mx-auto h-[min(680px,78vh)] w-full max-w-[420px]">
-      <div className="absolute inset-0 translate-x-2 translate-y-3 rounded-[1.75rem] bg-[var(--chip)]/80 ring-1 ring-[var(--line)]" />
-      <motion.div
-        key={cocktail.id}
-        style={{ x, rotate, opacity }}
-        drag="x"
-        dragConstraints={{ left: 0, right: 0 }}
-        dragElastic={0.9}
-        onDragEnd={handleDragEnd}
-        initial={{ opacity: 0, scale: 0.96, x: exitX || 40 * forward }}
-        animate={{ opacity: 1, scale: 1, x: 0 }}
-        transition={{ type: "spring", stiffness: 320, damping: 28 }}
-        className="absolute inset-0 cursor-grab active:cursor-grabbing"
-      >
-        <CocktailCard
-          cocktail={cocktail}
-          collected={collected}
-          onOpen={onOpen}
-          onCollect={onCollect}
-          onTried={onTried}
-        />
-      </motion.div>
-      <p className="pointer-events-none absolute -bottom-8 left-0 right-0 text-center text-xs tracking-wide text-[var(--ink-muted)]">
+    <div className="relative mx-auto w-full max-w-[420px]">
+      <div className="relative h-[min(680px,78vh)] max-md:h-[min(560px,calc(100dvh-16.5rem))]">
+        <div className="absolute inset-0 translate-y-2 rounded-[1.75rem] bg-[var(--chip)]/80 ring-1 ring-[var(--line)] sm:translate-x-2 sm:translate-y-3" />
+        <motion.div
+          key={cocktail.id}
+          style={{ x, rotate, opacity }}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.9}
+          onDragEnd={handleDragEnd}
+          initial={{ opacity: 0, scale: 0.96, x: exitX || 40 * forward }}
+          animate={{ opacity: 1, scale: 1, x: 0 }}
+          transition={{ type: "spring", stiffness: 320, damping: 28 }}
+          className="absolute inset-0 cursor-grab active:cursor-grabbing"
+        >
+          <CocktailCard
+            cocktail={cocktail}
+            collected={collected}
+            onOpen={onOpen}
+            onCollect={onCollect}
+            onTried={onTried}
+          />
+        </motion.div>
+      </div>
+      <p className="mt-3 px-2 text-center text-[11px] leading-snug tracking-wide text-[var(--ink-muted)] sm:text-xs">
         {t("card.swipeHint")}
       </p>
     </div>

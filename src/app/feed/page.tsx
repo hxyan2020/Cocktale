@@ -174,20 +174,20 @@ export default function FeedPage() {
   return (
     <>
       <AppNav />
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-16 pt-6">
-        <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <p className="text-xs font-medium tracking-[0.18em] uppercase text-[var(--accent-deep)]">
+      <main className="mx-auto w-full max-w-5xl flex-1 px-3 pb-10 pt-4 sm:px-4 sm:pb-16 sm:pt-6">
+        <div className="mb-3 flex flex-wrap items-end justify-between gap-2 sm:mb-6 sm:gap-4">
+          <div className="min-w-0">
+            <p className="text-[10px] font-medium tracking-[0.18em] uppercase text-[var(--accent-deep)] sm:text-xs">
               {t("feed.forUser", { name: user.name })}
             </p>
-            <h1 className="mt-1 font-[family-name:var(--font-display)] text-3xl text-[var(--ink)]">
+            <h1 className="mt-1 font-[family-name:var(--font-display)] text-2xl text-[var(--ink)] sm:text-3xl">
               {t("feed.title")}
             </h1>
           </div>
           {weather && (
-            <div className="inline-flex items-center gap-2 rounded-full bg-[var(--surface)] px-4 py-2 text-sm text-[var(--ink-soft)] ring-1 ring-[var(--line)]">
-              <CloudSun className="h-4 w-4 text-[var(--accent)]" />
-              <span>
+            <div className="inline-flex max-w-full items-center gap-2 rounded-full bg-[var(--surface)] px-3 py-1.5 text-xs text-[var(--ink-soft)] ring-1 ring-[var(--line)] sm:px-4 sm:py-2 sm:text-sm">
+              <CloudSun className="h-4 w-4 shrink-0 text-[var(--accent)]" />
+              <span className="truncate">
                 {weatherLabel}
                 {weather.tempC ? ` · ${Math.round(weather.tempC)}°C` : ""}
                 {cityDisplay ? ` · ${cityDisplay}` : ""}
@@ -196,11 +196,11 @@ export default function FeedPage() {
           )}
         </div>
 
-        <div className="mb-8 flex flex-wrap gap-2">
+        <div className="-mx-3 mb-4 flex gap-2 overflow-x-auto px-3 pb-1 sm:mx-0 sm:mb-8 sm:flex-wrap sm:overflow-visible sm:px-0">
           <button
             type="button"
             onClick={() => setMood(null)}
-            className={`rounded-full px-3 py-1.5 text-xs font-medium ${
+            className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-medium ${
               !data.moodPreference
                 ? "bg-[var(--ink)] text-[var(--foam)]"
                 : "bg-[var(--chip)] text-[var(--ink-soft)]"
@@ -213,7 +213,7 @@ export default function FeedPage() {
               key={mood}
               type="button"
               onClick={() => setMood(mood)}
-              className={`rounded-full px-3 py-1.5 text-xs font-medium ${
+              className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-medium ${
                 data.moodPreference === mood
                   ? "bg-[var(--accent)] text-[var(--foam)]"
                   : "bg-[var(--chip)] text-[var(--ink-soft)]"
@@ -224,13 +224,13 @@ export default function FeedPage() {
           ))}
         </div>
 
-        <div className="mb-4 inline-flex items-center gap-2 text-xs text-[var(--ink-muted)]">
-          <Sparkles className="h-3.5 w-3.5" />
-          {t("feed.rankingHint")}
+        <div className="mb-3 inline-flex max-w-full items-start gap-2 text-[11px] leading-snug text-[var(--ink-muted)] sm:mb-4 sm:text-xs">
+          <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+          <span>{t("feed.rankingHint")}</span>
         </div>
 
         {loading && !current ? (
-          <div className="flex h-[min(680px,78vh)] items-center justify-center rounded-[1.75rem] bg-[var(--surface)]/70">
+          <div className="flex h-[min(560px,calc(100dvh-16.5rem))] items-center justify-center rounded-[1.75rem] bg-[var(--surface)]/70 sm:h-[min(680px,78vh)]">
             <p className="text-[var(--ink-soft)]">{t("feed.shaking")}</p>
           </div>
         ) : (

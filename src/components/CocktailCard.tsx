@@ -40,14 +40,14 @@ export function CocktailCard({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[rgba(28,22,16,0.72)] via-transparent to-transparent" />
         <div className="absolute bottom-4 start-5 end-5">
-          <p className="font-[family-name:var(--font-display)] text-3xl leading-tight text-[var(--foam)]">
+          <p className="font-[family-name:var(--font-display)] text-2xl leading-tight text-[var(--foam)] sm:text-3xl">
             {cocktail.name}
           </p>
           <p className="mt-1 text-sm text-[rgba(247,242,233,0.85)]">{cocktail.origin}</p>
         </div>
       </button>
 
-      <div className="flex flex-1 flex-col gap-4 p-5">
+      <div className="flex flex-1 flex-col gap-3 p-4 sm:gap-4 sm:p-5">
         <p className="line-clamp-3 text-[15px] leading-relaxed text-[var(--ink-soft)]">
           {cocktail.description}
         </p>
@@ -59,13 +59,13 @@ export function CocktailCard({
               e.stopPropagation();
               onCollect();
             }}
-            className={`inline-flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-medium transition ${
+            className={`inline-flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-full px-3 py-2.5 text-xs font-medium transition sm:gap-2 sm:px-4 sm:py-3 sm:text-sm ${
               collected
                 ? "bg-[var(--accent)] text-[var(--foam)]"
                 : "bg-[var(--chip)] text-[var(--ink)] hover:bg-[var(--chip-hover)]"
             }`}
           >
-            <Bookmark className="h-4 w-4" fill={collected ? "currentColor" : "none"} />
+            <Bookmark className="h-4 w-4 shrink-0" fill={collected ? "currentColor" : "none"} />
             {collected ? t("card.collected") : t("card.collect")}
           </button>
           <button
@@ -74,9 +74,9 @@ export function CocktailCard({
               e.stopPropagation();
               onTried();
             }}
-            className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-[var(--ink)] px-4 py-3 text-sm font-medium text-[var(--foam)] transition hover:opacity-90"
+            className="inline-flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-full bg-[var(--ink)] px-3 py-2.5 text-xs font-medium text-[var(--foam)] transition hover:opacity-90 sm:gap-2 sm:px-4 sm:py-3 sm:text-sm"
           >
-            <Check className="h-4 w-4" />
+            <Check className="h-4 w-4 shrink-0" />
             {t("card.tried")}
           </button>
         </div>

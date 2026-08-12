@@ -42,7 +42,7 @@ export default function LoginPage() {
 
   return (
     <main className="relative flex flex-1 flex-col">
-      <div className="absolute end-4 top-4 z-10">
+      <div className="absolute end-3 top-3 z-10 max-w-[calc(100%-1.5rem)]">
         <LanguageSwitcher />
       </div>
       <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center px-4 py-10 lg:grid lg:grid-cols-2 lg:items-center lg:gap-16">
@@ -50,7 +50,7 @@ export default function LoginPage() {
           <p className="text-xs font-medium tracking-[0.22em] uppercase text-[var(--accent-deep)]">
             {t("login.eyebrow")}
           </p>
-          <h1 className="mt-4 font-[family-name:var(--font-display)] text-5xl leading-[1.05] text-[var(--ink)] sm:text-6xl">
+          <h1 className="mt-4 font-[family-name:var(--font-display)] text-4xl leading-[1.05] text-[var(--ink)] sm:text-6xl">
             {t("login.title")}
           </h1>
           <p className="mt-5 max-w-md text-lg leading-relaxed text-[var(--ink-soft)]">

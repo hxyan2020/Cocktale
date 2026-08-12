@@ -99,7 +99,7 @@ export function ItemInfoTrigger({ info, children, className = "" }: Props) {
   return (
     <span
       ref={wrapRef}
-      className={`relative inline-flex max-w-full items-center gap-1.5 ${className}`}
+      className={`relative inline-flex max-w-full min-w-0 items-center gap-1.5 ${className}`}
       onMouseEnter={() => {
         if (canHover()) openPanel();
       }}

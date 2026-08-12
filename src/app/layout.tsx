@@ -30,7 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
     >
       <body
-        className="min-h-full flex flex-col"
+        className="min-h-full flex flex-col overflow-x-hidden"
         style={{
           fontFamily:
             "var(--font-body), 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans Arabic', 'Noto Sans Hebrew', 'Noto Naskh Arabic', 'Apple SD Gothic Neo', 'Hiragino Sans', 'Noto Sans JP', 'Noto Sans KR', 'Noto Sans Thai', 'Noto Sans Bengali', 'Noto Sans Devanagari', sans-serif",

@@ -71,15 +71,15 @@ export function CocktailDetail({
   const activeGallery = gallery[galleryIndex] ?? gallery[0];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-[rgba(20,16,12,0.55)] p-0 sm:items-center sm:p-6">
+    <div className="fixed inset-0 z-50 flex items-end justify-center overflow-x-hidden bg-[rgba(20,16,12,0.55)] p-0 sm:items-center sm:p-6">
       <button
         type="button"
         className="absolute inset-0 cursor-default"
         aria-label={t("detail.close")}
         onClick={onClose}
       />
-      <div className="relative z-10 max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-t-[1.75rem] bg-[var(--surface)] shadow-2xl sm:rounded-[1.75rem]">
-        <div className="relative aspect-[4/3] w-full min-h-72 sm:min-h-80">
+      <div className="relative z-10 max-h-[100dvh] w-full max-w-lg overflow-x-hidden overflow-y-auto rounded-t-[1.75rem] bg-[var(--surface)] shadow-2xl sm:max-h-[92vh] sm:rounded-[1.75rem]">
+        <div className="relative h-[min(38vh,15.5rem)] w-full sm:aspect-[4/3] sm:h-auto sm:min-h-80">
           <Image
             src={cocktail.image || "/cocktail-fallback.svg"}
             alt={cocktail.name}
@@ -98,9 +98,9 @@ export function CocktailDetail({
           </button>
         </div>
 
-        <div className="space-y-6 p-6">
+        <div className="space-y-6 p-4 sm:p-6">
           <header>
-            <p className="text-xs font-medium tracking-[0.18em] uppercase text-[var(--accent-deep)]">
+            <p className="break-words text-xs font-medium tracking-[0.18em] uppercase text-[var(--accent-deep)]">
               {cocktail.category}
               {cocktail.iba ? ` · IBA ${cocktail.iba}` : ""}
             </p>
@@ -169,12 +169,12 @@ export function CocktailDetail({
               {cocktail.ingredients.map((ing) => (
                 <li
                   key={ing.name}
-                  className="flex items-baseline justify-between gap-4 border-b border-[var(--line)] pb-2 text-sm"
+                  className="flex items-start justify-between gap-3 border-b border-[var(--line)] pb-2 text-sm"
                 >
-                  <ItemInfoTrigger info={ingredientInfo(ing.name)}>
-                    <span className="text-[var(--ink)]">{ing.name}</span>
+                  <ItemInfoTrigger info={ingredientInfo(ing.name)} className="min-w-0">
+                    <span className="break-words text-[var(--ink)]">{ing.name}</span>
                   </ItemInfoTrigger>
-                  <span className="shrink-0 text-[var(--ink-muted)]">
+                  <span className="shrink-0 pt-0.5 text-end text-[var(--ink-muted)]">
                     {ing.measure
                       ? convertMeasure(ing.measure, unit)
                       : t("detail.toTaste")}
@@ -326,26 +326,26 @@ export function CocktailDetail({
             </div>
           </section>
 
-          <div className="flex gap-2 pb-2">
+          <div className="flex flex-col gap-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:flex-row">
             <button
               type="button"
               onClick={onCollect}
-              className={`inline-flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-medium ${
+              className={`inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-medium ${
                 collected
                   ? "bg-[var(--accent)] text-[var(--foam)]"
                   : "bg-[var(--chip)] text-[var(--ink)]"
               }`}
             >
-              <Bookmark className="h-4 w-4" fill={collected ? "currentColor" : "none"} />
-              {collected ? t("detail.inYourBook") : t("card.collect")}
+              <Bookmark className="h-4 w-4 shrink-0" fill={collected ? "currentColor" : "none"} />
+              <span className="text-center leading-tight">{collected ? t("detail.inYourBook") : t("card.collect")}</span>
             </button>
             <button
               type="button"
               onClick={onTried}
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-[var(--ink)] px-4 py-3 text-sm font-medium text-[var(--foam)]"
+              className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-full bg-[var(--ink)] px-4 py-3 text-sm font-medium text-[var(--foam)]"
             >
-              <Check className="h-4 w-4" />
-              {t("detail.logAsTried")}
+              <Check className="h-4 w-4 shrink-0" />
+              <span className="text-center leading-tight">{t("detail.logAsTried")}</span>
             </button>
           </div>
         </div>
