@@ -9,6 +9,7 @@ import {
   type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
+import Image from "next/image";
 import { Info, X } from "lucide-react";
 import { SketchIllustration } from "@/components/SketchIllustration";
 import type { ItemInfo } from "@/lib/item-info";
@@ -35,8 +36,13 @@ export function ItemInfoTrigger({ info, children, className = "" }: Props) {
   const [open, setOpen] = useState(false);
   const [coords, setCoords] = useState({ top: 0, left: 0 });
   const [mounted, setMounted] = useState(false);
+  const [imageFailed, setImageFailed] = useState(false);
 
   useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    setImageFailed(false);
+  }, [info.title, info.imageUrl]);
 
   const clearCloseTimer = useCallback(() => {
     if (closeTimer.current) {
@@ -54,7 +60,7 @@ export function ItemInfoTrigger({ info, children, className = "" }: Props) {
     let left = r.left + r.width / 2 - width / 2;
     left = Math.max(pad, Math.min(left, window.innerWidth - width - pad));
     const below = r.bottom + 10;
-    const estimatedHeight = 220;
+    const estimatedHeight = 250;
     const top =
       below + estimatedHeight > window.innerHeight - pad
         ? Math.max(pad, r.top - estimatedHeight - 10)
@@ -157,8 +163,19 @@ export function ItemInfoTrigger({ info, children, className = "" }: Props) {
                 </button>
               </div>
               <div className="flex flex-col items-center px-4 pb-4">
-                <div className="flex h-[100px] w-full items-center justify-center rounded-xl bg-[var(--bg)] text-[var(--ink-soft)] ring-1 ring-[var(--line)]">
-                  <SketchIllustration kind={info.sketch} className="h-[88px] w-[100px]" />
+                <div className="relative flex h-[112px] w-full items-center justify-center overflow-hidden rounded-xl bg-[#f3efe6] text-[var(--ink-soft)] ring-1 ring-[var(--line)]">
+                  {info.imageUrl && !imageFailed ? (
+                    <Image
+                      src={info.imageUrl}
+                      alt={info.title}
+                      fill
+                      className="object-contain p-3"
+                      sizes="240px"
+                      onError={() => setImageFailed(true)}
+                    />
+                  ) : (
+                    <SketchIllustration kind={info.sketch} className="h-[88px] w-[100px]" />
+                  )}
                 </div>
                 <p className="mt-3 text-center font-[family-name:var(--font-display)] text-lg leading-tight text-[var(--ink)]">
                   {info.title}

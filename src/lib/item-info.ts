@@ -46,7 +46,15 @@ export type ItemInfo = {
   title: string;
   blurb: string;
   sketch: SketchKind;
+  /** Consistent ingredient pack-shot (TheCocktailDB); omit for tools/glass. */
+  imageUrl?: string;
 };
+
+/** Same pack-shot style as the market — transparent PNG stills of the ingredient. */
+export function ingredientImageUrl(name: string, size: "full" | "medium" | "small" = "medium") {
+  const suffix = size === "full" ? "" : size === "medium" ? "-Medium" : "-Small";
+  return `https://www.thecocktaildb.com/images/ingredients/${encodeURIComponent(name)}${suffix}.png`;
+}
 
 const EQUIPMENT_BLURBS: Record<EquipmentId, string> = {
   jigger: "Double-ended cup that portions spirits in exact ounces or milliliters.",
@@ -147,7 +155,7 @@ function ingredientProfile(name: string): IngredientProfile {
     return { sketch: "vermouth", blurb: "Fortified, herb-laced wine that sweetens or dries a mix." };
   if (/bitters/.test(n))
     return { sketch: "bitters", blurb: "Concentrated aromatics—a few dashes reshape the whole drink." };
-  if (/triple sec|cointreau|curaçao|curacao|grand marnier|amaretto|kahlua|baileys|liqueur|schnapps|sambuca|chartreuse|benedictine|maraschino|creme de|crème de|galliano|frangelico|chambord/.test(n))
+  if (/triple sec|cointreau|curaçao|curacao|grand marnier|amaretto|kahlua|baileys|liqueur|schnapps|sambuca|chartreuse|benedictine|maraschino|creme de|crème de|galliano|frangelico|chambord|ricard|pastis|pernod|anisette|\banis\b|aperitif/.test(n))
     return { sketch: "liqueur", blurb: "Sweet, flavored spirit that adds depth and finish." };
   if (/lemon|lime|orange|grapefruit|citrus/.test(n) && /juice|peel|twist|zest|wedge|slice|rind/.test(n))
     return { sketch: "citrus", blurb: "Sharp acidity and oils that brighten and balance sweetness." };
@@ -194,5 +202,6 @@ export function ingredientInfo(name: string): ItemInfo {
     title: name,
     blurb: profile.blurb,
     sketch: profile.sketch,
+    imageUrl: ingredientImageUrl(name, "medium"),
   };
 }
