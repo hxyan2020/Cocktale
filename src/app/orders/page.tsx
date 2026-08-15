@@ -12,9 +12,9 @@ export default function OrdersPage() {
   const { ready } = useAuth();
   const shop = useShop();
   const { locale } = useI18n();
-  const { orders } = useCart();
+  const { orders, hydrated } = useCart();
 
-  if (!ready) return null;
+  if (!ready || !hydrated) return null;
 
   return (
     <>

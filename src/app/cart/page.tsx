@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
@@ -20,7 +20,16 @@ export default function CartPage() {
   const { items, setQty, removeItem, clearCart, saveOrder } = useCart();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const [hint, setHint] = useState("");
+  const [checkoutMode, setCheckoutMode] = useState<"demo" | "stripe" | null>(null);
+
+  useEffect(() => {
+    fetch("/api/checkout")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.mode === "stripe" || data?.mode === "demo") setCheckoutMode(data.mode);
+      })
+      .catch(() => setCheckoutMode("demo"));
+  }, []);
 
   const lines = useMemo(
     () =>
@@ -30,7 +39,10 @@ export default function CartPage() {
           if (!product) return null;
           return { item: i, product };
         })
-        .filter(Boolean) as { item: (typeof items)[0]; product: NonNullable<ReturnType<typeof getProduct>> }[],
+        .filter(Boolean) as {
+        item: (typeof items)[0];
+        product: NonNullable<ReturnType<typeof getProduct>>;
+      }[],
     [items],
   );
 
@@ -43,7 +55,6 @@ export default function CartPage() {
     if (lines.length === 0) return;
     setBusy(true);
     setError("");
-    setHint("");
     const buyer = user ?? { id: "guest", email: "guest@cocktale.app", name: "Guest" };
     try {
       const origin = window.location.origin;
@@ -66,7 +77,6 @@ export default function CartPage() {
       if (!res.ok) throw new Error(data.error || "Checkout failed");
 
       if (data.mode === "demo") {
-        setHint(shop.stripeMissing);
         const orderLines: OrderLine[] = data.lineItems;
         const order: Order = {
           id: data.orderId,
@@ -87,7 +97,6 @@ export default function CartPage() {
         return;
       }
 
-      // Persist a pending order before redirect
       const pending: Order = {
         id: data.orderId,
         userId: buyer.id,
@@ -167,7 +176,7 @@ export default function CartPage() {
                       <input
                         type="number"
                         min={1}
-                        max={20}
+                        max={Math.min(20, product.stock)}
                         value={item.quantity}
                         onChange={(e) => setQty(product.id, Number(e.target.value))}
                         className="ml-2 w-16 rounded-lg border border-[var(--line)] bg-[var(--bg)] px-2 py-1 text-sm"
@@ -195,7 +204,9 @@ export default function CartPage() {
               </span>
             </div>
 
-            {hint && <p className="text-sm text-[var(--on-bg-accent)]">{hint}</p>}
+            {checkoutMode === "demo" && (
+              <p className="text-sm text-[var(--on-bg-accent)]">{shop.stripeMissing}</p>
+            )}
             {error && <p className="text-sm text-red-300">{error}</p>}
 
             <button
@@ -204,7 +215,11 @@ export default function CartPage() {
               onClick={() => void checkout()}
               className="w-full rounded-full bg-[var(--ink)] py-3 text-sm font-medium text-[var(--foam)] disabled:opacity-60"
             >
-              {busy ? shop.processing : shop.checkout}
+              {busy
+                ? shop.processing
+                : checkoutMode === "demo"
+                  ? shop.checkoutDemo
+                  : shop.checkout}
             </button>
           </div>
         )}

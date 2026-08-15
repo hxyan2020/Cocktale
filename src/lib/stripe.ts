@@ -12,7 +12,9 @@ export function getStripe(): Stripe | null {
 }
 
 export function stripeConfigured() {
-  return Boolean(process.env.STRIPE_SECRET_KEY && process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+  // Hosted Checkout Sessions only need the secret key.
+  // Publishable key is optional until Stripe.js / Payment Element is used.
+  return Boolean(process.env.STRIPE_SECRET_KEY);
 }
 
 export function randomSuffix(len = 8) {

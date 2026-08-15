@@ -9,30 +9,48 @@ import { useCart } from "@/components/CartProvider";
 import { useI18n } from "@/components/LanguageProvider";
 import { useShop } from "@/components/useShop";
 import { formatMoney } from "@/lib/products";
+import type { OrderStatus } from "@/lib/commerce-types";
+
+function trackingSteps(status: OrderStatus, shop: ReturnType<typeof useShop>) {
+  const paid = status === "paid" || status === "fulfilled";
+  const preparing = status === "paid" || status === "fulfilled";
+  const fulfilled = status === "fulfilled";
+  return [
+    { label: shop.trackPlaced, done: true },
+    {
+      label: status === "pending" ? shop.trackPending : shop.trackPaid,
+      done: paid,
+    },
+    { label: shop.trackPreparing, done: preparing },
+    { label: shop.trackFulfilled, done: fulfilled },
+  ];
+}
 
 export default function OrderDetailPage() {
   const params = useParams<{ id: string }>();
   const { ready } = useAuth();
   const shop = useShop();
   const { locale } = useI18n();
-  const { getOrder } = useCart();
+  const { getOrder, hydrated } = useCart();
   const order = getOrder(params.id);
 
-  if (!ready) return null;
+  if (!ready || !hydrated) return null;
 
   if (!order) {
     return (
       <>
         <AppNav />
-        <main className="mx-auto max-w-3xl px-4 py-16 text-center text-[var(--ink-soft)]">
+        <main className="mx-auto max-w-3xl px-4 py-16 text-center text-[var(--on-bg-soft)]">
           Order not found.{" "}
-          <Link href="/orders" className="underline">
+          <Link href="/orders" className="underline text-[var(--on-bg)]">
             {shop.orders}
           </Link>
         </main>
       </>
     );
   }
+
+  const steps = trackingSteps(order.status, shop);
 
   return (
     <>
@@ -57,6 +75,28 @@ export default function OrderDetailPage() {
             Stripe session: {order.stripeSessionId}
           </p>
         )}
+
+        <section className="mt-8 rounded-[1.5rem] bg-[var(--surface)] p-5 ring-1 ring-[var(--line)]">
+          <h2 className="text-sm font-semibold text-[var(--ink)]">{shop.trackTitle}</h2>
+          <ol className="mt-4 space-y-3">
+            {steps.map((step, index) => (
+              <li key={step.label} className="flex items-center gap-3 text-sm">
+                <span
+                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${
+                    step.done
+                      ? "bg-[var(--ink)] text-[var(--foam)]"
+                      : "bg-[var(--chip)] text-[var(--ink-muted)]"
+                  }`}
+                >
+                  {index + 1}
+                </span>
+                <span className={step.done ? "text-[var(--ink)]" : "text-[var(--ink-muted)]"}>
+                  {step.label}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </section>
 
         <ul className="mt-8 space-y-3">
           {order.items.map((item) => (
@@ -87,7 +127,7 @@ export default function OrderDetailPage() {
           ))}
         </ul>
 
-        <div className="mt-6 flex justify-between rounded-[1.25rem] bg-[var(--chip)] px-4 py-4">
+        <div className="mt-6 flex justify-between rounded-[1.25rem] bg-[var(--chip)] px-4 py-4 text-[var(--ink)]">
           <span>{shop.orderTotal}</span>
           <span className="font-semibold">
             {formatMoney(order.totalCents, order.currency, locale)}
