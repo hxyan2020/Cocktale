@@ -6,6 +6,7 @@ import { AppFooter } from "@/components/AppFooter";
 import { CartProvider } from "@/components/CartProvider";
 import { CurrencyProvider } from "@/components/CurrencyProvider";
 import { GeoDefaultsBootstrap } from "@/components/GeoDefaultsBootstrap";
+import { HxViewershipBeacon } from "@/components/HxViewershipBeacon";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { MeasureUnitProvider } from "@/components/MeasureUnitProvider";
 import "./globals.css";
@@ -58,6 +59,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <GeoDefaultsBootstrap />
               <AuthProvider>
                 <CartProvider>
+                  <HxViewershipBeacon />
                   {children}
                   <AppFooter />
                   <AuthPromptHost />
