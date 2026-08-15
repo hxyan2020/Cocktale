@@ -121,6 +121,33 @@ export function inferEquipment(cocktail: Cocktail): EquipmentItem[] {
   return items;
 }
 
+type ChecklistLabels = {
+  ingredients: string;
+  materials: string;
+  servingVessel: string;
+  utensils: string;
+  toTaste: string;
+};
+
+export function preparationChecklistSteps(
+  cocktail: Cocktail,
+  equipment: EquipmentItem[],
+  labels: ChecklistLabels,
+  formatMeasure: (measure: string) => string,
+  equipmentLabel: (id: EquipmentId) => string,
+): string[] {
+  const ingredients = cocktail.ingredients.map(({ name, measure }) => {
+    const amount = measure ? formatMeasure(measure) : labels.toTaste;
+    return `${name} (${amount})`;
+  });
+  const utensils = equipment.map(({ id }) => equipmentLabel(id));
+
+  return [
+    `${labels.ingredients}: ${ingredients.join("; ")}.`,
+    `${labels.materials}: ${labels.servingVessel} — ${cocktail.glass}; ${labels.utensils} — ${utensils.join("; ")}.`,
+  ];
+}
+
 /** Expand terse API instructions into clearer numbered steps. */
 export function expandMakeSteps(cocktail: Cocktail): string[] {
   const raw = cocktail.instructions.length

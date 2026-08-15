@@ -8,7 +8,7 @@ import type { Cocktail } from "@/lib/types";
 import { useI18n } from "@/components/LanguageProvider";
 import { useShop } from "@/components/useShop";
 import { useCart } from "@/components/CartProvider";
-import { expandMakeSteps, inferEquipment } from "@/lib/make-guide";
+import { expandMakeSteps, inferEquipment, preparationChecklistSteps } from "@/lib/make-guide";
 import { formatMoney, productsForCocktailIngredients } from "@/lib/products";
 import { getCocktailGallery, mergeCocktailGallery, type GalleryImage } from "@/lib/cocktail-gallery";
 import { convertMeasure } from "@/lib/units";
@@ -86,13 +86,26 @@ export function CocktailDetail({
   );
 
   const steps = useMemo(() => {
+    const checklist = preparationChecklistSteps(
+      cocktail,
+      equipment,
+      {
+        ingredients: t("detail.ingredients"),
+        materials: t("detail.materials"),
+        servingVessel: t("detail.servingVessel"),
+        utensils: t("detail.utensils"),
+        toTaste: t("detail.toTaste"),
+      },
+      (measure) => convertMeasure(measure, unit),
+      (id) => t(`equipment.${id}`),
+    );
     return [
-      t("detail.gatherStep"),
+      ...checklist,
       t("detail.prepGlassStep", { glass: cocktail.glass }),
       ...recipeSteps,
       t("detail.finishStep"),
     ];
-  }, [cocktail.glass, recipeSteps, t]);
+  }, [cocktail, equipment, recipeSteps, t, unit]);
 
   const activeGallery = gallery[galleryIndex] ?? gallery[0];
 

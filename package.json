@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "audit:images": "tsx scripts/audit-cocktail-images.ts",
+    "audit:recipes": "tsx scripts/audit-recipe-checklists.ts",
     "seed": "tsx scripts/seed-cocktails.ts",
     "seed:products": "tsx scripts/seed-products.ts",
     "seed:all": "npm run seed && npm run seed:products"
