@@ -164,7 +164,7 @@ export default function FeedPage() {
   if (!ready) {
     return (
       <main className="flex flex-1 items-center justify-center">
-        <p className="text-[var(--ink-soft)]">{t("feed.openingBar")}</p>
+        <p className="text-[var(--on-bg-soft)]">{t("feed.openingBar")}</p>
       </main>
     );
   }
@@ -191,10 +191,10 @@ export default function FeedPage() {
       <main className="mx-auto w-full max-w-5xl flex-1 px-3 pb-10 pt-4 sm:px-4 sm:pb-16 sm:pt-6">
         <div className="mb-3 flex flex-wrap items-end justify-between gap-2 sm:mb-6 sm:gap-4">
           <div className="min-w-0">
-            <p className="text-[10px] font-medium tracking-[0.18em] uppercase text-[var(--accent-deep)] sm:text-xs">
+            <p className="text-[10px] font-medium tracking-[0.18em] uppercase text-[var(--on-bg-accent)] sm:text-xs">
               {t("feed.forUser", { name: user?.name ?? t("brand") })}
             </p>
-            <h1 className="mt-1 font-[family-name:var(--font-display)] text-2xl text-[var(--ink)] sm:text-3xl">
+            <h1 className="mt-1 font-[family-name:var(--font-display)] text-2xl text-[var(--on-bg)] sm:text-3xl">
               {t("feed.title")}
             </h1>
           </div>
@@ -238,7 +238,7 @@ export default function FeedPage() {
           ))}
         </div>
 
-        <div className="mb-3 inline-flex max-w-full items-start gap-2 text-[11px] leading-snug text-[var(--ink-muted)] sm:mb-4 sm:text-xs">
+        <div className="mb-3 inline-flex max-w-full items-start gap-2 text-[11px] leading-snug text-[var(--on-bg-muted)] sm:mb-4 sm:text-xs">
           <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0" />
           <span>{t("feed.rankingHint")}</span>
         </div>

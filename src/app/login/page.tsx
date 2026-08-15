@@ -25,13 +25,13 @@ export default function LoginPage() {
       <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center px-4 py-10 lg:grid lg:grid-cols-2 lg:items-center lg:gap-16">
         <section className="mb-10 lg:mb-0">
           <BrandLogo size={72} className="h-16 w-16 sm:h-[4.5rem] sm:w-[4.5rem]" priority />
-          <p className="mt-5 text-xs font-medium tracking-[0.22em] uppercase text-[var(--accent-deep)]">
+          <p className="mt-5 text-xs font-medium tracking-[0.22em] uppercase text-[var(--on-bg-accent)]">
             {t("login.eyebrow")}
           </p>
-          <h1 className="mt-4 font-[family-name:var(--font-display)] text-4xl leading-[1.05] text-[var(--ink)] sm:text-6xl">
+          <h1 className="mt-4 font-[family-name:var(--font-display)] text-4xl leading-[1.05] text-[var(--on-bg)] sm:text-6xl">
             {t("login.title")}
           </h1>
-          <p className="mt-5 max-w-md text-lg leading-relaxed text-[var(--ink-soft)]">
+          <p className="mt-5 max-w-md text-lg leading-relaxed text-[var(--on-bg-soft)]">
             {t("login.subtitle")}
           </p>
         </section>

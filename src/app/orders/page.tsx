@@ -20,7 +20,7 @@ export default function OrdersPage() {
     <>
       <AppNav />
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 pb-16 pt-6">
-        <h1 className="font-[family-name:var(--font-display)] text-3xl text-[var(--ink)]">
+        <h1 className="font-[family-name:var(--font-display)] text-3xl text-[var(--on-bg)]">
           {shop.ordersTitle}
         </h1>
 

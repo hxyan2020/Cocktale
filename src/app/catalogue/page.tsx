@@ -147,10 +147,10 @@ export default function CataloguePage() {
     <>
       <AppNav />
       <main className="mx-auto w-full max-w-6xl flex-1 px-3 pb-16 pt-4 sm:px-4 sm:pt-6">
-        <h1 className="font-[family-name:var(--font-display)] text-2xl text-[var(--ink)] sm:text-3xl">
+        <h1 className="font-[family-name:var(--font-display)] text-2xl text-[var(--on-bg)] sm:text-3xl">
           {t("catalogue.title")}
         </h1>
-        <p className="mt-2 max-w-2xl text-sm text-[var(--ink-soft)] sm:text-base">
+        <p className="mt-2 max-w-2xl text-sm text-[var(--on-bg-soft)] sm:text-base">
           {t("catalogue.subtitle")}
         </p>
 
@@ -192,7 +192,7 @@ export default function CataloguePage() {
           ))}
         </div>
 
-        <p className="mt-4 text-xs text-[var(--ink-muted)]">
+        <p className="mt-4 text-xs text-[var(--on-bg-muted)]">
           {loading ? t("feed.shaking") : t("catalogue.count", { n: list.length })}
         </p>
 

@@ -17,7 +17,7 @@ export default function HomePage() {
 
   return (
     <main className="flex flex-1 items-center justify-center p-8">
-      <p className="font-[family-name:var(--font-display)] text-3xl text-[var(--ink)]">
+      <p className="font-[family-name:var(--font-display)] text-3xl text-[var(--on-bg)]">
         {t("home.loading")}
       </p>
     </main>

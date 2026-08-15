@@ -100,11 +100,11 @@ export default function OrderSuccessClient() {
     <>
       <AppNav />
       <main className="mx-auto flex w-full max-w-lg flex-1 flex-col items-center justify-center px-4 py-16 text-center">
-        <h1 className="font-[family-name:var(--font-display)] text-4xl text-[var(--ink)]">
+        <h1 className="font-[family-name:var(--font-display)] text-4xl text-[var(--on-bg)]">
           {shop.successTitle}
         </h1>
-        <p className="mt-3 text-[var(--ink-soft)]">{shop.successBody}</p>
-        {demo && <p className="mt-3 text-sm text-[var(--accent-deep)]">{shop.demoPaid}</p>}
+        <p className="mt-3 text-[var(--on-bg-soft)]">{shop.successBody}</p>
+        {demo && <p className="mt-3 text-sm text-[var(--on-bg-accent)]">{shop.demoPaid}</p>}
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           {linked && (
             <Link

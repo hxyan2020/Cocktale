@@ -15,6 +15,11 @@
   --glow: #c4a35a;
   --background: var(--bg);
   --foreground: var(--ink);
+  /* Text placed directly on the dark cocktail backdrop. */
+  --on-bg: #f6f1e7;
+  --on-bg-soft: rgba(246, 241, 231, 0.82);
+  --on-bg-muted: rgba(246, 241, 231, 0.6);
+  --on-bg-accent: #e0ac63;
 }
 
 @theme inline {
@@ -30,13 +35,26 @@ body {
 }
 
 body {
-  background:
-    radial-gradient(1200px 600px at 10% -10%, rgba(196, 163, 90, 0.28), transparent 55%),
-    radial-gradient(900px 500px at 100% 0%, rgba(61, 90, 74, 0.16), transparent 50%),
-    linear-gradient(180deg, #eef1ec 0%, #e4e8e2 45%, #ddd6c8 100%);
+  background-color: #0b0908;
   color: var(--foreground);
   font-family: var(--font-body), system-ui, sans-serif;
   min-height: 100vh;
+}
+
+/* Cocktail backdrop, shaded 80% dark so content stays legible. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1200px 600px at 12% -10%, rgba(196, 163, 90, 0.16), transparent 55%),
+    linear-gradient(rgba(11, 9, 8, 0.8), rgba(11, 9, 8, 0.8)),
+    url("/cocktail-backdrop.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 ::selection {

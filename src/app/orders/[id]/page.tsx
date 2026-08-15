@@ -38,22 +38,22 @@ export default function OrderDetailPage() {
     <>
       <AppNav />
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 pb-16 pt-6">
-        <p className="text-xs uppercase tracking-wide text-[var(--accent-deep)]">{shop.orders}</p>
-        <h1 className="mt-1 font-[family-name:var(--font-display)] text-3xl text-[var(--ink)]">
+        <p className="text-xs uppercase tracking-wide text-[var(--on-bg-accent)]">{shop.orders}</p>
+        <h1 className="mt-1 font-[family-name:var(--font-display)] text-3xl text-[var(--on-bg)]">
           {order.id}
         </h1>
-        <p className="mt-2 text-sm text-[var(--ink-muted)]">
+        <p className="mt-2 text-sm text-[var(--on-bg-muted)]">
           {new Date(order.createdAt).toLocaleString(locale)} · {shop.orderStatus}:{" "}
-          <span className="capitalize text-[var(--ink)]">{order.status}</span>
+          <span className="capitalize text-[var(--on-bg)]">{order.status}</span>
           {order.demo ? " · demo" : ""}
         </p>
         {order.shippingEmail && (
-          <p className="mt-1 text-sm text-[var(--ink-soft)]">
+          <p className="mt-1 text-sm text-[var(--on-bg-soft)]">
             {order.shippingName} · {order.shippingEmail}
           </p>
         )}
         {order.stripeSessionId && (
-          <p className="mt-1 text-xs text-[var(--ink-muted)]">
+          <p className="mt-1 text-xs text-[var(--on-bg-muted)]">
             Stripe session: {order.stripeSessionId}
           </p>
         )}

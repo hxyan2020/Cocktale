@@ -60,7 +60,7 @@ export default function ProductDetailPage() {
                 priority
               />
             </div>
-            <p className="mt-3 text-xs font-medium uppercase tracking-wide text-[var(--ink-muted)]">
+            <p className="mt-3 text-xs font-medium uppercase tracking-wide text-[var(--on-bg-muted)]">
               {shop.images}
             </p>
             <div className="mt-2 flex gap-2 overflow-x-auto pb-1">
@@ -88,25 +88,25 @@ export default function ProductDetailPage() {
 
           <section className="space-y-5">
             <div>
-              <p className="text-xs uppercase tracking-wide text-[var(--accent-deep)]">
+              <p className="text-xs uppercase tracking-wide text-[var(--on-bg-accent)]">
                 {product.subcategory}
               </p>
-              <h1 className="mt-1 font-[family-name:var(--font-display)] text-4xl text-[var(--ink)]">
+              <h1 className="mt-1 font-[family-name:var(--font-display)] text-4xl text-[var(--on-bg)]">
                 {product.name}
               </h1>
-              <p className="mt-2 text-sm text-[var(--ink-muted)]">
+              <p className="mt-2 text-sm text-[var(--on-bg-muted)]">
                 {shop.brand}: {product.brand} · {shop.unit}: {product.unit}
               </p>
             </div>
 
-            <p className="text-2xl font-semibold text-[var(--ink)]">
+            <p className="text-2xl font-semibold text-[var(--on-bg)]">
               {formatMoney(product.priceCents, product.currency, locale)}
             </p>
-            <p className="text-sm text-[var(--ink-soft)]">
+            <p className="text-sm text-[var(--on-bg-soft)]">
               {product.stock > 0 ? `${shop.inStock} (${product.stock})` : shop.outOfStock}
             </p>
 
-            <p className="text-[15px] leading-relaxed text-[var(--ink-soft)]">
+            <p className="text-[15px] leading-relaxed text-[var(--on-bg-soft)]">
               {product.longDescription}
             </p>
 
@@ -124,7 +124,7 @@ export default function ProductDetailPage() {
             </button>
 
             <div>
-              <h2 className="text-sm font-semibold text-[var(--ink)]">{shop.specs}</h2>
+              <h2 className="text-sm font-semibold text-[var(--on-bg)]">{shop.specs}</h2>
               <ul className="mt-2 divide-y divide-[var(--line)] rounded-2xl bg-[var(--surface)] ring-1 ring-[var(--line)]">
                 {product.specs.map((s) => (
                   <li
@@ -140,7 +140,7 @@ export default function ProductDetailPage() {
 
             {related.length > 0 && (
               <div>
-                <h2 className="text-sm font-semibold text-[var(--ink)]">{shop.related}</h2>
+                <h2 className="text-sm font-semibold text-[var(--on-bg)]">{shop.related}</h2>
                 <ul className="mt-2 flex flex-wrap gap-2">
                   {related.map((c) =>
                     c ? (

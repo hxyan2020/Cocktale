@@ -37,10 +37,10 @@ export default function MarketPage() {
     <>
       <AppNav />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-16 pt-6">
-        <h1 className="font-[family-name:var(--font-display)] text-3xl text-[var(--ink)]">
+        <h1 className="font-[family-name:var(--font-display)] text-3xl text-[var(--on-bg)]">
           {shop.title}
         </h1>
-        <p className="mt-2 max-w-2xl text-[var(--ink-soft)]">{shop.subtitle}</p>
+        <p className="mt-2 max-w-2xl text-[var(--on-bg-soft)]">{shop.subtitle}</p>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
           <input
@@ -67,7 +67,7 @@ export default function MarketPage() {
           </div>
         </div>
 
-        <p className="mt-4 text-xs text-[var(--ink-muted)]">{list.length} products</p>
+        <p className="mt-4 text-xs text-[var(--on-bg-muted)]">{list.length} products</p>
 
         <div
           key={category}
