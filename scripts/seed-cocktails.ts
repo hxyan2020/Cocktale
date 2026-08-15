@@ -1,6 +1,7 @@
 /** Seed Cocktale DB from TheCocktailDB (legitimate public API). */
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
+import { descriptionForCocktail, storyForCocktail } from "./cocktail-intros";
 
 const API = "https://www.thecocktaildb.com/api/json/v1/1";
 
@@ -298,18 +299,6 @@ function popularityScore(d: RawDrink, name: string): number {
   return Math.min(100, score);
 }
 
-function descriptionFor(d: RawDrink, origin: string, flavors: string[]): string {
-  const iba = d.strIBA ? ` An IBA ${d.strIBA} cocktail.` : "";
-  const glass = d.strGlass ? ` Served in a ${d.strGlass.toLowerCase()}.` : "";
-  const flavor = flavors.length ? ` Expect a ${flavors.slice(0, 3).join(", ")} profile.` : "";
-  return `${d.strDrink} is a ${d.strCategory?.toLowerCase() || "classic"} drink with roots in ${origin}.${iba}${glass}${flavor}`;
-}
-
-function storyFor(name: string, origin: string, category: string): string {
-  if (STORY_MAP[name]) return STORY_MAP[name];
-  return `Part of the living ${category.toLowerCase()} tradition, ${name} is widely associated with ${origin}. Home bartenders keep reinventing it—ratios stay familiar, proportions tell the tale.`;
-}
-
 function normalize(d: RawDrink): Cocktail {
   const name = d.strDrink.trim();
   const ingredients = extractIngredients(d);
@@ -319,6 +308,15 @@ function normalize(d: RawDrink): Cocktail {
   const alcoholic = (d.strAlcoholic || "").toLowerCase() !== "non alcoholic";
   const flavors = inferFlavors(ingredientNames, name);
   const category = d.strCategory || "Cocktail";
+  const introInput = {
+    name,
+    category,
+    glass: d.strGlass || "Cocktail glass",
+    origin,
+    alcoholic,
+    ingredients: ingredientNames,
+    flavors,
+  };
   const tags = (d.strTags || "")
     .split(",")
     .map((t) => t.trim())
@@ -334,8 +332,8 @@ function normalize(d: RawDrink): Cocktail {
     alcoholic,
     glass: d.strGlass || "Cocktail glass",
     origin,
-    description: descriptionFor(d, origin, flavors),
-    story: storyFor(name, origin, category),
+    description: descriptionForCocktail(introInput),
+    story: STORY_MAP[name] || storyForCocktail(introInput),
     ingredients,
     instructions: stepsFromInstructions(d.strInstructions),
     tags,
