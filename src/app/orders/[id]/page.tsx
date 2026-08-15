@@ -8,6 +8,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
 import { useI18n } from "@/components/LanguageProvider";
 import { useShop } from "@/components/useShop";
+import { useTranslatedTexts } from "@/components/useTranslatedContent";
 import { formatMoney } from "@/lib/products";
 import type { OrderStatus } from "@/lib/commerce-types";
 
@@ -33,6 +34,13 @@ export default function OrderDetailPage() {
   const { locale } = useI18n();
   const { getOrder, hydrated } = useCart();
   const order = getOrder(params.id);
+  const orderTexts = order
+    ? [order.status, ...order.items.map((item) => item.name)]
+    : [];
+  const { texts: localizedOrderTexts } = useTranslatedTexts(
+    orderTexts,
+    `order:${params.id}`,
+  );
 
   if (!ready || !hydrated) return null;
 
@@ -41,7 +49,7 @@ export default function OrderDetailPage() {
       <>
         <AppNav />
         <main className="mx-auto max-w-3xl px-4 py-16 text-center text-[var(--on-bg-soft)]">
-          Order not found.{" "}
+          {shop.orderNotFound}{" "}
           <Link href="/orders" className="underline text-[var(--on-bg)]">
             {shop.orders}
           </Link>
@@ -62,8 +70,10 @@ export default function OrderDetailPage() {
         </h1>
         <p className="mt-2 text-sm text-[var(--on-bg-muted)]">
           {new Date(order.createdAt).toLocaleString(locale)} · {shop.orderStatus}:{" "}
-          <span className="capitalize text-[var(--on-bg)]">{order.status}</span>
-          {order.demo ? " · demo" : ""}
+          <span className="capitalize text-[var(--on-bg)]">
+            {localizedOrderTexts[0] || order.status}
+          </span>
+          {order.demo ? ` · ${shop.demoLabel}` : ""}
         </p>
         {order.shippingEmail && (
           <p className="mt-1 text-sm text-[var(--on-bg-soft)]">
@@ -72,7 +82,7 @@ export default function OrderDetailPage() {
         )}
         {order.stripeSessionId && (
           <p className="mt-1 text-xs text-[var(--on-bg-muted)]">
-            Stripe session: {order.stripeSessionId}
+            {shop.stripeSession}: {order.stripeSessionId}
           </p>
         )}
 
@@ -99,7 +109,7 @@ export default function OrderDetailPage() {
         </section>
 
         <ul className="mt-8 space-y-3">
-          {order.items.map((item) => (
+          {order.items.map((item, itemIndex) => (
             <li
               key={`${item.productId}-${item.name}`}
               className="flex gap-3 rounded-[1.25rem] bg-[var(--surface)] p-3 ring-1 ring-[var(--line)]"
@@ -107,7 +117,7 @@ export default function OrderDetailPage() {
               <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-[#f3efe6]">
                 <Image
                   src={item.image || "/cocktail-fallback.svg"}
-                  alt={item.name}
+                  alt={localizedOrderTexts[itemIndex + 1] || item.name}
                   fill
                   className="object-contain p-1"
                   sizes="64px"
@@ -115,7 +125,9 @@ export default function OrderDetailPage() {
                 />
               </div>
               <div className="flex-1">
-                <p className="font-medium text-[var(--ink)]">{item.name}</p>
+                <p className="font-medium text-[var(--ink)]">
+                  {localizedOrderTexts[itemIndex + 1] || item.name}
+                </p>
                 <p className="text-xs text-[var(--ink-muted)]">
                   {item.quantity} × {formatMoney(item.unitAmountCents, "usd", locale)}
                 </p>

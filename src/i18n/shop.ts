@@ -53,9 +53,19 @@ export type ShopMessages = {
   trackPreparing: string;
   trackFulfilled: string;
   trackPending: string;
+  trackCancelled: string;
+  trackRefunded: string;
+  productCount: string;
+  productNotFound: string;
+  orderNotFound: string;
+  item: string;
+  photo: string;
+  stripeSession: string;
+  demoLabel: string;
+  guest: string;
 };
 
-const en: ShopMessages = {
+export const EN_SHOP_MESSAGES: ShopMessages = {
   market: "Market",
   cart: "Cart",
   orders: "Orders",
@@ -108,12 +118,22 @@ const en: ShopMessages = {
   trackPreparing: "Preparing shipment",
   trackFulfilled: "Fulfilled",
   trackPending: "Awaiting payment",
+  trackCancelled: "Cancelled",
+  trackRefunded: "Refunded",
+  productCount: "{n} products",
+  productNotFound: "Product not found.",
+  orderNotFound: "Order not found.",
+  item: "Item",
+  photo: "Photo",
+  stripeSession: "Stripe session",
+  demoLabel: "demo",
+  guest: "Guest",
 };
 
 const catalogs: Partial<Record<LocaleCode, ShopMessages>> = {
-  en,
+  en: EN_SHOP_MESSAGES,
   "zh-CN": {
-    ...en,
+    ...EN_SHOP_MESSAGES,
     market: "市集",
     cart: "购物车",
     orders: "订单",
@@ -161,7 +181,7 @@ const catalogs: Partial<Record<LocaleCode, ShopMessages>> = {
 };
 
 export function getShopMessages(locale: LocaleCode): ShopMessages {
-  return catalogs[locale] ?? en;
+  return catalogs[locale] ?? EN_SHOP_MESSAGES;
 }
 
-export const SHOP_KEYS = Object.keys(en) as (keyof ShopMessages)[];
+export const SHOP_KEYS = Object.keys(EN_SHOP_MESSAGES) as (keyof ShopMessages)[];

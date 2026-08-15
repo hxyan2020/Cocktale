@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Bookmark, Check } from "lucide-react";
 import type { Cocktail } from "@/lib/types";
 import { useI18n } from "@/components/LanguageProvider";
+import { useLocalizedCocktail } from "@/components/useTranslatedContent";
 
 type Props = {
   cocktail: Cocktail;
@@ -21,6 +22,7 @@ export function CocktailCard({
   onTried,
 }: Props) {
   const { t } = useI18n();
+  const localized = useLocalizedCocktail(cocktail);
 
   return (
     <article className="relative flex h-full w-full flex-col overflow-hidden rounded-[1.75rem] bg-[var(--surface)] shadow-[0_24px_60px_rgba(28,22,16,0.18)] ring-1 ring-[var(--line)]">
@@ -28,11 +30,11 @@ export function CocktailCard({
         type="button"
         onClick={onOpen}
         className="relative block h-[58%] w-full overflow-hidden text-left"
-        aria-label={`${t("detail.theTale")}: ${cocktail.name}`}
+        aria-label={`${t("detail.theTale")}: ${localized.name}`}
       >
         <Image
           src={cocktail.image || "/cocktail-fallback.svg"}
-          alt={cocktail.name}
+          alt={localized.name}
           fill
           priority
           className="object-cover"
@@ -41,15 +43,15 @@ export function CocktailCard({
         <div className="absolute inset-0 bg-gradient-to-t from-[rgba(28,22,16,0.72)] via-transparent to-transparent" />
         <div className="absolute bottom-4 start-5 end-5">
           <p className="font-[family-name:var(--font-display)] text-2xl leading-tight text-[var(--foam)] sm:text-3xl">
-            {cocktail.name}
+            {localized.name}
           </p>
-          <p className="mt-1 text-sm text-[rgba(247,242,233,0.85)]">{cocktail.origin}</p>
+          <p className="mt-1 text-sm text-[rgba(247,242,233,0.85)]">{localized.origin}</p>
         </div>
       </button>
 
       <div className="flex flex-1 flex-col gap-3 p-4 sm:gap-4 sm:p-5">
         <p className="line-clamp-3 text-[15px] leading-relaxed text-[var(--ink-soft)]">
-          {cocktail.description}
+          {localized.description}
         </p>
 
         <div className="mt-auto flex items-center gap-2">

@@ -6,6 +6,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
 import { useI18n } from "@/components/LanguageProvider";
 import { useShop } from "@/components/useShop";
+import { useTranslatedTexts } from "@/components/useTranslatedContent";
 import { formatMoney } from "@/lib/products";
 
 export default function OrdersPage() {
@@ -13,6 +14,18 @@ export default function OrdersPage() {
   const shop = useShop();
   const { locale } = useI18n();
   const { orders, hydrated } = useCart();
+  const itemNames = orders.flatMap((order) => order.items.map((item) => item.name));
+  const { texts: localizedItemNames } = useTranslatedTexts(itemNames, "order-list-items");
+  let itemNameIndex = 0;
+
+  const statusLabel = (status: (typeof orders)[number]["status"]) => {
+    if (status === "pending") return shop.trackPending;
+    if (status === "paid") return shop.trackPaid;
+    if (status === "fulfilled") return shop.trackFulfilled;
+    if (status === "cancelled") return shop.trackCancelled;
+    if (status === "refunded") return shop.trackRefunded;
+    return status;
+  };
 
   if (!ready || !hydrated) return null;
 
@@ -47,7 +60,7 @@ export default function OrdersPage() {
                       <p className="font-medium text-[var(--ink)]">{order.id}</p>
                       <p className="text-xs text-[var(--ink-muted)]">
                         {new Date(order.createdAt).toLocaleString(locale)}
-                        {order.demo ? " · demo" : ""}
+                        {order.demo ? ` · ${shop.demoLabel}` : ""}
                       </p>
                     </div>
                     <div className="text-end">
@@ -55,12 +68,14 @@ export default function OrdersPage() {
                         {formatMoney(order.totalCents, order.currency, locale)}
                       </p>
                       <p className="text-xs capitalize text-[var(--accent-deep)]">
-                        {shop.orderStatus}: {order.status}
+                        {shop.orderStatus}: {statusLabel(order.status)}
                       </p>
                     </div>
                   </div>
                   <p className="mt-2 text-xs text-[var(--ink-soft)]">
-                    {order.items.map((i) => `${i.name} ×${i.quantity}`).join(" · ")}
+                    {order.items
+                      .map((i) => `${localizedItemNames[itemNameIndex++] || i.name} ×${i.quantity}`)
+                      .join(" · ")}
                   </p>
                 </Link>
               </li>

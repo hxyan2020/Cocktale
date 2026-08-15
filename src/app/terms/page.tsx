@@ -2,6 +2,7 @@
 
 import { AppNav } from "@/components/AppNav";
 import { useI18n } from "@/components/LanguageProvider";
+import { useTranslatedTexts } from "@/components/useTranslatedContent";
 
 const SECTIONS: { heading: string; body: string[] }[] = [
   {
@@ -77,6 +78,13 @@ const SECTIONS: { heading: string; body: string[] }[] = [
 
 export default function TermsPage() {
   const { t } = useI18n();
+  const source = SECTIONS.flatMap((section) => [section.heading, ...section.body]);
+  const { texts } = useTranslatedTexts(source, "terms-body");
+  let textIndex = 0;
+  const localizedSections = SECTIONS.map((section) => ({
+    heading: texts[textIndex++] || section.heading,
+    body: section.body.map((paragraph) => texts[textIndex++] || paragraph),
+  }));
 
   return (
     <>
@@ -88,7 +96,7 @@ export default function TermsPage() {
         <p className="mt-2 text-sm text-[var(--on-bg-muted)]">{t("terms.updated")}</p>
 
         <div className="mt-8 space-y-6 rounded-[1.5rem] bg-[var(--surface)] p-6 ring-1 ring-[var(--line)] sm:p-8">
-          {SECTIONS.map((section) => (
+          {localizedSections.map((section) => (
             <section key={section.heading}>
               <h2 className="font-[family-name:var(--font-display)] text-xl text-[var(--ink)]">
                 {section.heading}

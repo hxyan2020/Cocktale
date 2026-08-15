@@ -20,6 +20,8 @@ import { convertMeasure } from "@/lib/units";
 import { equipmentInfo, glassInfo, ingredientInfo } from "@/lib/item-info";
 import { useMeasureUnit } from "@/components/MeasureUnitProvider";
 import { ItemInfoTrigger } from "@/components/ItemInfoTrigger";
+import { useLocalizedCocktail, useTranslatedTexts } from "@/components/useTranslatedContent";
+import type { Product } from "@/lib/commerce-types";
 
 type Props = {
   cocktail: Cocktail;
@@ -28,6 +30,11 @@ type Props = {
   onCollect: () => void;
   onTried: () => void;
 };
+
+function LocalizedProductLabel({ product }: { product: Product }) {
+  const { texts } = useTranslatedTexts([product.name], `product-name:${product.id}`);
+  return <>{texts[0] || product.name}</>;
+}
 
 export function CocktailDetail({
   cocktail,
@@ -45,9 +52,10 @@ export function CocktailDetail({
   const [extraGallery, setExtraGallery] = useState<GalleryImage[]>([]);
   const [galleryLoaded, setGalleryLoaded] = useState(false);
   const [failedGalleryIds, setFailedGalleryIds] = useState<Set<string>>(new Set());
+  const localized = useLocalizedCocktail(cocktail);
 
   const equipment = useMemo(() => inferEquipment(cocktail), [cocktail]);
-  const recipeSteps = useMemo(() => expandMakeSteps(cocktail), [cocktail]);
+  const recipeSteps = useMemo(() => expandMakeSteps(localized), [localized]);
   const localGallery = useMemo(() => getCocktailGallery(cocktail, 6), [cocktail]);
   const gallery = useMemo(
     () =>
@@ -92,7 +100,7 @@ export function CocktailDetail({
 
   const steps = useMemo(() => {
     const checklist = preparationChecklistSteps(
-      cocktail,
+      localized,
       equipment,
       {
         ingredients: t("detail.ingredients"),
@@ -106,11 +114,11 @@ export function CocktailDetail({
     );
     return [
       ...checklist,
-      t("detail.prepGlassStep", { glass: cocktail.glass }),
+      t("detail.prepGlassStep", { glass: localized.glass }),
       ...recipeSteps,
       t("detail.finishStep"),
     ];
-  }, [cocktail, equipment, recipeSteps, t, unit]);
+  }, [localized, equipment, recipeSteps, t, unit]);
 
   const activeGallery = gallery[galleryIndex] ?? gallery[0];
 
@@ -126,7 +134,7 @@ export function CocktailDetail({
         <div className="relative h-[min(38vh,15.5rem)] w-full sm:aspect-[4/3] sm:h-auto sm:min-h-80">
           <Image
             src={cocktail.image || "/cocktail-fallback.svg"}
-            alt={cocktail.name}
+            alt={localized.name}
             fill
             className="object-cover"
             sizes="(max-width: 640px) 100vw, 512px"
@@ -145,13 +153,13 @@ export function CocktailDetail({
         <div className="space-y-6 p-4 sm:p-6">
           <header>
             <p className="break-words text-xs font-medium tracking-[0.18em] uppercase text-[var(--accent-deep)]">
-              {cocktail.category}
+              {localized.category}
               {cocktail.iba ? ` · IBA ${cocktail.iba}` : ""}
             </p>
             <h2 className="mt-2 font-[family-name:var(--font-display)] text-3xl text-[var(--ink)]">
-              {cocktail.name}
+              {localized.name}
             </h2>
-            <p className="mt-1 text-sm text-[var(--ink-soft)]">{cocktail.origin}</p>
+            <p className="mt-1 text-sm text-[var(--ink-soft)]">{localized.origin}</p>
           </header>
 
           {galleryLoaded && gallery.length > 1 && (
@@ -184,7 +192,7 @@ export function CocktailDetail({
                     className="absolute bottom-3 end-3 max-w-[55%] truncate rounded-full bg-[rgba(28,22,16,0.7)] px-3 py-1 text-[10px] text-[var(--foam)] backdrop-blur hover:underline"
                     title={`${activeGallery.credit}${activeGallery.license ? ` · ${activeGallery.license}` : ""}`}
                   >
-                    Photo: {activeGallery.credit}
+                    {shop.photo}: {activeGallery.credit}
                   </a>
                 )}
               </div>
@@ -219,7 +227,7 @@ export function CocktailDetail({
           <section>
             <h3 className="text-sm font-semibold text-[var(--ink)]">{t("detail.theTale")}</h3>
             <p className="mt-2 text-[15px] leading-relaxed text-[var(--ink-soft)]">
-              {cocktail.story}
+              {localized.story}
             </p>
           </section>
 
@@ -227,7 +235,7 @@ export function CocktailDetail({
             <div>
               <h3 className="text-sm font-semibold text-[var(--ink)]">{t("detail.bestFor")}</h3>
               <ul className="mt-2 space-y-1 text-sm text-[var(--ink-soft)]">
-                {cocktail.suitableFor.map((p) => (
+                {localized.suitableFor.map((p) => (
                   <li key={p}>· {p}</li>
                 ))}
               </ul>
@@ -235,7 +243,7 @@ export function CocktailDetail({
             <div>
               <h3 className="text-sm font-semibold text-[var(--ink)]">{t("detail.situations")}</h3>
               <ul className="mt-2 space-y-1 text-sm text-[var(--ink-soft)]">
-                {cocktail.situations.map((s) => (
+                {localized.situations.map((s) => (
                   <li key={s}>· {s}</li>
                 ))}
               </ul>
@@ -245,13 +253,15 @@ export function CocktailDetail({
           <section>
             <h3 className="text-sm font-semibold text-[var(--ink)]">{t("detail.ingredients")}</h3>
             <ul className="mt-2 space-y-2">
-              {cocktail.ingredients.map((ing) => (
+              {cocktail.ingredients.map((ing, ingredientIndex) => (
                 <li
                   key={ing.name}
                   className="flex items-start justify-between gap-3 border-b border-[var(--line)] pb-2 text-sm"
                 >
                   <ItemInfoTrigger info={ingredientInfo(ing.name)} className="min-w-0">
-                    <span className="break-words text-[var(--ink)]">{ing.name}</span>
+                    <span className="break-words text-[var(--ink)]">
+                      {localized.ingredients[ingredientIndex]?.name || ing.name}
+                    </span>
                   </ItemInfoTrigger>
                   <span className="shrink-0 pt-0.5 text-end text-[var(--ink-muted)]">
                     {ing.measure
@@ -279,7 +289,7 @@ export function CocktailDetail({
               </div>
               <div className="rounded-xl bg-[var(--surface)] px-3 py-2 text-sm text-[var(--ink)] ring-1 ring-[var(--line)]">
                 <ItemInfoTrigger info={glassInfo(cocktail.glass)} className="w-full">
-                  <span>{cocktail.glass}</span>
+                  <span>{localized.glass}</span>
                 </ItemInfoTrigger>
               </div>
             </div>
@@ -328,9 +338,6 @@ export function CocktailDetail({
                 </li>
               ))}
             </ol>
-            <p className="mt-3 text-xs leading-relaxed text-[var(--ink-muted)]">
-              {t("content.recipeNote")}
-            </p>
           </section>
 
           {shopProducts.length > 0 && (
@@ -375,7 +382,9 @@ export function CocktailDetail({
                             />
                           </Link>
                           <Link href={`/market/${p.slug}`} className="min-w-0 flex-1">
-                            <p className="truncate text-sm text-[var(--ink)]">{p.name}</p>
+                            <p className="truncate text-sm text-[var(--ink)]">
+                              <LocalizedProductLabel product={p} />
+                            </p>
                             <p className="text-xs text-[var(--ink-muted)]">
                               {formatMoney(p.priceCents, p.currency, locale)}
                             </p>

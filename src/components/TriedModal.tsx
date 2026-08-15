@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Cocktail } from "@/lib/types";
 import { useI18n } from "@/components/LanguageProvider";
+import { useLocalizedCocktail } from "@/components/useTranslatedContent";
 
 type Props = {
   cocktail: Cocktail;
@@ -12,6 +13,7 @@ type Props = {
 
 export function TriedModal({ cocktail, onClose, onSave }: Props) {
   const { t } = useI18n();
+  const localized = useLocalizedCocktail(cocktail);
   const [triedAt, setTriedAt] = useState(() => new Date().toISOString().slice(0, 10));
   const [note, setNote] = useState("");
 
@@ -20,7 +22,7 @@ export function TriedModal({ cocktail, onClose, onSave }: Props) {
       <button type="button" className="absolute inset-0" aria-label={t("detail.close")} onClick={onClose} />
       <div className="relative z-10 w-full max-w-md rounded-[1.5rem] bg-[var(--surface)] p-6 shadow-2xl">
         <h2 className="font-[family-name:var(--font-display)] text-2xl text-[var(--ink)]">
-          {t("triedModal.title", { name: cocktail.name })}
+          {t("triedModal.title", { name: localized.name })}
         </h2>
         <p className="mt-1 text-sm text-[var(--ink-soft)]">{t("triedModal.subtitle")}</p>
 

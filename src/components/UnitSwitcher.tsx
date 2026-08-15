@@ -1,6 +1,7 @@
 "use client";
 
 import { useMeasureUnit } from "@/components/MeasureUnitProvider";
+import { useI18n } from "@/components/LanguageProvider";
 import type { MeasureUnit } from "@/lib/units";
 
 const LABELS: Record<MeasureUnit, string> = {
@@ -16,13 +17,14 @@ type Props = {
 
 export function UnitSwitcher({ className = "", size = "sm" }: Props) {
   const { unit, setUnit, units } = useMeasureUnit();
+  const { t } = useI18n();
   const pad = size === "sm" ? "px-2 py-0.5 text-[10px] sm:px-2.5 sm:py-1 sm:text-[11px]" : "px-3 py-1.5 text-xs";
 
   return (
     <div
       className={`inline-flex shrink-0 items-center rounded-full bg-[var(--chip)] p-0.5 ${className}`}
       role="group"
-      aria-label="Measurement units"
+      aria-label={t("nav.measure")}
     >
       {units.map((u) => (
         <button

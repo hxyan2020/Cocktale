@@ -9,6 +9,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
 import { useI18n } from "@/components/LanguageProvider";
 import { useShop } from "@/components/useShop";
+import { useTranslatedTexts } from "@/components/useTranslatedContent";
 import { formatMoney, getProduct, productImageClass, productImageUnoptimized } from "@/lib/products";
 import type { Order, OrderLine } from "@/lib/commerce-types";
 
@@ -50,12 +51,18 @@ export default function CartPage() {
     (sum, l) => sum + l.product.priceCents * l.item.quantity,
     0,
   );
+  const productNames = useMemo(() => lines.map((line) => line.product.name), [lines]);
+  const { texts: localizedProductNames } = useTranslatedTexts(productNames, "cart-products");
+  const { texts: localizedError } = useTranslatedTexts(
+    error ? [error] : [],
+    "checkout-error",
+  );
 
   async function checkout() {
     if (lines.length === 0) return;
     setBusy(true);
     setError("");
-    const buyer = user ?? { id: "guest", email: "guest@cocktale.app", name: "Guest" };
+    const buyer = user ?? { id: "guest", email: "guest@cocktale.app", name: shop.guest };
     try {
       const origin = window.location.origin;
       const res = await fetch("/api/checkout", {
@@ -148,7 +155,7 @@ export default function CartPage() {
           </div>
         ) : (
           <div className="mt-8 space-y-4">
-            {lines.map(({ item, product }) => (
+            {lines.map(({ item, product }, lineIndex) => (
               <div
                 key={product.id}
                 className="flex gap-4 rounded-[1.25rem] bg-[var(--surface)] p-4 ring-1 ring-[var(--line)]"
@@ -156,7 +163,7 @@ export default function CartPage() {
                 <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-[#f3efe6]">
                   <Image
                     src={product.images[0]?.url || "/cocktail-fallback.svg"}
-                    alt={product.name}
+                    alt={localizedProductNames[lineIndex] || product.name}
                     fill
                     className={productImageClass(product.images[0]?.url || "", "thumb")}
                     sizes="80px"
@@ -165,7 +172,7 @@ export default function CartPage() {
                 </div>
                 <div className="min-w-0 flex-1">
                   <Link href={`/market/${product.slug}`} className="font-medium text-[var(--ink)]">
-                    {product.name}
+                    {localizedProductNames[lineIndex] || product.name}
                   </Link>
                   <p className="text-sm text-[var(--ink-muted)]">
                     {formatMoney(product.priceCents, product.currency, locale)}
@@ -207,7 +214,7 @@ export default function CartPage() {
             {checkoutMode === "demo" && (
               <p className="text-sm text-[var(--on-bg-accent)]">{shop.stripeMissing}</p>
             )}
-            {error && <p className="text-sm text-red-300">{error}</p>}
+            {error && <p className="text-sm text-red-300">{localizedError[0] || error}</p>}
 
             <button
               type="button"

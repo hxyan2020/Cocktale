@@ -8,6 +8,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { useI18n } from "@/components/LanguageProvider";
 import { CocktailDetail } from "@/components/CocktailDetail";
 import { TriedModal } from "@/components/TriedModal";
+import { useLocalizedCocktail, useTranslatedTexts } from "@/components/useTranslatedContent";
 import { cocktailCategories, searchCocktails } from "@/lib/cocktails";
 import { maybeAdvanceRankOffset, getRankOffset, rotateRanked } from "@/lib/rank-rotation";
 import type { Cocktail, WeatherBucket } from "@/lib/types";
@@ -40,14 +41,67 @@ function formatOrigin(origin: string) {
   );
 }
 
-function cocktailIntro(cocktail: Cocktail) {
-  const category = cocktail.category.toLowerCase();
-  const flavors = cocktail.flavorProfile.slice(0, 3).join(", ");
-  const profile = flavors ? ` with ${flavors} notes` : "";
-  const categoryArticle = /^[aeiou]/.test(category) ? "An" : "A";
-  const glass = cocktail.glass.toLowerCase();
-  const glassArticle = /^[aeiou]/.test(glass) ? "an" : "a";
-  return `${categoryArticle} ${category}${profile}, traditionally served in ${glassArticle} ${glass}.`;
+function CatalogueCard({
+  cocktail,
+  onSelect,
+}: {
+  cocktail: Cocktail;
+  onSelect: (cocktail: Cocktail) => void;
+}) {
+  const cardRef = useRef<HTMLButtonElement | null>(null);
+  const [visible, setVisible] = useState(false);
+  const withFlags = useMemo(
+    () => ({ ...cocktail, origin: formatOrigin(cocktail.origin) }),
+    [cocktail],
+  );
+  const localized = useLocalizedCocktail(withFlags, visible);
+
+  useEffect(() => {
+    const node = cardRef.current;
+    if (!node || visible) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "240px" },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [visible]);
+
+  return (
+    <button
+      ref={cardRef}
+      type="button"
+      onClick={() => onSelect(cocktail)}
+      className="flex h-full flex-col overflow-hidden rounded-[1.15rem] bg-[var(--surface)] text-left ring-1 ring-[var(--line)] transition hover:-translate-y-0.5 hover:shadow-lg"
+    >
+      <div className="relative h-32 w-full bg-[#ebe8e0] sm:h-40">
+        <Image
+          src={cocktail.image || "/cocktail-fallback.svg"}
+          alt={localized.name}
+          fill
+          className="object-contain"
+          sizes="(max-width: 640px) 50vw, 240px"
+        />
+      </div>
+      <div className="flex flex-1 flex-col p-3 sm:p-4">
+        <h2 className="line-clamp-2 font-[family-name:var(--font-display)] text-base leading-tight text-[var(--ink)] sm:text-lg">
+          {localized.name}
+        </h2>
+        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-[var(--ink-soft)] sm:text-sm">
+          {localized.description}
+        </p>
+        <p className="mt-2 line-clamp-2 text-[11px] text-[var(--ink-muted)] sm:text-xs">
+          {localized.category}
+          {localized.origin ? ` · ${localized.origin}` : ""}
+        </p>
+      </div>
+    </button>
+  );
 }
 
 export default function CataloguePage() {
@@ -124,6 +178,7 @@ export default function CataloguePage() {
   }, [accountId, ranked.length]);
 
   const categories = useMemo(() => cocktailCategories(), []);
+  const { texts: categoryLabels } = useTranslatedTexts(categories, "cocktail-categories");
 
   const list = useMemo(() => {
     const filtered =
@@ -176,7 +231,7 @@ export default function CataloguePage() {
           >
             {t("catalogue.all")}
           </button>
-          {categories.map((c) => (
+          {categories.map((c, categoryIndex) => (
             <button
               key={c}
               type="button"
@@ -187,7 +242,7 @@ export default function CataloguePage() {
                   : "bg-[var(--chip)] text-[var(--ink-soft)]"
               }`}
             >
-              {c}
+              {categoryLabels[categoryIndex] || c}
             </button>
           ))}
         </div>
@@ -207,34 +262,11 @@ export default function CataloguePage() {
         ) : (
           <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
             {list.map((cocktail) => (
-              <button
+              <CatalogueCard
                 key={cocktail.id}
-                type="button"
-                onClick={() => setSelected(cocktail)}
-                className="flex h-full flex-col overflow-hidden rounded-[1.15rem] bg-[var(--surface)] text-left ring-1 ring-[var(--line)] transition hover:-translate-y-0.5 hover:shadow-lg"
-              >
-                <div className="relative h-32 w-full bg-[#ebe8e0] sm:h-40">
-                  <Image
-                    src={cocktail.image || "/cocktail-fallback.svg"}
-                    alt={cocktail.name}
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 640px) 50vw, 240px"
-                  />
-                </div>
-                <div className="flex flex-1 flex-col p-3 sm:p-4">
-                  <h2 className="line-clamp-2 font-[family-name:var(--font-display)] text-base leading-tight text-[var(--ink)] sm:text-lg">
-                    {cocktail.name}
-                  </h2>
-                  <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-[var(--ink-soft)] sm:text-sm">
-                    {cocktailIntro(cocktail)}
-                  </p>
-                  <p className="mt-2 line-clamp-2 text-[11px] text-[var(--ink-muted)] sm:text-xs">
-                    {cocktail.category}
-                    {cocktail.origin ? ` · ${formatOrigin(cocktail.origin)}` : ""}
-                  </p>
-                </div>
-              </button>
+                cocktail={cocktail}
+                onSelect={setSelected}
+              />
             ))}
           </div>
         )}

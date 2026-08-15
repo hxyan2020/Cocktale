@@ -11,9 +11,18 @@ import { CocktailDetail } from "@/components/CocktailDetail";
 import { useI18n } from "@/components/LanguageProvider";
 import { TriedModal } from "@/components/TriedModal";
 import { useShop } from "@/components/useShop";
+import { useLocalizedProduct, useTranslatedTexts } from "@/components/useTranslatedContent";
 import { getCocktail } from "@/lib/cocktails";
 import { formatMoney, getProductBySlug, productImageClass, productImageUnoptimized } from "@/lib/products";
 import type { Cocktail } from "@/lib/types";
+
+function LocalizedCocktailName({ cocktail }: { cocktail: Cocktail }) {
+  const { texts } = useTranslatedTexts(
+    [cocktail.name],
+    `cocktail-name:${cocktail.id}`,
+  );
+  return <>{texts[0] || cocktail.name}</>;
+}
 
 export default function ProductDetailPage() {
   const params = useParams<{ slug: string }>();
@@ -22,6 +31,7 @@ export default function ProductDetailPage() {
   const { locale } = useI18n();
   const { addItem } = useCart();
   const product = useMemo(() => getProductBySlug(params.slug), [params.slug]);
+  const localizedProduct = useLocalizedProduct(product);
   const [active, setActive] = useState(0);
   const [added, setAdded] = useState(false);
   const [selected, setSelected] = useState<Cocktail | null>(null);
@@ -34,7 +44,7 @@ export default function ProductDetailPage() {
       <>
         <AppNav />
         <main className="mx-auto max-w-3xl px-4 py-16 text-center text-[var(--ink-soft)]">
-          Product not found.{" "}
+          {shop.productNotFound}{" "}
           <Link href="/market" className="underline">
             {shop.continueShopping}
           </Link>
@@ -43,6 +53,7 @@ export default function ProductDetailPage() {
     );
   }
 
+  const displayProduct = localizedProduct ?? product;
   const related = product.relatedCocktailIds
     .map((id) => getCocktail(id))
     .filter(Boolean)
@@ -57,7 +68,7 @@ export default function ProductDetailPage() {
             <div className="relative aspect-square overflow-hidden rounded-[1.5rem] bg-[#f3efe6] ring-1 ring-[var(--line)]">
               <Image
                 src={product.images[active]?.url || "/cocktail-fallback.svg"}
-                alt={product.images[active]?.alt || product.name}
+                alt={displayProduct.name}
                 fill
                 className={productImageClass(product.images[active]?.url || "", "hero")}
                 sizes="560px"
@@ -80,7 +91,7 @@ export default function ProductDetailPage() {
                 >
                   <Image
                     src={img.url}
-                    alt={img.alt}
+                    alt={`${displayProduct.name} ${i + 1}`}
                     fill
                     className={productImageClass(img.url, "thumb")}
                     sizes="80px"
@@ -94,13 +105,13 @@ export default function ProductDetailPage() {
           <section className="space-y-5">
             <div>
               <p className="text-xs uppercase tracking-wide text-[var(--on-bg-accent)]">
-                {product.subcategory}
+                {displayProduct.subcategory}
               </p>
               <h1 className="mt-1 font-[family-name:var(--font-display)] text-4xl text-[var(--on-bg)]">
-                {product.name}
+                {displayProduct.name}
               </h1>
               <p className="mt-2 text-sm text-[var(--on-bg-muted)]">
-                {shop.brand}: {product.brand} · {shop.unit}: {product.unit}
+                {shop.brand}: {product.brand} · {shop.unit}: {displayProduct.unit}
               </p>
             </div>
 
@@ -112,7 +123,7 @@ export default function ProductDetailPage() {
             </p>
 
             <p className="text-[15px] leading-relaxed text-[var(--on-bg-soft)]">
-              {product.longDescription}
+              {displayProduct.longDescription}
             </p>
 
             <button
@@ -131,7 +142,7 @@ export default function ProductDetailPage() {
             <div>
               <h2 className="text-sm font-semibold text-[var(--on-bg)]">{shop.specs}</h2>
               <ul className="mt-2 divide-y divide-[var(--line)] rounded-2xl bg-[var(--surface)] ring-1 ring-[var(--line)]">
-                {product.specs.map((s) => (
+                {displayProduct.specs.map((s) => (
                   <li
                     key={s.label}
                     className="flex items-baseline justify-between gap-4 px-4 py-3 text-sm"
@@ -155,7 +166,7 @@ export default function ProductDetailPage() {
                           onClick={() => setSelected(c)}
                           className="rounded-full bg-[var(--chip)] px-3 py-1 text-xs text-[var(--ink-soft)] transition hover:bg-[var(--chip-hover)] hover:text-[var(--ink)]"
                         >
-                          {c.name}
+                          <LocalizedCocktailName cocktail={c} />
                         </button>
                       </li>
                     ) : null,

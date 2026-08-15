@@ -96,7 +96,7 @@ export default function OrderSuccessClient() {
                 productId?: string;
               }) => ({
                 productId: li.productId || "stripe-line",
-                name: li.name || "Item",
+                name: li.name || shop.item,
                 unitAmountCents: li.quantity
                   ? Math.round((li.amountTotal || 0) / li.quantity)
                   : 0,
@@ -137,6 +137,7 @@ export default function OrderSuccessClient() {
     findOrderBySession,
     getOrder,
     saveOrder,
+    shop.item,
     updateOrder,
   ]);
 

@@ -14,6 +14,7 @@ import { Info, X } from "lucide-react";
 import { SketchIllustration } from "@/components/SketchIllustration";
 import type { ItemInfo } from "@/lib/item-info";
 import { useI18n } from "@/components/LanguageProvider";
+import { useTranslatedTexts } from "@/components/useTranslatedContent";
 
 type Props = {
   info: ItemInfo;
@@ -37,6 +38,13 @@ export function ItemInfoTrigger({ info, children, className = "" }: Props) {
   const [coords, setCoords] = useState({ top: 0, left: 0 });
   const [mounted, setMounted] = useState(false);
   const [imageFailed, setImageFailed] = useState(false);
+  const { texts: localizedInfo } = useTranslatedTexts(
+    [info.title, info.blurb],
+    `item-info:${info.sketch}:${info.title}`,
+    open,
+  );
+  const localizedTitle = localizedInfo[0] || info.title;
+  const localizedBlurb = localizedInfo[1] || info.blurb;
 
   useEffect(() => setMounted(true), []);
 
@@ -117,7 +125,7 @@ export function ItemInfoTrigger({ info, children, className = "" }: Props) {
       <button
         type="button"
         className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[var(--ink-muted)] ring-1 ring-[var(--line)] transition hover:bg-[var(--chip)] hover:text-[var(--ink)] md:hidden"
-        aria-label={`${info.title} — info`}
+        aria-label={`${localizedTitle} — ${t("detail.ingredients")}`}
         aria-expanded={open}
         aria-controls={panelId}
         onClick={(e) => {
@@ -142,7 +150,7 @@ export function ItemInfoTrigger({ info, children, className = "" }: Props) {
             <div
               id={panelId}
               role="dialog"
-              aria-label={info.title}
+              aria-label={localizedTitle}
               className="fixed z-[80] w-[min(240px,calc(100vw-24px))] overflow-hidden rounded-2xl bg-[var(--surface)] text-[var(--ink)] shadow-[0_18px_50px_rgba(28,22,16,0.22)] ring-1 ring-[var(--line)]"
               style={{ top: coords.top, left: coords.left }}
               onMouseEnter={() => {
@@ -167,7 +175,7 @@ export function ItemInfoTrigger({ info, children, className = "" }: Props) {
                   {info.imageUrl && !imageFailed ? (
                     <Image
                       src={info.imageUrl}
-                      alt={info.title}
+                      alt={localizedTitle}
                       fill
                       className={info.imageFit === "cover" ? "object-cover" : "object-contain p-3"}
                       sizes="240px"
@@ -179,10 +187,10 @@ export function ItemInfoTrigger({ info, children, className = "" }: Props) {
                   )}
                 </div>
                 <p className="mt-3 text-center font-[family-name:var(--font-display)] text-lg leading-tight text-[var(--ink)]">
-                  {info.title}
+                  {localizedTitle}
                 </p>
                 <p className="mt-1.5 text-center text-[13px] leading-snug text-[var(--ink-soft)]">
-                  {info.blurb}
+                  {localizedBlurb}
                 </p>
               </div>
             </div>

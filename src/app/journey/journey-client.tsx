@@ -9,10 +9,36 @@ import { useAuth } from "@/components/AuthProvider";
 import { useI18n } from "@/components/LanguageProvider";
 import { CocktailDetail } from "@/components/CocktailDetail";
 import { TriedModal } from "@/components/TriedModal";
+import { useTranslatedTexts } from "@/components/useTranslatedContent";
 import { getCocktail } from "@/lib/cocktails";
 import type { Cocktail, JournalEntry } from "@/lib/types";
 
 type Tab = "collected" | "tried";
+
+function CocktailIdentity({
+  cocktail,
+  showOrigin = false,
+}: {
+  cocktail: Cocktail;
+  showOrigin?: boolean;
+}) {
+  const { texts } = useTranslatedTexts(
+    [cocktail.name, cocktail.origin],
+    `cocktail-identity:${cocktail.id}`,
+  );
+  return (
+    <>
+      <h2 className="font-[family-name:var(--font-display)] text-xl text-[var(--ink)]">
+        {texts[0] || cocktail.name}
+      </h2>
+      {showOrigin && (
+        <p className="mt-1 line-clamp-1 text-xs text-[var(--ink-muted)]">
+          {texts[1] || cocktail.origin}
+        </p>
+      )}
+    </>
+  );
+}
 
 export default function JourneyPageClient() {
   const { ready, data, collect, markTried, isCollected, requireAuth, editJournal, deleteJournal } =
@@ -113,12 +139,7 @@ export default function JourneyPageClient() {
                     />
                   </div>
                   <div className="p-4">
-                    <h2 className="font-[family-name:var(--font-display)] text-xl text-[var(--ink)]">
-                      {cocktail.name}
-                    </h2>
-                    <p className="mt-1 line-clamp-1 text-xs text-[var(--ink-muted)]">
-                      {cocktail.origin}
-                    </p>
+                    <CocktailIdentity cocktail={cocktail} showOrigin />
                     <p className="mt-2 text-xs text-[var(--ink-muted)]">
                       {t("book.collectedOn", { date: formatDate(meta.collectedAt) })}
                     </p>
@@ -150,9 +171,7 @@ export default function JourneyPageClient() {
                 <div className="min-w-0 flex-1">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h2 className="font-[family-name:var(--font-display)] text-xl text-[var(--ink)]">
-                        {cocktail.name}
-                      </h2>
+                      <CocktailIdentity cocktail={cocktail} />
                       <p className="text-xs text-[var(--ink-muted)]">
                         {t("journal.triedOn", { date: formatDate(entry.triedAt) })}
                       </p>
