@@ -9,7 +9,6 @@ import {
   LogIn,
   LogOut,
   Package,
-  PencilLine,
   Settings2,
   ShoppingCart,
   Store,
@@ -67,7 +66,7 @@ function NavMenu({
         <div
           id={panelId}
           role="menu"
-          className="absolute end-0 top-[calc(100%+0.4rem)] z-50 min-w-[14.5rem] rounded-2xl bg-[var(--surface)] p-2 shadow-lg ring-1 ring-[var(--line)]"
+          className="absolute end-0 top-[calc(100%+0.4rem)] z-50 min-w-[16rem] rounded-2xl bg-[var(--surface)] p-2 shadow-lg ring-1 ring-[var(--line)]"
         >
           {children}
         </div>
@@ -115,7 +114,6 @@ export function AppNav() {
     pathname.startsWith("/orders") ||
     pathname.startsWith("/book") ||
     pathname.startsWith("/journal") ||
-    pathname.startsWith("/admin") ||
     pathname.startsWith("/login");
 
   const navLinkClass = (href: string) => {
@@ -231,7 +229,7 @@ export function AppNav() {
                 <p className="mb-2 text-[11px] font-medium tracking-wide text-[var(--ink-muted)] uppercase">
                   {t("language.label")}
                 </p>
-                <LanguageSwitcher compact className="w-full" />
+                <LanguageSwitcher compact variant="list" className="w-full" />
               </div>
             </div>
           </NavMenu>
