@@ -7,20 +7,25 @@ import { useParams } from "next/navigation";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
+import { CocktailDetail } from "@/components/CocktailDetail";
 import { useI18n } from "@/components/LanguageProvider";
+import { TriedModal } from "@/components/TriedModal";
 import { useShop } from "@/components/useShop";
-import { formatMoney, getProductBySlug, productImageClass, productImageUnoptimized } from "@/lib/products";
 import { getCocktail } from "@/lib/cocktails";
+import { formatMoney, getProductBySlug, productImageClass, productImageUnoptimized } from "@/lib/products";
+import type { Cocktail } from "@/lib/types";
 
 export default function ProductDetailPage() {
   const params = useParams<{ slug: string }>();
-  const { ready } = useAuth();
+  const { ready, collect, markTried, isCollected, requireAuth } = useAuth();
   const shop = useShop();
   const { locale } = useI18n();
   const { addItem } = useCart();
   const product = useMemo(() => getProductBySlug(params.slug), [params.slug]);
   const [active, setActive] = useState(0);
   const [added, setAdded] = useState(false);
+  const [selected, setSelected] = useState<Cocktail | null>(null);
+  const [triedOpen, setTriedOpen] = useState(false);
 
   if (!ready) return null;
 
@@ -144,11 +149,14 @@ export default function ProductDetailPage() {
                 <ul className="mt-2 flex flex-wrap gap-2">
                   {related.map((c) =>
                     c ? (
-                      <li
-                        key={c.id}
-                        className="rounded-full bg-[var(--chip)] px-3 py-1 text-xs text-[var(--ink-soft)]"
-                      >
-                        {c.name}
+                      <li key={c.id}>
+                        <button
+                          type="button"
+                          onClick={() => setSelected(c)}
+                          className="rounded-full bg-[var(--chip)] px-3 py-1 text-xs text-[var(--ink-soft)] transition hover:bg-[var(--chip-hover)] hover:text-[var(--ink)]"
+                        >
+                          {c.name}
+                        </button>
                       </li>
                     ) : null,
                   )}
@@ -158,6 +166,27 @@ export default function ProductDetailPage() {
           </section>
         </div>
       </main>
+
+      {selected && (
+        <CocktailDetail
+          cocktail={selected}
+          collected={isCollected(selected.id)}
+          onClose={() => setSelected(null)}
+          onCollect={() => collect(selected.id)}
+          onTried={() => requireAuth(() => setTriedOpen(true))}
+        />
+      )}
+
+      {triedOpen && selected && (
+        <TriedModal
+          cocktail={selected}
+          onClose={() => setTriedOpen(false)}
+          onSave={(triedAt, note) => {
+            markTried(selected.id, triedAt, note);
+            setTriedOpen(false);
+          }}
+        />
+      )}
     </>
   );
 }
