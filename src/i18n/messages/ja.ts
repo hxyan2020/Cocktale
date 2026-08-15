@@ -121,6 +121,23 @@ export const ja: Messages = {
     tried: "飲んだカクテル",
   },
   language: { label: "言語", choose: "言語を選択" },
+  footer: {
+    terms: "利用規約",
+    contact: "お問い合わせ",
+    rights: "© {year} Cocktale. All rights reserved.",
+  },
+  contact: {
+    title: "お問い合わせ",
+    subtitle: "注文・レシピ・アカウントについてのご質問は、Cocktale チームまで。",
+    customerService: "カスタマーサービス",
+    telegram: "Telegram でメッセージ",
+    email: "メール",
+    hours: "通常、営業日 1 日以内にご返信します。",
+  },
+  terms: {
+    title: "利用規約",
+    updated: "最終更新：2026 年 8 月 15 日",
+  },
   content: { recipeNote: "レシピ詳細はデータベースの原文で表示されます。" },
   errors: {
     emailExists: "このメールのアカウントは既にあります。",

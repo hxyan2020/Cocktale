@@ -122,6 +122,23 @@ export const uk: Messages = {
     tried: "Коктейлі, які я спробував",
   },
   language: { label: "Мова", choose: "Обрати мову" },
+  footer: {
+    terms: "Умови використання",
+    contact: "Зв'язатися з нами",
+    rights: "© {year} Cocktale. Усі права захищено.",
+  },
+  contact: {
+    title: "Зв'язатися з нами",
+    subtitle: "Питання щодо замовлення, рецепта чи акаунта? Напишіть команді Cocktale.",
+    customerService: "Служба підтримки",
+    telegram: "Написати в Telegram",
+    email: "Ел. пошта",
+    hours: "Зазвичай відповідаємо протягом одного робочого дня.",
+  },
+  terms: {
+    title: "Умови використання",
+    updated: "Оновлено: 15 серпня 2026",
+  },
   content: {
     recipeNote: "Деталі рецепта з бази показано мовою оригіналу.",
   },
@@ -254,6 +271,23 @@ export const ms: Messages = {
     tried: "Koktel yang saya cuba",
   },
   language: { label: "Bahasa", choose: "Pilih bahasa" },
+  footer: {
+    terms: "Terma penggunaan",
+    contact: "Hubungi kami",
+    rights: "© {year} Cocktale. Hak cipta terpelihara.",
+  },
+  contact: {
+    title: "Hubungi kami",
+    subtitle: "Soalan tentang pesanan, resipi atau akaun? Hubungi pasukan Cocktale terus.",
+    customerService: "Khidmat pelanggan",
+    telegram: "Mesej melalui Telegram",
+    email: "E-mel",
+    hours: "Kami biasanya membalas dalam satu hari bekerja.",
+  },
+  terms: {
+    title: "Terma penggunaan",
+    updated: "Kemaskini terakhir: 15 Ogos 2026",
+  },
   content: {
     recipeNote: "Butiran resipi daripada pangkalan data dipaparkan dalam bahasa asal.",
   },
@@ -386,6 +420,23 @@ export const fa: Messages = {
     tried: "کوکتل‌هایی که چشیدم",
   },
   language: { label: "زبان", choose: "انتخاب زبان" },
+  footer: {
+    terms: "شرایط استفاده",
+    contact: "تماس با ما",
+    rights: "© {year} Cocktale. تمامی حقوق محفوظ است.",
+  },
+  contact: {
+    title: "تماس با ما",
+    subtitle: "سؤال درباره سفارش، دستور یا حساب؟ مستقیم با تیم Cocktale در تماس باشید.",
+    customerService: "پشتیبانی مشتریان",
+    telegram: "پیام در تلگرام",
+    email: "ایمیل",
+    hours: "معمولاً ظرف یک روز کاری پاسخ می‌دهیم.",
+  },
+  terms: {
+    title: "شرایط استفاده",
+    updated: "آخرین به‌روزرسانی: ۱۵ اوت ۲۰۲۶",
+  },
   content: {
     recipeNote: "جزئیات دستور از پایگاه‌داده به زبان اصلی نمایش داده می‌شود.",
   },
@@ -518,6 +569,23 @@ export const he: Messages = {
     tried: "קוקטיילים שטעמתי",
   },
   language: { label: "שפה", choose: "בחרו שפה" },
+  footer: {
+    terms: "תנאי שימוש",
+    contact: "צור קשר",
+    rights: "© {year} Cocktale. כל הזכויות שמורות.",
+  },
+  contact: {
+    title: "צור קשר",
+    subtitle: "שאלות על הזמנה, מתכון או החשבון? פנו ישירות לצוות Cocktale.",
+    customerService: "שירות לקוחות",
+    telegram: "שלחו הודעה בטלגרם",
+    email: "אימייל",
+    hours: "בדרך כלל נשיב תוך יום עסקים אחד.",
+  },
+  terms: {
+    title: "תנאי שימוש",
+    updated: "עודכן לאחרונה: 15 באוגוסט 2026",
+  },
   content: {
     recipeNote: "פרטי המתכון ממסד הנתונים מוצגים בשפת המקור.",
   },
@@ -650,6 +718,23 @@ export const sv: Messages = {
     tried: "Cocktails jag har provat",
   },
   language: { label: "Språk", choose: "Välj språk" },
+  footer: {
+    terms: "Användarvillkor",
+    contact: "Kontakta oss",
+    rights: "© {year} Cocktale. Alla rättigheter förbehållna.",
+  },
+  contact: {
+    title: "Kontakta oss",
+    subtitle: "Frågor om en beställning, ett recept eller ditt konto? Hör av dig till Cocktale-teamet.",
+    customerService: "Kundservice",
+    telegram: "Skicka meddelande på Telegram",
+    email: "E-post",
+    hours: "Vi svarar vanligtvis inom en arbetsdag.",
+  },
+  terms: {
+    title: "Användarvillkor",
+    updated: "Senast uppdaterad: 15 augusti 2026",
+  },
   content: {
     recipeNote: "Receptdetaljer från databasen visas på originalspråket.",
   },

@@ -122,6 +122,23 @@ export const hi: Messages = {
     tried: "कॉकटेल जो मैंने चखे",
   },
   language: { label: "भाषा", choose: "भाषा चुनें" },
+  footer: {
+    terms: "उपयोग की शर्तें",
+    contact: "संपर्क करें",
+    rights: "© {year} Cocktale. सर्वाधिकार सुरक्षित।",
+  },
+  contact: {
+    title: "संपर्क करें",
+    subtitle: "ऑर्डर, रेसिपी या खाते के बारे में सवाल? सीधे Cocktale टीम से बात करें।",
+    customerService: "ग्राहक सेवा",
+    telegram: "Telegram पर संदेश भेजें",
+    email: "ईमेल",
+    hours: "हम आमतौर पर एक व्यावसायिक दिन में जवाब देते हैं।",
+  },
+  terms: {
+    title: "उपयोग की शर्तें",
+    updated: "अंतिम अपडेट: 15 अगस्त 2026",
+  },
   content: { recipeNote: "रेसिपी विवरण डेटाबेस की मूल भाषा में दिखाए जाते हैं।" },
   errors: {
     emailExists: "इस ईमेल से खाता पहले से मौजूद है।",

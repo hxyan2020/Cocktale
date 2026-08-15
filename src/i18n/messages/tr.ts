@@ -122,6 +122,23 @@ export const tr: Messages = {
     tried: "Denediğim kokteyller",
   },
   language: { label: "Dil", choose: "Dil seçin" },
+  footer: {
+    terms: "Kullanım koşulları",
+    contact: "Bize ulaşın",
+    rights: "© {year} Cocktale. Tüm hakları saklıdır.",
+  },
+  contact: {
+    title: "Bize ulaşın",
+    subtitle: "Sipariş, tarif veya hesabınızla ilgili sorular için Cocktale ekibine yazın.",
+    customerService: "Müşteri hizmetleri",
+    telegram: "Telegram'dan yazın",
+    email: "E-posta",
+    hours: "Genellikle bir iş günü içinde yanıtlarız.",
+  },
+  terms: {
+    title: "Kullanım koşulları",
+    updated: "Son güncelleme: 15 Ağustos 2026",
+  },
   content: {
     recipeNote: "Tarif ayrıntıları veritabanından gelir ve orijinal dilde gösterilir.",
   },

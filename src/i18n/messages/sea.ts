@@ -152,6 +152,23 @@ export const vi: Messages = {
     tried: "Cocktail tôi đã thử",
   },
   language: { label: "Ngôn ngữ", choose: "Chọn ngôn ngữ" },
+  footer: {
+    terms: "Điều khoản sử dụng",
+    contact: "Liên hệ",
+    rights: "© {year} Cocktale. Bảo lưu mọi quyền.",
+  },
+  contact: {
+    title: "Liên hệ",
+    subtitle: "Câu hỏi về đơn hàng, công thức hoặc tài khoản? Liên hệ đội ngũ Cocktale.",
+    customerService: "Chăm sóc khách hàng",
+    telegram: "Nhắn tin qua Telegram",
+    email: "Email",
+    hours: "Chúng tôi thường phản hồi trong một ngày làm việc.",
+  },
+  terms: {
+    title: "Điều khoản sử dụng",
+    updated: "Cập nhật lần cuối: 15 tháng 8 năm 2026",
+  },
   content: { recipeNote: "Chi tiết công thức từ cơ sở dữ liệu, hiển thị bằng ngôn ngữ gốc." },
   errors: {
     emailExists: "Đã có tài khoản với email này.",
@@ -273,6 +290,23 @@ export const th: Messages = {
     tried: "ค็อกเทลที่ฉันลอง",
   },
   language: { label: "ภาษา", choose: "เลือกภาษา" },
+  footer: {
+    terms: "ข้อกำหนดการใช้งาน",
+    contact: "ติดต่อเรา",
+    rights: "© {year} Cocktale. สงวนลิขสิทธิ์",
+  },
+  contact: {
+    title: "ติดต่อเรา",
+    subtitle: "มีคำถามเกี่ยวกับคำสั่งซื้อ สูตร หรือบัญชี? ติดต่อทีม Cocktale ได้โดยตรง",
+    customerService: "ฝ่ายบริการลูกค้า",
+    telegram: "ข้อความผ่าน Telegram",
+    email: "อีเมล",
+    hours: "โดยปกติเราจะตอบกลับภายในหนึ่งวันทำการ",
+  },
+  terms: {
+    title: "ข้อกำหนดการใช้งาน",
+    updated: "อัปเดตล่าสุด: 15 สิงหาคม 2026",
+  },
   content: { recipeNote: "รายละเอียดสูตรมาจากฐานข้อมูลและแสดงเป็นภาษาต้นฉบับ" },
   errors: {
     emailExists: "มีบัญชีที่ใช้ อีเมลนี้แล้ว",
@@ -395,6 +429,23 @@ export const id: Messages = {
     tried: "Cocktail yang saya coba",
   },
   language: { label: "Bahasa", choose: "Pilih bahasa" },
+  footer: {
+    terms: "Syarat penggunaan",
+    contact: "Hubungi kami",
+    rights: "© {year} Cocktale. Hak cipta dilindungi.",
+  },
+  contact: {
+    title: "Hubungi kami",
+    subtitle: "Pertanyaan soal pesanan, resep, atau akun? Hubungi tim Cocktale langsung.",
+    customerService: "Layanan pelanggan",
+    telegram: "Pesan lewat Telegram",
+    email: "Email",
+    hours: "Kami biasanya membalas dalam satu hari kerja.",
+  },
+  terms: {
+    title: "Syarat penggunaan",
+    updated: "Terakhir diperbarui: 15 Agustus 2026",
+  },
   content: {
     recipeNote: "Detail resep dari basis data ditampilkan dalam bahasa aslinya.",
   },

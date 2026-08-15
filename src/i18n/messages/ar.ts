@@ -122,6 +122,23 @@ export const ar: Messages = {
     tried: "كوكتيلات تذوقتُها",
   },
   language: { label: "اللغة", choose: "اختر اللغة" },
+  footer: {
+    terms: "شروط الاستخدام",
+    contact: "اتصل بنا",
+    rights: "© {year} Cocktale. جميع الحقوق محفوظة.",
+  },
+  contact: {
+    title: "اتصل بنا",
+    subtitle: "أسئلة حول طلب أو وصفة أو حسابك؟ تواصل مع فريق Cocktale مباشرة.",
+    customerService: "خدمة العملاء",
+    telegram: "راسلنا على تيليغرام",
+    email: "البريد الإلكتروني",
+    hours: "نرد عادة خلال يوم عمل واحد.",
+  },
+  terms: {
+    title: "شروط الاستخدام",
+    updated: "آخر تحديث: 15 أغسطس 2026",
+  },
   content: {
     recipeNote: "تفاصيل الوصفة من قاعدة البيانات وتُعرض بلغتها الأصلية.",
   },

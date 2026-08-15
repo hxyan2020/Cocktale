@@ -122,6 +122,23 @@ export const nl: Messages = {
     tried: "Cocktails die ik proefde",
   },
   language: { label: "Taal", choose: "Taal kiezen" },
+  footer: {
+    terms: "Gebruiksvoorwaarden",
+    contact: "Contact",
+    rights: "© {year} Cocktale. Alle rechten voorbehouden.",
+  },
+  contact: {
+    title: "Contact",
+    subtitle: "Vragen over een bestelling, recept of je account? Neem contact op met het Cocktale-team.",
+    customerService: "Klantenservice",
+    telegram: "Bericht via Telegram",
+    email: "E-mail",
+    hours: "We antwoorden doorgaans binnen één werkdag.",
+  },
+  terms: {
+    title: "Gebruiksvoorwaarden",
+    updated: "Laatst bijgewerkt: 15 augustus 2026",
+  },
   content: {
     recipeNote: "Receptdetails komen uit onze database en staan in de brontaal.",
   },
@@ -254,6 +271,23 @@ export const pl: Messages = {
     tried: "Koktajle, które próbowałem",
   },
   language: { label: "Język", choose: "Wybierz język" },
+  footer: {
+    terms: "Warunki użytkowania",
+    contact: "Kontakt",
+    rights: "© {year} Cocktale. Wszelkie prawa zastrzeżone.",
+  },
+  contact: {
+    title: "Kontakt",
+    subtitle: "Pytania o zamówienie, przepis lub konto? Napisz do zespołu Cocktale.",
+    customerService: "Obsługa klienta",
+    telegram: "Napisz na Telegramie",
+    email: "E-mail",
+    hours: "Zwykle odpowiadamy w ciągu jednego dnia roboczego.",
+  },
+  terms: {
+    title: "Warunki użytkowania",
+    updated: "Ostatnia aktualizacja: 15 sierpnia 2026",
+  },
   content: {
     recipeNote: "Szczegóły przepisu z bazy są pokazywane w oryginalnym języku.",
   },
@@ -386,6 +420,23 @@ export const bn: Messages = {
     tried: "যে ককটেলগুলো চেখেছি",
   },
   language: { label: "ভাষা", choose: "ভাষা বেছে নিন" },
+  footer: {
+    terms: "ব্যবহারের শর্তাবলী",
+    contact: "যোগাযোগ",
+    rights: "© {year} Cocktale. সর্বস্বত্ব সংরক্ষিত।",
+  },
+  contact: {
+    title: "যোগাযোগ",
+    subtitle: "অর্ডার, রেসিপি বা অ্যাকাউন্ট নিয়ে প্রশ্ন? সরাসরি Cocktale টিমের সাথে যোগাযোগ করুন।",
+    customerService: "কাস্টমার সার্ভিস",
+    telegram: "টেলিগ্রামে মেসেজ করুন",
+    email: "ইমেইল",
+    hours: "সাধারণত এক কর্মদিবসের মধ্যে উত্তর দিই।",
+  },
+  terms: {
+    title: "ব্যবহারের শর্তাবলী",
+    updated: "সর্বশেষ আপডেট: ১৫ আগস্ট ২০২৬",
+  },
   content: { recipeNote: "রেসিপির বিবরণ ডেটাবেস থেকে মূল ভাষায় দেখানো হয়।" },
   errors: {
     emailExists: "এই ইমেইলে অ্যাকাউন্ট আগেই আছে।",

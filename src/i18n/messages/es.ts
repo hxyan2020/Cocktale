@@ -133,6 +133,23 @@ export const es: Messages = {
     tried: "Cócteles que probé",
   },
   language: { label: "Idioma", choose: "Elegir idioma" },
+  footer: {
+    terms: "Términos de uso",
+    contact: "Contáctanos",
+    rights: "© {year} Cocktale. Todos los derechos reservados.",
+  },
+  contact: {
+    title: "Contáctanos",
+    subtitle: "¿Preguntas sobre un pedido, una receta o tu cuenta? Habla directamente con el equipo de Cocktale.",
+    customerService: "Atención al cliente",
+    telegram: "Escríbenos por Telegram",
+    email: "Correo",
+    hours: "Solemos responder en un día hábil.",
+  },
+  terms: {
+    title: "Términos de uso",
+    updated: "Última actualización: 15 de agosto de 2026",
+  },
   content: {
     recipeNote: "Los detalles de la receta provienen de nuestra base de datos y se muestran en su idioma original.",
   },

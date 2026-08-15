@@ -135,6 +135,23 @@ export type Messages = {
     label: string;
     choose: string;
   };
+  footer: {
+    terms: string;
+    contact: string;
+    rights: string;
+  };
+  contact: {
+    title: string;
+    subtitle: string;
+    customerService: string;
+    telegram: string;
+    email: string;
+    hours: string;
+  };
+  terms: {
+    title: string;
+    updated: string;
+  };
   content: {
     recipeNote: string;
   };
@@ -282,6 +299,23 @@ export const en: Messages = {
   language: {
     label: "Language",
     choose: "Choose language",
+  },
+  footer: {
+    terms: "Terms of use",
+    contact: "Contact us",
+    rights: "© {year} Cocktale. All rights reserved.",
+  },
+  contact: {
+    title: "Contact us",
+    subtitle: "Questions about an order, a recipe, or your account? Reach the Cocktale team directly.",
+    customerService: "Customer service",
+    telegram: "Message us on Telegram",
+    email: "Email",
+    hours: "We typically reply within one business day.",
+  },
+  terms: {
+    title: "Terms of use",
+    updated: "Last updated: 15 August 2026",
   },
   content: {
     recipeNote: "Recipe details come from our cocktail database and are shown in their original language.",

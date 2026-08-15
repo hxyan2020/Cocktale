@@ -122,6 +122,23 @@ export const pt: Messages = {
     tried: "Coquetéis que provei",
   },
   language: { label: "Idioma", choose: "Escolher idioma" },
+  footer: {
+    terms: "Termos de uso",
+    contact: "Fale conosco",
+    rights: "© {year} Cocktale. Todos os direitos reservados.",
+  },
+  contact: {
+    title: "Fale conosco",
+    subtitle: "Dúvidas sobre pedido, receita ou conta? Fale direto com a equipe Cocktale.",
+    customerService: "Atendimento",
+    telegram: "Mensagem no Telegram",
+    email: "E-mail",
+    hours: "Costumamos responder em até um dia útil.",
+  },
+  terms: {
+    title: "Termos de uso",
+    updated: "Última atualização: 15 de agosto de 2026",
+  },
   content: {
     recipeNote: "Os detalhes da receita vêm do nosso banco e aparecem no idioma original.",
   },

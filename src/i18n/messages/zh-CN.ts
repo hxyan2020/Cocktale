@@ -132,6 +132,23 @@ export const zhCN: Messages = {
     tried: "我尝过的鸡尾酒",
   },
   language: { label: "语言", choose: "选择语言" },
+  footer: {
+    terms: "使用条款",
+    contact: "联系我们",
+    rights: "© {year} Cocktale。保留所有权利。",
+  },
+  contact: {
+    title: "联系我们",
+    subtitle: "关于订单、配方或账户的问题？直接联系 Cocktale 团队。",
+    customerService: "客服",
+    telegram: "通过 Telegram 联系我们",
+    email: "邮箱",
+    hours: "我们通常在一个工作日内回复。",
+  },
+  terms: {
+    title: "使用条款",
+    updated: "最近更新：2026 年 8 月 15 日",
+  },
   content: {
     recipeNote: "配方详情来自鸡尾酒数据库，并以原始语言展示。",
   },

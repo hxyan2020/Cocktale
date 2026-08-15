@@ -121,6 +121,23 @@ export const ko: Messages = {
     tried: "마셔 본 칵테일",
   },
   language: { label: "언어", choose: "언어 선택" },
+  footer: {
+    terms: "이용 약관",
+    contact: "문의하기",
+    rights: "© {year} Cocktale. All rights reserved.",
+  },
+  contact: {
+    title: "문의하기",
+    subtitle: "주문, 레시피, 계정 관련 문의는 Cocktale 팀에 연락해 주세요.",
+    customerService: "고객 서비스",
+    telegram: "텔레그램으로 메시지 보내기",
+    email: "이메일",
+    hours: "보통 영업일 기준 하루 이내에 답변드립니다.",
+  },
+  terms: {
+    title: "이용 약관",
+    updated: "최종 업데이트: 2026년 8월 15일",
+  },
   content: { recipeNote: "레시피 세부 정보는 데이터베이스 원문으로 표시됩니다." },
   errors: {
     emailExists: "이미 이 이메일로 가입된 계정이 있습니다.",
