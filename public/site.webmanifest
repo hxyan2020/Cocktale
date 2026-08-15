@@ -1,0 +1,18 @@
+{
+  "name": "Cocktale",
+  "short_name": "Cocktale",
+  "description": "Discover, collect, and taste cocktails matched to weather, mood, and your taste history.",
+  "start_url": "/feed",
+  "display": "standalone",
+  "background_color": "#0b0908",
+  "theme_color": "#0b0908",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

@@ -9,6 +9,7 @@ import { GeoDefaultsBootstrap } from "@/components/GeoDefaultsBootstrap";
 import { HxViewershipBeacon } from "@/components/HxViewershipBeacon";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { MeasureUnitProvider } from "@/components/MeasureUnitProvider";
+import { rootMetadata, websiteJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 const display = Fraunces({
@@ -21,16 +22,7 @@ const body = Outfit({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Cocktale — Learn, collect, and taste",
-  description:
-    "Discover cocktails matched to weather, popularity, and your taste history. Collect favorites and keep a tasting journal.",
-  icons: {
-    icon: [{ url: "/logo.png", type: "image/png", sizes: "any" }],
-    shortcut: "/logo.png",
-    apple: [{ url: "/logo.png", type: "image/png" }],
-  },
-};
+export const metadata: Metadata = rootMetadata();
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -53,6 +45,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             "var(--font-body), 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans Arabic', 'Noto Sans Hebrew', 'Noto Naskh Arabic', 'Apple SD Gothic Neo', 'Hiragino Sans', 'Noto Sans JP', 'Noto Sans KR', 'Noto Sans Thai', 'Noto Sans Bengali', 'Noto Sans Devanagari', sans-serif",
         }}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
+        />
         <LanguageProvider>
           <MeasureUnitProvider>
             <CurrencyProvider>

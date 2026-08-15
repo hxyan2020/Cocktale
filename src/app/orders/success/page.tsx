@@ -1,5 +1,9 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
+import { createPageMetadata, PAGE_SEO } from "@/lib/seo";
 import OrderSuccessClient from "./success-client";
+
+export const metadata: Metadata = createPageMetadata(PAGE_SEO.orderSuccess);
 
 export default function OrderSuccessPage() {
   return (

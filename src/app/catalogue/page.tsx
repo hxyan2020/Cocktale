@@ -118,6 +118,11 @@ export default function CataloguePage() {
   const shifted = useRef(false);
 
   useEffect(() => {
+    const initial = new URLSearchParams(window.location.search).get("q");
+    if (initial?.trim()) setQ(initial.trim());
+  }, []);
+
+  useEffect(() => {
     setVisitOffset(getRankOffset(accountId, "catalogue"));
     shifted.current = false;
   }, [accountId]);
