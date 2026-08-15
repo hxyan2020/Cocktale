@@ -1,9 +1,26 @@
 import cocktailsData from "@/data/cocktails.json";
 import type { Cocktail } from "@/lib/types";
 
-export const cocktails = cocktailsData as Cocktail[];
+/** CocktailDB categories that are not cocktails (coffee, beer, cocoa, etc.). */
+const NON_COCKTAIL_CATEGORIES = new Set([
+  "Beer",
+  "Coffee / Tea",
+  "Cocoa",
+  "Soft Drink",
+  "Homemade Liqueur",
+  "Other / Unknown",
+]);
 
-const byId = new Map(cocktails.map((c) => [c.id, c]));
+export function isCocktailDrink(cocktail: Cocktail): boolean {
+  return !NON_COCKTAIL_CATEGORIES.has(cocktail.category);
+}
+
+const allCocktailsData = cocktailsData as Cocktail[];
+
+/** Cocktail-only catalog used across feed, catalogue, and recommendations. */
+export const cocktails = allCocktailsData.filter(isCocktailDrink);
+
+const byId = new Map(allCocktailsData.map((c) => [c.id, c]));
 
 export function getCocktail(id: string): Cocktail | undefined {
   return byId.get(id);
