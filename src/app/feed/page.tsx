@@ -370,11 +370,11 @@ export default function FeedPage() {
             </div>
           )}
 
-        <div className="mobile-scrollbar-none -mx-3 mb-3 flex gap-2 overflow-x-auto px-3 pb-1 sm:mx-0 sm:mb-8 sm:flex-wrap sm:overflow-visible sm:px-0">
+        <div className="mobile-scrollbar-none -mx-3 mb-3 flex snap-x snap-mandatory gap-2 overflow-x-auto px-3 pb-1 sm:mx-0 sm:mb-8 sm:flex-wrap sm:overflow-visible sm:px-0">
           <button
             type="button"
             onClick={() => setMood(null)}
-            className={`min-h-10 shrink-0 rounded-full px-3 py-1.5 text-xs font-medium ${
+            className={`min-h-11 shrink-0 snap-start rounded-full px-3.5 py-2 text-xs font-medium ${
               !data.moodPreference
                 ? "bg-[var(--ink)] text-[var(--foam)]"
                 : "bg-[var(--chip)] text-[var(--ink-soft)]"
@@ -387,7 +387,7 @@ export default function FeedPage() {
               key={mood}
               type="button"
               onClick={() => setMood(mood)}
-              className={`min-h-10 shrink-0 rounded-full px-3 py-1.5 text-xs font-medium ${
+              className={`min-h-11 shrink-0 snap-start rounded-full px-3.5 py-2 text-xs font-medium ${
                 data.moodPreference === mood
                   ? "bg-[var(--accent)] text-[var(--foam)]"
                   : "bg-[var(--chip)] text-[var(--ink-soft)]"
@@ -407,7 +407,7 @@ export default function FeedPage() {
         </div>
 
         {loading && !current ? (
-          <div className="flex h-[clamp(30rem,72svh,35rem)] items-center justify-center rounded-[1.5rem] bg-[var(--surface)]/70 sm:h-[min(680px,78vh)] sm:rounded-[1.75rem]">
+          <div className="flex h-[min(32rem,calc(100svh-14.5rem))] items-center justify-center rounded-[1.5rem] bg-[var(--surface)]/70 sm:h-[min(680px,78vh)] sm:rounded-[1.75rem]">
             <p className="text-[var(--ink-soft)]">{t("feed.shaking")}</p>
           </div>
         ) : (

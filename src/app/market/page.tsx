@@ -81,7 +81,7 @@ function ProductCard({
         <button
           type="button"
           onClick={onAdd}
-          className="min-h-10 rounded-full bg-[var(--ink)] px-3 py-2 text-xs font-medium text-[var(--foam)] sm:min-h-0"
+          className="min-h-11 rounded-full bg-[var(--ink)] px-3 py-2 text-xs font-medium text-[var(--foam)] sm:min-h-0"
         >
           {added ? addedLabel : addLabel}
         </button>
@@ -127,13 +127,13 @@ export default function MarketPage() {
             placeholder={shop.searchPlaceholder}
             className="min-h-11 w-full flex-1 rounded-full border border-[var(--line)] bg-[var(--surface)] px-4 py-2.5 text-base outline-none focus:border-[var(--accent)] sm:text-sm"
           />
-          <div className="mobile-scrollbar-none -mx-3 flex gap-2 overflow-x-auto px-3 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
+          <div className="mobile-scrollbar-none -mx-3 flex snap-x snap-mandatory gap-2 overflow-x-auto px-3 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
             {CATEGORIES.map((c) => (
               <button
                 key={c}
                 type="button"
                 onClick={() => setCategory(c)}
-                className={`min-h-10 shrink-0 rounded-full px-3 py-1.5 text-xs font-medium ${
+                className={`min-h-11 shrink-0 snap-start rounded-full px-3.5 py-2 text-xs font-medium ${
                   category === c
                     ? "bg-[var(--ink)] text-[var(--foam)]"
                     : "bg-[var(--chip)] text-[var(--ink-soft)]"

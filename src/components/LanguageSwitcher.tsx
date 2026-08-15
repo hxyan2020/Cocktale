@@ -76,7 +76,7 @@ export function LanguageSwitcher({
             <button
               type="button"
               onClick={() => choose(l.code)}
-              className={`flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-start text-sm transition ${
+              className={`flex min-h-11 w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-start text-sm transition ${
                 selected
                   ? "bg-[var(--ink)] text-[var(--foam)]"
                   : "text-[var(--ink)] hover:bg-[var(--chip)]"
@@ -118,7 +118,7 @@ export function LanguageSwitcher({
           aria-expanded={open}
           aria-controls={listId}
           onClick={() => setOpen((value) => !value)}
-          className="flex w-full min-w-0 items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--bg)] px-2.5 py-1.5 text-start text-xs text-[var(--ink)] outline-none focus:border-[var(--accent)] sm:px-3 sm:text-sm"
+          className="flex min-h-10 w-full min-w-0 items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--bg)] px-2.5 py-1.5 text-start text-xs text-[var(--ink)] outline-none focus:border-[var(--accent)] sm:px-3 sm:text-sm"
         >
           <FlagIcon flag={current.flag} name={current.name} />
           <span className="min-w-0 flex-1 truncate">{current.nativeName}</span>

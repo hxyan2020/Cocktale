@@ -42,14 +42,14 @@ export function CocktailCard({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[rgba(28,22,16,0.72)] via-transparent to-transparent" />
         <div className="absolute bottom-3 start-4 end-4 sm:bottom-4 sm:start-5 sm:end-5">
-          <p className="font-[family-name:var(--font-display)] text-2xl leading-tight text-[var(--foam)] sm:text-3xl">
+          <p className="line-clamp-2 font-[family-name:var(--font-display)] text-2xl leading-tight text-[var(--foam)] sm:text-3xl">
             {localized.name}
           </p>
-          <p className="mt-1 text-sm text-[rgba(247,242,233,0.85)]">{localized.origin}</p>
+          <p className="mt-1 truncate text-sm text-[rgba(247,242,233,0.85)]">{localized.origin}</p>
         </div>
       </button>
 
-      <div className="flex flex-1 flex-col gap-2.5 p-3.5 sm:gap-4 sm:p-5">
+      <div className="flex min-h-0 flex-1 flex-col gap-2.5 p-3.5 sm:gap-4 sm:p-5">
         <p className="line-clamp-2 text-sm leading-relaxed text-[var(--ink-soft)] sm:line-clamp-3 sm:text-[15px]">
           {localized.description}
         </p>
@@ -57,6 +57,7 @@ export function CocktailCard({
         <div className="mt-auto flex items-center gap-2">
           <button
             type="button"
+            onPointerDown={(e) => e.stopPropagation()}
             onClick={(e) => {
               e.stopPropagation();
               onCollect();
@@ -68,10 +69,11 @@ export function CocktailCard({
             }`}
           >
             <Bookmark className="h-4 w-4 shrink-0" fill={collected ? "currentColor" : "none"} />
-            {collected ? t("card.collected") : t("card.collect")}
+            <span className="min-w-0 truncate">{collected ? t("card.collected") : t("card.collect")}</span>
           </button>
           <button
             type="button"
+            onPointerDown={(e) => e.stopPropagation()}
             onClick={(e) => {
               e.stopPropagation();
               onTried();
@@ -79,12 +81,13 @@ export function CocktailCard({
             className="inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-full bg-[var(--ink)] px-3 py-2.5 text-xs font-medium text-[var(--foam)] transition hover:opacity-90 sm:gap-2 sm:px-4 sm:py-3 sm:text-sm"
           >
             <Check className="h-4 w-4 shrink-0" />
-            {t("card.tried")}
+            <span className="min-w-0 truncate">{t("card.tried")}</span>
           </button>
         </div>
 
         <button
           type="button"
+          onPointerDown={(e) => e.stopPropagation()}
           onClick={onOpen}
           className="inline-flex min-h-10 items-center justify-center text-center text-xs font-medium tracking-[0.12em] uppercase text-[var(--accent-deep)]"
         >

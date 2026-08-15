@@ -3,6 +3,7 @@
 import { X } from "lucide-react";
 import { AuthForm } from "@/components/AuthForm";
 import { useI18n } from "@/components/LanguageProvider";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
 type Props = {
   open: boolean;
@@ -11,6 +12,7 @@ type Props = {
 
 export function AuthPrompt({ open, onClose }: Props) {
   const { t } = useI18n();
+  useBodyScrollLock(open);
   if (!open) return null;
 
   return (
@@ -21,10 +23,15 @@ export function AuthPrompt({ open, onClose }: Props) {
         aria-label={t("detail.close")}
         onClick={onClose}
       />
-      <div className="relative z-10 max-h-[calc(100dvh-env(safe-area-inset-top))] w-full max-w-md overflow-y-auto rounded-t-[1.5rem] bg-[var(--surface)] p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-2xl sm:rounded-[1.75rem] sm:p-6">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="auth-prompt-title"
+        className="relative z-10 max-h-[calc(100dvh-env(safe-area-inset-top))] w-full max-w-md overflow-y-auto overscroll-contain rounded-t-[1.5rem] bg-[var(--surface)] p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-2xl sm:rounded-[1.75rem] sm:p-6"
+      >
         <div className="mb-4 flex items-start justify-between gap-3">
           <div>
-            <h2 className="font-[family-name:var(--font-display)] text-2xl text-[var(--ink)]">
+            <h2 id="auth-prompt-title" className="font-[family-name:var(--font-display)] text-2xl text-[var(--ink)]">
               {t("login.signIn")}
             </h2>
             <p className="mt-1 text-sm text-[var(--ink-soft)]">{t("login.subtitle")}</p>

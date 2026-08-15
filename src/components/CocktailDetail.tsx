@@ -22,6 +22,7 @@ import { useMeasureUnit } from "@/components/MeasureUnitProvider";
 import { ItemInfoTrigger } from "@/components/ItemInfoTrigger";
 import { useLocalizedCocktail, useTranslatedTexts } from "@/components/useTranslatedContent";
 import type { Product } from "@/lib/commerce-types";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
 type Props = {
   cocktail: Cocktail;
@@ -54,6 +55,7 @@ export function CocktailDetail({
   const [galleryLoaded, setGalleryLoaded] = useState(false);
   const [failedGalleryIds, setFailedGalleryIds] = useState<Set<string>>(new Set());
   const localized = useLocalizedCocktail(cocktail);
+  useBodyScrollLock();
 
   const equipment = useMemo(() => inferEquipment(cocktail), [cocktail]);
   const recipeSteps = useMemo(() => expandMakeSteps(localized), [localized]);
@@ -131,7 +133,13 @@ export function CocktailDetail({
         aria-label={t("detail.close")}
         onClick={onClose}
       />
-      <div className="relative z-10 max-h-[100dvh] w-full max-w-lg overflow-x-hidden overflow-y-auto overscroll-contain rounded-t-[1.5rem] bg-[var(--surface)] shadow-2xl sm:max-h-[92vh] sm:rounded-[1.75rem]">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="cocktail-detail-title"
+        className="relative z-10 flex max-h-[100svh] w-full max-w-lg flex-col overflow-hidden rounded-t-[1.5rem] bg-[var(--surface)] shadow-2xl sm:max-h-[92vh] sm:rounded-[1.75rem]"
+      >
+        <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain">
         <div className="relative h-[min(38vh,15.5rem)] w-full sm:aspect-[4/3] sm:h-auto sm:min-h-80">
           <Image
             src={cocktail.image || "/cocktail-fallback.svg"}
@@ -144,7 +152,7 @@ export function CocktailDetail({
           <button
             type="button"
             onClick={onClose}
-            className="absolute end-3 top-3 inline-flex h-11 w-11 items-center justify-center rounded-full bg-[rgba(28,22,16,0.6)] text-[var(--foam)] backdrop-blur sm:end-4 sm:top-4"
+            className="absolute end-3 top-[max(0.75rem,env(safe-area-inset-top))] inline-flex h-11 w-11 items-center justify-center rounded-full bg-[rgba(28,22,16,0.6)] text-[var(--foam)] backdrop-blur sm:end-4 sm:top-4"
             aria-label={t("detail.close")}
           >
             <X className="h-5 w-5" />
@@ -157,7 +165,7 @@ export function CocktailDetail({
               {localized.category}
               {cocktail.iba ? ` · IBA ${cocktail.iba}` : ""}
             </p>
-            <h2 className="mt-2 font-[family-name:var(--font-display)] text-2xl leading-tight text-[var(--ink)] sm:text-3xl">
+            <h2 id="cocktail-detail-title" className="mt-2 font-[family-name:var(--font-display)] text-2xl leading-tight text-[var(--ink)] sm:text-3xl">
               {localized.name}
             </h2>
             <p className="mt-1 text-sm text-[var(--ink-soft)]">{localized.origin}</p>
@@ -393,7 +401,7 @@ export function CocktailDetail({
                           <button
                             type="button"
                             onClick={() => addItem(p.id, 1)}
-                            className="col-span-2 min-h-10 rounded-full bg-[var(--ink)] px-3 py-2 text-xs text-[var(--foam)] sm:col-auto sm:min-h-0 sm:shrink-0 sm:py-1.5 sm:text-[11px]"
+                            className="col-span-2 min-h-11 rounded-full bg-[var(--ink)] px-3 py-2 text-xs text-[var(--foam)] sm:col-auto sm:min-h-0 sm:shrink-0 sm:py-1.5 sm:text-[11px]"
                           >
                             {shop.addToCart}
                           </button>
@@ -412,28 +420,29 @@ export function CocktailDetail({
             </section>
           )}
 
-          <div className="flex flex-col gap-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:flex-row">
+          <div className="sticky bottom-0 z-10 -mx-4 mt-2 flex flex-col gap-2 border-t border-[var(--line)] bg-[var(--surface)]/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur sm:static sm:mx-0 sm:mt-0 sm:border-0 sm:bg-transparent sm:px-0 sm:pt-0 sm:pb-0 sm:backdrop-blur-none sm:flex-row">
             <button
               type="button"
               onClick={onCollect}
-              className={`inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-medium ${
+              className={`inline-flex min-h-12 min-w-0 flex-1 items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-medium ${
                 collected
                   ? "bg-[var(--accent)] text-[var(--foam)]"
                   : "bg-[var(--chip)] text-[var(--ink)]"
               }`}
             >
               <Bookmark className="h-4 w-4 shrink-0" fill={collected ? "currentColor" : "none"} />
-              <span className="text-center leading-tight">{collected ? t("detail.inYourBook") : t("card.collect")}</span>
+              <span className="truncate text-center leading-tight">{collected ? t("detail.inYourBook") : t("card.collect")}</span>
             </button>
             <button
               type="button"
               onClick={onTried}
-              className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-full bg-[var(--ink)] px-4 py-3 text-sm font-medium text-[var(--foam)]"
+              className="inline-flex min-h-12 min-w-0 flex-1 items-center justify-center gap-2 rounded-full bg-[var(--ink)] px-4 py-3 text-sm font-medium text-[var(--foam)]"
             >
               <Check className="h-4 w-4 shrink-0" />
-              <span className="text-center leading-tight">{t("detail.logAsTried")}</span>
+              <span className="truncate text-center leading-tight">{t("detail.logAsTried")}</span>
             </button>
           </div>
+        </div>
         </div>
       </div>
     </div>

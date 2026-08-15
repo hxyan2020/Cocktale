@@ -219,11 +219,11 @@ export default function CataloguePage() {
           />
         </div>
 
-        <div className="mobile-scrollbar-none -mx-3 mt-4 flex gap-2 overflow-x-auto px-3 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
+        <div className="mobile-scrollbar-none -mx-3 mt-4 flex snap-x snap-mandatory gap-2 overflow-x-auto px-3 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
           <button
             type="button"
             onClick={() => setCategory("all")}
-            className={`min-h-10 shrink-0 rounded-full px-3 py-1.5 text-xs font-medium ${
+            className={`min-h-11 shrink-0 snap-start rounded-full px-3.5 py-2 text-xs font-medium ${
               category === "all"
                 ? "bg-[var(--ink)] text-[var(--foam)]"
                 : "bg-[var(--chip)] text-[var(--ink-soft)]"
@@ -236,7 +236,7 @@ export default function CataloguePage() {
               key={c}
               type="button"
               onClick={() => setCategory(c)}
-              className={`min-h-10 shrink-0 rounded-full px-3 py-1.5 text-xs font-medium ${
+              className={`min-h-11 shrink-0 snap-start rounded-full px-3.5 py-2 text-xs font-medium ${
                 category === c
                   ? "bg-[var(--ink)] text-[var(--foam)]"
                   : "bg-[var(--chip)] text-[var(--ink-soft)]"
@@ -272,7 +272,7 @@ export default function CataloguePage() {
         )}
       </main>
 
-      {selected && (
+      {selected && !triedOpen && (
         <CocktailDetail
           cocktail={selected}
           collected={isCollected(selected.id)}

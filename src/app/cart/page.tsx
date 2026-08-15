@@ -204,7 +204,7 @@ export default function CartPage() {
               </div>
             ))}
 
-            <div className="sticky bottom-2 z-10 space-y-2 rounded-[1.25rem] bg-[var(--surface)]/95 p-2.5 shadow-[0_12px_35px_rgba(0,0,0,0.22)] ring-1 ring-[var(--line)] backdrop-blur sm:static sm:space-y-4 sm:bg-transparent sm:p-0 sm:shadow-none sm:ring-0">
+            <div className="sticky bottom-2 z-10 space-y-2 rounded-[1.25rem] bg-[var(--surface)]/95 p-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_12px_35px_rgba(0,0,0,0.22)] ring-1 ring-[var(--line)] backdrop-blur sm:static sm:space-y-4 sm:bg-transparent sm:p-0 sm:pb-0 sm:shadow-none sm:ring-0">
               <div className="flex items-center justify-between rounded-2xl bg-[var(--chip)] px-4 py-3 sm:rounded-[1.25rem] sm:py-4">
                 <span className="text-sm text-[var(--ink-soft)]">{shop.subtotal}</span>
                 <span className="text-lg font-semibold text-[var(--ink)]">

@@ -28,7 +28,7 @@ export function CurrencySwitcher({ className = "", size = "md" }: Props) {
           key={code}
           type="button"
           onClick={() => setCurrency(code)}
-          className={`min-h-9 shrink-0 rounded-full font-medium uppercase tracking-wide transition ${pad} ${
+          className={`min-h-10 shrink-0 rounded-full font-medium uppercase tracking-wide transition ${pad} ${
             currency === code
               ? "bg-[var(--ink)] text-[var(--foam)]"
               : "text-[var(--ink-soft)] hover:text-[var(--ink)]"

@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { Cocktail } from "@/lib/types";
 import { useI18n } from "@/components/LanguageProvider";
 import { useLocalizedCocktail } from "@/components/useTranslatedContent";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
 type Props = {
   cocktail: Cocktail;
@@ -16,12 +17,18 @@ export function TriedModal({ cocktail, onClose, onSave }: Props) {
   const localized = useLocalizedCocktail(cocktail);
   const [triedAt, setTriedAt] = useState(() => new Date().toISOString().slice(0, 10));
   const [note, setNote] = useState("");
+  useBodyScrollLock();
 
   return (
     <div className="fixed inset-0 z-[60] flex items-end justify-center overscroll-contain bg-[rgba(20,16,12,0.55)] p-0 sm:items-center sm:p-4">
       <button type="button" className="absolute inset-0" aria-label={t("detail.close")} onClick={onClose} />
-      <div className="relative z-10 max-h-[calc(100dvh-env(safe-area-inset-top))] w-full max-w-md overflow-y-auto rounded-t-[1.5rem] bg-[var(--surface)] p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-2xl sm:rounded-[1.5rem] sm:p-6">
-        <h2 className="font-[family-name:var(--font-display)] text-xl leading-tight text-[var(--ink)] sm:text-2xl">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="tried-modal-title"
+        className="relative z-10 max-h-[calc(100dvh-env(safe-area-inset-top))] w-full max-w-md overflow-y-auto overscroll-contain rounded-t-[1.5rem] bg-[var(--surface)] p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-2xl sm:rounded-[1.5rem] sm:p-6"
+      >
+        <h2 id="tried-modal-title" className="break-words font-[family-name:var(--font-display)] text-xl leading-tight text-[var(--ink)] sm:text-2xl">
           {t("triedModal.title", { name: localized.name })}
         </h2>
         <p className="mt-1 text-sm text-[var(--ink-soft)]">{t("triedModal.subtitle")}</p>

@@ -67,7 +67,7 @@ function NavMenu({
         <div
           id={panelId}
           role="menu"
-          className="absolute end-0 top-[calc(100%+0.4rem)] z-50 min-w-[min(16rem,calc(100vw-1.5rem))] rounded-2xl bg-[var(--surface)] p-2 shadow-lg ring-1 ring-[var(--line)]"
+          className="fixed inset-x-3 top-[calc(env(safe-area-inset-top)+5.25rem)] z-50 max-h-[calc(100dvh-env(safe-area-inset-top)-6rem)] min-w-0 overflow-y-auto overscroll-contain rounded-2xl bg-[var(--surface)] p-2 shadow-lg ring-1 ring-[var(--line)] sm:absolute sm:inset-x-auto sm:end-0 sm:top-[calc(100%+0.4rem)] sm:max-h-[min(28rem,calc(100dvh-6rem))] sm:min-w-[min(16rem,calc(100vw-1.5rem))]"
         >
           {children}
         </div>
@@ -90,16 +90,16 @@ export function AppNav() {
   }, [pathname]);
 
   useEffect(() => {
-    function onPointerDown(event: MouseEvent) {
+    function onPointerDown(event: PointerEvent) {
       if (!navRef.current?.contains(event.target as Node)) setOpenMenu(null);
     }
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") setOpenMenu(null);
     }
-    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("pointerdown", onPointerDown);
     document.addEventListener("keydown", onKeyDown);
     return () => {
-      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("pointerdown", onPointerDown);
       document.removeEventListener("keydown", onKeyDown);
     };
   }, []);

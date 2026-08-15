@@ -38,6 +38,7 @@ export function ItemInfoTrigger({ info, children, className = "" }: Props) {
   const [coords, setCoords] = useState({ top: 0, left: 0 });
   const [mounted, setMounted] = useState(false);
   const [imageFailed, setImageFailed] = useState(false);
+  const [desktop, setDesktop] = useState(false);
   const { texts: localizedInfo } = useTranslatedTexts(
     [info.title, info.blurb],
     `item-info:${info.sketch}:${info.title}`,
@@ -47,6 +48,14 @@ export function ItemInfoTrigger({ info, children, className = "" }: Props) {
   const localizedBlurb = localizedInfo[1] || info.blurb;
 
   useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px)");
+    const sync = () => setDesktop(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
 
   useEffect(() => {
     setImageFailed(false);
@@ -124,7 +133,7 @@ export function ItemInfoTrigger({ info, children, className = "" }: Props) {
       <span className="min-w-0">{children}</span>
       <button
         type="button"
-        className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[var(--ink-muted)] ring-1 ring-[var(--line)] transition hover:bg-[var(--chip)] hover:text-[var(--ink)] md:hidden"
+        className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[var(--ink-muted)] ring-1 ring-[var(--line)] transition hover:bg-[var(--chip)] hover:text-[var(--ink)] md:hidden"
         aria-label={`${localizedTitle} — ${t("detail.ingredients")}`}
         aria-expanded={open}
         aria-controls={panelId}
@@ -134,7 +143,7 @@ export function ItemInfoTrigger({ info, children, className = "" }: Props) {
           else openPanel();
         }}
       >
-        <Info className="h-3 w-3" strokeWidth={2.25} />
+        <Info className="h-4 w-4" strokeWidth={2.25} />
       </button>
 
       {mounted &&
@@ -151,8 +160,8 @@ export function ItemInfoTrigger({ info, children, className = "" }: Props) {
               id={panelId}
               role="dialog"
               aria-label={localizedTitle}
-              className="fixed z-[80] w-[min(240px,calc(100vw-24px))] overflow-hidden rounded-2xl bg-[var(--surface)] text-[var(--ink)] shadow-[0_18px_50px_rgba(28,22,16,0.22)] ring-1 ring-[var(--line)]"
-              style={{ top: coords.top, left: coords.left }}
+              className="fixed z-[80] overflow-hidden rounded-2xl bg-[var(--surface)] text-[var(--ink)] shadow-[0_18px_50px_rgba(28,22,16,0.22)] ring-1 ring-[var(--line)] inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] max-h-[70dvh] w-auto overflow-y-auto md:inset-x-auto md:bottom-auto md:max-h-none md:w-[min(240px,calc(100vw-24px))] md:overflow-hidden"
+              style={desktop ? { top: coords.top, left: coords.left } : undefined}
               onMouseEnter={() => {
                 if (canHover()) openPanel();
               }}
@@ -164,7 +173,7 @@ export function ItemInfoTrigger({ info, children, className = "" }: Props) {
                 <button
                   type="button"
                   onClick={closePanel}
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-full text-[var(--ink-muted)] transition hover:bg-[var(--chip)] hover:text-[var(--ink)]"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full text-[var(--ink-muted)] transition hover:bg-[var(--chip)] hover:text-[var(--ink)]"
                   aria-label={t("detail.close")}
                 >
                   <X className="h-4 w-4" />

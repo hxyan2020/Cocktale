@@ -18,7 +18,10 @@ type Props = {
 export function UnitSwitcher({ className = "", size = "sm" }: Props) {
   const { unit, setUnit, units } = useMeasureUnit();
   const { t } = useI18n();
-  const pad = size === "sm" ? "px-2 py-0.5 text-[10px] sm:px-2.5 sm:py-1 sm:text-[11px]" : "px-3 py-1.5 text-xs";
+  const pad =
+    size === "sm"
+      ? "min-h-10 px-2 py-1 text-[10px] sm:min-h-0 sm:px-2.5 sm:py-1 sm:text-[11px]"
+      : "min-h-10 px-3 py-2 text-xs";
 
   return (
     <div

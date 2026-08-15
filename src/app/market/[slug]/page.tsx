@@ -65,7 +65,7 @@ export default function ProductDetailPage() {
       <main className="mx-auto w-full max-w-6xl flex-1 px-3 pb-16 pt-3 sm:px-4 sm:pt-6">
         <div className="grid gap-5 sm:gap-8 lg:grid-cols-2">
           <section>
-            <div className="relative aspect-square overflow-hidden rounded-[1.25rem] bg-[#f3efe6] ring-1 ring-[var(--line)] sm:rounded-[1.5rem]">
+            <div className="relative aspect-[4/3] max-h-[42vh] overflow-hidden rounded-[1.25rem] bg-[#f3efe6] ring-1 ring-[var(--line)] sm:aspect-square sm:max-h-none sm:rounded-[1.5rem]">
               <Image
                 src={product.images[active]?.url || "/cocktail-fallback.svg"}
                 alt={displayProduct.name}
@@ -115,29 +115,30 @@ export default function ProductDetailPage() {
               </p>
             </div>
 
-            <p className="text-2xl font-semibold text-[var(--on-bg)]">
-              {formatMoney(product.priceCents)}
-            </p>
-            <p className="text-sm text-[var(--on-bg-soft)]">
-              {product.stock > 0 ? `${shop.inStock} (${product.stock})` : shop.outOfStock}
-            </p>
+            <div className="sticky bottom-2 z-10 space-y-3 rounded-[1.25rem] bg-[var(--surface)]/95 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_12px_35px_rgba(0,0,0,0.22)] ring-1 ring-[var(--line)] backdrop-blur sm:static sm:space-y-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:ring-0 sm:backdrop-blur-none">
+              <p className="text-2xl font-semibold text-[var(--ink)] sm:text-[var(--on-bg)]">
+                {formatMoney(product.priceCents)}
+              </p>
+              <p className="text-sm text-[var(--ink-muted)] sm:text-[var(--on-bg-soft)]">
+                {product.stock > 0 ? `${shop.inStock} (${product.stock})` : shop.outOfStock}
+              </p>
+              <button
+                type="button"
+                disabled={product.stock <= 0}
+                onClick={() => {
+                  addItem(product.id, 1);
+                  setAdded(true);
+                  setTimeout(() => setAdded(false), 1200);
+                }}
+                className="min-h-12 w-full rounded-full bg-[var(--ink)] px-4 py-3 text-sm font-medium text-[var(--foam)] disabled:opacity-40 sm:mt-4 sm:w-auto sm:px-8"
+              >
+                {added ? shop.added : shop.addToCart}
+              </button>
+            </div>
 
             <p className="text-[15px] leading-relaxed text-[var(--on-bg-soft)]">
               {displayProduct.longDescription}
             </p>
-
-            <button
-              type="button"
-              disabled={product.stock <= 0}
-              onClick={() => {
-                addItem(product.id, 1);
-                setAdded(true);
-                setTimeout(() => setAdded(false), 1200);
-              }}
-              className="min-h-12 w-full rounded-full bg-[var(--ink)] px-4 py-3 text-sm font-medium text-[var(--foam)] disabled:opacity-40 sm:w-auto sm:px-8"
-            >
-              {added ? shop.added : shop.addToCart}
-            </button>
 
             <div>
               <h2 className="text-sm font-semibold text-[var(--on-bg)]">{shop.specs}</h2>

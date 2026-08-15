@@ -235,7 +235,7 @@ export default function JourneyPageClient() {
         )}
       </main>
 
-      {selected && (
+      {selected && !triedOpen && (
         <CocktailDetail
           cocktail={selected}
           collected={isCollected(selected.id)}
