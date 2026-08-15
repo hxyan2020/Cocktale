@@ -148,6 +148,7 @@ export default function CataloguePage() {
         body: JSON.stringify({
           history: data.history,
           moodPreference: data.moodPreference,
+          surveyPreferences: data.surveyPreferences,
           lat,
           lon,
           cursor: 0,
@@ -169,7 +170,7 @@ export default function CataloguePage() {
     };
     // Rank once per visit; history updates from opening cards shouldn't reshuffle the grid.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, accountId, data.moodPreference]);
+  }, [ready, accountId, data.moodPreference, data.surveyPreferences]);
 
   useEffect(() => {
     if (shifted.current || ranked.length === 0) return;

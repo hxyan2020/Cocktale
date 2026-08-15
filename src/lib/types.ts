@@ -51,9 +51,17 @@ export type JournalEntry = {
   note: string;
 };
 
+export type SurveyPreferences = {
+  mood: string;
+  flavor: string;
+  complexity: "simple" | "complex";
+  completedAt: string;
+};
+
 export type UserData = {
   collected: CollectionItem[];
   journal: JournalEntry[];
   history: BrowseEvent[];
   moodPreference: string | null;
+  surveyPreferences: SurveyPreferences | null;
 };

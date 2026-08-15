@@ -8,9 +8,18 @@ import { useI18n } from "@/components/LanguageProvider";
 import { CocktailDetail } from "@/components/CocktailDetail";
 import { SwipeDeck } from "@/components/SwipeDeck";
 import { TriedModal } from "@/components/TriedModal";
+import {
+  PreferenceSurvey,
+  type SurveyLocationStatus,
+} from "@/components/PreferenceSurvey";
 import { useTranslatedTexts } from "@/components/useTranslatedContent";
 import { getRankOffset, maybeAdvanceRankOffset, setRankOffset } from "@/lib/rank-rotation";
-import type { BrowseEvent, Cocktail, WeatherBucket } from "@/lib/types";
+import type {
+  BrowseEvent,
+  Cocktail,
+  SurveyPreferences,
+  WeatherBucket,
+} from "@/lib/types";
 
 type WeatherPayload = {
   tempC: number;
@@ -18,15 +27,6 @@ type WeatherPayload = {
   label: string;
   city: string;
 };
-
-type LocationStatus =
-  | "checking"
-  | "prompt"
-  | "requesting"
-  | "granted"
-  | "blocked"
-  | "unavailable"
-  | "dismissed";
 
 const LOCATION_CACHE_KEY = "cocktale:recommendation-location";
 const PERSONAL_MESSAGES = [
@@ -68,6 +68,7 @@ export default function FeedPage() {
     markTried,
     isCollected,
     setMood,
+    saveSurvey,
     requireAuth,
   } = useAuth();
   const { t } = useI18n();
@@ -79,17 +80,22 @@ export default function FeedPage() {
   const [loading, setLoading] = useState(true);
   const [detailOpen, setDetailOpen] = useState(false);
   const [triedOpen, setTriedOpen] = useState(false);
+  const [surveyAnalyzing, setSurveyAnalyzing] = useState(false);
   const [coords, setCoords] = useState<{ lat?: number; lon?: number }>({});
-  const [locationStatus, setLocationStatus] = useState<LocationStatus>("prompt");
+  const [locationStatus, setLocationStatus] = useState<SurveyLocationStatus>("prompt");
   const seenIds = useRef<Set<string>>(new Set());
   const loadingMore = useRef(false);
   const historyRef = useRef<BrowseEvent[]>(data.history);
   const moodRef = useRef(data.moodPreference);
+  const surveyRef = useRef<SurveyPreferences | null>(data.surveyPreferences);
   const startCursorRef = useRef(0);
   const totalRef = useRef(0);
 
-  historyRef.current = data.history;
-  moodRef.current = data.moodPreference;
+  useEffect(() => {
+    historyRef.current = data.history;
+    moodRef.current = data.moodPreference;
+    surveyRef.current = data.surveyPreferences;
+  }, [data.history, data.moodPreference, data.surveyPreferences]);
 
   const requestLocation = useCallback(() => {
     if (!navigator.geolocation) {
@@ -116,6 +122,18 @@ export default function FeedPage() {
       },
       { enableHighAccuracy: false, maximumAge: 10 * 60 * 1000, timeout: 8000 },
     );
+  }, []);
+
+  const submitSurvey = useCallback(
+    (preferences: SurveyPreferences) => {
+      setSurveyAnalyzing(true);
+      saveSurvey(preferences);
+    },
+    [saveSurvey],
+  );
+
+  const finishSurvey = useCallback(() => {
+    setSurveyAnalyzing(false);
   }, []);
 
   useEffect(() => {
@@ -151,6 +169,7 @@ export default function FeedPage() {
           body: JSON.stringify({
             history: historyRef.current,
             moodPreference: moodRef.current,
+            surveyPreferences: surveyRef.current,
             excludeIds: [],
             lat: coords.lat,
             lon: coords.lon,
@@ -196,7 +215,15 @@ export default function FeedPage() {
     setIndex(0);
     seenIds.current = new Set();
     void fetchRecommendations(startCursorRef.current, true);
-  }, [ready, accountId, data.moodPreference, coords.lat, coords.lon, fetchRecommendations]);
+  }, [
+    ready,
+    accountId,
+    data.moodPreference,
+    data.surveyPreferences,
+    coords.lat,
+    coords.lon,
+    fetchRecommendations,
+  ]);
 
   const current = queue[index] ?? null;
 
@@ -280,6 +307,19 @@ export default function FeedPage() {
       "Try again",
     ],
     "feed-location-permission",
+  );
+  const preference = data.surveyPreferences;
+  const surveyOpen = ready && (!preference || surveyAnalyzing);
+  const signalSource = preference
+    ? [
+        `Collected signals: ${weather ? `${weather.bucket}, ${Math.round(weather.tempC)}°C` : "weather loading"} · ${preference.mood} mood · ${preference.flavor} flavor · ${preference.complexity} recipe · ${data.history.length} history events.`,
+        "Analysis process: weather affinity → mood match → flavor profile → recipe complexity → browsing history → popularity balance.",
+      ]
+    : [];
+  const { texts: signalCopy } = useTranslatedTexts(
+    signalSource,
+    `recommendation-signals:${preference?.completedAt ?? "none"}`,
+    Boolean(preference),
   );
 
   if (!ready) {
@@ -398,6 +438,20 @@ export default function FeedPage() {
           ))}
         </div>
 
+        {preference && (
+          <div className="mb-3 rounded-2xl border border-white/10 bg-black/25 p-3 text-xs leading-relaxed text-[var(--on-bg-soft)] backdrop-blur sm:mb-5 sm:p-4">
+            <div className="mb-2 flex items-center gap-2 font-medium text-[var(--on-bg)]">
+              <Sparkles className="h-3.5 w-3.5 text-[var(--on-bg-accent)]" />
+              AI match
+            </div>
+            <p>{signalCopy[0] || signalSource[0]}</p>
+            <p className="mt-1 text-[var(--on-bg-muted)]">{signalCopy[1] || signalSource[1]}</p>
+            <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
+              <div className="h-full w-full rounded-full bg-[var(--on-bg-accent)]" />
+            </div>
+          </div>
+        )}
+
         <div className="mb-3 inline-flex max-w-full items-start gap-2 px-0.5 text-xs leading-snug text-[var(--on-bg-muted)] sm:mb-4">
           <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0" />
           <span>
@@ -454,6 +508,15 @@ export default function FeedPage() {
           }}
         />
       )}
+
+      <PreferenceSurvey
+        open={surveyOpen}
+        locationStatus={locationStatus}
+        onRequestLocation={requestLocation}
+        onUseDefaultLocation={() => setLocationStatus("dismissed")}
+        onSubmit={submitSurvey}
+        onDone={finishSurvey}
+      />
     </>
   );
 }

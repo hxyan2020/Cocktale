@@ -2,12 +2,17 @@ import { NextResponse } from "next/server";
 import { getAllCocktails } from "@/lib/cocktails";
 import { rankCocktails } from "@/lib/recommend";
 import { fetchWeather } from "@/lib/weather";
-import type { BrowseEvent, WeatherBucket } from "@/lib/types";
+import type {
+  BrowseEvent,
+  SurveyPreferences,
+  WeatherBucket,
+} from "@/lib/types";
 
 export async function POST(req: Request) {
   const body = (await req.json()) as {
     history?: BrowseEvent[];
     moodPreference?: string | null;
+    surveyPreferences?: SurveyPreferences | null;
     excludeIds?: string[];
     lat?: number;
     lon?: number;
@@ -36,6 +41,7 @@ export async function POST(req: Request) {
     weather: weather.bucket,
     history: body.history ?? [],
     moodPreference: body.moodPreference,
+    surveyPreferences: body.surveyPreferences,
     excludeIds: body.excludeIds ?? [],
   });
 

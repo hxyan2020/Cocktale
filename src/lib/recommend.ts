@@ -1,10 +1,16 @@
-import type { BrowseEvent, Cocktail, WeatherBucket } from "@/lib/types";
+import type {
+  BrowseEvent,
+  Cocktail,
+  SurveyPreferences,
+  WeatherBucket,
+} from "@/lib/types";
 
 export type RecommendInput = {
   cocktails: Cocktail[];
   weather: WeatherBucket;
   history: BrowseEvent[];
   moodPreference?: string | null;
+  surveyPreferences?: SurveyPreferences | null;
   excludeIds?: string[];
   limit?: number;
 };
@@ -54,6 +60,7 @@ export function scoreCocktail(
   weather: WeatherBucket,
   signals: ReturnType<typeof enrichHistorySignals>,
   moodPreference?: string | null,
+  surveyPreferences?: SurveyPreferences | null,
 ): number {
   let score = 0;
 
@@ -92,6 +99,29 @@ export function scoreCocktail(
   // Explicit mood preference
   if (moodPreference && cocktail.moods.includes(moodPreference)) score += 18;
 
+  // Explicit onboarding signals: flavor and preferred recipe effort.
+  if (
+    surveyPreferences?.flavor &&
+    cocktail.flavorProfile.includes(surveyPreferences.flavor)
+  ) {
+    score += 22;
+  }
+
+  if (surveyPreferences?.complexity) {
+    const simpleRecipe =
+      cocktail.instructions.length <= 3 && cocktail.ingredients.length <= 5;
+    if (surveyPreferences.complexity === "simple" && simpleRecipe) score += 18;
+    if (surveyPreferences.complexity === "complex" && !simpleRecipe) score += 18;
+    if (
+      surveyPreferences.complexity === "complex" &&
+      cocktail.moods.some((mood) =>
+        ["adventurous", "curious", "playful"].includes(mood),
+      )
+    ) {
+      score += 6;
+    }
+  }
+
   // Tiny deterministic jitter so ties feel alive but stable per id
   const jitter = (cocktail.id.charCodeAt(0) + cocktail.id.charCodeAt(cocktail.id.length - 1)) % 7;
   score += jitter * 0.1;
@@ -100,7 +130,14 @@ export function scoreCocktail(
 }
 
 export function rankCocktails(input: Omit<RecommendInput, "limit">): Cocktail[] {
-  const { cocktails, weather, history, moodPreference, excludeIds = [] } = input;
+  const {
+    cocktails,
+    weather,
+    history,
+    moodPreference,
+    surveyPreferences,
+    excludeIds = [],
+  } = input;
   const excluded = new Set(excludeIds);
   const signals = enrichHistorySignals(history, cocktails);
 
@@ -108,7 +145,13 @@ export function rankCocktails(input: Omit<RecommendInput, "limit">): Cocktail[] 
     .filter((c) => !excluded.has(c.id))
     .map((c) => ({
       cocktail: c,
-      score: scoreCocktail(c, weather, signals, moodPreference),
+      score: scoreCocktail(
+        c,
+        weather,
+        signals,
+        moodPreference,
+        surveyPreferences,
+      ),
     }))
     .sort((a, b) => b.score - a.score || b.cocktail.popularity - a.cocktail.popularity)
     .map((r) => r.cocktail);

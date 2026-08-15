@@ -5,6 +5,7 @@ import type {
   CollectionItem,
   JournalEntry,
   SessionUser,
+  SurveyPreferences,
   UserData,
   UserProfile,
 } from "@/lib/types";
@@ -12,6 +13,7 @@ import type {
 const USERS_KEY = "cocktale:users";
 const SESSION_KEY = "cocktale:session";
 const DATA_PREFIX = "cocktale:data:";
+const GUEST_DATA_KEY = "cocktale:data:guest";
 
 function uid() {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 9)}`;
@@ -31,7 +33,28 @@ function writeUsers(users: UserProfile[]) {
 }
 
 export function emptyUserData(): UserData {
-  return { collected: [], journal: [], history: [], moodPreference: null };
+  return {
+    collected: [],
+    journal: [],
+    history: [],
+    moodPreference: null,
+    surveyPreferences: null,
+  };
+}
+
+export function getGuestData(): UserData {
+  if (typeof window === "undefined") return emptyUserData();
+  try {
+    const raw = localStorage.getItem(GUEST_DATA_KEY);
+    return raw ? { ...emptyUserData(), ...(JSON.parse(raw) as UserData) } : emptyUserData();
+  } catch {
+    return emptyUserData();
+  }
+}
+
+export function saveGuestData(data: UserData) {
+  localStorage.setItem(GUEST_DATA_KEY, JSON.stringify(data));
+  return data;
 }
 
 export function getSession(): SessionUser | null {
@@ -175,6 +198,17 @@ export function removeJournalEntry(userId: string, entryId: string): UserData {
 export function setMoodPreference(userId: string, mood: string | null): UserData {
   const data = getUserData(userId);
   data.moodPreference = mood;
+  saveUserData(userId, data);
+  return data;
+}
+
+export function setSurveyPreferences(
+  userId: string,
+  preferences: SurveyPreferences,
+): UserData {
+  const data = getUserData(userId);
+  data.surveyPreferences = preferences;
+  data.moodPreference = preferences.mood;
   saveUserData(userId, data);
   return data;
 }

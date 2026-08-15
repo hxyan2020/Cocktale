@@ -10,18 +10,21 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import type { SessionUser, UserData } from "@/lib/types";
+import type { SessionUser, SurveyPreferences, UserData } from "@/lib/types";
 import {
   addJournalEntry,
   emptyUserData,
   ensureDemoUser,
   getSession,
+  getGuestData,
   getUserData,
   loginUser,
   logoutUser,
   registerUser,
   removeJournalEntry,
   setMoodPreference,
+  setSurveyPreferences,
+  saveGuestData,
   toggleCollect,
   trackBrowse,
   updateJournalNote,
@@ -42,6 +45,7 @@ type AuthContextValue = {
   deleteJournal: (entryId: string) => void;
   browse: (cocktailId: string, action: "view" | "open" | "skip") => void;
   setMood: (mood: string | null) => void;
+  saveSurvey: (preferences: SurveyPreferences) => void;
   isCollected: (cocktailId: string) => boolean;
   requireAuth: (then?: () => void) => boolean;
   authPromptOpen: boolean;
@@ -80,6 +84,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (session) {
       setData(getUserData(session.id));
       setLoginSeed(currentLoginSeed(session.id));
+    } else {
+      setData(getGuestData());
     }
     setReady(true);
   }, []);
@@ -107,7 +113,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     logoutUser();
     sessionStorage.removeItem(LOGIN_SEED_KEY);
     setUser(null);
-    setData(emptyUserData());
+    setData(getGuestData());
     setLoginSeed("");
   }, []);
 
@@ -178,13 +184,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const browse = useCallback(
     (cocktailId: string, action: "view" | "open" | "skip") => {
       if (!user) {
-        setData((d) => ({
-          ...d,
-          history: [
-            { cocktailId, action, at: new Date().toISOString() },
-            ...d.history,
-          ].slice(0, 500),
-        }));
+        setData((d) =>
+          saveGuestData({
+            ...d,
+            history: [
+              { cocktailId, action, at: new Date().toISOString() },
+              ...d.history,
+            ].slice(0, 500),
+          }),
+        );
         return;
       }
       setData(trackBrowse(user.id, { cocktailId, action }));
@@ -195,10 +203,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const setMood = useCallback(
     (mood: string | null) => {
       if (!user) {
-        setData((d) => ({ ...d, moodPreference: mood }));
+        setData((d) => saveGuestData({ ...d, moodPreference: mood }));
         return;
       }
       setData(setMoodPreference(user.id, mood));
+    },
+    [user],
+  );
+
+  const saveSurvey = useCallback(
+    (preferences: SurveyPreferences) => {
+      if (!user) {
+        setData((d) =>
+          saveGuestData({
+            ...d,
+            moodPreference: preferences.mood,
+            surveyPreferences: preferences,
+          }),
+        );
+        return;
+      }
+      setData(setSurveyPreferences(user.id, preferences));
     },
     [user],
   );
@@ -224,6 +249,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       deleteJournal,
       browse,
       setMood,
+      saveSurvey,
       isCollected,
       requireAuth,
       authPromptOpen,
@@ -244,6 +270,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       deleteJournal,
       browse,
       setMood,
+      saveSurvey,
       isCollected,
       requireAuth,
       authPromptOpen,
