@@ -1,7 +1,11 @@
 import productsData from "@/data/products.json";
 import type { Product } from "@/lib/commerce-types";
 
-export const products = productsData as Product[];
+const rawProducts = productsData as Product[];
+
+// Ingredient and glass names from CocktailDB can differ only by capitalization,
+// producing duplicate product IDs. Keep one canonical card per purchasable item.
+export const products = [...new Map(rawProducts.map((product) => [product.id, product])).values()];
 
 const byId = new Map(products.map((p) => [p.id, p]));
 const bySlug = new Map(products.map((p) => [p.slug, p]));

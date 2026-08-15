@@ -69,7 +69,10 @@ export default function MarketPage() {
 
         <p className="mt-4 text-xs text-[var(--ink-muted)]">{list.length} products</p>
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div
+          key={category}
+          className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        >
           {list.map((p) => (
             <article
               key={p.id}
