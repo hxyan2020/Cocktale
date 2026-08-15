@@ -14,6 +14,42 @@ import type { Cocktail, WeatherBucket } from "@/lib/types";
 
 const SHIFT_PER_VISIT = 36;
 
+const COUNTRY_FLAGS = [
+  ["United Kingdom", "🇬🇧"],
+  ["United States", "🇺🇸"],
+  ["Bahamas", "🇧🇸"],
+  ["Belgium", "🇧🇪"],
+  ["Bermuda", "🇧🇲"],
+  ["Brazil", "🇧🇷"],
+  ["Canada", "🇨🇦"],
+  ["Chile", "🇨🇱"],
+  ["Cuba", "🇨🇺"],
+  ["France", "🇫🇷"],
+  ["Ireland", "🇮🇪"],
+  ["Italy", "🇮🇹"],
+  ["Jamaica", "🇯🇲"],
+  ["Mexico", "🇲🇽"],
+  ["Peru", "🇵🇪"],
+  ["Scotland", "🏴󠁧󠁢󠁳󠁣󠁴󠁿"],
+] as const;
+
+function formatOrigin(origin: string) {
+  return COUNTRY_FLAGS.reduce(
+    (formatted, [country, flag]) => formatted.replaceAll(country, flag),
+    origin,
+  );
+}
+
+function cocktailIntro(cocktail: Cocktail) {
+  const category = cocktail.category.toLowerCase();
+  const flavors = cocktail.flavorProfile.slice(0, 3).join(", ");
+  const profile = flavors ? ` with ${flavors} notes` : "";
+  const categoryArticle = /^[aeiou]/.test(category) ? "An" : "A";
+  const glass = cocktail.glass.toLowerCase();
+  const glassArticle = /^[aeiou]/.test(glass) ? "an" : "a";
+  return `${categoryArticle} ${category}${profile}, traditionally served in ${glassArticle} ${glass}.`;
+}
+
 export default function CataloguePage() {
   const { user, ready, data, collect, markTried, isCollected, requireAuth } = useAuth();
   const { t } = useI18n();
@@ -175,24 +211,27 @@ export default function CataloguePage() {
                 key={cocktail.id}
                 type="button"
                 onClick={() => setSelected(cocktail)}
-                className="overflow-hidden rounded-[1.15rem] bg-[var(--surface)] text-left ring-1 ring-[var(--line)] transition hover:-translate-y-0.5 hover:shadow-lg"
+                className="flex h-full flex-col overflow-hidden rounded-[1.15rem] bg-[var(--surface)] text-left ring-1 ring-[var(--line)] transition hover:-translate-y-0.5 hover:shadow-lg"
               >
-                <div className="relative h-32 w-full sm:h-40">
+                <div className="relative h-32 w-full bg-[#ebe8e0] sm:h-40">
                   <Image
                     src={cocktail.image || "/cocktail-fallback.svg"}
                     alt={cocktail.name}
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     sizes="(max-width: 640px) 50vw, 240px"
                   />
                 </div>
-                <div className="p-3 sm:p-4">
+                <div className="flex flex-1 flex-col p-3 sm:p-4">
                   <h2 className="line-clamp-2 font-[family-name:var(--font-display)] text-base leading-tight text-[var(--ink)] sm:text-lg">
                     {cocktail.name}
                   </h2>
-                  <p className="mt-1 line-clamp-1 text-[11px] text-[var(--ink-muted)] sm:text-xs">
+                  <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-[var(--ink-soft)] sm:text-sm">
+                    {cocktailIntro(cocktail)}
+                  </p>
+                  <p className="mt-2 line-clamp-2 text-[11px] text-[var(--ink-muted)] sm:text-xs">
                     {cocktail.category}
-                    {cocktail.origin ? ` · ${cocktail.origin}` : ""}
+                    {cocktail.origin ? ` · ${formatOrigin(cocktail.origin)}` : ""}
                   </p>
                 </div>
               </button>
