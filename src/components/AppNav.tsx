@@ -100,8 +100,8 @@ export function AppNav() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--line)] bg-[var(--bg)]/85 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl flex-col gap-2 px-3 py-2 sm:px-4 sm:py-3 md:flex-row md:items-center md:justify-between md:gap-3">
-        <div className="flex min-w-0 items-center justify-between gap-2">
+      <div className="mx-auto flex max-w-6xl flex-col gap-2 px-3 py-2 sm:px-4 sm:py-3 md:flex-row md:items-center md:justify-between md:gap-4">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
           <Link
             href="/feed"
             className="inline-flex min-w-0 shrink-0 items-center gap-2 font-[family-name:var(--font-display)] text-xl text-[var(--ink)] sm:text-2xl"
@@ -109,12 +109,12 @@ export function AppNav() {
             <BrandLogo size={36} className="h-8 w-8 sm:h-9 sm:w-9" priority alt="" />
             <span className="truncate">{t("brand")}</span>
           </Link>
-          <div className="flex min-w-0 items-center gap-1.5">
+          <div className="ms-auto flex shrink-0 items-center gap-1.5 md:ms-0">
             <UnitSwitcher />
             <LanguageSwitcher compact />
           </div>
         </div>
-        <nav className="flex min-w-0 items-center justify-between gap-0.5 overflow-x-auto md:justify-end md:gap-1.5">
+        <nav className="flex min-w-0 items-center justify-between gap-0.5 overflow-x-auto p-0.5 md:justify-end md:gap-1.5">
           {navItems}
         </nav>
       </div>
