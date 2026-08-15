@@ -141,7 +141,7 @@ export function AppNav() {
 
         <nav
           ref={navRef}
-          className="flex min-w-0 items-center justify-between gap-0.5 overflow-x-auto p-0.5 md:justify-end md:gap-1.5"
+          className="flex min-w-0 items-center justify-between gap-0.5 overflow-x-auto px-0.5 py-1.5 md:justify-end md:gap-1.5"
         >
           {primaryLinks.map(({ href, label, icon: Icon }) => (
             <Link key={href} href={href} className={navLinkClass(href)} aria-label={label}>
@@ -158,7 +158,7 @@ export function AppNav() {
             <ShoppingCart className="h-4 w-4" />
             <span className="hidden lg:inline">{shop.cart}</span>
             {count > 0 && (
-              <span className="absolute -top-1 -end-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--accent)] px-1 text-[10px] font-semibold text-[var(--foam)]">
+              <span className="absolute -top-1 -end-0.5 z-10 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--accent)] px-1 text-[10px] leading-none font-semibold text-[var(--foam)]">
                 {count}
               </span>
             )}
