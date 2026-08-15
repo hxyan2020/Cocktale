@@ -55,8 +55,8 @@ function NavMenu({
         onClick={() => onOpenChange(open ? null : id)}
         className={`inline-flex h-11 w-full min-w-10 items-center justify-center gap-1.5 rounded-full px-2 text-sm transition sm:h-10 sm:w-auto sm:px-3 ${
           active || open
-            ? "bg-[var(--ink)] text-[var(--foam)]"
-            : "text-[var(--ink-soft)] hover:bg-[var(--chip)]"
+            ? "bg-[var(--foam)] text-[var(--ink)]"
+            : "text-[var(--on-bg-soft)] hover:bg-white/10 hover:text-[var(--on-bg)]"
         }`}
       >
         <Icon className="h-4 w-4 shrink-0" />
@@ -121,8 +121,8 @@ export function AppNav() {
     const active = pathname === href || pathname.startsWith(href + "/");
     return `inline-flex h-11 min-w-10 flex-1 items-center justify-center gap-1.5 rounded-full px-2 text-sm transition sm:h-10 sm:flex-none sm:px-3 ${
       active
-        ? "bg-[var(--ink)] text-[var(--foam)]"
-        : "text-[var(--ink-soft)] hover:bg-[var(--chip)]"
+        ? "bg-[var(--foam)] text-[var(--ink)]"
+        : "text-[var(--on-bg-soft)] hover:bg-white/10 hover:text-[var(--on-bg)]"
     }`;
   };
 
@@ -130,11 +130,11 @@ export function AppNav() {
     "flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-[var(--ink)] transition hover:bg-[var(--chip)]";
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--line)] bg-[var(--bg)]/90 pt-[env(safe-area-inset-top)] backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-white/10 bg-[#0b0908]/95 pt-[env(safe-area-inset-top)] text-[var(--on-bg)] backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl flex-col gap-1 px-3 py-1.5 sm:gap-2 sm:px-4 sm:py-3 md:flex-row md:items-center md:justify-between md:gap-4">
         <Link
           href="/feed"
-          className="inline-flex min-h-9 min-w-0 shrink-0 items-center gap-2 font-[family-name:var(--font-display)] text-lg text-[var(--ink)] sm:text-2xl"
+          className="inline-flex min-h-9 min-w-0 shrink-0 items-center gap-2 font-[family-name:var(--font-display)] text-lg text-[var(--on-bg)] sm:text-2xl"
         >
           <BrandLogo size={36} className="h-7 w-7 sm:h-9 sm:w-9" priority alt="" />
           <span className="truncate">{t("brand")}</span>
