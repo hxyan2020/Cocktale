@@ -223,6 +223,25 @@ export function CocktailDetail({
             </p>
           </section>
 
+          <section className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <h3 className="text-sm font-semibold text-[var(--ink)]">{t("detail.bestFor")}</h3>
+              <ul className="mt-2 space-y-1 text-sm text-[var(--ink-soft)]">
+                {cocktail.suitableFor.map((p) => (
+                  <li key={p}>· {p}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-[var(--ink)]">{t("detail.situations")}</h3>
+              <ul className="mt-2 space-y-1 text-sm text-[var(--ink-soft)]">
+                {cocktail.situations.map((s) => (
+                  <li key={s}>· {s}</li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
           <section>
             <h3 className="text-sm font-semibold text-[var(--ink)]">{t("detail.ingredients")}</h3>
             <ul className="mt-2 space-y-2">
@@ -382,25 +401,6 @@ export function CocktailDetail({
               )}
             </section>
           )}
-
-          <section className="grid gap-4 sm:grid-cols-2">
-            <div>
-              <h3 className="text-sm font-semibold text-[var(--ink)]">{t("detail.bestFor")}</h3>
-              <ul className="mt-2 space-y-1 text-sm text-[var(--ink-soft)]">
-                {cocktail.suitableFor.map((p) => (
-                  <li key={p}>· {p}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold text-[var(--ink)]">{t("detail.situations")}</h3>
-              <ul className="mt-2 space-y-1 text-sm text-[var(--ink-soft)]">
-                {cocktail.situations.map((s) => (
-                  <li key={s}>· {s}</li>
-                ))}
-              </ul>
-            </div>
-          </section>
 
           <div className="flex flex-col gap-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:flex-row">
             <button
