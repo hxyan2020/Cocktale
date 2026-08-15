@@ -23,12 +23,9 @@ export const metadata: Metadata = {
   description:
     "Discover cocktails matched to weather, popularity, and your taste history. Collect favorites and keep a tasting journal.",
   icons: {
-    icon: [
-      { url: "/logo.png", type: "image/png" },
-      { url: "/favicon.ico", sizes: "any" },
-    ],
+    icon: [{ url: "/logo.png", type: "image/png", sizes: "any" }],
     shortcut: "/logo.png",
-    apple: "/logo.png",
+    apple: [{ url: "/logo.png", type: "image/png" }],
   },
 };
 
