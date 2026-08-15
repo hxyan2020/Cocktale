@@ -1,13 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import { CloudSun, Sparkles } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { CloudSun, MapPin, Sparkles } from "lucide-react";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
 import { useI18n } from "@/components/LanguageProvider";
 import { CocktailDetail } from "@/components/CocktailDetail";
 import { SwipeDeck } from "@/components/SwipeDeck";
 import { TriedModal } from "@/components/TriedModal";
+import { useTranslatedTexts } from "@/components/useTranslatedContent";
 import { getRankOffset, maybeAdvanceRankOffset, setRankOffset } from "@/lib/rank-rotation";
 import type { BrowseEvent, Cocktail, WeatherBucket } from "@/lib/types";
 
@@ -17,6 +18,34 @@ type WeatherPayload = {
   label: string;
   city: string;
 };
+
+type LocationStatus =
+  | "checking"
+  | "prompt"
+  | "requesting"
+  | "granted"
+  | "blocked"
+  | "unavailable"
+  | "dismissed";
+
+const LOCATION_CACHE_KEY = "cocktale:recommendation-location";
+const PERSONAL_MESSAGES = [
+  "your cocktail journey has a fresh chapter waiting tonight.",
+  "we found a few unexpected pours that feel right for this moment.",
+  "your taste is shaping a more personal lineup with every visit.",
+  "tonight's selection was refreshed with your recent discoveries in mind.",
+  "there may be a new favorite waiting in this lineup.",
+] as const;
+
+function messageIndex(seed: string, count: number) {
+  const sequence = Number.parseInt(seed, 10);
+  if (Number.isFinite(sequence) && sequence > 0) return (sequence - 1) % count;
+  let value = 0;
+  for (let index = 0; index < seed.length; index++) {
+    value = (value * 31 + seed.charCodeAt(index)) >>> 0;
+  }
+  return value % count;
+}
 
 const MOODS = [
   "celebratory",
@@ -29,7 +58,18 @@ const MOODS = [
 ] as const;
 
 export default function FeedPage() {
-  const { user, ready, data, browse, collect, markTried, isCollected, setMood, requireAuth } = useAuth();
+  const {
+    user,
+    ready,
+    data,
+    loginSeed,
+    browse,
+    collect,
+    markTried,
+    isCollected,
+    setMood,
+    requireAuth,
+  } = useAuth();
   const { t } = useI18n();
   const accountId = user?.id ?? "guest";
   const [queue, setQueue] = useState<Cocktail[]>([]);
@@ -40,6 +80,7 @@ export default function FeedPage() {
   const [detailOpen, setDetailOpen] = useState(false);
   const [triedOpen, setTriedOpen] = useState(false);
   const [coords, setCoords] = useState<{ lat?: number; lon?: number }>({});
+  const [locationStatus, setLocationStatus] = useState<LocationStatus>("prompt");
   const seenIds = useRef<Set<string>>(new Set());
   const loadingMore = useRef(false);
   const historyRef = useRef<BrowseEvent[]>(data.history);
@@ -50,14 +91,54 @@ export default function FeedPage() {
   historyRef.current = data.history;
   moodRef.current = data.moodPreference;
 
-  useEffect(() => {
-    if (!navigator.geolocation) return;
+  const requestLocation = useCallback(() => {
+    if (!navigator.geolocation) {
+      setLocationStatus("unavailable");
+      return;
+    }
+    setLocationStatus("requesting");
     navigator.geolocation.getCurrentPosition(
-      (pos) => setCoords({ lat: pos.coords.latitude, lon: pos.coords.longitude }),
-      () => setCoords({}),
-      { timeout: 5000 },
+      (position) => {
+        const nextCoords = {
+          lat: position.coords.latitude,
+          lon: position.coords.longitude,
+        };
+        setCoords(nextCoords);
+        setLocationStatus("granted");
+        try {
+          sessionStorage.setItem(LOCATION_CACHE_KEY, JSON.stringify(nextCoords));
+        } catch {
+          // Recommendations still work if browser storage is unavailable.
+        }
+      },
+      (error) => {
+        setLocationStatus(error.code === error.PERMISSION_DENIED ? "blocked" : "unavailable");
+      },
+      { enableHighAccuracy: false, maximumAge: 10 * 60 * 1000, timeout: 8000 },
     );
   }, []);
+
+  useEffect(() => {
+    if (!navigator.geolocation) {
+      queueMicrotask(() => setLocationStatus("unavailable"));
+      return;
+    }
+
+    const checkPermission = async () => {
+      try {
+        const permission = await navigator.permissions.query({ name: "geolocation" });
+        if (permission.state === "granted") {
+          requestLocation();
+        } else {
+          setLocationStatus(permission.state === "denied" ? "blocked" : "prompt");
+        }
+      } catch {
+        setLocationStatus("prompt");
+      }
+    };
+
+    void checkPermission();
+  }, [loginSeed, requestLocation]);
 
   const fetchRecommendations = useCallback(
     async (nextCursor: number, replace: boolean) => {
@@ -161,6 +242,46 @@ export default function FeedPage() {
     setIndex((i) => Math.max(0, i - 1));
   };
 
+  const weatherLabel = weather ? t(`weather.${weather.bucket}`) : "";
+  const personalMessageSource = useMemo(() => {
+    const choices: string[] = [
+      ...PERSONAL_MESSAGES,
+      data.moodPreference
+        ? `tonight's lineup leans into your ${data.moodPreference} mood.`
+        : "tonight is wide open, so we mixed in a little of everything.",
+      data.history.length >= 5
+        ? "your recent explorations inspired a fresh set of pours."
+        : "your first few discoveries are ready to begin.",
+      data.collected.length > 0
+        ? "we kept what you love in mind while preparing tonight's lineup."
+        : "there is plenty of room here for a new favorite.",
+    ];
+    return choices[messageIndex(loginSeed || accountId, choices.length)];
+  }, [
+    accountId,
+    data.collected.length,
+    data.history.length,
+    data.moodPreference,
+    loginSeed,
+  ]);
+  const { texts: personalMessages } = useTranslatedTexts(
+    [personalMessageSource],
+    "feed-personal-message",
+  );
+  const { texts: locationCopy } = useTranslatedTexts(
+    [
+      "Share your location for more accurate recommendations",
+      "Your local weather helps Cocktale choose drinks that better fit the moment.",
+      "Use my location",
+      "Not now",
+      "Asking for location…",
+      "Location access is blocked. Enable it in your browser settings for local recommendations.",
+      "Your location is unavailable right now. You can try again.",
+      "Try again",
+    ],
+    "feed-location-permission",
+  );
+
   if (!ready) {
     return (
       <main className="flex flex-1 items-center justify-center">
@@ -168,8 +289,6 @@ export default function FeedPage() {
       </main>
     );
   }
-
-  const weatherLabel = weather ? t(`weather.${weather.bucket}`) : "";
 
   const cityDisplay = (() => {
     if (!weather) return "";
@@ -210,6 +329,47 @@ export default function FeedPage() {
           )}
         </div>
 
+        {locationStatus !== "checking" &&
+          locationStatus !== "granted" &&
+          locationStatus !== "dismissed" && (
+            <div className="mb-4 flex items-start gap-3 rounded-2xl bg-[var(--surface)] p-3.5 ring-1 ring-[var(--line)] sm:mb-6 sm:p-4">
+              <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[var(--accent)]" />
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-medium text-[var(--ink)]">{locationCopy[0]}</p>
+                <p className="mt-1 text-xs leading-relaxed text-[var(--ink-soft)]">
+                  {locationStatus === "blocked"
+                    ? locationCopy[5]
+                    : locationStatus === "unavailable"
+                      ? locationCopy[6]
+                      : locationCopy[1]}
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={requestLocation}
+                    disabled={locationStatus === "requesting"}
+                    className="rounded-full bg-[var(--ink)] px-3.5 py-2 text-xs font-medium text-[var(--foam)] disabled:opacity-60"
+                  >
+                    {locationStatus === "requesting"
+                      ? locationCopy[4]
+                      : locationStatus === "prompt"
+                        ? locationCopy[2]
+                        : locationCopy[7]}
+                  </button>
+                  {locationStatus === "prompt" && (
+                    <button
+                      type="button"
+                      onClick={() => setLocationStatus("dismissed")}
+                      className="rounded-full px-3.5 py-2 text-xs font-medium text-[var(--ink-soft)]"
+                    >
+                      {locationCopy[3]}
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
         <div className="-mx-3 mb-4 flex gap-2 overflow-x-auto px-3 pb-1 sm:mx-0 sm:mb-8 sm:flex-wrap sm:overflow-visible sm:px-0">
           <button
             type="button"
@@ -240,7 +400,10 @@ export default function FeedPage() {
 
         <div className="mb-3 inline-flex max-w-full items-start gap-2 text-[11px] leading-snug text-[var(--on-bg-muted)] sm:mb-4 sm:text-xs">
           <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-          <span>{t("feed.rankingHint")}</span>
+          <span>
+            {user?.name && <span className="font-medium">{user.name.split(/\s+/)[0]}, </span>}
+            {personalMessages[0]}
+          </span>
         </div>
 
         {loading && !current ? (

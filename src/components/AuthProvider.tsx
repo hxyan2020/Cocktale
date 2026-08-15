@@ -31,6 +31,7 @@ type AuthContextValue = {
   user: SessionUser | null;
   data: UserData;
   ready: boolean;
+  loginSeed: string;
   login: (email: string, password: string) => void;
   register: (name: string, email: string, password: string) => void;
   logout: () => void;
@@ -48,11 +49,27 @@ type AuthContextValue = {
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
+const LOGIN_SEED_KEY = "cocktale:login-seed";
+const LOGIN_SEQUENCE_PREFIX = "cocktale:login-sequence:";
+
+function createLoginSeed(userId: string) {
+  const sequenceKey = LOGIN_SEQUENCE_PREFIX + userId;
+  const previous = Number.parseInt(localStorage.getItem(sequenceKey) || "0", 10);
+  const seed = String(Number.isFinite(previous) ? previous + 1 : 1);
+  localStorage.setItem(sequenceKey, seed);
+  sessionStorage.setItem(LOGIN_SEED_KEY, seed);
+  return seed;
+}
+
+function currentLoginSeed(userId: string) {
+  return sessionStorage.getItem(LOGIN_SEED_KEY) || createLoginSeed(userId);
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<SessionUser | null>(null);
   const [data, setData] = useState<UserData>(emptyUserData());
   const [ready, setReady] = useState(false);
+  const [loginSeed, setLoginSeed] = useState("");
   const [authPromptOpen, setAuthPromptOpen] = useState(false);
   const pendingRef = useRef<(() => void) | null>(null);
 
@@ -60,7 +77,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     ensureDemoUser();
     const session = getSession();
     setUser(session);
-    if (session) setData(getUserData(session.id));
+    if (session) {
+      setData(getUserData(session.id));
+      setLoginSeed(currentLoginSeed(session.id));
+    }
     setReady(true);
   }, []);
 
@@ -73,18 +93,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const session = loginUser(email, password);
     setUser(session);
     setData(getUserData(session.id));
+    setLoginSeed(createLoginSeed(session.id));
   }, []);
 
   const register = useCallback((name: string, email: string, password: string) => {
     const session = registerUser(name, email, password);
     setUser(session);
     setData(getUserData(session.id));
+    setLoginSeed(createLoginSeed(session.id));
   }, []);
 
   const logout = useCallback(() => {
     logoutUser();
+    sessionStorage.removeItem(LOGIN_SEED_KEY);
     setUser(null);
     setData(emptyUserData());
+    setLoginSeed("");
   }, []);
 
   const closeAuthPrompt = useCallback(() => {
@@ -189,6 +213,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       user,
       data,
       ready,
+      loginSeed,
       login,
       register,
       logout,
@@ -208,6 +233,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       user,
       data,
       ready,
+      loginSeed,
       login,
       register,
       logout,
