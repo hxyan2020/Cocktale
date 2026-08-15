@@ -8,6 +8,10 @@ export type Messages = {
     book: string;
     journal: string;
     signOut: string;
+    hub: string;
+    preferences: string;
+    measure: string;
+    account: string;
   };
   login: {
     eyebrow: string;
@@ -151,6 +155,10 @@ export const en: Messages = {
     book: "Book",
     journal: "Journal",
     signOut: "Sign out",
+    hub: "My Hub",
+    preferences: "Preference",
+    measure: "Measure",
+    account: "Account",
   },
   login: {
     eyebrow: "Cocktail stories, poured for you",

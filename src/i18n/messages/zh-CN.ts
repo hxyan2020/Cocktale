@@ -10,6 +10,10 @@ export const zhCN: Messages = {
     book: "收藏",
     journal: "手账",
     signOut: "退出登录",
+    hub: "我的中心",
+    preferences: "偏好设置",
+    measure: "计量单位",
+    account: "账户管理",
   },
   login: {
     eyebrow: "为你斟上的鸡尾酒故事",

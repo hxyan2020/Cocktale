@@ -10,6 +10,10 @@ export const de: Messages = {
     book: "Buch",
     journal: "Tagebuch",
     signOut: "Abmelden",
+    hub: "Mein Hub",
+    preferences: "Einstellungen",
+    measure: "Maß",
+    account: "Konto",
   },
   login: {
     eyebrow: "Cocktailgeschichten – für dich eingeschenkt",

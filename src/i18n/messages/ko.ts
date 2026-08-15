@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const ko: Messages = {
   brand: "Cocktale",
   tagline: "당신을 위해 따른 칵테일 이야기",
-  nav: { discover: "발견", catalogue: "도감", journey: "여정", book: "북", journal: "저널", signOut: "로그아웃" },
+  nav: { discover: "발견", catalogue: "도감", journey: "여정", book: "북", journal: "저널", signOut: "로그아웃", hub: "마이 허브", preferences: "환경설정", measure: "단위", account: "계정" },
   login: {
     eyebrow: "당신을 위해 따른 칵테일 이야기",
     title: "Cocktale",

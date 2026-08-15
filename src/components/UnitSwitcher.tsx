@@ -29,7 +29,7 @@ export function UnitSwitcher({ className = "", size = "sm" }: Props) {
           key={u}
           type="button"
           onClick={() => setUnit(u)}
-          className={`rounded-full font-medium uppercase tracking-wide transition ${pad} ${
+          className={`flex-1 rounded-full font-medium uppercase tracking-wide transition ${pad} ${
             unit === u
               ? "bg-[var(--ink)] text-[var(--foam)]"
               : "text-[var(--ink-soft)] hover:text-[var(--ink)]"

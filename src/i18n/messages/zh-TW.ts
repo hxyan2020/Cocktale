@@ -10,6 +10,10 @@ export const zhTW: Messages = {
     book: "收藏",
     journal: "手札",
     signOut: "登出",
+    hub: "我的中心",
+    preferences: "偏好設定",
+    measure: "計量單位",
+    account: "帳戶管理",
   },
   login: {
     eyebrow: "為你斟上的雞尾酒故事",

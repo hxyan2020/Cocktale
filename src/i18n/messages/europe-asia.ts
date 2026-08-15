@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const nl: Messages = {
   brand: "Cocktale",
   tagline: "Cocktailverhalen, voor jou ingeschonken",
-  nav: { discover: "Ontdekken", catalogue: "Catalogus", journey: "Reis", book: "Boek", journal: "Dagboek", signOut: "Uitloggen" },
+  nav: { discover: "Ontdekken", catalogue: "Catalogus", journey: "Reis", book: "Boek", journal: "Dagboek", signOut: "Uitloggen", hub: "My Hub", preferences: "Preference", measure: "Measure", account: "Account" },
   login: {
     eyebrow: "Cocktailverhalen, voor jou ingeschonken",
     title: "Cocktale",
@@ -135,7 +135,7 @@ export const nl: Messages = {
 export const pl: Messages = {
   brand: "Cocktale",
   tagline: "Historie koktajli — nalane dla Ciebie",
-  nav: { discover: "Odkrywaj", catalogue: "Katalog", journey: "Podróż", book: "Książka", journal: "Dziennik", signOut: "Wyloguj" },
+  nav: { discover: "Odkrywaj", catalogue: "Katalog", journey: "Podróż", book: "Książka", journal: "Dziennik", signOut: "Wyloguj", hub: "My Hub", preferences: "Preference", measure: "Measure", account: "Account" },
   login: {
     eyebrow: "Historie koktajli — nalane dla Ciebie",
     title: "Cocktale",
@@ -267,7 +267,7 @@ export const pl: Messages = {
 export const bn: Messages = {
   brand: "Cocktale",
   tagline: "ককটেলের গল্প, আপনার জন্য ঢেলে দেওয়া",
-  nav: { discover: "আবিষ্কার", catalogue: "তালিকা", journey: "যাত্রা", book: "বই", journal: "জার্নাল", signOut: "সাইন আউট" },
+  nav: { discover: "আবিষ্কার", catalogue: "তালিকা", journey: "যাত্রা", book: "বই", journal: "জার্নাল", signOut: "সাইন আউট", hub: "My Hub", preferences: "Preference", measure: "Measure", account: "Account" },
   login: {
     eyebrow: "ককটেলের গল্প, আপনার জন্য ঢেলে দেওয়া",
     title: "Cocktale",
