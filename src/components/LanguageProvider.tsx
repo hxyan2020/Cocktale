@@ -29,6 +29,7 @@ type TranslateFn = (path: string, vars?: Record<string, string | number>) => str
 type LanguageContextValue = {
   locale: LocaleCode;
   setLocale: (code: LocaleCode) => void;
+  applyDefaultLocale: (code: LocaleCode) => void;
   messages: Messages;
   t: TranslateFn;
   dir: "ltr" | "rtl";
@@ -73,11 +74,18 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     const meta = getLocaleMeta(locale);
     document.documentElement.lang = locale;
     document.documentElement.dir = meta.dir;
-    localStorage.setItem(LOCALE_STORAGE_KEY, locale);
   }, [locale, ready]);
 
   const setLocale = useCallback((code: LocaleCode) => {
     setLocaleState(code);
+    localStorage.setItem(LOCALE_STORAGE_KEY, code);
+  }, []);
+
+  const applyDefaultLocale = useCallback((code: LocaleCode) => {
+    if (localStorage.getItem(LOCALE_STORAGE_KEY)) return;
+    if (!isLocaleCode(code)) return;
+    setLocaleState(code);
+    localStorage.setItem(LOCALE_STORAGE_KEY, code);
   }, []);
 
   const messages = useMemo(() => getMessages(locale), [locale]);
@@ -107,8 +115,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   );
 
   const value = useMemo(
-    () => ({ locale, setLocale, messages, t, dir }),
-    [locale, setLocale, messages, t, dir],
+    () => ({ locale, setLocale, applyDefaultLocale, messages, t, dir }),
+    [locale, setLocale, applyDefaultLocale, messages, t, dir],
   );
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;

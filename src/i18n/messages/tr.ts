@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const tr: Messages = {
   brand: "Cocktale",
   tagline: "Kokteyl hikâyeleri, sizin için sunulur",
-  nav: { discover: "Keşfet", catalogue: "Katalog", journey: "Yolculuk", book: "Kitap", journal: "Günlük", signOut: "Çıkış", hub: "Hub'ım", preferences: "Tercihler", measure: "Ölçü", account: "Hesap" },
+  nav: { discover: "Keşfet", catalogue: "Katalog", journey: "Yolculuk", book: "Kitap", journal: "Günlük", signOut: "Çıkış", hub: "Hub'ım", preferences: "Tercihler", measure: "Ölçü", currency: "Para birimi", account: "Hesap" },
   login: {
     eyebrow: "Kokteyl hikâyeleri, sizin için sunulur",
     title: "Cocktale",

@@ -13,6 +13,7 @@ export const zhCN: Messages = {
     hub: "我的中心",
     preferences: "偏好设置",
     measure: "计量单位",
+    currency: "货币",
     account: "账户管理",
   },
   login: {

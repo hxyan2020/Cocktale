@@ -7,17 +7,17 @@ import { useRouter } from "next/navigation";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
-import { useI18n } from "@/components/LanguageProvider";
+import { useCurrency } from "@/components/CurrencyProvider";
 import { useShop } from "@/components/useShop";
 import { useTranslatedTexts } from "@/components/useTranslatedContent";
-import { formatMoney, getProduct, productImageClass, productImageUnoptimized } from "@/lib/products";
+import { getProduct, productImageClass, productImageUnoptimized } from "@/lib/products";
 import type { Order, OrderLine } from "@/lib/commerce-types";
 
 export default function CartPage() {
   const { user, ready } = useAuth();
   const router = useRouter();
   const shop = useShop();
-  const { locale } = useI18n();
+  const { format: formatMoney } = useCurrency();
   const { items, setQty, removeItem, clearCart, saveOrder } = useCart();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -175,7 +175,7 @@ export default function CartPage() {
                     {localizedProductNames[lineIndex] || product.name}
                   </Link>
                   <p className="text-sm text-[var(--ink-muted)]">
-                    {formatMoney(product.priceCents, product.currency, locale)}
+                    {formatMoney(product.priceCents)}
                   </p>
                   <div className="mt-2 flex flex-wrap items-center gap-2 sm:gap-3">
                     <label className="inline-flex items-center text-xs text-[var(--ink-muted)]">
@@ -199,7 +199,7 @@ export default function CartPage() {
                   </div>
                 </div>
                 <p className="col-start-2 text-end text-sm font-semibold text-[var(--ink)] sm:ms-auto">
-                  {formatMoney(product.priceCents * item.quantity, "usd", locale)}
+                  {formatMoney(product.priceCents * item.quantity)}
                 </p>
               </div>
             ))}
@@ -208,7 +208,7 @@ export default function CartPage() {
               <div className="flex items-center justify-between rounded-2xl bg-[var(--chip)] px-4 py-3 sm:rounded-[1.25rem] sm:py-4">
                 <span className="text-sm text-[var(--ink-soft)]">{shop.subtotal}</span>
                 <span className="text-lg font-semibold text-[var(--ink)]">
-                  {formatMoney(subtotal, "usd", locale)}
+                  {formatMoney(subtotal)}
                 </span>
               </div>
 

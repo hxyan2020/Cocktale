@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const ja: Messages = {
   brand: "Cocktale",
   tagline: "あなたのために注ぐ、カクテルの物語",
-  nav: { discover: "見つける", catalogue: "図鑑", journey: "旅", book: "ブック", journal: "ジャーナル", signOut: "ログアウト", hub: "マイハブ", preferences: "設定", measure: "計量", account: "アカウント" },
+  nav: { discover: "見つける", catalogue: "図鑑", journey: "旅", book: "ブック", journal: "ジャーナル", signOut: "ログアウト", hub: "マイハブ", preferences: "設定", measure: "計量", currency: "通貨", account: "アカウント" },
   login: {
     eyebrow: "あなたのために注ぐ、カクテルの物語",
     title: "Cocktale",

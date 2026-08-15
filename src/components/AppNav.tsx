@@ -22,6 +22,7 @@ import { useCart } from "@/components/CartProvider";
 import { useI18n } from "@/components/LanguageProvider";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { UnitSwitcher } from "@/components/UnitSwitcher";
+import { CurrencySwitcher } from "@/components/CurrencySwitcher";
 import { useShop } from "@/components/useShop";
 
 type MenuId = "hub" | "preferences" | null;
@@ -224,6 +225,12 @@ export function AppNav() {
                   {t("nav.measure")}
                 </p>
                 <UnitSwitcher size="md" className="w-full justify-between" />
+              </div>
+              <div>
+                <p className="mb-2 text-[11px] font-medium tracking-wide text-[var(--ink-muted)] uppercase">
+                  {t("nav.currency")}
+                </p>
+                <CurrencySwitcher size="md" className="w-full" />
               </div>
               <div>
                 <p className="mb-2 text-[11px] font-medium tracking-wide text-[var(--ink-muted)] uppercase">

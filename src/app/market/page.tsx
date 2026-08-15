@@ -6,10 +6,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
-import { useI18n } from "@/components/LanguageProvider";
+import { useCurrency } from "@/components/CurrencyProvider";
 import { useShop } from "@/components/useShop";
 import { useLocalizedProduct } from "@/components/useTranslatedContent";
-import { formatMoney, productImageClass, productImageUnoptimized, searchProducts } from "@/lib/products";
+import { productImageClass, productImageUnoptimized, searchProducts } from "@/lib/products";
 import type { Product } from "@/lib/commerce-types";
 
 const CATEGORIES = ["all", "ingredient", "utensil", "glassware", "accessory"] as const;
@@ -20,14 +20,14 @@ function ProductCard({
   onAdd,
   addLabel,
   addedLabel,
-  locale,
+  formatMoney,
 }: {
   product: Product;
   added: boolean;
   onAdd: () => void;
   addLabel: string;
   addedLabel: string;
-  locale: string;
+  formatMoney: (usdCents: number) => string;
 }) {
   const cardRef = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
@@ -76,7 +76,7 @@ function ProductCard({
         </Link>
         <p className="line-clamp-2 text-xs text-[var(--ink-soft)]">{localized.description}</p>
         <p className="mt-auto text-sm font-semibold text-[var(--ink)]">
-          {formatMoney(product.priceCents, product.currency, locale)}
+          {formatMoney(product.priceCents)}
         </p>
         <button
           type="button"
@@ -93,7 +93,7 @@ function ProductCard({
 export default function MarketPage() {
   const { ready } = useAuth();
   const shop = useShop();
-  const { locale } = useI18n();
+  const { format: formatMoney } = useCurrency();
   const { addItem } = useCart();
   const [q, setQ] = useState("");
   const [category, setCategory] = useState<(typeof CATEGORIES)[number]>("all");
@@ -160,7 +160,7 @@ export default function MarketPage() {
               added={addedId === p.id}
               addLabel={shop.addToCart}
               addedLabel={shop.added}
-              locale={locale}
+              formatMoney={formatMoney}
               onAdd={() => {
                 addItem(p.id, 1);
                 setAddedId(p.id);

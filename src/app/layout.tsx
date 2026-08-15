@@ -4,6 +4,8 @@ import { AuthProvider } from "@/components/AuthProvider";
 import { AuthPromptHost } from "@/components/AuthPromptHost";
 import { AppFooter } from "@/components/AppFooter";
 import { CartProvider } from "@/components/CartProvider";
+import { CurrencyProvider } from "@/components/CurrencyProvider";
+import { GeoDefaultsBootstrap } from "@/components/GeoDefaultsBootstrap";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { MeasureUnitProvider } from "@/components/MeasureUnitProvider";
 import "./globals.css";
@@ -52,13 +54,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       >
         <LanguageProvider>
           <MeasureUnitProvider>
-            <AuthProvider>
-              <CartProvider>
-                {children}
-                <AppFooter />
-                <AuthPromptHost />
-              </CartProvider>
-            </AuthProvider>
+            <CurrencyProvider>
+              <GeoDefaultsBootstrap />
+              <AuthProvider>
+                <CartProvider>
+                  {children}
+                  <AppFooter />
+                  <AuthPromptHost />
+                </CartProvider>
+              </AuthProvider>
+            </CurrencyProvider>
           </MeasureUnitProvider>
         </LanguageProvider>
       </body>

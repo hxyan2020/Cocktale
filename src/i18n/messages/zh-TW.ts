@@ -13,6 +13,7 @@ export const zhTW: Messages = {
     hub: "我的中心",
     preferences: "偏好設定",
     measure: "計量單位",
+    currency: "貨幣",
     account: "帳戶管理",
   },
   login: {

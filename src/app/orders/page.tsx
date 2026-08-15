@@ -4,15 +4,16 @@ import Link from "next/link";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
+import { useCurrency } from "@/components/CurrencyProvider";
 import { useI18n } from "@/components/LanguageProvider";
 import { useShop } from "@/components/useShop";
 import { useTranslatedTexts } from "@/components/useTranslatedContent";
-import { formatMoney } from "@/lib/products";
 
 export default function OrdersPage() {
   const { ready } = useAuth();
   const shop = useShop();
   const { locale } = useI18n();
+  const { format: formatMoney } = useCurrency();
   const { orders, hydrated } = useCart();
   const itemNames = orders.flatMap((order) => order.items.map((item) => item.name));
   const { texts: localizedItemNames } = useTranslatedTexts(itemNames, "order-list-items");
@@ -65,7 +66,7 @@ export default function OrdersPage() {
                     </div>
                     <div className="shrink-0 text-end">
                       <p className="text-sm font-semibold text-[var(--ink)]">
-                        {formatMoney(order.totalCents, order.currency, locale)}
+                        {formatMoney(order.totalCents)}
                       </p>
                       <p className="text-xs capitalize text-[var(--accent-deep)]">
                         {shop.orderStatus}: {statusLabel(order.status)}

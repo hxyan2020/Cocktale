@@ -42,7 +42,7 @@ const detailExtras = {
 export const vi: Messages = {
   brand: "Cocktale",
   tagline: "Câu chuyện cocktail, rót dành cho bạn",
-  nav: { discover: "Khám phá", catalogue: "Danh mục", journey: "Hành trình", book: "Sổ", journal: "Nhật ký", signOut: "Đăng xuất", hub: "My Hub", preferences: "Preference", measure: "Measure", account: "Account" },
+  nav: { discover: "Khám phá", catalogue: "Danh mục", journey: "Hành trình", book: "Sổ", journal: "Nhật ký", signOut: "Đăng xuất", hub: "My Hub", preferences: "Preference", measure: "Measure", currency: "Currency", account: "Account" },
   login: {
     eyebrow: "Câu chuyện cocktail, rót dành cho bạn",
     title: "Cocktale",
@@ -180,7 +180,7 @@ export const vi: Messages = {
 export const th: Messages = {
   brand: "Cocktale",
   tagline: "เรื่องราวค็อกเทล รินให้คุณ",
-  nav: { discover: "ค้นพบ", catalogue: "สารบัญ", journey: "การเดินทาง", book: "สมุด", journal: "บันทึก", signOut: "ออกจากระบบ", hub: "My Hub", preferences: "Preference", measure: "Measure", account: "Account" },
+  nav: { discover: "ค้นพบ", catalogue: "สารบัญ", journey: "การเดินทาง", book: "สมุด", journal: "บันทึก", signOut: "ออกจากระบบ", hub: "My Hub", preferences: "Preference", measure: "Measure", currency: "Currency", account: "Account" },
   login: {
     eyebrow: "เรื่องราวค็อกเทล รินให้คุณ",
     title: "Cocktale",
@@ -318,7 +318,7 @@ export const th: Messages = {
 export const id: Messages = {
   brand: "Cocktale",
   tagline: "Kisah koktail, dituangkan untuk Anda",
-  nav: { discover: "Temukan", catalogue: "Katalog", journey: "Perjalanan", book: "Buku", journal: "Jurnal", signOut: "Keluar", hub: "My Hub", preferences: "Preference", measure: "Measure", account: "Account" },
+  nav: { discover: "Temukan", catalogue: "Katalog", journey: "Perjalanan", book: "Buku", journal: "Jurnal", signOut: "Keluar", hub: "My Hub", preferences: "Preference", measure: "Measure", currency: "Currency", account: "Account" },
   login: {
     eyebrow: "Kisah koktail, dituangkan untuk Anda",
     title: "Cocktale",

@@ -11,6 +11,7 @@ export type Messages = {
     hub: string;
     preferences: string;
     measure: string;
+    currency: string;
     account: string;
   };
   login: {
@@ -175,6 +176,7 @@ export const en: Messages = {
     hub: "My Hub",
     preferences: "Preference",
     measure: "Measure",
+    currency: "Currency",
     account: "Account",
   },
   login: {

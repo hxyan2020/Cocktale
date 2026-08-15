@@ -45,11 +45,15 @@ export function equipmentImageUrl(sourceKey: string): string | undefined {
   return product?.images[0]?.url ? `/utensils/${sourceKey}.webp` : undefined;
 }
 
-export function formatMoney(cents: number, currency = "usd", locale = "en") {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: currency.toUpperCase(),
-  }).format(cents / 100);
+import { formatMoneyAmount, type CurrencyCode } from "@/lib/currency";
+
+/** Formats catalog USD-cent amounts into the selected display currency. */
+export function formatMoney(
+  usdCents: number,
+  currency: string = "usd",
+  locale = "en",
+) {
+  return formatMoneyAmount(usdCents, currency.toUpperCase() as CurrencyCode, locale);
 }
 
 export function searchProducts(query: string, category?: string): Product[] {

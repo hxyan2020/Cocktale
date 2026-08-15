@@ -8,12 +8,12 @@ import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
 import { CocktailDetail } from "@/components/CocktailDetail";
-import { useI18n } from "@/components/LanguageProvider";
+import { useCurrency } from "@/components/CurrencyProvider";
 import { TriedModal } from "@/components/TriedModal";
 import { useShop } from "@/components/useShop";
 import { useLocalizedProduct, useTranslatedTexts } from "@/components/useTranslatedContent";
 import { getCocktail } from "@/lib/cocktails";
-import { formatMoney, getProductBySlug, productImageClass, productImageUnoptimized } from "@/lib/products";
+import { getProductBySlug, productImageClass, productImageUnoptimized } from "@/lib/products";
 import type { Cocktail } from "@/lib/types";
 
 function LocalizedCocktailName({ cocktail }: { cocktail: Cocktail }) {
@@ -28,7 +28,7 @@ export default function ProductDetailPage() {
   const params = useParams<{ slug: string }>();
   const { ready, collect, markTried, isCollected, requireAuth } = useAuth();
   const shop = useShop();
-  const { locale } = useI18n();
+  const { format: formatMoney } = useCurrency();
   const { addItem } = useCart();
   const product = useMemo(() => getProductBySlug(params.slug), [params.slug]);
   const localizedProduct = useLocalizedProduct(product);
@@ -116,7 +116,7 @@ export default function ProductDetailPage() {
             </div>
 
             <p className="text-2xl font-semibold text-[var(--on-bg)]">
-              {formatMoney(product.priceCents, product.currency, locale)}
+              {formatMoney(product.priceCents)}
             </p>
             <p className="text-sm text-[var(--on-bg-soft)]">
               {product.stock > 0 ? `${shop.inStock} (${product.stock})` : shop.outOfStock}

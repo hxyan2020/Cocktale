@@ -11,26 +11,27 @@ import {
 } from "react";
 import {
   getStoredMeasureUnit,
+  peekStoredMeasureUnit,
   setStoredMeasureUnit,
   type MeasureUnit,
   MEASURE_UNITS,
+  isMeasureUnit,
 } from "@/lib/units";
 
 type MeasureContextValue = {
   unit: MeasureUnit;
   setUnit: (unit: MeasureUnit) => void;
   units: MeasureUnit[];
+  applyDefaultUnit: (unit: MeasureUnit) => void;
 };
 
 const MeasureContext = createContext<MeasureContextValue | null>(null);
 
 export function MeasureUnitProvider({ children }: { children: ReactNode }) {
   const [unit, setUnitState] = useState<MeasureUnit>("oz");
-  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     setUnitState(getStoredMeasureUnit());
-    setReady(true);
   }, []);
 
   const setUnit = useCallback((next: MeasureUnit) => {
@@ -38,13 +39,17 @@ export function MeasureUnitProvider({ children }: { children: ReactNode }) {
     setStoredMeasureUnit(next);
   }, []);
 
-  const value = useMemo(
-    () => ({ unit, setUnit, units: MEASURE_UNITS }),
-    [unit, setUnit],
-  );
+  const applyDefaultUnit = useCallback((next: MeasureUnit) => {
+    if (peekStoredMeasureUnit()) return;
+    if (!isMeasureUnit(next)) return;
+    setUnitState(next);
+    setStoredMeasureUnit(next);
+  }, []);
 
-  // Avoid hydration mismatch flashing — still render children
-  void ready;
+  const value = useMemo(
+    () => ({ unit, setUnit, units: MEASURE_UNITS, applyDefaultUnit }),
+    [unit, setUnit, applyDefaultUnit],
+  );
 
   return <MeasureContext.Provider value={value}>{children}</MeasureContext.Provider>;
 }

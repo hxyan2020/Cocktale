@@ -6,10 +6,10 @@ import { useParams } from "next/navigation";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
+import { useCurrency } from "@/components/CurrencyProvider";
 import { useI18n } from "@/components/LanguageProvider";
 import { useShop } from "@/components/useShop";
 import { useTranslatedTexts } from "@/components/useTranslatedContent";
-import { formatMoney } from "@/lib/products";
 import type { OrderStatus } from "@/lib/commerce-types";
 
 function trackingSteps(status: OrderStatus, shop: ReturnType<typeof useShop>) {
@@ -32,6 +32,7 @@ export default function OrderDetailPage() {
   const { ready } = useAuth();
   const shop = useShop();
   const { locale } = useI18n();
+  const { format: formatMoney } = useCurrency();
   const { getOrder, hydrated } = useCart();
   const order = getOrder(params.id);
   const orderTexts = order
@@ -129,11 +130,11 @@ export default function OrderDetailPage() {
                   {localizedOrderTexts[itemIndex + 1] || item.name}
                 </p>
                 <p className="text-xs text-[var(--ink-muted)]">
-                  {item.quantity} × {formatMoney(item.unitAmountCents, "usd", locale)}
+                  {item.quantity} × {formatMoney(item.unitAmountCents)}
                 </p>
               </div>
               <p className="col-start-2 text-end text-sm font-semibold text-[var(--ink)] sm:ms-auto">
-                {formatMoney(item.unitAmountCents * item.quantity, "usd", locale)}
+                {formatMoney(item.unitAmountCents * item.quantity)}
               </p>
             </li>
           ))}
@@ -142,7 +143,7 @@ export default function OrderDetailPage() {
         <div className="mt-6 flex justify-between rounded-[1.25rem] bg-[var(--chip)] px-4 py-4 text-[var(--ink)]">
           <span>{shop.orderTotal}</span>
           <span className="font-semibold">
-            {formatMoney(order.totalCents, order.currency, locale)}
+            {formatMoney(order.totalCents)}
           </span>
         </div>
       </main>

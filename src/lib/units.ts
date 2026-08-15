@@ -2,7 +2,12 @@ export type MeasureUnit = "oz" | "ml" | "cl";
 
 export const MEASURE_UNITS: MeasureUnit[] = ["oz", "ml", "cl"];
 
-const STORAGE_KEY = "cocktale:measureUnit";
+export const MEASURE_STORAGE_KEY = "cocktale:measureUnit";
+const STORAGE_KEY = MEASURE_STORAGE_KEY;
+
+export function isMeasureUnit(value: string): value is MeasureUnit {
+  return value === "oz" || value === "ml" || value === "cl";
+}
 
 /** US fluid ounce used by most cocktail recipes in TheCocktailDB. */
 const ML_PER_OZ = 29.5735;
@@ -145,15 +150,19 @@ export function convertMeasure(measure: string | null, unit: MeasureUnit): strin
   return [prefix, body, suffix].filter(Boolean).join(" ").replace(/\s+/g, " ").trim();
 }
 
-export function getStoredMeasureUnit(): MeasureUnit {
-  if (typeof window === "undefined") return "oz";
+export function peekStoredMeasureUnit(): MeasureUnit | null {
+  if (typeof window === "undefined") return null;
   try {
     const v = localStorage.getItem(STORAGE_KEY);
-    if (v === "oz" || v === "ml" || v === "cl") return v;
+    if (isMeasureUnit(v || "")) return v as MeasureUnit;
   } catch {
     /* ignore */
   }
-  return "oz";
+  return null;
+}
+
+export function getStoredMeasureUnit(): MeasureUnit {
+  return peekStoredMeasureUnit() ?? "oz";
 }
 
 export function setStoredMeasureUnit(unit: MeasureUnit) {

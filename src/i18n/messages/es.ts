@@ -13,6 +13,7 @@ export const es: Messages = {
     hub: "Mi espacio",
     preferences: "Preferencias",
     measure: "Medida",
+    currency: "Moneda",
     account: "Cuenta",
   },
   login: {

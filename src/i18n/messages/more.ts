@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const uk: Messages = {
   brand: "Cocktale",
   tagline: "Історії коктейлів — налиті для вас",
-  nav: { discover: "Відкрити", catalogue: "Каталог", journey: "Подорож", book: "Книга", journal: "Щоденник", signOut: "Вийти", hub: "My Hub", preferences: "Preference", measure: "Measure", account: "Account" },
+  nav: { discover: "Відкрити", catalogue: "Каталог", journey: "Подорож", book: "Книга", journal: "Щоденник", signOut: "Вийти", hub: "My Hub", preferences: "Preference", measure: "Measure", currency: "Currency", account: "Account" },
   login: {
     eyebrow: "Історії коктейлів — налиті для вас",
     title: "Cocktale",
@@ -152,7 +152,7 @@ export const uk: Messages = {
 export const ms: Messages = {
   brand: "Cocktale",
   tagline: "Kisah koktel, dituangkan untuk anda",
-  nav: { discover: "Teroka", catalogue: "Katalog", journey: "Perjalanan", book: "Buku", journal: "Jurnal", signOut: "Log keluar", hub: "My Hub", preferences: "Preference", measure: "Measure", account: "Account" },
+  nav: { discover: "Teroka", catalogue: "Katalog", journey: "Perjalanan", book: "Buku", journal: "Jurnal", signOut: "Log keluar", hub: "My Hub", preferences: "Preference", measure: "Measure", currency: "Currency", account: "Account" },
   login: {
     eyebrow: "Kisah koktel, dituangkan untuk anda",
     title: "Cocktale",
@@ -301,7 +301,7 @@ export const ms: Messages = {
 export const fa: Messages = {
   brand: "Cocktale",
   tagline: "داستان‌های کوکتل، برای شما ریخته می‌شود",
-  nav: { discover: "کشف", catalogue: "فهرست", journey: "سفر", book: "کتاب", journal: "دفترچه", signOut: "خروج", hub: "My Hub", preferences: "Preference", measure: "Measure", account: "Account" },
+  nav: { discover: "کشف", catalogue: "فهرست", journey: "سفر", book: "کتاب", journal: "دفترچه", signOut: "خروج", hub: "My Hub", preferences: "Preference", measure: "Measure", currency: "Currency", account: "Account" },
   login: {
     eyebrow: "داستان‌های کوکتل، برای شما ریخته می‌شود",
     title: "Cocktale",
@@ -450,7 +450,7 @@ export const fa: Messages = {
 export const he: Messages = {
   brand: "Cocktale",
   tagline: "סיפורי קוקטיילים, מוגשים עבורך",
-  nav: { discover: "גלה", catalogue: "קטלוג", journey: "מסע", book: "ספר", journal: "יומן", signOut: "התנתק", hub: "My Hub", preferences: "Preference", measure: "Measure", account: "Account" },
+  nav: { discover: "גלה", catalogue: "קטלוג", journey: "מסע", book: "ספר", journal: "יומן", signOut: "התנתק", hub: "My Hub", preferences: "Preference", measure: "Measure", currency: "Currency", account: "Account" },
   login: {
     eyebrow: "סיפורי קוקטיילים, מוגשים עבורך",
     title: "Cocktale",
@@ -599,7 +599,7 @@ export const he: Messages = {
 export const sv: Messages = {
   brand: "Cocktale",
   tagline: "Cocktailberättelser, hällts för dig",
-  nav: { discover: "Upptäck", catalogue: "Katalog", journey: "Resa", book: "Bok", journal: "Dagbok", signOut: "Logga ut", hub: "My Hub", preferences: "Preference", measure: "Measure", account: "Account" },
+  nav: { discover: "Upptäck", catalogue: "Katalog", journey: "Resa", book: "Bok", journal: "Dagbok", signOut: "Logga ut", hub: "My Hub", preferences: "Preference", measure: "Measure", currency: "Currency", account: "Account" },
   login: {
     eyebrow: "Cocktailberättelser, hällts för dig",
     title: "Cocktale",

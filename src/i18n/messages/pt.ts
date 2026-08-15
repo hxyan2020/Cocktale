@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 export const pt: Messages = {
   brand: "Cocktale",
   tagline: "Histórias de coquetéis, servidas para você",
-  nav: { discover: "Descobrir", catalogue: "Catálogo", journey: "Jornada", book: "Livro", journal: "Diário", signOut: "Sair", hub: "Meu espaço", preferences: "Preferências", measure: "Medida", account: "Conta" },
+  nav: { discover: "Descobrir", catalogue: "Catálogo", journey: "Jornada", book: "Livro", journal: "Diário", signOut: "Sair", hub: "Meu espaço", preferences: "Preferências", measure: "Medida", currency: "Moeda", account: "Conta" },
   login: {
     eyebrow: "Histórias de coquetéis, servidas para você",
     title: "Cocktale",
