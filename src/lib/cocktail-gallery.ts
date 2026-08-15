@@ -7,6 +7,11 @@ export type GalleryImage = {
   alt: string;
   label: string;
   unoptimized?: boolean;
+  width?: number;
+  height?: number;
+  credit?: string;
+  creditUrl?: string;
+  license?: string;
 };
 
 function normalizeName(name: string) {
@@ -67,8 +72,9 @@ export function mergeCocktailGallery(
   const seen = new Set<string>();
   const out: GalleryImage[] = [];
   for (const img of [...base, ...extra]) {
-    if (!img.url || seen.has(img.url) || out.length >= limit) continue;
-    seen.add(img.url);
+    const canonicalUrl = img.url.replace(/[?#].*$/, "");
+    if (!img.url || seen.has(canonicalUrl) || out.length >= limit) continue;
+    seen.add(canonicalUrl);
     out.push(img);
   }
   return out;

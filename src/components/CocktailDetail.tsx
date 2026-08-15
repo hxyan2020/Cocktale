@@ -38,27 +38,41 @@ export function CocktailDetail({
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [shopOpen, setShopOpen] = useState(false);
   const [extraGallery, setExtraGallery] = useState<GalleryImage[]>([]);
+  const [galleryLoaded, setGalleryLoaded] = useState(false);
+  const [failedGalleryIds, setFailedGalleryIds] = useState<Set<string>>(new Set());
 
   const equipment = useMemo(() => inferEquipment(cocktail), [cocktail]);
   const recipeSteps = useMemo(() => expandMakeSteps(cocktail), [cocktail]);
   const localGallery = useMemo(() => getCocktailGallery(cocktail, 6), [cocktail]);
   const gallery = useMemo(
-    () => mergeCocktailGallery(localGallery, extraGallery, 6),
-    [localGallery, extraGallery],
+    () =>
+      mergeCocktailGallery(extraGallery, localGallery, 6).filter(
+        (image) => !failedGalleryIds.has(image.id),
+      ),
+    [localGallery, extraGallery, failedGalleryIds],
   );
 
   useEffect(() => {
     setGalleryIndex(0);
     setShopOpen(false);
     setExtraGallery([]);
+    setGalleryLoaded(false);
+    setFailedGalleryIds(new Set());
     const ac = new AbortController();
-    fetch(`/api/cocktail-photos?name=${encodeURIComponent(cocktail.name)}`, { signal: ac.signal })
+    let active = true;
+    fetch(`/api/cocktail-photos?id=${encodeURIComponent(cocktail.id)}`, { signal: ac.signal })
       .then((r) => (r.ok ? r.json() : { photos: [] }))
       .then((data: { photos?: GalleryImage[] }) => {
-        setExtraGallery(Array.isArray(data.photos) ? data.photos : []);
+        if (active) setExtraGallery(Array.isArray(data.photos) ? data.photos : []);
       })
-      .catch(() => {});
-    return () => ac.abort();
+      .catch(() => {})
+      .finally(() => {
+        if (active) setGalleryLoaded(true);
+      });
+    return () => {
+      active = false;
+      ac.abort();
+    };
   }, [cocktail.id, cocktail.name]);
 
   const shopProducts = useMemo(
@@ -122,7 +136,7 @@ export function CocktailDetail({
             <p className="mt-1 text-sm text-[var(--ink-soft)]">{cocktail.origin}</p>
           </header>
 
-          {gallery.length > 0 && (
+          {galleryLoaded && gallery.length > 1 && (
             <section>
               <h3 className="text-sm font-semibold text-[var(--ink)]">{shop.gallery}</h3>
               <div className="relative mt-3 aspect-[4/3] overflow-hidden rounded-2xl bg-[#efe8dc] ring-1 ring-[var(--line)]">
@@ -133,12 +147,27 @@ export function CocktailDetail({
                     fill
                     className="object-cover"
                     sizes="512px"
+                    quality={90}
+                    onError={() =>
+                      setFailedGalleryIds((current) => new Set(current).add(activeGallery.id))
+                    }
                   />
                 )}
                 {activeGallery && (
                   <span className="absolute bottom-3 start-3 rounded-full bg-[rgba(28,22,16,0.7)] px-3 py-1 text-xs text-[var(--foam)] backdrop-blur">
                     {activeGallery.label}
                   </span>
+                )}
+                {activeGallery?.credit && activeGallery.creditUrl && (
+                  <a
+                    href={activeGallery.creditUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="absolute bottom-3 end-3 max-w-[55%] truncate rounded-full bg-[rgba(28,22,16,0.7)] px-3 py-1 text-[10px] text-[var(--foam)] backdrop-blur hover:underline"
+                    title={`${activeGallery.credit}${activeGallery.license ? ` · ${activeGallery.license}` : ""}`}
+                  >
+                    Photo: {activeGallery.credit}
+                  </a>
                 )}
               </div>
               <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
@@ -158,6 +187,10 @@ export function CocktailDetail({
                       fill
                       className="object-cover"
                       sizes="80px"
+                      quality={85}
+                      onError={() =>
+                        setFailedGalleryIds((current) => new Set(current).add(img.id))
+                      }
                     />
                   </button>
                 ))}

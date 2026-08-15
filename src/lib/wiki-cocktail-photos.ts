@@ -9,6 +9,7 @@ type CommonsPage = {
     mime?: string;
     thumburl?: string;
     url?: string;
+    descriptionurl?: string;
     width?: number;
     height?: number;
   }>;
@@ -19,7 +20,7 @@ type CommonsQuery = {
 };
 
 const SKIP =
-  /\b(logo|icon|flag|map|svg|poster|sign|neon|menu|label|bottle|ingredient|building|street|alley|hotel|portrait|statue|museum|roosevelt)\b/i;
+  /\b(logo|icon|flag|map|svg|poster|sign|neon|menu|label|bottle|ingredient|ingredients|building|street|alley|hotel|portrait|statue|museum|roosevelt|person|people)\b/i;
 
 function compact(s: string) {
   return s.toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -62,8 +63,8 @@ function fileLooksLikeThisCocktail(title: string, cocktailName: string): boolean
 
 function searchTerm(name: string) {
   const n = name.trim();
-  if (/\bcocktail\b/i.test(n)) return n;
-  return `${n} cocktail`;
+  if (/\bcocktail\b/i.test(n)) return `${n} filetype:bitmap`;
+  return `${n} cocktail filetype:bitmap`;
 }
 
 export async function fetchWikiCocktailPhotos(name: string, limit = 5): Promise<GalleryImage[]> {
@@ -73,11 +74,11 @@ export async function fetchWikiCocktailPhotos(name: string, limit = 5): Promise<
     origin: "*",
     generator: "search",
     gsrnamespace: "6",
-    gsrlimit: "12",
+    gsrlimit: "24",
     gsrsearch: searchTerm(name),
     prop: "imageinfo",
     iiprop: "url|mime|size",
-    iiurlwidth: "900",
+    iiurlwidth: "1400",
   });
 
   const res = await fetch(`https://commons.wikimedia.org/w/api.php?${params}`, {
@@ -99,7 +100,9 @@ export async function fetchWikiCocktailPhotos(name: string, limit = 5): Promise<
     const info = page.imageinfo?.[0];
     const mime = info?.mime || "";
     if (!/^image\/(jpeg|jpg|png|webp)$/i.test(mime)) continue;
-    if ((info?.width || 0) < 400 && (info?.height || 0) < 400) continue;
+    const width = info?.width || 0;
+    const height = info?.height || 0;
+    if (width < 1000 || height < 800 || width * height < 1_000_000) continue;
     const url = cleanUrl(info?.thumburl || info?.url || "");
     if (!url.startsWith("https://upload.wikimedia.org/") || seen.has(url)) continue;
     seen.add(url);
@@ -108,6 +111,11 @@ export async function fetchWikiCocktailPhotos(name: string, limit = 5): Promise<
       url,
       alt: `${name} — ${page.title.replace(/^File:/i, "")}`,
       label: name,
+      width,
+      height,
+      credit: "Wikimedia Commons",
+      creditUrl: info?.descriptionurl,
+      license: "See source license",
     });
     if (out.length >= limit) break;
   }

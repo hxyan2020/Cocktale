@@ -1,19 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
+import { mergeCocktailGallery } from "@/lib/cocktail-gallery";
+import { getCocktail } from "@/lib/cocktails";
+import { fetchOpenverseCocktailPhotos } from "@/lib/openverse-cocktail-photos";
 import { fetchWikiCocktailPhotos } from "@/lib/wiki-cocktail-photos";
 
 export async function GET(req: NextRequest) {
-  const name = req.nextUrl.searchParams.get("name")?.trim() || "";
-  if (!name) {
+  const id = req.nextUrl.searchParams.get("id")?.trim() || "";
+  const cocktail = getCocktail(id);
+  if (!cocktail) {
     return NextResponse.json({ photos: [] });
   }
 
   try {
-    const photos = await fetchWikiCocktailPhotos(name, 5);
+    const wikiPhotos = await fetchWikiCocktailPhotos(cocktail.name, 5);
+    const openversePhotos =
+      wikiPhotos.length >= 5
+        ? []
+        : await fetchOpenverseCocktailPhotos(cocktail.name, 5 - wikiPhotos.length);
+    const photos = mergeCocktailGallery([], [...wikiPhotos, ...openversePhotos], 5);
     return NextResponse.json(
       { photos },
       {
         headers: {
-          "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800",
+          "Cache-Control": "public, s-maxage=2592000, stale-while-revalidate=7776000",
         },
       },
     );

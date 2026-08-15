@@ -22,6 +22,11 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "live.staticflickr.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
         hostname: "commons.wikimedia.org",
         pathname: "/wiki/**",
       },
