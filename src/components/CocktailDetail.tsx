@@ -9,7 +9,12 @@ import { useI18n } from "@/components/LanguageProvider";
 import { useShop } from "@/components/useShop";
 import { useCart } from "@/components/CartProvider";
 import { expandMakeSteps, inferEquipment, preparationChecklistSteps } from "@/lib/make-guide";
-import { formatMoney, productsForCocktailIngredients } from "@/lib/products";
+import {
+  formatMoney,
+  productImageClass,
+  productImageUnoptimized,
+  productsForCocktailIngredients,
+} from "@/lib/products";
 import { getCocktailGallery, mergeCocktailGallery, type GalleryImage } from "@/lib/cocktail-gallery";
 import { convertMeasure } from "@/lib/units";
 import { equipmentInfo, glassInfo, ingredientInfo } from "@/lib/item-info";
@@ -330,26 +335,42 @@ export function CocktailDetail({
               {shopOpen && (
                 <>
                   <ul className="mt-3 space-y-2">
-                    {shopProducts.map((p) => (
-                      <li
-                        key={p.id}
-                        className="flex items-center justify-between gap-3 rounded-xl bg-[var(--surface)] px-3 py-2 ring-1 ring-[var(--line)]"
-                      >
-                        <Link href={`/market/${p.slug}`} className="min-w-0 flex-1">
-                          <p className="truncate text-sm text-[var(--ink)]">{p.name}</p>
-                          <p className="text-xs text-[var(--ink-muted)]">
-                            {formatMoney(p.priceCents, p.currency, locale)}
-                          </p>
-                        </Link>
-                        <button
-                          type="button"
-                          onClick={() => addItem(p.id, 1)}
-                          className="shrink-0 rounded-full bg-[var(--ink)] px-3 py-1.5 text-[11px] text-[var(--foam)]"
+                    {shopProducts.map((p) => {
+                      const imageUrl = p.images[0]?.url || "/cocktail-fallback.svg";
+                      return (
+                        <li
+                          key={p.id}
+                          className="flex items-center gap-3 rounded-xl bg-[var(--surface)] p-2 ring-1 ring-[var(--line)]"
                         >
-                          {shop.addToCart}
-                        </button>
-                      </li>
-                    ))}
+                          <Link
+                            href={`/market/${p.slug}`}
+                            className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-[#f3efe6]"
+                          >
+                            <Image
+                              src={imageUrl}
+                              alt={p.images[0]?.alt || p.name}
+                              fill
+                              className={productImageClass(imageUrl, "thumb")}
+                              sizes="56px"
+                              unoptimized={productImageUnoptimized(imageUrl)}
+                            />
+                          </Link>
+                          <Link href={`/market/${p.slug}`} className="min-w-0 flex-1">
+                            <p className="truncate text-sm text-[var(--ink)]">{p.name}</p>
+                            <p className="text-xs text-[var(--ink-muted)]">
+                              {formatMoney(p.priceCents, p.currency, locale)}
+                            </p>
+                          </Link>
+                          <button
+                            type="button"
+                            onClick={() => addItem(p.id, 1)}
+                            className="shrink-0 rounded-full bg-[var(--ink)] px-3 py-1.5 text-[11px] text-[var(--foam)]"
+                          >
+                            {shop.addToCart}
+                          </button>
+                        </li>
+                      );
+                    })}
                   </ul>
                   <Link
                     href="/market"
