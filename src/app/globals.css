@@ -32,13 +32,14 @@
 html,
 body {
   overflow-x: hidden;
+  overscroll-behavior-x: none;
 }
 
 body {
   background-color: #0b0908;
   color: var(--foreground);
   font-family: var(--font-body), system-ui, sans-serif;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 /* Cocktail backdrop, shaded 80% dark so content stays legible. */
@@ -59,4 +60,27 @@ body::before {
 
 ::selection {
   background: rgba(180, 83, 9, 0.25);
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+  touch-action: manipulation;
+}
+
+@media (max-width: 639px) {
+  .mobile-scrollbar-none {
+    scrollbar-width: none;
+  }
+
+  .mobile-scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
 }

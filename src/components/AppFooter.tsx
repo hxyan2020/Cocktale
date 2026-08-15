@@ -14,15 +14,15 @@ export function AppFooter() {
 
   return (
     <footer className="mt-auto border-t border-[var(--line)] bg-[var(--bg)]/80 backdrop-blur-md">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-5 sm:flex-row sm:items-center sm:justify-between sm:py-6">
-        <p className="text-xs text-[var(--ink-muted)]">{t("footer.rights", { year })}</p>
+      <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-2 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 sm:flex-row sm:justify-between sm:py-6">
+        <p className="text-center text-xs text-[var(--ink-muted)] sm:text-start">{t("footer.rights", { year })}</p>
         <nav
-          className="flex flex-wrap items-center gap-1 sm:gap-2"
+          className="flex flex-wrap items-center justify-center gap-1 sm:gap-2"
           aria-label={t("footer.terms")}
         >
           <Link
             href="/terms"
-            className={`rounded-full px-3 py-1.5 text-sm transition ${
+            className={`inline-flex min-h-10 items-center rounded-full px-3 py-1.5 text-sm transition ${
               pathname.startsWith("/terms")
                 ? "bg-[var(--ink)] text-[var(--foam)]"
                 : "text-[var(--ink-soft)] hover:bg-[var(--chip)]"
@@ -32,7 +32,7 @@ export function AppFooter() {
           </Link>
           <Link
             href="/contact"
-            className={`rounded-full px-3 py-1.5 text-sm transition ${
+            className={`inline-flex min-h-10 items-center rounded-full px-3 py-1.5 text-sm transition ${
               pathname.startsWith("/contact")
                 ? "bg-[var(--ink)] text-[var(--foam)]"
                 : "text-[var(--ink-soft)] hover:bg-[var(--chip)]"

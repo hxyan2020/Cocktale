@@ -89,8 +89,8 @@ export default function JourneyPageClient() {
   return (
     <>
       <AppNav />
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-16 pt-6">
-        <h1 className="font-[family-name:var(--font-display)] text-3xl text-[var(--on-bg)]">
+      <main className="mx-auto w-full max-w-5xl flex-1 px-3 pb-16 pt-3 sm:px-4 sm:pt-6">
+        <h1 className="font-[family-name:var(--font-display)] text-2xl text-[var(--on-bg)] sm:text-3xl">
           {t("journey.title")}
         </h1>
 
@@ -98,7 +98,7 @@ export default function JourneyPageClient() {
           <button
             type="button"
             onClick={() => selectTab("collected")}
-            className={`flex-1 rounded-full px-4 py-2 text-sm font-medium ${
+            className={`min-h-11 flex-1 rounded-full px-4 py-2 text-sm font-medium ${
               tab === "collected" ? "bg-[var(--ink)] text-[var(--foam)]" : "text-[var(--ink-soft)]"
             }`}
           >
@@ -107,7 +107,7 @@ export default function JourneyPageClient() {
           <button
             type="button"
             onClick={() => selectTab("tried")}
-            className={`flex-1 rounded-full px-4 py-2 text-sm font-medium ${
+            className={`min-h-11 flex-1 rounded-full px-4 py-2 text-sm font-medium ${
               tab === "tried" ? "bg-[var(--ink)] text-[var(--foam)]" : "text-[var(--ink-soft)]"
             }`}
           >
@@ -121,7 +121,7 @@ export default function JourneyPageClient() {
               <p className="text-[var(--ink-soft)]">{t("book.empty")}</p>
             </div>
           ) : (
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-5 grid gap-3 min-[380px]:grid-cols-2 sm:mt-8 sm:gap-4 lg:grid-cols-3">
               {items.map(({ cocktail, meta }) => (
                 <button
                   key={cocktail.id}
@@ -129,7 +129,7 @@ export default function JourneyPageClient() {
                   onClick={() => setSelected(cocktail)}
                   className="overflow-hidden rounded-[1.25rem] bg-[var(--surface)] text-left ring-1 ring-[var(--line)] transition hover:-translate-y-0.5 hover:shadow-lg"
                 >
-                  <div className="relative h-44 w-full">
+                  <div className="relative h-36 w-full sm:h-44">
                     <Image
                       src={cocktail.image || "/cocktail-fallback.svg"}
                       alt={cocktail.name}
@@ -138,7 +138,7 @@ export default function JourneyPageClient() {
                       sizes="320px"
                     />
                   </div>
-                  <div className="p-4">
+                  <div className="p-3 sm:p-4">
                     <CocktailIdentity cocktail={cocktail} showOrigin />
                     <p className="mt-2 text-xs text-[var(--ink-muted)]">
                       {t("book.collectedOn", { date: formatDate(meta.collectedAt) })}
@@ -153,13 +153,13 @@ export default function JourneyPageClient() {
             <p className="text-[var(--ink-soft)]">{t("journal.empty")}</p>
           </div>
         ) : (
-          <ul className="mx-auto mt-8 max-w-3xl space-y-4">
+          <ul className="mx-auto mt-5 max-w-3xl space-y-3 sm:mt-8 sm:space-y-4">
             {entries.map(({ entry, cocktail }) => (
               <li
                 key={entry.id}
-                className="flex gap-4 rounded-[1.25rem] bg-[var(--surface)] p-4 ring-1 ring-[var(--line)]"
+                className="flex gap-3 rounded-[1.25rem] bg-[var(--surface)] p-3 ring-1 ring-[var(--line)] sm:gap-4 sm:p-4"
               >
-                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl">
+                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl sm:h-20 sm:w-20">
                   <Image
                     src={cocktail.image || "/cocktail-fallback.svg"}
                     alt={cocktail.name}
@@ -179,7 +179,7 @@ export default function JourneyPageClient() {
                     <button
                       type="button"
                       onClick={() => deleteJournal(entry.id)}
-                      className="rounded-full p-2 text-[var(--ink-muted)] hover:bg-[var(--chip)]"
+                      className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[var(--ink-muted)] hover:bg-[var(--chip)]"
                       aria-label={t("journal.deleteEntry")}
                     >
                       <Trash2 className="h-4 w-4" />
@@ -192,7 +192,7 @@ export default function JourneyPageClient() {
                         value={draft}
                         onChange={(e) => setDraft(e.target.value)}
                         rows={3}
-                        className="w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
+                        className="w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2 text-base outline-none focus:border-[var(--accent)] sm:text-sm"
                       />
                       <div className="flex gap-2">
                         <button
@@ -201,14 +201,14 @@ export default function JourneyPageClient() {
                             editJournal(entry.id, draft);
                             setEditing(null);
                           }}
-                          className="rounded-full bg-[var(--ink)] px-3 py-1.5 text-xs text-[var(--foam)]"
+                          className="min-h-10 rounded-full bg-[var(--ink)] px-3 py-1.5 text-xs text-[var(--foam)]"
                         >
                           {t("journal.saveNote")}
                         </button>
                         <button
                           type="button"
                           onClick={() => setEditing(null)}
-                          className="rounded-full bg-[var(--chip)] px-3 py-1.5 text-xs text-[var(--ink)]"
+                          className="min-h-10 rounded-full bg-[var(--chip)] px-3 py-1.5 text-xs text-[var(--ink)]"
                         >
                           {t("journal.cancel")}
                         </button>

@@ -62,10 +62,10 @@ export default function ProductDetailPage() {
   return (
     <>
       <AppNav />
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-16 pt-6">
-        <div className="grid gap-8 lg:grid-cols-2">
+      <main className="mx-auto w-full max-w-6xl flex-1 px-3 pb-16 pt-3 sm:px-4 sm:pt-6">
+        <div className="grid gap-5 sm:gap-8 lg:grid-cols-2">
           <section>
-            <div className="relative aspect-square overflow-hidden rounded-[1.5rem] bg-[#f3efe6] ring-1 ring-[var(--line)]">
+            <div className="relative aspect-square overflow-hidden rounded-[1.25rem] bg-[#f3efe6] ring-1 ring-[var(--line)] sm:rounded-[1.5rem]">
               <Image
                 src={product.images[active]?.url || "/cocktail-fallback.svg"}
                 alt={displayProduct.name}
@@ -79,13 +79,13 @@ export default function ProductDetailPage() {
             <p className="mt-3 text-xs font-medium uppercase tracking-wide text-[var(--on-bg-muted)]">
               {shop.images}
             </p>
-            <div className="mt-2 flex gap-2 overflow-x-auto pb-1">
+            <div className="mobile-scrollbar-none mt-2 flex gap-2 overflow-x-auto pb-1">
               {product.images.map((img, i) => (
                 <button
                   key={img.angle}
                   type="button"
                   onClick={() => setActive(i)}
-                  className={`relative h-20 w-20 shrink-0 overflow-hidden rounded-xl ring-2 ${
+                  className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-xl ring-2 sm:h-20 sm:w-20 ${
                     active === i ? "ring-[var(--accent)]" : "ring-transparent"
                   }`}
                 >
@@ -102,12 +102,12 @@ export default function ProductDetailPage() {
             </div>
           </section>
 
-          <section className="space-y-5">
+          <section className="space-y-4 sm:space-y-5">
             <div>
               <p className="text-xs uppercase tracking-wide text-[var(--on-bg-accent)]">
                 {displayProduct.subcategory}
               </p>
-              <h1 className="mt-1 font-[family-name:var(--font-display)] text-4xl text-[var(--on-bg)]">
+              <h1 className="mt-1 break-words font-[family-name:var(--font-display)] text-3xl leading-tight text-[var(--on-bg)] sm:text-4xl">
                 {displayProduct.name}
               </h1>
               <p className="mt-2 text-sm text-[var(--on-bg-muted)]">
@@ -134,7 +134,7 @@ export default function ProductDetailPage() {
                 setAdded(true);
                 setTimeout(() => setAdded(false), 1200);
               }}
-              className="w-full rounded-full bg-[var(--ink)] px-4 py-3 text-sm font-medium text-[var(--foam)] disabled:opacity-40 sm:w-auto sm:px-8"
+              className="min-h-12 w-full rounded-full bg-[var(--ink)] px-4 py-3 text-sm font-medium text-[var(--foam)] disabled:opacity-40 sm:w-auto sm:px-8"
             >
               {added ? shop.added : shop.addToCart}
             </button>
@@ -145,7 +145,7 @@ export default function ProductDetailPage() {
                 {displayProduct.specs.map((s) => (
                   <li
                     key={s.label}
-                    className="flex items-baseline justify-between gap-4 px-4 py-3 text-sm"
+                    className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-baseline gap-3 px-3 py-3 text-sm sm:px-4"
                   >
                     <span className="text-[var(--ink-muted)]">{s.label}</span>
                     <span className="text-end text-[var(--ink)]">{s.value}</span>
@@ -164,7 +164,7 @@ export default function ProductDetailPage() {
                         <button
                           type="button"
                           onClick={() => setSelected(c)}
-                          className="rounded-full bg-[var(--chip)] px-3 py-1 text-xs text-[var(--ink-soft)] transition hover:bg-[var(--chip-hover)] hover:text-[var(--ink)]"
+                          className="min-h-10 rounded-full bg-[var(--chip)] px-3 py-2 text-xs text-[var(--ink-soft)] transition hover:bg-[var(--chip-hover)] hover:text-[var(--ink)]"
                         >
                           <LocalizedCocktailName cocktail={c} />
                         </button>

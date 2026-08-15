@@ -63,9 +63,9 @@ export default function OrderDetailPage() {
   return (
     <>
       <AppNav />
-      <main className="mx-auto w-full max-w-3xl flex-1 px-4 pb-16 pt-6">
+      <main className="mx-auto w-full max-w-3xl flex-1 px-3 pb-16 pt-3 sm:px-4 sm:pt-6">
         <p className="text-xs uppercase tracking-wide text-[var(--on-bg-accent)]">{shop.orders}</p>
-        <h1 className="mt-1 font-[family-name:var(--font-display)] text-3xl text-[var(--on-bg)]">
+        <h1 className="mt-1 break-all font-[family-name:var(--font-display)] text-2xl text-[var(--on-bg)] sm:text-3xl">
           {order.id}
         </h1>
         <p className="mt-2 text-sm text-[var(--on-bg-muted)]">
@@ -81,12 +81,12 @@ export default function OrderDetailPage() {
           </p>
         )}
         {order.stripeSessionId && (
-          <p className="mt-1 text-xs text-[var(--on-bg-muted)]">
+          <p className="mt-1 break-all text-xs text-[var(--on-bg-muted)]">
             {shop.stripeSession}: {order.stripeSessionId}
           </p>
         )}
 
-        <section className="mt-8 rounded-[1.5rem] bg-[var(--surface)] p-5 ring-1 ring-[var(--line)]">
+        <section className="mt-5 rounded-[1.5rem] bg-[var(--surface)] p-4 ring-1 ring-[var(--line)] sm:mt-8 sm:p-5">
           <h2 className="text-sm font-semibold text-[var(--ink)]">{shop.trackTitle}</h2>
           <ol className="mt-4 space-y-3">
             {steps.map((step, index) => (
@@ -108,13 +108,13 @@ export default function OrderDetailPage() {
           </ol>
         </section>
 
-        <ul className="mt-8 space-y-3">
+        <ul className="mt-5 space-y-3 sm:mt-8">
           {order.items.map((item, itemIndex) => (
             <li
               key={`${item.productId}-${item.name}`}
-              className="flex gap-3 rounded-[1.25rem] bg-[var(--surface)] p-3 ring-1 ring-[var(--line)]"
+              className="grid grid-cols-[3.5rem_minmax(0,1fr)] gap-3 rounded-[1.25rem] bg-[var(--surface)] p-3 ring-1 ring-[var(--line)] sm:flex"
             >
-              <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-[#f3efe6]">
+              <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-[#f3efe6] sm:h-16 sm:w-16">
                 <Image
                   src={item.image || "/cocktail-fallback.svg"}
                   alt={localizedOrderTexts[itemIndex + 1] || item.name}
@@ -124,7 +124,7 @@ export default function OrderDetailPage() {
                   unoptimized={item.image?.startsWith("/api/")}
                 />
               </div>
-              <div className="flex-1">
+              <div className="min-w-0 flex-1">
                 <p className="font-medium text-[var(--ink)]">
                   {localizedOrderTexts[itemIndex + 1] || item.name}
                 </p>
@@ -132,7 +132,7 @@ export default function OrderDetailPage() {
                   {item.quantity} × {formatMoney(item.unitAmountCents, "usd", locale)}
                 </p>
               </div>
-              <p className="text-sm font-semibold text-[var(--ink)]">
+              <p className="col-start-2 text-end text-sm font-semibold text-[var(--ink)] sm:ms-auto">
                 {formatMoney(item.unitAmountCents * item.quantity, "usd", locale)}
               </p>
             </li>

@@ -68,7 +68,7 @@ export function SwipeDeck({
 
   if (!cocktail) {
     return (
-      <div className="flex h-[min(680px,78vh)] items-center justify-center rounded-[1.75rem] bg-[var(--surface)]/70 ring-1 ring-[var(--line)] max-md:h-[min(560px,calc(100dvh-16.5rem))]">
+      <div className="flex h-[clamp(30rem,72svh,35rem)] items-center justify-center rounded-[1.5rem] bg-[var(--surface)]/70 ring-1 ring-[var(--line)] sm:h-[min(680px,78vh)] sm:rounded-[1.75rem]">
         <p className="text-[var(--ink-soft)]">{t("card.loadingPours")}</p>
       </div>
     );
@@ -76,8 +76,8 @@ export function SwipeDeck({
 
   return (
     <div className="relative mx-auto w-full max-w-[420px]">
-      <div className="relative h-[min(680px,78vh)] max-md:h-[min(560px,calc(100dvh-16.5rem))]">
-        <div className="absolute inset-0 translate-y-2 rounded-[1.75rem] bg-[var(--chip)]/80 ring-1 ring-[var(--line)] sm:translate-x-2 sm:translate-y-3" />
+      <div className="relative h-[clamp(30rem,72svh,35rem)] sm:h-[min(680px,78vh)]">
+        <div className="absolute inset-0 translate-y-2 rounded-[1.5rem] bg-[var(--chip)]/80 ring-1 ring-[var(--line)] sm:translate-x-2 sm:translate-y-3 sm:rounded-[1.75rem]" />
         <motion.div
           key={cocktail.id}
           style={{ x, rotate, opacity }}
@@ -99,7 +99,7 @@ export function SwipeDeck({
           />
         </motion.div>
       </div>
-      <p className="mt-3 px-2 text-center text-[11px] leading-snug tracking-wide text-[var(--ink-muted)] sm:text-xs">
+      <p className="mt-3 px-2 text-center text-xs leading-snug tracking-wide text-[var(--on-bg-muted)] sm:text-[var(--ink-muted)]">
         {t("card.swipeHint")}
       </p>
     </div>

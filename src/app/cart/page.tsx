@@ -138,29 +138,29 @@ export default function CartPage() {
   return (
     <>
       <AppNav />
-      <main className="mx-auto w-full max-w-3xl flex-1 px-4 pb-16 pt-6">
-        <h1 className="font-[family-name:var(--font-display)] text-3xl text-[var(--on-bg)]">
+      <main className="mx-auto w-full max-w-3xl flex-1 px-3 pb-16 pt-3 sm:px-4 sm:pt-6">
+        <h1 className="font-[family-name:var(--font-display)] text-2xl text-[var(--on-bg)] sm:text-3xl">
           {shop.cartTitle}
         </h1>
 
         {lines.length === 0 ? (
-          <div className="mt-10 rounded-[1.5rem] bg-[var(--surface)] p-10 text-center ring-1 ring-[var(--line)]">
+          <div className="mt-8 rounded-[1.5rem] bg-[var(--surface)] p-6 text-center ring-1 ring-[var(--line)] sm:mt-10 sm:p-10">
             <p className="text-[var(--ink-soft)]">{shop.cartEmpty}</p>
             <Link
               href="/market"
-              className="mt-4 inline-block rounded-full bg-[var(--ink)] px-4 py-2 text-sm text-[var(--foam)]"
+              className="mt-4 inline-flex min-h-11 items-center rounded-full bg-[var(--ink)] px-4 py-2 text-sm text-[var(--foam)]"
             >
               {shop.continueShopping}
             </Link>
           </div>
         ) : (
-          <div className="mt-8 space-y-4">
+          <div className="mt-5 space-y-3 sm:mt-8 sm:space-y-4">
             {lines.map(({ item, product }, lineIndex) => (
               <div
                 key={product.id}
-                className="flex gap-4 rounded-[1.25rem] bg-[var(--surface)] p-4 ring-1 ring-[var(--line)]"
+                className="grid grid-cols-[4rem_minmax(0,1fr)] gap-3 rounded-[1.25rem] bg-[var(--surface)] p-3 ring-1 ring-[var(--line)] sm:flex sm:gap-4 sm:p-4"
               >
-                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-[#f3efe6]">
+                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-[#f3efe6] sm:h-20 sm:w-20">
                   <Image
                     src={product.images[0]?.url || "/cocktail-fallback.svg"}
                     alt={localizedProductNames[lineIndex] || product.name}
@@ -177,8 +177,8 @@ export default function CartPage() {
                   <p className="text-sm text-[var(--ink-muted)]">
                     {formatMoney(product.priceCents, product.currency, locale)}
                   </p>
-                  <div className="mt-2 flex items-center gap-3">
-                    <label className="text-xs text-[var(--ink-muted)]">
+                  <div className="mt-2 flex flex-wrap items-center gap-2 sm:gap-3">
+                    <label className="inline-flex items-center text-xs text-[var(--ink-muted)]">
                       {shop.quantity}
                       <input
                         type="number"
@@ -186,48 +186,50 @@ export default function CartPage() {
                         max={Math.min(20, product.stock)}
                         value={item.quantity}
                         onChange={(e) => setQty(product.id, Number(e.target.value))}
-                        className="ml-2 w-16 rounded-lg border border-[var(--line)] bg-[var(--bg)] px-2 py-1 text-sm"
+                        className="ms-2 min-h-10 w-14 rounded-lg border border-[var(--line)] bg-[var(--bg)] px-2 py-1 text-base sm:w-16 sm:text-sm"
                       />
                     </label>
                     <button
                       type="button"
                       onClick={() => removeItem(product.id)}
-                      className="text-xs text-[var(--accent-deep)]"
+                      className="min-h-10 rounded-full px-2 text-xs text-[var(--accent-deep)]"
                     >
                       {shop.remove}
                     </button>
                   </div>
                 </div>
-                <p className="text-sm font-semibold text-[var(--ink)]">
+                <p className="col-start-2 text-end text-sm font-semibold text-[var(--ink)] sm:ms-auto">
                   {formatMoney(product.priceCents * item.quantity, "usd", locale)}
                 </p>
               </div>
             ))}
 
-            <div className="flex items-center justify-between rounded-[1.25rem] bg-[var(--chip)] px-4 py-4">
-              <span className="text-sm text-[var(--ink-soft)]">{shop.subtotal}</span>
-              <span className="text-lg font-semibold text-[var(--ink)]">
-                {formatMoney(subtotal, "usd", locale)}
-              </span>
+            <div className="sticky bottom-2 z-10 space-y-2 rounded-[1.25rem] bg-[var(--surface)]/95 p-2.5 shadow-[0_12px_35px_rgba(0,0,0,0.22)] ring-1 ring-[var(--line)] backdrop-blur sm:static sm:space-y-4 sm:bg-transparent sm:p-0 sm:shadow-none sm:ring-0">
+              <div className="flex items-center justify-between rounded-2xl bg-[var(--chip)] px-4 py-3 sm:rounded-[1.25rem] sm:py-4">
+                <span className="text-sm text-[var(--ink-soft)]">{shop.subtotal}</span>
+                <span className="text-lg font-semibold text-[var(--ink)]">
+                  {formatMoney(subtotal, "usd", locale)}
+                </span>
+              </div>
+
+              {checkoutMode === "demo" && (
+                <p className="px-1 text-xs text-[var(--accent-deep)] sm:text-sm sm:text-[var(--on-bg-accent)]">{shop.stripeMissing}</p>
+              )}
+              {error && <p className="px-1 text-xs text-red-700 sm:text-sm sm:text-red-300">{localizedError[0] || error}</p>}
+
+              <button
+                type="button"
+                disabled={busy}
+                onClick={() => void checkout()}
+                className="min-h-12 w-full rounded-full bg-[var(--ink)] py-3 text-sm font-medium text-[var(--foam)] disabled:opacity-60"
+              >
+                {busy
+                  ? shop.processing
+                  : checkoutMode === "demo"
+                    ? shop.checkoutDemo
+                    : shop.checkout}
+              </button>
             </div>
-
-            {checkoutMode === "demo" && (
-              <p className="text-sm text-[var(--on-bg-accent)]">{shop.stripeMissing}</p>
-            )}
-            {error && <p className="text-sm text-red-300">{localizedError[0] || error}</p>}
-
-            <button
-              type="button"
-              disabled={busy}
-              onClick={() => void checkout()}
-              className="w-full rounded-full bg-[var(--ink)] py-3 text-sm font-medium text-[var(--foam)] disabled:opacity-60"
-            >
-              {busy
-                ? shop.processing
-                : checkoutMode === "demo"
-                  ? shop.checkoutDemo
-                  : shop.checkout}
-            </button>
           </div>
         )}
       </main>

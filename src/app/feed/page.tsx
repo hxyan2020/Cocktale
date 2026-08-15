@@ -307,8 +307,8 @@ export default function FeedPage() {
   return (
     <>
       <AppNav />
-      <main className="mx-auto w-full max-w-5xl flex-1 px-3 pb-10 pt-4 sm:px-4 sm:pb-16 sm:pt-6">
-        <div className="mb-3 flex flex-wrap items-end justify-between gap-2 sm:mb-6 sm:gap-4">
+      <main className="mx-auto w-full max-w-5xl flex-1 px-3 pb-10 pt-3 sm:px-4 sm:pb-16 sm:pt-6">
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2 sm:mb-6 sm:items-end sm:gap-4">
           <div className="min-w-0">
             <p className="text-[10px] font-medium tracking-[0.18em] uppercase text-[var(--on-bg-accent)] sm:text-xs">
               {t("feed.forUser", { name: user?.name ?? t("brand") })}
@@ -332,7 +332,7 @@ export default function FeedPage() {
         {locationStatus !== "checking" &&
           locationStatus !== "granted" &&
           locationStatus !== "dismissed" && (
-            <div className="mb-4 flex items-start gap-3 rounded-2xl bg-[var(--surface)] p-3.5 ring-1 ring-[var(--line)] sm:mb-6 sm:p-4">
+            <div className="mb-4 flex items-start gap-3 rounded-2xl bg-[var(--surface)] p-3 ring-1 ring-[var(--line)] sm:mb-6 sm:p-4">
               <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[var(--accent)]" />
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-medium text-[var(--ink)]">{locationCopy[0]}</p>
@@ -348,7 +348,7 @@ export default function FeedPage() {
                     type="button"
                     onClick={requestLocation}
                     disabled={locationStatus === "requesting"}
-                    className="rounded-full bg-[var(--ink)] px-3.5 py-2 text-xs font-medium text-[var(--foam)] disabled:opacity-60"
+                    className="min-h-11 rounded-full bg-[var(--ink)] px-4 py-2 text-xs font-medium text-[var(--foam)] disabled:opacity-60"
                   >
                     {locationStatus === "requesting"
                       ? locationCopy[4]
@@ -360,7 +360,7 @@ export default function FeedPage() {
                     <button
                       type="button"
                       onClick={() => setLocationStatus("dismissed")}
-                      className="rounded-full px-3.5 py-2 text-xs font-medium text-[var(--ink-soft)]"
+                      className="min-h-11 rounded-full px-4 py-2 text-xs font-medium text-[var(--ink-soft)]"
                     >
                       {locationCopy[3]}
                     </button>
@@ -370,11 +370,11 @@ export default function FeedPage() {
             </div>
           )}
 
-        <div className="-mx-3 mb-4 flex gap-2 overflow-x-auto px-3 pb-1 sm:mx-0 sm:mb-8 sm:flex-wrap sm:overflow-visible sm:px-0">
+        <div className="mobile-scrollbar-none -mx-3 mb-3 flex gap-2 overflow-x-auto px-3 pb-1 sm:mx-0 sm:mb-8 sm:flex-wrap sm:overflow-visible sm:px-0">
           <button
             type="button"
             onClick={() => setMood(null)}
-            className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-medium ${
+            className={`min-h-10 shrink-0 rounded-full px-3 py-1.5 text-xs font-medium ${
               !data.moodPreference
                 ? "bg-[var(--ink)] text-[var(--foam)]"
                 : "bg-[var(--chip)] text-[var(--ink-soft)]"
@@ -387,7 +387,7 @@ export default function FeedPage() {
               key={mood}
               type="button"
               onClick={() => setMood(mood)}
-              className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-medium ${
+              className={`min-h-10 shrink-0 rounded-full px-3 py-1.5 text-xs font-medium ${
                 data.moodPreference === mood
                   ? "bg-[var(--accent)] text-[var(--foam)]"
                   : "bg-[var(--chip)] text-[var(--ink-soft)]"
@@ -398,7 +398,7 @@ export default function FeedPage() {
           ))}
         </div>
 
-        <div className="mb-3 inline-flex max-w-full items-start gap-2 text-[11px] leading-snug text-[var(--on-bg-muted)] sm:mb-4 sm:text-xs">
+        <div className="mb-3 inline-flex max-w-full items-start gap-2 px-0.5 text-xs leading-snug text-[var(--on-bg-muted)] sm:mb-4">
           <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0" />
           <span>
             {user?.name && <span className="font-medium">{user.name.split(/\s+/)[0]}, </span>}
@@ -407,7 +407,7 @@ export default function FeedPage() {
         </div>
 
         {loading && !current ? (
-          <div className="flex h-[min(560px,calc(100dvh-16.5rem))] items-center justify-center rounded-[1.75rem] bg-[var(--surface)]/70 sm:h-[min(680px,78vh)]">
+          <div className="flex h-[clamp(30rem,72svh,35rem)] items-center justify-center rounded-[1.5rem] bg-[var(--surface)]/70 sm:h-[min(680px,78vh)] sm:rounded-[1.75rem]">
             <p className="text-[var(--ink-soft)]">{t("feed.shaking")}</p>
           </div>
         ) : (

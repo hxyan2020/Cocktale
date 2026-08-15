@@ -123,14 +123,14 @@ export function CocktailDetail({
   const activeGallery = gallery[galleryIndex] ?? gallery[0];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center overflow-x-hidden bg-[rgba(20,16,12,0.55)] p-0 sm:items-center sm:p-6">
+    <div className="fixed inset-0 z-50 flex items-end justify-center overflow-x-hidden overscroll-contain bg-[rgba(20,16,12,0.55)] p-0 sm:items-center sm:p-6">
       <button
         type="button"
         className="absolute inset-0 cursor-default"
         aria-label={t("detail.close")}
         onClick={onClose}
       />
-      <div className="relative z-10 max-h-[100dvh] w-full max-w-lg overflow-x-hidden overflow-y-auto rounded-t-[1.75rem] bg-[var(--surface)] shadow-2xl sm:max-h-[92vh] sm:rounded-[1.75rem]">
+      <div className="relative z-10 max-h-[100dvh] w-full max-w-lg overflow-x-hidden overflow-y-auto overscroll-contain rounded-t-[1.5rem] bg-[var(--surface)] shadow-2xl sm:max-h-[92vh] sm:rounded-[1.75rem]">
         <div className="relative h-[min(38vh,15.5rem)] w-full sm:aspect-[4/3] sm:h-auto sm:min-h-80">
           <Image
             src={cocktail.image || "/cocktail-fallback.svg"}
@@ -143,20 +143,20 @@ export function CocktailDetail({
           <button
             type="button"
             onClick={onClose}
-            className="absolute end-4 top-4 rounded-full bg-[rgba(28,22,16,0.55)] p-2 text-[var(--foam)] backdrop-blur"
+            className="absolute end-3 top-3 inline-flex h-11 w-11 items-center justify-center rounded-full bg-[rgba(28,22,16,0.6)] text-[var(--foam)] backdrop-blur sm:end-4 sm:top-4"
             aria-label={t("detail.close")}
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        <div className="space-y-6 p-4 sm:p-6">
+        <div className="space-y-5 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:space-y-6 sm:p-6">
           <header>
             <p className="break-words text-xs font-medium tracking-[0.18em] uppercase text-[var(--accent-deep)]">
               {localized.category}
               {cocktail.iba ? ` · IBA ${cocktail.iba}` : ""}
             </p>
-            <h2 className="mt-2 font-[family-name:var(--font-display)] text-3xl text-[var(--ink)]">
+            <h2 className="mt-2 font-[family-name:var(--font-display)] text-2xl leading-tight text-[var(--ink)] sm:text-3xl">
               {localized.name}
             </h2>
             <p className="mt-1 text-sm text-[var(--ink-soft)]">{localized.origin}</p>
@@ -202,7 +202,7 @@ export function CocktailDetail({
                     key={img.id}
                     type="button"
                     onClick={() => setGalleryIndex(i)}
-                    className={`relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-[#efe8dc] ring-2 transition ${
+                    className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-[#efe8dc] ring-2 transition sm:h-20 sm:w-20 ${
                       galleryIndex === i ? "ring-[var(--accent)]" : "ring-transparent"
                     }`}
                     aria-label={img.label}
@@ -366,7 +366,7 @@ export function CocktailDetail({
                       return (
                         <li
                           key={p.id}
-                          className="flex items-center gap-3 rounded-xl bg-[var(--surface)] p-2 ring-1 ring-[var(--line)]"
+                          className="grid grid-cols-[3.5rem_minmax(0,1fr)] items-center gap-2 rounded-xl bg-[var(--surface)] p-2 ring-1 ring-[var(--line)] sm:flex sm:gap-3"
                         >
                           <Link
                             href={`/market/${p.slug}`}
@@ -392,7 +392,7 @@ export function CocktailDetail({
                           <button
                             type="button"
                             onClick={() => addItem(p.id, 1)}
-                            className="shrink-0 rounded-full bg-[var(--ink)] px-3 py-1.5 text-[11px] text-[var(--foam)]"
+                            className="col-span-2 min-h-10 rounded-full bg-[var(--ink)] px-3 py-2 text-xs text-[var(--foam)] sm:col-auto sm:min-h-0 sm:shrink-0 sm:py-1.5 sm:text-[11px]"
                           >
                             {shop.addToCart}
                           </button>

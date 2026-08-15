@@ -42,7 +42,7 @@ export function AuthForm({ onSuccess }: Props) {
         <button
           type="button"
           onClick={() => setMode("login")}
-          className={`flex-1 rounded-full py-2 text-sm font-medium ${
+          className={`min-h-11 flex-1 rounded-full py-2 text-sm font-medium ${
             mode === "login" ? "bg-[var(--ink)] text-[var(--foam)]" : "text-[var(--ink-soft)]"
           }`}
         >
@@ -51,7 +51,7 @@ export function AuthForm({ onSuccess }: Props) {
         <button
           type="button"
           onClick={() => setMode("register")}
-          className={`flex-1 rounded-full py-2 text-sm font-medium ${
+          className={`min-h-11 flex-1 rounded-full py-2 text-sm font-medium ${
             mode === "register" ? "bg-[var(--ink)] text-[var(--foam)]" : "text-[var(--ink-soft)]"
           }`}
         >
@@ -67,7 +67,7 @@ export function AuthForm({ onSuccess }: Props) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="mt-2 w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2.5 text-sm text-[var(--ink)] outline-none focus:border-[var(--accent)]"
+              className="mt-2 min-h-11 w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2.5 text-base text-[var(--ink)] outline-none focus:border-[var(--accent)] sm:text-sm"
             />
           </label>
         )}
@@ -78,7 +78,7 @@ export function AuthForm({ onSuccess }: Props) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="mt-2 w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2.5 text-sm text-[var(--ink)] outline-none focus:border-[var(--accent)]"
+            className="mt-2 min-h-11 w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2.5 text-base text-[var(--ink)] outline-none focus:border-[var(--accent)] sm:text-sm"
           />
         </label>
         <label className="block text-xs font-medium tracking-wide uppercase text-[var(--ink-muted)]">
@@ -88,7 +88,7 @@ export function AuthForm({ onSuccess }: Props) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="mt-2 w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2.5 text-sm text-[var(--ink)] outline-none focus:border-[var(--accent)]"
+            className="mt-2 min-h-11 w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2.5 text-base text-[var(--ink)] outline-none focus:border-[var(--accent)] sm:text-sm"
           />
         </label>
 
@@ -96,7 +96,7 @@ export function AuthForm({ onSuccess }: Props) {
 
         <button
           type="submit"
-          className="w-full rounded-full bg-[var(--ink)] py-3 text-sm font-medium text-[var(--foam)] transition hover:opacity-90"
+          className="min-h-12 w-full rounded-full bg-[var(--ink)] py-3 text-sm font-medium text-[var(--foam)] transition hover:opacity-90"
         >
           {mode === "login" ? t("login.submitSignIn") : t("login.submitRegister")}
         </button>

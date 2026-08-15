@@ -164,32 +164,32 @@ export default function OrderSuccessClient() {
   return (
     <>
       <AppNav />
-      <main className="mx-auto flex w-full max-w-lg flex-1 flex-col items-center justify-center px-4 py-16 text-center">
-        <h1 className="font-[family-name:var(--font-display)] text-4xl text-[var(--on-bg)]">
+      <main className="mx-auto flex w-full max-w-lg flex-1 flex-col items-center justify-center px-3 py-10 text-center sm:px-4 sm:py-16">
+        <h1 className="font-[family-name:var(--font-display)] text-3xl leading-tight text-[var(--on-bg)] sm:text-4xl">
           {title}
         </h1>
         <p className="mt-3 text-[var(--on-bg-soft)]">{body}</p>
         {demo && phase === "confirmed" && (
           <p className="mt-3 text-sm text-[var(--on-bg-accent)]">{shop.demoPaid}</p>
         )}
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
+        <div className="mt-6 flex w-full flex-col gap-2 sm:mt-8 sm:w-auto sm:flex-row sm:flex-wrap sm:justify-center sm:gap-3">
           {phase === "confirmed" && linkedId && (
             <Link
               href={`/orders/${linkedId}`}
-              className="rounded-full bg-[var(--ink)] px-5 py-2.5 text-sm text-[var(--foam)]"
+              className="inline-flex min-h-12 items-center justify-center rounded-full bg-[var(--ink)] px-5 py-2.5 text-sm text-[var(--foam)]"
             >
               {shop.viewOrder}
             </Link>
           )}
           <Link
             href="/orders"
-            className="rounded-full bg-[var(--chip)] px-5 py-2.5 text-sm text-[var(--ink)]"
+            className="inline-flex min-h-12 items-center justify-center rounded-full bg-[var(--chip)] px-5 py-2.5 text-sm text-[var(--ink)]"
           >
             {shop.orders}
           </Link>
           <Link
             href={phase === "failed" || phase === "missing" ? "/cart" : "/market"}
-            className="rounded-full bg-[var(--chip)] px-5 py-2.5 text-sm text-[var(--ink)]"
+            className="inline-flex min-h-12 items-center justify-center rounded-full bg-[var(--chip)] px-5 py-2.5 text-sm text-[var(--ink)]"
           >
             {phase === "failed" || phase === "missing" ? shop.cart : shop.continueShopping}
           </Link>

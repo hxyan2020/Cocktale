@@ -64,13 +64,13 @@ function ProductCard({
           unoptimized={productImageUnoptimized(product.images[0]?.url || "")}
         />
       </Link>
-      <div className="flex flex-1 flex-col gap-2 p-4">
-        <p className="text-[11px] uppercase tracking-wide text-[var(--ink-muted)]">
+      <div className="flex flex-1 flex-col gap-1.5 p-2.5 sm:gap-2 sm:p-4">
+        <p className="truncate text-[10px] uppercase tracking-wide text-[var(--ink-muted)] sm:text-[11px]">
           {localized.subcategory}
         </p>
         <Link
           href={`/market/${product.slug}`}
-          className="font-[family-name:var(--font-display)] text-lg leading-snug text-[var(--ink)]"
+          className="line-clamp-2 font-[family-name:var(--font-display)] text-base leading-snug text-[var(--ink)] sm:text-lg"
         >
           {localized.name}
         </Link>
@@ -81,7 +81,7 @@ function ProductCard({
         <button
           type="button"
           onClick={onAdd}
-          className="rounded-full bg-[var(--ink)] px-3 py-2 text-xs font-medium text-[var(--foam)]"
+          className="min-h-10 rounded-full bg-[var(--ink)] px-3 py-2 text-xs font-medium text-[var(--foam)] sm:min-h-0"
         >
           {added ? addedLabel : addLabel}
         </button>
@@ -114,26 +114,26 @@ export default function MarketPage() {
   return (
     <>
       <AppNav />
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-16 pt-6">
-        <h1 className="font-[family-name:var(--font-display)] text-3xl text-[var(--on-bg)]">
+      <main className="mx-auto w-full max-w-6xl flex-1 px-3 pb-16 pt-3 sm:px-4 sm:pt-6">
+        <h1 className="font-[family-name:var(--font-display)] text-2xl text-[var(--on-bg)] sm:text-3xl">
           {shop.title}
         </h1>
         <p className="mt-2 max-w-2xl text-[var(--on-bg-soft)]">{shop.subtitle}</p>
 
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="mt-5 flex flex-col gap-3 sm:mt-6 sm:flex-row sm:items-center">
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder={shop.searchPlaceholder}
-            className="w-full flex-1 rounded-full border border-[var(--line)] bg-[var(--surface)] px-4 py-2.5 text-sm outline-none focus:border-[var(--accent)]"
+            className="min-h-11 w-full flex-1 rounded-full border border-[var(--line)] bg-[var(--surface)] px-4 py-2.5 text-base outline-none focus:border-[var(--accent)] sm:text-sm"
           />
-          <div className="flex flex-wrap gap-2">
+          <div className="mobile-scrollbar-none -mx-3 flex gap-2 overflow-x-auto px-3 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
             {CATEGORIES.map((c) => (
               <button
                 key={c}
                 type="button"
                 onClick={() => setCategory(c)}
-                className={`rounded-full px-3 py-1.5 text-xs font-medium ${
+                className={`min-h-10 shrink-0 rounded-full px-3 py-1.5 text-xs font-medium ${
                   category === c
                     ? "bg-[var(--ink)] text-[var(--foam)]"
                     : "bg-[var(--chip)] text-[var(--ink-soft)]"
@@ -151,7 +151,7 @@ export default function MarketPage() {
 
         <div
           key={category}
-          className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          className="mt-4 grid grid-cols-2 gap-2.5 sm:mt-6 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4"
         >
           {list.map((p) => (
             <ProductCard

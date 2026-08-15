@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fraunces, Outfit } from "next/font/google";
 import { AuthProvider } from "@/components/AuthProvider";
 import { AuthPromptHost } from "@/components/AuthPromptHost";
@@ -27,6 +27,13 @@ export const metadata: Metadata = {
     shortcut: "/logo.png",
     apple: [{ url: "/logo.png", type: "image/png" }],
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0b0908",
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

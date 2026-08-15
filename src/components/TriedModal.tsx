@@ -18,10 +18,10 @@ export function TriedModal({ cocktail, onClose, onSave }: Props) {
   const [note, setNote] = useState("");
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-[rgba(20,16,12,0.55)] p-4">
+    <div className="fixed inset-0 z-[60] flex items-end justify-center overscroll-contain bg-[rgba(20,16,12,0.55)] p-0 sm:items-center sm:p-4">
       <button type="button" className="absolute inset-0" aria-label={t("detail.close")} onClick={onClose} />
-      <div className="relative z-10 w-full max-w-md rounded-[1.5rem] bg-[var(--surface)] p-6 shadow-2xl">
-        <h2 className="font-[family-name:var(--font-display)] text-2xl text-[var(--ink)]">
+      <div className="relative z-10 max-h-[calc(100dvh-env(safe-area-inset-top))] w-full max-w-md overflow-y-auto rounded-t-[1.5rem] bg-[var(--surface)] p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-2xl sm:rounded-[1.5rem] sm:p-6">
+        <h2 className="font-[family-name:var(--font-display)] text-xl leading-tight text-[var(--ink)] sm:text-2xl">
           {t("triedModal.title", { name: localized.name })}
         </h2>
         <p className="mt-1 text-sm text-[var(--ink-soft)]">{t("triedModal.subtitle")}</p>
@@ -32,7 +32,7 @@ export function TriedModal({ cocktail, onClose, onSave }: Props) {
             type="date"
             value={triedAt}
             onChange={(e) => setTriedAt(e.target.value)}
-            className="mt-2 w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2.5 text-sm text-[var(--ink)] outline-none focus:border-[var(--accent)]"
+            className="mt-2 min-h-11 w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2.5 text-base text-[var(--ink)] outline-none focus:border-[var(--accent)] sm:text-sm"
           />
         </label>
 
@@ -43,7 +43,7 @@ export function TriedModal({ cocktail, onClose, onSave }: Props) {
             onChange={(e) => setNote(e.target.value)}
             rows={4}
             placeholder={t("triedModal.notePlaceholder")}
-            className="mt-2 w-full resize-none rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2.5 text-sm text-[var(--ink)] outline-none focus:border-[var(--accent)]"
+            className="mt-2 w-full resize-none rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2.5 text-base text-[var(--ink)] outline-none focus:border-[var(--accent)] sm:text-sm"
           />
         </label>
 
@@ -51,14 +51,14 @@ export function TriedModal({ cocktail, onClose, onSave }: Props) {
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 rounded-full bg-[var(--chip)] px-4 py-3 text-sm font-medium text-[var(--ink)]"
+            className="min-h-12 flex-1 rounded-full bg-[var(--chip)] px-4 py-3 text-sm font-medium text-[var(--ink)]"
           >
             {t("triedModal.cancel")}
           </button>
           <button
             type="button"
             onClick={() => onSave(triedAt, note)}
-            className="flex-1 rounded-full bg-[var(--ink)] px-4 py-3 text-sm font-medium text-[var(--foam)]"
+            className="min-h-12 flex-1 rounded-full bg-[var(--ink)] px-4 py-3 text-sm font-medium text-[var(--foam)]"
           >
             {t("triedModal.save")}
           </button>
