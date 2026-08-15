@@ -182,10 +182,6 @@ export function AppNav() {
               <Package className="h-4 w-4 shrink-0 text-[var(--accent-deep)]" />
               {shop.orders}
             </Link>
-            <Link href="/admin" className={menuItemClass} onClick={() => setOpenMenu(null)}>
-              <PencilLine className="h-4 w-4 shrink-0 text-[var(--accent-deep)]" />
-              {t("nav.account")}
-            </Link>
             <div className="my-1 border-t border-[var(--line)]" />
             {user ? (
               <button
