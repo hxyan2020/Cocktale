@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { CloudSun, MapPin, Sparkles } from "lucide-react";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
@@ -29,23 +29,6 @@ type WeatherPayload = {
 };
 
 const LOCATION_CACHE_KEY = "cocktale:recommendation-location";
-const PERSONAL_MESSAGES = [
-  "your cocktail journey has a fresh chapter waiting tonight.",
-  "we found a few unexpected pours that feel right for this moment.",
-  "your taste is shaping a more personal lineup with every visit.",
-  "tonight's selection was refreshed with your recent discoveries in mind.",
-  "there may be a new favorite waiting in this lineup.",
-] as const;
-
-function messageIndex(seed: string, count: number) {
-  const sequence = Number.parseInt(seed, 10);
-  if (Number.isFinite(sequence) && sequence > 0) return (sequence - 1) % count;
-  let value = 0;
-  for (let index = 0; index < seed.length; index++) {
-    value = (value * 31 + seed.charCodeAt(index)) >>> 0;
-  }
-  return value % count;
-}
 
 const MOODS = [
   "celebratory",
@@ -62,7 +45,6 @@ export default function FeedPage() {
     user,
     ready,
     data,
-    loginSeed,
     browse,
     collect,
     markTried,
@@ -156,7 +138,7 @@ export default function FeedPage() {
     };
 
     void checkPermission();
-  }, [loginSeed, requestLocation]);
+  }, [requestLocation]);
 
   const fetchRecommendations = useCallback(
     async (nextCursor: number, replace: boolean) => {
@@ -270,31 +252,6 @@ export default function FeedPage() {
   };
 
   const weatherLabel = weather ? t(`weather.${weather.bucket}`) : "";
-  const personalMessageSource = useMemo(() => {
-    const choices: string[] = [
-      ...PERSONAL_MESSAGES,
-      data.moodPreference
-        ? `tonight's lineup leans into your ${data.moodPreference} mood.`
-        : "tonight is wide open, so we mixed in a little of everything.",
-      data.history.length >= 5
-        ? "your recent explorations inspired a fresh set of pours."
-        : "your first few discoveries are ready to begin.",
-      data.collected.length > 0
-        ? "we kept what you love in mind while preparing tonight's lineup."
-        : "there is plenty of room here for a new favorite.",
-    ];
-    return choices[messageIndex(loginSeed || accountId, choices.length)];
-  }, [
-    accountId,
-    data.collected.length,
-    data.history.length,
-    data.moodPreference,
-    loginSeed,
-  ]);
-  const { texts: personalMessages } = useTranslatedTexts(
-    [personalMessageSource],
-    "feed-personal-message",
-  );
   const { texts: locationCopy } = useTranslatedTexts(
     [
       "Share your location for more accurate recommendations",
@@ -451,14 +408,6 @@ export default function FeedPage() {
             </div>
           </div>
         )}
-
-        <div className="mb-3 inline-flex max-w-full items-start gap-2 px-0.5 text-xs leading-snug text-[var(--on-bg-muted)] sm:mb-4">
-          <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-          <span>
-            {user?.name && <span className="font-medium">{user.name.split(/\s+/)[0]}, </span>}
-            {personalMessages[0]}
-          </span>
-        </div>
 
         {loading && !current ? (
           <div className="flex h-[min(32rem,calc(100svh-14.5rem))] items-center justify-center rounded-[1.5rem] bg-[var(--surface)]/70 sm:h-[min(680px,78vh)] sm:rounded-[1.75rem]">
