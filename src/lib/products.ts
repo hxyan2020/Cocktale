@@ -32,6 +32,15 @@ export function productImageUnoptimized(url: string) {
   return url.includes("commons.wikimedia.org") || url.includes("upload.wikimedia.org");
 }
 
+export function equipmentImageUrl(sourceKey: string): string | undefined {
+  const product = products.find(
+    (product) =>
+      product.sourceKey === sourceKey &&
+      (product.category === "utensil" || product.category === "accessory"),
+  );
+  return product?.images[0]?.url ? `/utensils/${sourceKey}.webp` : undefined;
+}
+
 export function formatMoney(cents: number, currency = "usd", locale = "en") {
   return new Intl.NumberFormat(locale, {
     style: "currency",

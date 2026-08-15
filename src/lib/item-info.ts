@@ -1,4 +1,5 @@
 import type { EquipmentId } from "@/lib/make-guide";
+import { equipmentImageUrl } from "@/lib/products";
 
 export type SketchKind =
   | EquipmentId
@@ -46,8 +47,9 @@ export type ItemInfo = {
   title: string;
   blurb: string;
   sketch: SketchKind;
-  /** Consistent ingredient pack-shot (TheCocktailDB); omit for tools/glass. */
+  /** Product or ingredient photo; omit when a line-sketch is the fallback. */
   imageUrl?: string;
+  imageFit?: "contain" | "cover";
 };
 
 /** Same pack-shot style as the market — transparent PNG stills of the ingredient. */
@@ -85,6 +87,8 @@ export function equipmentInfo(id: EquipmentId, title: string): ItemInfo {
     title,
     blurb: EQUIPMENT_BLURBS[id],
     sketch: id,
+    imageUrl: equipmentImageUrl(id),
+    imageFit: "contain",
   };
 }
 
@@ -203,5 +207,6 @@ export function ingredientInfo(name: string): ItemInfo {
     blurb: profile.blurb,
     sketch: profile.sketch,
     imageUrl: ingredientImageUrl(name, "medium"),
+    imageFit: "contain",
   };
 }

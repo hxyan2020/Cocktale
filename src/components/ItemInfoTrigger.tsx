@@ -169,8 +169,9 @@ export function ItemInfoTrigger({ info, children, className = "" }: Props) {
                       src={info.imageUrl}
                       alt={info.title}
                       fill
-                      className="object-contain p-3"
+                      className={info.imageFit === "cover" ? "object-cover" : "object-contain p-3"}
                       sizes="240px"
+                      quality={88}
                       onError={() => setImageFailed(true)}
                     />
                   ) : (
