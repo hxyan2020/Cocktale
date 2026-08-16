@@ -297,9 +297,9 @@ export function rootMetadata(): Metadata {
       },
     },
     icons: {
-      icon: [{ url: "/logo.png", type: "image/png", sizes: "any" }],
-      shortcut: "/logo.png",
-      apple: [{ url: "/logo.png", type: "image/png" }],
+      icon: [{ url: "/icon.png", type: "image/png", sizes: "512x512" }],
+      shortcut: "/icon.png",
+      apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
     },
     manifest: "/site.webmanifest",
   };
