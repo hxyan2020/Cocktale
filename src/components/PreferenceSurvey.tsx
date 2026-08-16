@@ -34,7 +34,7 @@ const ENGLISH_COPY = [
   "Location",
   "Your local weather changes which drinks rise to the top.",
   "Use my location",
-  "Continue with default weather",
+  "Continue without location",
   "Location received",
   "Location is blocked",
   "Location is unavailable",
@@ -52,7 +52,7 @@ const ENGLISH_COPY = [
   "Mood",
   "Flavor",
   "Recipe style",
-  "Default weather",
+  "",
   "Local weather",
   "Not selected yet",
   "Analyzing your preferences",
@@ -91,8 +91,9 @@ export function PreferenceSurvey({
   useBodyScrollLock(open);
 
   const progress = step === 4 ? analysisProgress : [12, 34, 57, 78][step] ?? 100;
+  const locationSkipped = ["dismissed", "blocked", "unavailable"].includes(locationStatus);
   const locationLabel =
-    locationStatus === "granted" ? copy(24) : locationStatus === "dismissed" ? copy(23) : copy(25);
+    locationStatus === "granted" ? copy(24) : locationSkipped ? "" : copy(25);
 
   const collected = useMemo(
     () => [
@@ -262,7 +263,10 @@ export function PreferenceSurvey({
                 {analysisProgress >= 100 ? copy(32) : copy(26)}
               </h3>
               <ul className="mt-4 space-y-2">
-                {[copy(27), copy(28), copy(29), copy(30), copy(31)].map((label, index) => {
+                {(locationSkipped
+                  ? [copy(28), copy(29), copy(30), copy(31)]
+                  : [copy(27), copy(28), copy(29), copy(30), copy(31)]
+                ).map((label, index) => {
                   const complete = analysisProgress >= 84 + index * 4;
                   return (
                     <li

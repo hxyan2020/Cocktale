@@ -287,10 +287,18 @@ export default function FeedPage() {
   );
   const preference = data.surveyPreferences;
   const surveyOpen = ready && (!preference || surveyAnalyzing);
+  const hasSharedLocation = coords.lat != null && coords.lon != null && locationStatus === "granted";
+  const weatherSignal = hasSharedLocation
+    ? weather
+      ? `${weather.bucket}, ${Math.round(weather.tempC)}°C`
+      : "weather loading"
+    : "";
   const signalSource = preference
     ? [
-        `Collected signals: ${weather ? `${weather.bucket}, ${Math.round(weather.tempC)}°C` : "weather loading"} · ${preference.mood} mood · ${preference.flavor} flavor · ${preference.complexity} recipe · ${data.history.length} history events.`,
-        "Analysis process: weather affinity → mood match → flavor profile → recipe complexity → browsing history → popularity balance.",
+        `Collected signals: ${weatherSignal ? `${weatherSignal} · ` : ""}${preference.mood} mood · ${preference.flavor} flavor · ${preference.complexity} recipe · ${data.history.length} history events.`,
+        hasSharedLocation
+          ? "Analysis process: weather affinity → mood match → flavor profile → recipe complexity → browsing history → popularity balance."
+          : "Analysis process: mood match → flavor profile → recipe complexity → browsing history → popularity balance.",
       ]
     : [];
   const { texts: signalCopy } = useTranslatedTexts(
@@ -334,7 +342,7 @@ export default function FeedPage() {
               {t("feed.title")}
             </h1>
           </div>
-          {weather && (
+          {weather && locationStatus === "granted" && (
             <div className="inline-flex max-w-full items-center gap-2 rounded-full bg-[var(--surface)] px-3 py-1.5 text-xs text-[var(--ink-soft)] ring-1 ring-[var(--line)] sm:px-4 sm:py-2 sm:text-sm">
               <CloudSun className="h-4 w-4 shrink-0 text-[var(--accent)]" />
               <span className="truncate">
