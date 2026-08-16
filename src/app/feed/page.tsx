@@ -14,6 +14,13 @@ import {
 } from "@/components/PreferenceSurvey";
 import { useTranslatedTexts } from "@/components/useTranslatedContent";
 import { getRankOffset, maybeAdvanceRankOffset, setRankOffset } from "@/lib/rank-rotation";
+import {
+  markLocationAskedToday,
+  readCachedCoords,
+  readGeolocationPermission,
+  wasLocationAskedToday,
+  writeCachedCoords,
+} from "@/lib/location-permission";
 import type {
   BrowseEvent,
   Cocktail,
@@ -27,8 +34,6 @@ type WeatherPayload = {
   label: string;
   city: string;
 };
-
-const LOCATION_CACHE_KEY = "cocktale:recommendation-location";
 
 const MOODS = [
   "celebratory",
@@ -63,8 +68,8 @@ export default function FeedPage() {
   const [detailOpen, setDetailOpen] = useState(false);
   const [triedOpen, setTriedOpen] = useState(false);
   const [surveyAnalyzing, setSurveyAnalyzing] = useState(false);
-  const [coords, setCoords] = useState<{ lat?: number; lon?: number }>({});
-  const [locationStatus, setLocationStatus] = useState<SurveyLocationStatus>("prompt");
+  const [coords, setCoords] = useState<{ lat?: number; lon?: number }>(() => readCachedCoords() ?? {});
+  const [locationStatus, setLocationStatus] = useState<SurveyLocationStatus>("checking");
   const seenIds = useRef<Set<string>>(new Set());
   const loadingMore = useRef(false);
   const historyRef = useRef<BrowseEvent[]>(data.history);
@@ -79,10 +84,19 @@ export default function FeedPage() {
     surveyRef.current = data.surveyPreferences;
   }, [data.history, data.moodPreference, data.surveyPreferences]);
 
-  const requestLocation = useCallback(() => {
+  const dismissLocationPrompt = useCallback(() => {
+    markLocationAskedToday();
+    setLocationStatus("dismissed");
+  }, []);
+
+  const requestLocation = useCallback((options?: { userInitiated?: boolean }) => {
     if (!navigator.geolocation) {
       setLocationStatus("unavailable");
+      markLocationAskedToday();
       return;
+    }
+    if (options?.userInitiated) {
+      markLocationAskedToday();
     }
     setLocationStatus("requesting");
     navigator.geolocation.getCurrentPosition(
@@ -93,13 +107,11 @@ export default function FeedPage() {
         };
         setCoords(nextCoords);
         setLocationStatus("granted");
-        try {
-          sessionStorage.setItem(LOCATION_CACHE_KEY, JSON.stringify(nextCoords));
-        } catch {
-          // Recommendations still work if browser storage is unavailable.
-        }
+        markLocationAskedToday();
+        writeCachedCoords(nextCoords);
       },
       (error) => {
+        markLocationAskedToday();
         setLocationStatus(error.code === error.PERMISSION_DENIED ? "blocked" : "unavailable");
       },
       { enableHighAccuracy: false, maximumAge: 10 * 60 * 1000, timeout: 8000 },
@@ -120,21 +132,29 @@ export default function FeedPage() {
 
   useEffect(() => {
     if (!navigator.geolocation) {
-      queueMicrotask(() => setLocationStatus("unavailable"));
+      queueMicrotask(() => {
+        setLocationStatus("unavailable");
+        markLocationAskedToday();
+      });
       return;
     }
 
     const checkPermission = async () => {
-      try {
-        const permission = await navigator.permissions.query({ name: "geolocation" });
-        if (permission.state === "granted") {
-          requestLocation();
-        } else {
-          setLocationStatus(permission.state === "denied" ? "blocked" : "prompt");
-        }
-      } catch {
-        setLocationStatus("prompt");
+      const permission = await readGeolocationPermission();
+      if (permission === "granted") {
+        requestLocation();
+        return;
       }
+      if (permission === "denied") {
+        setLocationStatus("blocked");
+        markLocationAskedToday();
+        return;
+      }
+      if (wasLocationAskedToday()) {
+        setLocationStatus("dismissed");
+        return;
+      }
+      setLocationStatus("prompt");
     };
 
     void checkPermission();
@@ -343,7 +363,7 @@ export default function FeedPage() {
                 <div className="mt-3 flex flex-wrap gap-2">
                   <button
                     type="button"
-                    onClick={requestLocation}
+                    onClick={() => requestLocation({ userInitiated: true })}
                     disabled={locationStatus === "requesting"}
                     className="min-h-11 rounded-full bg-[var(--ink)] px-4 py-2 text-xs font-medium text-[var(--foam)] disabled:opacity-60"
                   >
@@ -356,7 +376,7 @@ export default function FeedPage() {
                   {locationStatus === "prompt" && (
                     <button
                       type="button"
-                      onClick={() => setLocationStatus("dismissed")}
+                      onClick={dismissLocationPrompt}
                       className="min-h-11 rounded-full px-4 py-2 text-xs font-medium text-[var(--ink-soft)]"
                     >
                       {locationCopy[3]}
@@ -461,8 +481,8 @@ export default function FeedPage() {
       <PreferenceSurvey
         open={surveyOpen}
         locationStatus={locationStatus}
-        onRequestLocation={requestLocation}
-        onUseDefaultLocation={() => setLocationStatus("dismissed")}
+        onRequestLocation={() => requestLocation({ userInitiated: true })}
+        onUseDefaultLocation={dismissLocationPrompt}
         onSubmit={submitSurvey}
         onDone={finishSurvey}
       />

@@ -10,6 +10,11 @@ import { CocktailDetail } from "@/components/CocktailDetail";
 import { TriedModal } from "@/components/TriedModal";
 import { useLocalizedCocktail, useTranslatedTexts } from "@/components/useTranslatedContent";
 import { cocktailCategories, searchCocktails } from "@/lib/cocktails";
+import {
+  readCachedCoords,
+  readGeolocationPermission,
+  writeCachedCoords,
+} from "@/lib/location-permission";
 import { maybeAdvanceRankOffset, getRankOffset, rotateRanked } from "@/lib/rank-rotation";
 import type { Cocktail, WeatherBucket } from "@/lib/types";
 
@@ -135,16 +140,26 @@ export default function CataloguePage() {
     const load = async () => {
       let lat: number | undefined;
       let lon: number | undefined;
-      if (navigator.geolocation) {
-        const pos = await new Promise<GeolocationPosition | null>((resolve) => {
-          navigator.geolocation.getCurrentPosition(
-            resolve,
-            () => resolve(null),
-            { timeout: 4000 },
-          );
-        });
-        lat = pos?.coords.latitude;
-        lon = pos?.coords.longitude;
+      const cached = readCachedCoords();
+      if (cached) {
+        lat = cached.lat;
+        lon = cached.lon;
+      } else {
+        const permission = await readGeolocationPermission();
+        if (permission === "granted" && navigator.geolocation) {
+          const pos = await new Promise<GeolocationPosition | null>((resolve) => {
+            navigator.geolocation.getCurrentPosition(
+              resolve,
+              () => resolve(null),
+              { timeout: 4000, maximumAge: 10 * 60 * 1000 },
+            );
+          });
+          lat = pos?.coords.latitude;
+          lon = pos?.coords.longitude;
+          if (lat != null && lon != null) {
+            writeCachedCoords({ lat, lon });
+          }
+        }
       }
 
       const res = await fetch("/api/recommend", {
