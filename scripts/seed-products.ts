@@ -414,6 +414,35 @@ const LIFESTYLE = [
   "https://images.unsplash.com/photo-1587223962930-cb7f313ff742?auto=format&fit=crop&w=900&q=80",
 ];
 
+/** Fallback stock used only when a glass has no remaining unique cocktail photo. */
+const GLASS_FALLBACK_STOCK = [
+  wiki("Champagne glass empty.jpg"),
+  wiki("Weizenbier.jpg"),
+  wiki("Red wine glass.jpg"),
+  wiki("Punch Bowl MET 180787.jpg"),
+  wiki("3 Dry Martinis.JPG"),
+  wiki("Glass of champagne - bubbles.jpg"),
+  wiki("Champagne glass flower stem shape.jpg"),
+  "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1566417713940-ae11570957e8?auto=format&fit=crop&w=900&q=80",
+  ...LIFESTYLE,
+];
+
+const usedGlassHeroUrls = new Set<string>();
+
+function claimUniqueUrl(candidates: string[]): string | undefined {
+  for (const url of candidates) {
+    if (!url || usedGlassHeroUrls.has(url)) continue;
+    usedGlassHeroUrls.add(url);
+    return url;
+  }
+  return undefined;
+}
+
 const TOOL_PHOTOS: Record<string, string[]> = {
   blender: [
     wiki("Piña Coladas made in home kitchen blender - 1.jpg"),
@@ -682,24 +711,46 @@ function glassImages(name: string, cocktails: Cocktail[]): ProductImage[] {
   const exact = cocktailPhotos(
     cocktails,
     (c) => c.glass.trim().toLowerCase() === name.toLowerCase(),
+    24,
   );
-  const related = cocktailPhotos(cocktails, (c) => glassFamily(c.glass) === family);
-  return gallery(name, [...(GLASS_PHOTOS[family] || []), ...exact, ...related], [
-    "hero",
-    "front",
-    "side",
-    "detail",
-    "lifestyle",
-  ]);
+  const related = cocktailPhotos(
+    cocktails,
+    (c) =>
+      glassFamily(c.glass) === family &&
+      c.glass.trim().toLowerCase() !== name.toLowerCase(),
+    12,
+  );
+  const hero =
+    claimUniqueUrl(exact) ||
+    claimUniqueUrl(related) ||
+    claimUniqueUrl(GLASS_PHOTOS[family] || []) ||
+    claimUniqueUrl(GLASS_FALLBACK_STOCK) ||
+    exact[0] ||
+    (GLASS_PHOTOS[family] || LIFESTYLE)[0];
+
+  return gallery(
+    name,
+    [hero, ...exact, ...related, ...(GLASS_PHOTOS[family] || []), ...GLASS_FALLBACK_STOCK],
+    ["hero", "front", "side", "detail", "lifestyle"],
+  );
+}
+
+function titleCaseGlass(name: string) {
+  return name
+    .trim()
+    .toLowerCase()
+    .replace(/\b([a-z])/g, (char) => char.toUpperCase())
+    .replace(/\bAnd\b/g, "and");
 }
 
 function main() {
+  usedGlassHeroUrls.clear();
   const cocktails = JSON.parse(
     readFileSync(join(process.cwd(), "src/data/cocktails.json"), "utf8"),
   ) as Cocktail[];
 
   const ingredientMap = new Map<string, Set<string>>();
-  const glassMap = new Map<string, Set<string>>();
+  const glassMap = new Map<string, { display: string; cocktailIds: Set<string> }>();
 
   for (const c of cocktails) {
     for (const ing of c.ingredients) {
@@ -710,8 +761,13 @@ function main() {
     }
     const glass = (c.glass || "").trim();
     if (glass) {
-      if (!glassMap.has(glass)) glassMap.set(glass, new Set());
-      glassMap.get(glass)!.add(c.id);
+      const key = glass.toLowerCase();
+      const existing = glassMap.get(key);
+      if (!existing) {
+        glassMap.set(key, { display: titleCaseGlass(glass), cocktailIds: new Set([c.id]) });
+      } else {
+        existing.cocktailIds.add(c.id);
+      }
     }
   }
 
@@ -752,8 +808,8 @@ function main() {
     });
   }
 
-  for (const [glass, cocktailIds] of [...glassMap.entries()].sort((a, b) =>
-    a[0].localeCompare(b[0]),
+  for (const [, { display: glass, cocktailIds }] of [...glassMap.entries()].sort((a, b) =>
+    a[1].display.localeCompare(b[1].display),
   )) {
     const slug = slugify(glass);
     const priceCents = hashPrice(glass, 1299, 3499);

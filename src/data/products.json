@@ -2563,27 +2563,27 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/t0iugg1509556712.jpg",
         "alt": "Balloon Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1551538827-9c03746530ea?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/qwc5f91512406543.jpg",
         "alt": "Balloon Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/6xfj5t1517748412.jpg",
         "alt": "Balloon Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/t0iugg1509556712.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/apneom1504370294.jpg",
         "alt": "Balloon Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/qwc5f91512406543.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/yqvvqs1475667388.jpg",
         "alt": "Balloon Glass — lifestyle view"
       }
     ],
@@ -2988,27 +2988,27 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/xxyywq1454511117.jpg",
         "alt": "Beer Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/osgvxt1513595509.jpg",
         "alt": "Beer Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/wwqrsw1441248662.jpg",
         "alt": "Beer Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/xxyywq1454511117.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/rvwrvv1468877323.jpg",
         "alt": "Beer Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/osgvxt1513595509.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/upvtyt1441249023.jpg",
         "alt": "Beer Glass — lifestyle view"
       }
     ],
@@ -3029,17 +3029,17 @@
   {
     "id": "glass-beer-mug",
     "slug": "glass-beer-mug",
-    "name": "Beer mug",
+    "name": "Beer Mug",
     "category": "glassware",
     "subcategory": "Glassware",
     "priceCents": 2699,
     "currency": "usd",
-    "description": "Serve authentic pours in a proper Beer mug.",
-    "longDescription": "This Beer mug matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
+    "description": "Serve authentic pours in a proper Beer Mug.",
+    "longDescription": "This Beer Mug matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
     "specs": [
       {
         "label": "Type",
-        "value": "Beer mug"
+        "value": "Beer Mug"
       },
       {
         "label": "Material",
@@ -3061,28 +3061,28 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=900&q=80",
-        "alt": "Beer mug — hero view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/rvwrvv1468877323.jpg",
+        "alt": "Beer Mug — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
-        "alt": "Beer mug — front view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/xsqrup1441249130.jpg",
+        "alt": "Beer Mug — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=900&q=80",
-        "alt": "Beer mug — side view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/upusyu1472667977.jpg",
+        "alt": "Beer Mug — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/rvwrvv1468877323.jpg",
-        "alt": "Beer mug — detail view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/rx8k8e1504365812.jpg",
+        "alt": "Beer Mug — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/xsqrup1441249130.jpg",
-        "alt": "Beer mug — lifestyle view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/xxyywq1454511117.jpg",
+        "alt": "Beer Mug — lifestyle view"
       }
     ],
     "stock": 35,
@@ -3090,7 +3090,7 @@
     "brand": "ClearCraft",
     "tags": [
       "glassware",
-      "Beer mug"
+      "Beer Mug"
     ],
     "relatedCocktailIds": [
       "14588",
@@ -3098,22 +3098,22 @@
       "16262",
       "17141"
     ],
-    "sourceKey": "Beer mug"
+    "sourceKey": "Beer Mug"
   },
   {
     "id": "glass-beer-pilsner",
     "slug": "glass-beer-pilsner",
-    "name": "Beer pilsner",
+    "name": "Beer Pilsner",
     "category": "glassware",
     "subcategory": "Glassware",
-    "priceCents": 2799,
+    "priceCents": 2699,
     "currency": "usd",
-    "description": "Serve authentic pours in a proper Beer pilsner.",
-    "longDescription": "This Beer pilsner matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
+    "description": "Serve authentic pours in a proper Beer Pilsner.",
+    "longDescription": "This Beer Pilsner matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
     "specs": [
       {
         "label": "Type",
-        "value": "Beer pilsner"
+        "value": "Beer Pilsner"
       },
       {
         "label": "Material",
@@ -3135,28 +3135,28 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=900&q=80",
-        "alt": "Beer pilsner — hero view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/upvtyt1441249023.jpg",
+        "alt": "Beer Pilsner — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
-        "alt": "Beer pilsner — front view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/ft8ed01485620930.jpg",
+        "alt": "Beer Pilsner — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=900&q=80",
-        "alt": "Beer pilsner — side view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/xxyywq1454511117.jpg",
+        "alt": "Beer Pilsner — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/upvtyt1441249023.jpg",
-        "alt": "Beer pilsner — detail view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/rvwrvv1468877323.jpg",
+        "alt": "Beer Pilsner — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/ft8ed01485620930.jpg",
-        "alt": "Beer pilsner — lifestyle view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/xsqrup1441249130.jpg",
+        "alt": "Beer Pilsner — lifestyle view"
       }
     ],
     "stock": 35,
@@ -3164,13 +3164,13 @@
     "brand": "ClearCraft",
     "tags": [
       "glassware",
-      "Beer pilsner"
+      "Beer Pilsner"
     ],
     "relatedCocktailIds": [
       "17035",
       "15691"
     ],
-    "sourceKey": "Beer pilsner"
+    "sourceKey": "Beer Pilsner"
   },
   {
     "id": "ing-benedictine",
@@ -4425,17 +4425,17 @@
   {
     "id": "glass-brandy-snifter",
     "slug": "glass-brandy-snifter",
-    "name": "Brandy snifter",
+    "name": "Brandy Snifter",
     "category": "glassware",
     "subcategory": "Glassware",
-    "priceCents": 2199,
+    "priceCents": 1799,
     "currency": "usd",
-    "description": "Serve authentic pours in a proper Brandy snifter.",
-    "longDescription": "This Brandy snifter matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
+    "description": "Serve authentic pours in a proper Brandy Snifter.",
+    "longDescription": "This Brandy Snifter matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
     "specs": [
       {
         "label": "Type",
-        "value": "Brandy snifter"
+        "value": "Brandy Snifter"
       },
       {
         "label": "Material",
@@ -4457,28 +4457,28 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=900&q=80",
-        "alt": "Brandy snifter — hero view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/sqxsxp1478820236.jpg",
+        "alt": "Brandy Snifter — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=900&q=80",
-        "alt": "Brandy snifter — front view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/3gz2vw1503425983.jpg",
+        "alt": "Brandy Snifter — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80",
-        "alt": "Brandy snifter — side view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/rswqpy1441246518.jpg",
+        "alt": "Brandy Snifter — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/sqxsxp1478820236.jpg",
-        "alt": "Brandy snifter — detail view"
+        "url": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=900&q=80",
+        "alt": "Brandy Snifter — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/3gz2vw1503425983.jpg",
-        "alt": "Brandy snifter — lifestyle view"
+        "url": "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=900&q=80",
+        "alt": "Brandy Snifter — lifestyle view"
       }
     ],
     "stock": 35,
@@ -4486,14 +4486,14 @@
     "brand": "ClearCraft",
     "tags": [
       "glassware",
-      "Brandy snifter"
+      "Brandy Snifter"
     ],
     "relatedCocktailIds": [
       "11602",
       "12256",
       "14860"
     ],
-    "sourceKey": "Brandy snifter"
+    "sourceKey": "Brandy Snifter"
   },
   {
     "id": "ing-brown-sugar",
@@ -5506,81 +5506,6 @@
   {
     "id": "glass-champagne-flute",
     "slug": "glass-champagne-flute",
-    "name": "Champagne flute",
-    "category": "glassware",
-    "subcategory": "Glassware",
-    "priceCents": 2199,
-    "currency": "usd",
-    "description": "Serve authentic pours in a proper Champagne flute.",
-    "longDescription": "This Champagne flute matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
-    "specs": [
-      {
-        "label": "Type",
-        "value": "Champagne flute"
-      },
-      {
-        "label": "Material",
-        "value": "Crystal-clear glass"
-      },
-      {
-        "label": "Set",
-        "value": "Sold individually"
-      },
-      {
-        "label": "Care",
-        "value": "Dishwasher safe (top rack)"
-      },
-      {
-        "label": "Used in",
-        "value": "5 recipes"
-      }
-    ],
-    "images": [
-      {
-        "angle": "hero",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Champagne%20glass%20empty.jpg?width=800",
-        "alt": "Champagne flute — hero view"
-      },
-      {
-        "angle": "front",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Champagne%20glass%20flower%20stem%20shape.jpg?width=800",
-        "alt": "Champagne flute — front view"
-      },
-      {
-        "angle": "side",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Glass%20of%20champagne%20-%20bubbles.jpg?width=800",
-        "alt": "Champagne flute — side view"
-      },
-      {
-        "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/eaag491504367543.jpg",
-        "alt": "Champagne flute — detail view"
-      },
-      {
-        "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/juhcuu1504370685.jpg",
-        "alt": "Champagne flute — lifestyle view"
-      }
-    ],
-    "stock": 35,
-    "unit": "1 glass",
-    "brand": "ClearCraft",
-    "tags": [
-      "glassware",
-      "Champagne flute"
-    ],
-    "relatedCocktailIds": [
-      "17205",
-      "11387",
-      "11422",
-      "15825",
-      "14456"
-    ],
-    "sourceKey": "Champagne flute"
-  },
-  {
-    "id": "glass-champagne-flute",
-    "slug": "glass-champagne-flute",
     "name": "Champagne Flute",
     "category": "glassware",
     "subcategory": "Glassware",
@@ -5607,33 +5532,33 @@
       },
       {
         "label": "Used in",
-        "value": "2 recipes"
+        "value": "7 recipes"
       }
     ],
     "images": [
       {
         "angle": "hero",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Champagne%20glass%20empty.jpg?width=800",
+        "url": "https://www.thecocktaildb.com/images/media/drink/eaag491504367543.jpg",
         "alt": "Champagne Flute — hero view"
       },
       {
         "angle": "front",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Champagne%20glass%20flower%20stem%20shape.jpg?width=800",
+        "url": "https://www.thecocktaildb.com/images/media/drink/juhcuu1504370685.jpg",
         "alt": "Champagne Flute — front view"
       },
       {
         "angle": "side",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Glass%20of%20champagne%20-%20bubbles.jpg?width=800",
+        "url": "https://www.thecocktaildb.com/images/media/drink/7oyrj91504884412.jpg",
         "alt": "Champagne Flute — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/eaag491504367543.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/m5nhtr1504820829.jpg",
         "alt": "Champagne Flute — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/juhcuu1504370685.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/xqptps1441247257.jpg",
         "alt": "Champagne Flute — lifestyle view"
       }
     ],
@@ -5646,7 +5571,12 @@
     ],
     "relatedCocktailIds": [
       "17195",
-      "13837"
+      "17205",
+      "11387",
+      "11422",
+      "15825",
+      "13837",
+      "14456"
     ],
     "sourceKey": "Champagne Flute"
   },
@@ -6809,88 +6739,6 @@
   {
     "id": "glass-cocktail-glass",
     "slug": "glass-cocktail-glass",
-    "name": "Cocktail glass",
-    "category": "glassware",
-    "subcategory": "Glassware",
-    "priceCents": 1999,
-    "currency": "usd",
-    "description": "Serve authentic pours in a proper Cocktail glass.",
-    "longDescription": "This Cocktail glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
-    "specs": [
-      {
-        "label": "Type",
-        "value": "Cocktail glass"
-      },
-      {
-        "label": "Material",
-        "value": "Crystal-clear glass"
-      },
-      {
-        "label": "Set",
-        "value": "Sold individually"
-      },
-      {
-        "label": "Care",
-        "value": "Dishwasher safe (top rack)"
-      },
-      {
-        "label": "Used in",
-        "value": "102 recipes"
-      }
-    ],
-    "images": [
-      {
-        "angle": "hero",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/3%20Dry%20Martinis.JPG?width=800",
-        "alt": "Cocktail glass — hero view"
-      },
-      {
-        "angle": "front",
-        "url": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80",
-        "alt": "Cocktail glass — front view"
-      },
-      {
-        "angle": "side",
-        "url": "https://images.unsplash.com/photo-1551538827-9c03746530ea?auto=format&fit=crop&w=900&q=80",
-        "alt": "Cocktail glass — side view"
-      },
-      {
-        "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/trbplb1606855233.jpg",
-        "alt": "Cocktail glass — detail view"
-      },
-      {
-        "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/t0aja61504348715.jpg",
-        "alt": "Cocktail glass — lifestyle view"
-      }
-    ],
-    "stock": 35,
-    "unit": "1 glass",
-    "brand": "ClearCraft",
-    "tags": [
-      "glassware",
-      "Cocktail glass"
-    ],
-    "relatedCocktailIds": [
-      "17180",
-      "17186",
-      "17196",
-      "17212",
-      "17200",
-      "11008",
-      "11007",
-      "11728",
-      "17188",
-      "13214",
-      "12196",
-      "17218"
-    ],
-    "sourceKey": "Cocktail glass"
-  },
-  {
-    "id": "glass-cocktail-glass",
-    "slug": "glass-cocktail-glass",
     "name": "Cocktail Glass",
     "category": "glassware",
     "subcategory": "Glassware",
@@ -6917,33 +6765,33 @@
       },
       {
         "label": "Used in",
-        "value": "2 recipes"
+        "value": "104 recipes"
       }
     ],
     "images": [
       {
         "angle": "hero",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/3%20Dry%20Martinis.JPG?width=800",
+        "url": "https://www.thecocktaildb.com/images/media/drink/trbplb1606855233.jpg",
         "alt": "Cocktail Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/t0aja61504348715.jpg",
         "alt": "Cocktail Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1551538827-9c03746530ea?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/kpsajh1504368362.jpg",
         "alt": "Cocktail Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/trbplb1606855233.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/n0sx531504372951.jpg",
         "alt": "Cocktail Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/t0aja61504348715.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/aqm9el1504369613.jpg",
         "alt": "Cocktail Glass — lifestyle view"
       }
     ],
@@ -6955,8 +6803,18 @@
       "Cocktail Glass"
     ],
     "relatedCocktailIds": [
-      "11391",
-      "16178"
+      "17180",
+      "17186",
+      "17196",
+      "17212",
+      "17200",
+      "11008",
+      "11007",
+      "11728",
+      "17188",
+      "13214",
+      "12196",
+      "17218"
     ],
     "sourceKey": "Cocktail Glass"
   },
@@ -7579,88 +7437,6 @@
   {
     "id": "glass-coffee-mug",
     "slug": "glass-coffee-mug",
-    "name": "Coffee mug",
-    "category": "glassware",
-    "subcategory": "Glassware",
-    "priceCents": 3099,
-    "currency": "usd",
-    "description": "Serve authentic pours in a proper Coffee mug.",
-    "longDescription": "This Coffee mug matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
-    "specs": [
-      {
-        "label": "Type",
-        "value": "Coffee mug"
-      },
-      {
-        "label": "Material",
-        "value": "Crystal-clear glass"
-      },
-      {
-        "label": "Set",
-        "value": "Sold individually"
-      },
-      {
-        "label": "Care",
-        "value": "Dishwasher safe (top rack)"
-      },
-      {
-        "label": "Used in",
-        "value": "12 recipes"
-      }
-    ],
-    "images": [
-      {
-        "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=900&q=80",
-        "alt": "Coffee mug — hero view"
-      },
-      {
-        "angle": "front",
-        "url": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80",
-        "alt": "Coffee mug — front view"
-      },
-      {
-        "angle": "side",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Espresso%20machine%201.jpg?width=800",
-        "alt": "Coffee mug — side view"
-      },
-      {
-        "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/vqwptt1441247711.jpg",
-        "alt": "Coffee mug — detail view"
-      },
-      {
-        "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/q7w4xu1487603180.jpg",
-        "alt": "Coffee mug — lifestyle view"
-      }
-    ],
-    "stock": 35,
-    "unit": "1 glass",
-    "brand": "ClearCraft",
-    "tags": [
-      "glassware",
-      "Coffee mug"
-    ],
-    "relatedCocktailIds": [
-      "14181",
-      "12734",
-      "12736",
-      "12668",
-      "15743",
-      "12738",
-      "12770",
-      "12772",
-      "16951",
-      "12776",
-      "12746",
-      "12748"
-    ],
-    "sourceKey": "Coffee mug"
-  },
-  {
-    "id": "glass-coffee-mug",
-    "slug": "glass-coffee-mug",
     "name": "Coffee Mug",
     "category": "glassware",
     "subcategory": "Glassware",
@@ -7687,33 +7463,33 @@
       },
       {
         "label": "Used in",
-        "value": "4 recipes"
+        "value": "16 recipes"
       }
     ],
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/vqwptt1441247711.jpg",
         "alt": "Coffee Mug — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/q7w4xu1487603180.jpg",
         "alt": "Coffee Mug — front view"
       },
       {
         "angle": "side",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Espresso%20machine%201.jpg?width=800",
+        "url": "https://www.thecocktaildb.com/images/media/drink/vurrxr1441246074.jpg",
         "alt": "Coffee Mug — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/vqwptt1441247711.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/u6jrdf1487603173.jpg",
         "alt": "Coffee Mug — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/q7w4xu1487603180.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/mvis731484430445.jpg",
         "alt": "Coffee Mug — lifestyle view"
       }
     ],
@@ -7725,10 +7501,18 @@
       "Coffee Mug"
     ],
     "relatedCocktailIds": [
+      "14181",
+      "12734",
       "15409",
+      "12736",
+      "12668",
+      "15743",
+      "12738",
+      "12770",
+      "12772",
+      "16951",
       "12774",
-      "15515",
-      "15328"
+      "12776"
     ],
     "sourceKey": "Coffee Mug"
   },
@@ -7891,88 +7675,6 @@
   {
     "id": "glass-collins-glass",
     "slug": "glass-collins-glass",
-    "name": "Collins glass",
-    "category": "glassware",
-    "subcategory": "Glassware",
-    "priceCents": 1599,
-    "currency": "usd",
-    "description": "Serve authentic pours in a proper Collins glass.",
-    "longDescription": "This Collins glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
-    "specs": [
-      {
-        "label": "Type",
-        "value": "Collins glass"
-      },
-      {
-        "label": "Material",
-        "value": "Crystal-clear glass"
-      },
-      {
-        "label": "Set",
-        "value": "Sold individually"
-      },
-      {
-        "label": "Care",
-        "value": "Dishwasher safe (top rack)"
-      },
-      {
-        "label": "Used in",
-        "value": "30 recipes"
-      }
-    ],
-    "images": [
-      {
-        "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
-        "alt": "Collins glass — hero view"
-      },
-      {
-        "angle": "front",
-        "url": "https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=900&q=80",
-        "alt": "Collins glass — front view"
-      },
-      {
-        "angle": "side",
-        "url": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80",
-        "alt": "Collins glass — side view"
-      },
-      {
-        "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/709s6m1613655124.jpg",
-        "alt": "Collins glass — detail view"
-      },
-      {
-        "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/hrxfbl1606773109.jpg",
-        "alt": "Collins glass — lifestyle view"
-      }
-    ],
-    "stock": 35,
-    "unit": "1 glass",
-    "brand": "ClearCraft",
-    "tags": [
-      "glassware",
-      "Collins glass"
-    ],
-    "relatedCocktailIds": [
-      "15941",
-      "17197",
-      "11462",
-      "11690",
-      "17191",
-      "17207",
-      "17206",
-      "17253",
-      "12402",
-      "11580",
-      "13899",
-      "178346"
-    ],
-    "sourceKey": "Collins glass"
-  },
-  {
-    "id": "glass-collins-glass",
-    "slug": "glass-collins-glass",
     "name": "Collins Glass",
     "category": "glassware",
     "subcategory": "Glassware",
@@ -7999,33 +7701,33 @@
       },
       {
         "label": "Used in",
-        "value": "33 recipes"
+        "value": "63 recipes"
       }
     ],
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/709s6m1613655124.jpg",
         "alt": "Collins Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/hrxfbl1606773109.jpg",
         "alt": "Collins Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/7os4gs1606854357.jpg",
         "alt": "Collins Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/709s6m1613655124.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/twyrrp1439907470.jpg",
         "alt": "Collins Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/hrxfbl1606773109.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/fdk8a31606854815.jpg",
         "alt": "Collins Glass — lifestyle view"
       }
     ],
@@ -8037,18 +7739,18 @@
       "Collins Glass"
     ],
     "relatedCocktailIds": [
+      "15941",
+      "17197",
+      "11462",
+      "11690",
+      "17191",
+      "17207",
+      "17206",
       "12988",
-      "15300",
-      "13581",
-      "14598",
-      "17105",
-      "13940",
-      "15106",
-      "13332",
-      "15511",
-      "13206",
-      "12798",
-      "12800"
+      "17253",
+      "12402",
+      "11580",
+      "13899"
     ],
     "sourceKey": "Collins Glass"
   },
@@ -8226,27 +7928,27 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/3pylqc1504370988.jpg",
         "alt": "Copper Mug — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=900&q=80",
+        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
         "alt": "Copper Mug — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80",
+        "url": "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=900&q=80",
         "alt": "Copper Mug — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/3pylqc1504370988.jpg",
+        "url": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80",
         "alt": "Copper Mug — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Champagne%20glass%20empty.jpg?width=800",
         "alt": "Copper Mug — lifestyle view"
       }
     ],
@@ -8265,17 +7967,17 @@
   {
     "id": "glass-cordial-glass",
     "slug": "glass-cordial-glass",
-    "name": "Cordial glass",
+    "name": "Cordial Glass",
     "category": "glassware",
     "subcategory": "Glassware",
-    "priceCents": 1399,
+    "priceCents": 1499,
     "currency": "usd",
-    "description": "Serve authentic pours in a proper Cordial glass.",
-    "longDescription": "This Cordial glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
+    "description": "Serve authentic pours in a proper Cordial Glass.",
+    "longDescription": "This Cordial Glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
     "specs": [
       {
         "label": "Type",
-        "value": "Cordial glass"
+        "value": "Cordial Glass"
       },
       {
         "label": "Material",
@@ -8297,28 +7999,28 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80",
-        "alt": "Cordial glass — hero view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/bglc6y1504388797.jpg",
+        "alt": "Cordial Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80",
-        "alt": "Cordial glass — front view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/hyztmx1598719265.jpg",
+        "alt": "Cordial Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=900&q=80",
-        "alt": "Cordial glass — side view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/5a3vg61504372070.jpg",
+        "alt": "Cordial Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/bglc6y1504388797.jpg",
-        "alt": "Cordial glass — detail view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/yyrwty1468877498.jpg",
+        "alt": "Cordial Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/hyztmx1598719265.jpg",
-        "alt": "Cordial glass — lifestyle view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/rtpxqw1468877562.jpg",
+        "alt": "Cordial Glass — lifestyle view"
       }
     ],
     "stock": 35,
@@ -8326,13 +8028,13 @@
     "brand": "ClearCraft",
     "tags": [
       "glassware",
-      "Cordial glass"
+      "Cordial Glass"
     ],
     "relatedCocktailIds": [
       "13775",
       "178333"
     ],
-    "sourceKey": "Cordial glass"
+    "sourceKey": "Cordial Glass"
   },
   {
     "id": "ing-coriander",
@@ -8595,27 +8297,27 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/nl89tf1518947401.jpg",
         "alt": "Coupe Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1551538827-9c03746530ea?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/jwmr1x1504372337.jpg",
         "alt": "Coupe Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/3%20Dry%20Martinis.JPG?width=800",
+        "url": "https://www.thecocktaildb.com/images/media/drink/y7s3rh1598719574.jpg",
         "alt": "Coupe Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/nl89tf1518947401.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/vu8l7t1582475673.jpg",
         "alt": "Coupe Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/jwmr1x1504372337.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/sp8hkp1596017787.jpg",
         "alt": "Coupe Glass — lifestyle view"
       }
     ],
@@ -14000,88 +13702,6 @@
   {
     "id": "glass-highball-glass",
     "slug": "glass-highball-glass",
-    "name": "Highball glass",
-    "category": "glassware",
-    "subcategory": "Glassware",
-    "priceCents": 2699,
-    "currency": "usd",
-    "description": "Serve authentic pours in a proper Highball glass.",
-    "longDescription": "This Highball glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
-    "specs": [
-      {
-        "label": "Type",
-        "value": "Highball glass"
-      },
-      {
-        "label": "Material",
-        "value": "Crystal-clear glass"
-      },
-      {
-        "label": "Set",
-        "value": "Sold individually"
-      },
-      {
-        "label": "Care",
-        "value": "Dishwasher safe (top rack)"
-      },
-      {
-        "label": "Used in",
-        "value": "80 recipes"
-      }
-    ],
-    "images": [
-      {
-        "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
-        "alt": "Highball glass — hero view"
-      },
-      {
-        "angle": "front",
-        "url": "https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=900&q=80",
-        "alt": "Highball glass — front view"
-      },
-      {
-        "angle": "side",
-        "url": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80",
-        "alt": "Highball glass — side view"
-      },
-      {
-        "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/wmkbfj1606853905.jpg",
-        "alt": "Highball glass — detail view"
-      },
-      {
-        "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/t1tn0s1504374905.jpg",
-        "alt": "Highball glass — lifestyle view"
-      }
-    ],
-    "stock": 35,
-    "unit": "1 glass",
-    "brand": "ClearCraft",
-    "tags": [
-      "glassware",
-      "Highball glass"
-    ],
-    "relatedCocktailIds": [
-      "11288",
-      "17211",
-      "11410",
-      "17204",
-      "11000",
-      "12162",
-      "13621",
-      "17202",
-      "17214",
-      "13377",
-      "17267",
-      "11002"
-    ],
-    "sourceKey": "Highball glass"
-  },
-  {
-    "id": "glass-highball-glass",
-    "slug": "glass-highball-glass",
     "name": "Highball Glass",
     "category": "glassware",
     "subcategory": "Glassware",
@@ -14108,33 +13728,33 @@
       },
       {
         "label": "Used in",
-        "value": "19 recipes"
+        "value": "99 recipes"
       }
     ],
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/wmkbfj1606853905.jpg",
         "alt": "Highball Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/t1tn0s1504374905.jpg",
         "alt": "Highball Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/drtihp1606768397.jpg",
         "alt": "Highball Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/wmkbfj1606853905.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/wx7hsg1504370510.jpg",
         "alt": "Highball Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/t1tn0s1504374905.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/metwgh1606770327.jpg",
         "alt": "Highball Glass — lifestyle view"
       }
     ],
@@ -14146,18 +13766,18 @@
       "Highball Glass"
     ],
     "relatedCocktailIds": [
-      "12560",
-      "13938",
-      "17135",
-      "12768",
-      "12670",
-      "12672",
-      "12674",
-      "12688",
-      "12714",
-      "12690",
-      "12692",
-      "12694"
+      "11288",
+      "17211",
+      "11410",
+      "17204",
+      "11000",
+      "12162",
+      "13621",
+      "17202",
+      "17214",
+      "13377",
+      "17267",
+      "11002"
     ],
     "sourceKey": "Highball Glass"
   },
@@ -14544,17 +14164,17 @@
   {
     "id": "glass-hurricane-glass",
     "slug": "glass-hurricane-glass",
-    "name": "Hurricane glass",
+    "name": "Hurricane Glass",
     "category": "glassware",
     "subcategory": "Glassware",
-    "priceCents": 1599,
+    "priceCents": 1699,
     "currency": "usd",
-    "description": "Serve authentic pours in a proper Hurricane glass.",
-    "longDescription": "This Hurricane glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
+    "description": "Serve authentic pours in a proper Hurricane Glass.",
+    "longDescription": "This Hurricane Glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
     "specs": [
       {
         "label": "Type",
-        "value": "Hurricane glass"
+        "value": "Hurricane Glass"
       },
       {
         "label": "Material",
@@ -14576,28 +14196,28 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=900&q=80",
-        "alt": "Hurricane glass — hero view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/2en3jk1509557725.jpg",
+        "alt": "Hurricane Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80",
-        "alt": "Hurricane glass — front view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/y36z8c1503563911.jpg",
+        "alt": "Hurricane Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
-        "alt": "Hurricane glass — side view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/urpvvv1441249549.jpg",
+        "alt": "Hurricane Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/2en3jk1509557725.jpg",
-        "alt": "Hurricane glass — detail view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/mgf0y91503565781.jpg",
+        "alt": "Hurricane Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/y36z8c1503563911.jpg",
-        "alt": "Hurricane glass — lifestyle view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/43uhr51551451311.jpg",
+        "alt": "Hurricane Glass — lifestyle view"
       }
     ],
     "stock": 35,
@@ -14605,7 +14225,7 @@
     "brand": "ClearCraft",
     "tags": [
       "glassware",
-      "Hurricane glass"
+      "Hurricane Glass"
     ],
     "relatedCocktailIds": [
       "17241",
@@ -14615,7 +14235,7 @@
       "178307",
       "17027"
     ],
-    "sourceKey": "Hurricane glass"
+    "sourceKey": "Hurricane Glass"
   },
   {
     "id": "ing-ice",
@@ -14781,17 +14401,17 @@
   {
     "id": "glass-irish-coffee-cup",
     "slug": "glass-irish-coffee-cup",
-    "name": "Irish coffee cup",
+    "name": "Irish Coffee Cup",
     "category": "glassware",
     "subcategory": "Glassware",
-    "priceCents": 2499,
+    "priceCents": 2199,
     "currency": "usd",
-    "description": "Serve authentic pours in a proper Irish coffee cup.",
-    "longDescription": "This Irish coffee cup matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
+    "description": "Serve authentic pours in a proper Irish Coffee Cup.",
+    "longDescription": "This Irish Coffee Cup matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
     "specs": [
       {
         "label": "Type",
-        "value": "Irish coffee cup"
+        "value": "Irish Coffee Cup"
       },
       {
         "label": "Material",
@@ -14813,28 +14433,28 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=900&q=80",
-        "alt": "Irish coffee cup — hero view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/sywsqw1439906999.jpg",
+        "alt": "Irish Coffee Cup — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80",
-        "alt": "Irish coffee cup — front view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/ggx0lv1613942306.jpg",
+        "alt": "Irish Coffee Cup — front view"
       },
       {
         "angle": "side",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Espresso%20machine%201.jpg?width=800",
-        "alt": "Irish coffee cup — side view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/vuxwvt1468875418.jpg",
+        "alt": "Irish Coffee Cup — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/sywsqw1439906999.jpg",
-        "alt": "Irish coffee cup — detail view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/spvrtp1472668037.jpg",
+        "alt": "Irish Coffee Cup — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/ggx0lv1613942306.jpg",
-        "alt": "Irish coffee cup — lifestyle view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/90etyl1504884699.jpg",
+        "alt": "Irish Coffee Cup — lifestyle view"
       }
     ],
     "stock": 35,
@@ -14842,7 +14462,7 @@
     "brand": "ClearCraft",
     "tags": [
       "glassware",
-      "Irish coffee cup"
+      "Irish Coffee Cup"
     ],
     "relatedCocktailIds": [
       "13971",
@@ -14852,7 +14472,7 @@
       "12820",
       "14209"
     ],
-    "sourceKey": "Irish coffee cup"
+    "sourceKey": "Irish Coffee Cup"
   },
   {
     "id": "ing-irish-cream",
@@ -15556,27 +15176,27 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/wfqmgm1630406820.jpg",
         "alt": "Jar — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/rrstxv1441246184.jpg",
         "alt": "Jar — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/bsvmlg1515792693.jpg",
         "alt": "Jar — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/wfqmgm1630406820.jpg",
+        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
         "alt": "Jar — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/rrstxv1441246184.jpg",
+        "url": "https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=900&q=80",
         "alt": "Jar — lifestyle view"
       }
     ],
@@ -18456,17 +18076,17 @@
   {
     "id": "glass-margarita-glass",
     "slug": "glass-margarita-glass",
-    "name": "Margarita glass",
+    "name": "Margarita Glass",
     "category": "glassware",
     "subcategory": "Glassware",
-    "priceCents": 3499,
+    "priceCents": 1499,
     "currency": "usd",
-    "description": "Serve authentic pours in a proper Margarita glass.",
-    "longDescription": "This Margarita glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
+    "description": "Serve authentic pours in a proper Margarita Glass.",
+    "longDescription": "This Margarita Glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
     "specs": [
       {
         "label": "Type",
-        "value": "Margarita glass"
+        "value": "Margarita Glass"
       },
       {
         "label": "Material",
@@ -18488,28 +18108,28 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80",
-        "alt": "Margarita glass — hero view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/jwmr1x1504372337.jpg",
+        "alt": "Margarita Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1551538827-9c03746530ea?auto=format&fit=crop&w=900&q=80",
-        "alt": "Margarita glass — front view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/y7s3rh1598719574.jpg",
+        "alt": "Margarita Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/3%20Dry%20Martinis.JPG?width=800",
-        "alt": "Margarita glass — side view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/vu8l7t1582475673.jpg",
+        "alt": "Margarita Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/jwmr1x1504372337.jpg",
-        "alt": "Margarita glass — detail view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/sp8hkp1596017787.jpg",
+        "alt": "Margarita Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/y7s3rh1598719574.jpg",
-        "alt": "Margarita glass — lifestyle view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/nl89tf1518947401.jpg",
+        "alt": "Margarita Glass — lifestyle view"
       }
     ],
     "stock": 35,
@@ -18517,7 +18137,7 @@
     "brand": "ClearCraft",
     "tags": [
       "glassware",
-      "Margarita glass"
+      "Margarita Glass"
     ],
     "relatedCocktailIds": [
       "17209",
@@ -18525,22 +18145,22 @@
       "178316",
       "178330"
     ],
-    "sourceKey": "Margarita glass"
+    "sourceKey": "Margarita Glass"
   },
   {
     "id": "glass-margarita-coupette-glass",
     "slug": "glass-margarita-coupette-glass",
-    "name": "Margarita/Coupette glass",
+    "name": "Margarita/Coupette Glass",
     "category": "glassware",
     "subcategory": "Glassware",
-    "priceCents": 2499,
+    "priceCents": 2699,
     "currency": "usd",
-    "description": "Serve authentic pours in a proper Margarita/Coupette glass.",
-    "longDescription": "This Margarita/Coupette glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
+    "description": "Serve authentic pours in a proper Margarita/Coupette Glass.",
+    "longDescription": "This Margarita/Coupette Glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
     "specs": [
       {
         "label": "Type",
-        "value": "Margarita/Coupette glass"
+        "value": "Margarita/Coupette Glass"
       },
       {
         "label": "Material",
@@ -18562,28 +18182,28 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80",
-        "alt": "Margarita/Coupette glass — hero view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/srpxxp1441209622.jpg",
+        "alt": "Margarita/Coupette Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1551538827-9c03746530ea?auto=format&fit=crop&w=900&q=80",
-        "alt": "Margarita/Coupette glass — front view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/0fbo2t1485620752.jpg",
+        "alt": "Margarita/Coupette Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/3%20Dry%20Martinis.JPG?width=800",
-        "alt": "Margarita/Coupette glass — side view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/jwmr1x1504372337.jpg",
+        "alt": "Margarita/Coupette Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/srpxxp1441209622.jpg",
-        "alt": "Margarita/Coupette glass — detail view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/y7s3rh1598719574.jpg",
+        "alt": "Margarita/Coupette Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/0fbo2t1485620752.jpg",
-        "alt": "Margarita/Coupette glass — lifestyle view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/nl89tf1518947401.jpg",
+        "alt": "Margarita/Coupette Glass — lifestyle view"
       }
     ],
     "stock": 35,
@@ -18591,13 +18211,13 @@
     "brand": "ClearCraft",
     "tags": [
       "glassware",
-      "Margarita/Coupette glass"
+      "Margarita/Coupette Glass"
     ],
     "relatedCocktailIds": [
       "16158",
       "14594"
     ],
-    "sourceKey": "Margarita/Coupette glass"
+    "sourceKey": "Margarita/Coupette Glass"
   },
   {
     "id": "ing-marshmallows",
@@ -18709,27 +18329,27 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/3%20Dry%20Martinis.JPG?width=800",
+        "url": "https://www.thecocktaildb.com/images/media/drink/3xgldt1513707271.jpg",
         "alt": "Martini Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/l3cd7f1504818306.jpg",
         "alt": "Martini Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1551538827-9c03746530ea?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/yzva7x1504820300.jpg",
         "alt": "Martini Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/3xgldt1513707271.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/x8lhp41513703167.jpg",
         "alt": "Martini Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/l3cd7f1504818306.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/trbplb1606855233.jpg",
         "alt": "Martini Glass — lifestyle view"
       }
     ],
@@ -18751,17 +18371,17 @@
   {
     "id": "glass-mason-jar",
     "slug": "glass-mason-jar",
-    "name": "Mason jar",
+    "name": "Mason Jar",
     "category": "glassware",
     "subcategory": "Glassware",
     "priceCents": 2999,
     "currency": "usd",
-    "description": "Serve authentic pours in a proper Mason jar.",
-    "longDescription": "This Mason jar matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
+    "description": "Serve authentic pours in a proper Mason Jar.",
+    "longDescription": "This Mason Jar matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
     "specs": [
       {
         "label": "Type",
-        "value": "Mason jar"
+        "value": "Mason Jar"
       },
       {
         "label": "Material",
@@ -18783,28 +18403,28 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
-        "alt": "Mason jar — hero view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/rrstxv1441246184.jpg",
+        "alt": "Mason Jar — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=900&q=80",
-        "alt": "Mason jar — front view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/bsvmlg1515792693.jpg",
+        "alt": "Mason Jar — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80",
-        "alt": "Mason jar — side view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/wfqmgm1630406820.jpg",
+        "alt": "Mason Jar — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/rrstxv1441246184.jpg",
-        "alt": "Mason jar — detail view"
+        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
+        "alt": "Mason Jar — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/bsvmlg1515792693.jpg",
-        "alt": "Mason jar — lifestyle view"
+        "url": "https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=900&q=80",
+        "alt": "Mason Jar — lifestyle view"
       }
     ],
     "stock": 35,
@@ -18812,13 +18432,13 @@
     "brand": "ClearCraft",
     "tags": [
       "glassware",
-      "Mason jar"
+      "Mason Jar"
     ],
     "relatedCocktailIds": [
       "15813",
       "17266"
     ],
-    "sourceKey": "Mason jar"
+    "sourceKey": "Mason Jar"
   },
   {
     "id": "ing-melon-liqueur",
@@ -19467,27 +19087,27 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/3%20Dry%20Martinis.JPG?width=800",
+        "url": "https://www.thecocktaildb.com/images/media/drink/x03td31521761009.jpg",
         "alt": "Nick and Nora Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/qrryvq1478820428.jpg",
         "alt": "Nick and Nora Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1551538827-9c03746530ea?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/b522ek1521761610.jpg",
         "alt": "Nick and Nora Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/x03td31521761009.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/trbplb1606855233.jpg",
         "alt": "Nick and Nora Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/qrryvq1478820428.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/t0aja61504348715.jpg",
         "alt": "Nick and Nora Glass — lifestyle view"
       }
     ],
@@ -19592,17 +19212,17 @@
   {
     "id": "glass-old-fashioned-glass",
     "slug": "glass-old-fashioned-glass",
-    "name": "Old-fashioned glass",
+    "name": "Old-Fashioned Glass",
     "category": "glassware",
     "subcategory": "Glassware",
-    "priceCents": 2999,
+    "priceCents": 3299,
     "currency": "usd",
-    "description": "Serve authentic pours in a proper Old-fashioned glass.",
-    "longDescription": "This Old-fashioned glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
+    "description": "Serve authentic pours in a proper Old-Fashioned Glass.",
+    "longDescription": "This Old-Fashioned Glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
     "specs": [
       {
         "label": "Type",
-        "value": "Old-fashioned glass"
+        "value": "Old-Fashioned Glass"
       },
       {
         "label": "Material",
@@ -19618,34 +19238,34 @@
       },
       {
         "label": "Used in",
-        "value": "36 recipes"
+        "value": "39 recipes"
       }
     ],
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=900&q=80",
-        "alt": "Old-fashioned glass — hero view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/twtbh51630406392.jpg",
+        "alt": "Old-Fashioned Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=900&q=80",
-        "alt": "Old-fashioned glass — front view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/jgvn7p1582484435.jpg",
+        "alt": "Old-Fashioned Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1575023782549-fea7c3d5b0d4?auto=format&fit=crop&w=900&q=80",
-        "alt": "Old-fashioned glass — side view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/zaqa381504368758.jpg",
+        "alt": "Old-Fashioned Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/twtbh51630406392.jpg",
-        "alt": "Old-fashioned glass — detail view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/e5zgao1582582378.jpg",
+        "alt": "Old-Fashioned Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/jgvn7p1582484435.jpg",
-        "alt": "Old-fashioned glass — lifestyle view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/qgdu971561574065.jpg",
+        "alt": "Old-Fashioned Glass — lifestyle view"
       }
     ],
     "stock": 35,
@@ -19653,9 +19273,10 @@
     "brand": "ClearCraft",
     "tags": [
       "glassware",
-      "Old-fashioned glass"
+      "Old-Fashioned Glass"
     ],
     "relatedCocktailIds": [
+      "17210",
       "11202",
       "17198",
       "11423",
@@ -19664,85 +19285,11 @@
       "12101",
       "12127",
       "11004",
-      "17829",
-      "12528",
-      "11424",
-      "17836"
-    ],
-    "sourceKey": "Old-fashioned glass"
-  },
-  {
-    "id": "glass-old-fashioned-glass",
-    "slug": "glass-old-fashioned-glass",
-    "name": "Old-Fashioned glass",
-    "category": "glassware",
-    "subcategory": "Glassware",
-    "priceCents": 3199,
-    "currency": "usd",
-    "description": "Serve authentic pours in a proper Old-Fashioned glass.",
-    "longDescription": "This Old-Fashioned glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
-    "specs": [
-      {
-        "label": "Type",
-        "value": "Old-Fashioned glass"
-      },
-      {
-        "label": "Material",
-        "value": "Crystal-clear glass"
-      },
-      {
-        "label": "Set",
-        "value": "Sold individually"
-      },
-      {
-        "label": "Care",
-        "value": "Dishwasher safe (top rack)"
-      },
-      {
-        "label": "Used in",
-        "value": "3 recipes"
-      }
-    ],
-    "images": [
-      {
-        "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=900&q=80",
-        "alt": "Old-Fashioned glass — hero view"
-      },
-      {
-        "angle": "front",
-        "url": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=900&q=80",
-        "alt": "Old-Fashioned glass — front view"
-      },
-      {
-        "angle": "side",
-        "url": "https://images.unsplash.com/photo-1575023782549-fea7c3d5b0d4?auto=format&fit=crop&w=900&q=80",
-        "alt": "Old-Fashioned glass — side view"
-      },
-      {
-        "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/twtbh51630406392.jpg",
-        "alt": "Old-Fashioned glass — detail view"
-      },
-      {
-        "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/jgvn7p1582484435.jpg",
-        "alt": "Old-Fashioned glass — lifestyle view"
-      }
-    ],
-    "stock": 35,
-    "unit": "1 glass",
-    "brand": "ClearCraft",
-    "tags": [
-      "glassware",
-      "Old-Fashioned glass"
-    ],
-    "relatedCocktailIds": [
-      "17210",
       "17215",
-      "17217"
+      "17217",
+      "17829"
     ],
-    "sourceKey": "Old-Fashioned glass"
+    "sourceKey": "Old-Fashioned Glass"
   },
   {
     "id": "ing-olive",
@@ -22531,17 +22078,17 @@
   {
     "id": "glass-pint-glass",
     "slug": "glass-pint-glass",
-    "name": "Pint glass",
+    "name": "Pint Glass",
     "category": "glassware",
     "subcategory": "Glassware",
-    "priceCents": 2399,
+    "priceCents": 2599,
     "currency": "usd",
-    "description": "Serve authentic pours in a proper Pint glass.",
-    "longDescription": "This Pint glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
+    "description": "Serve authentic pours in a proper Pint Glass.",
+    "longDescription": "This Pint Glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
     "specs": [
       {
         "label": "Type",
-        "value": "Pint glass"
+        "value": "Pint Glass"
       },
       {
         "label": "Material",
@@ -22563,28 +22110,28 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=900&q=80",
-        "alt": "Pint glass — hero view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/sxrrqq1454512852.jpg",
+        "alt": "Pint Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
-        "alt": "Pint glass — front view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/qywpvt1454512546.jpg",
+        "alt": "Pint Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=900&q=80",
-        "alt": "Pint glass — side view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/u736bd1605907086.jpg",
+        "alt": "Pint Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/sxrrqq1454512852.jpg",
-        "alt": "Pint glass — detail view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/xxyywq1454511117.jpg",
+        "alt": "Pint Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/qywpvt1454512546.jpg",
-        "alt": "Pint glass — lifestyle view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/rvwrvv1468877323.jpg",
+        "alt": "Pint Glass — lifestyle view"
       }
     ],
     "stock": 35,
@@ -22592,14 +22139,14 @@
     "brand": "ClearCraft",
     "tags": [
       "glassware",
-      "Pint glass"
+      "Pint Glass"
     ],
     "relatedCocktailIds": [
       "13128",
       "14378",
       "178343"
     ],
-    "sourceKey": "Pint glass"
+    "sourceKey": "Pint Glass"
   },
   {
     "id": "ing-pisang-ambon",
@@ -22787,27 +22334,27 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/quxsvt1468875505.jpg",
         "alt": "Pitcher — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/xrvxpp1441249280.jpg",
         "alt": "Pitcher — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/uv96zr1504793256.jpg",
         "alt": "Pitcher — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/quxsvt1468875505.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/uqqvsp1468924228.jpg",
         "alt": "Pitcher — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/xrvxpp1441249280.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/hnuod91587851576.jpg",
         "alt": "Pitcher — lifestyle view"
       }
     ],
@@ -22984,17 +22531,17 @@
   {
     "id": "glass-pousse-cafe-glass",
     "slug": "glass-pousse-cafe-glass",
-    "name": "Pousse cafe glass",
+    "name": "Pousse Cafe Glass",
     "category": "glassware",
     "subcategory": "Glassware",
-    "priceCents": 3399,
+    "priceCents": 2899,
     "currency": "usd",
-    "description": "Serve authentic pours in a proper Pousse cafe glass.",
-    "longDescription": "This Pousse cafe glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
+    "description": "Serve authentic pours in a proper Pousse Cafe Glass.",
+    "longDescription": "This Pousse Cafe Glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
     "specs": [
       {
         "label": "Type",
-        "value": "Pousse cafe glass"
+        "value": "Pousse Cafe Glass"
       },
       {
         "label": "Material",
@@ -23016,28 +22563,28 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/3%20Dry%20Martinis.JPG?width=800",
-        "alt": "Pousse cafe glass — hero view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/wxvupx1441553911.jpg",
+        "alt": "Pousse Cafe Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80",
-        "alt": "Pousse cafe glass — front view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/trbplb1606855233.jpg",
+        "alt": "Pousse Cafe Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1551538827-9c03746530ea?auto=format&fit=crop&w=900&q=80",
-        "alt": "Pousse cafe glass — side view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/t0aja61504348715.jpg",
+        "alt": "Pousse Cafe Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/wxvupx1441553911.jpg",
-        "alt": "Pousse cafe glass — detail view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/kpsajh1504368362.jpg",
+        "alt": "Pousse Cafe Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/trbplb1606855233.jpg",
-        "alt": "Pousse cafe glass — lifestyle view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/n0sx531504372951.jpg",
+        "alt": "Pousse Cafe Glass — lifestyle view"
       }
     ],
     "stock": 35,
@@ -23045,12 +22592,12 @@
     "brand": "ClearCraft",
     "tags": [
       "glassware",
-      "Pousse cafe glass"
+      "Pousse Cafe Glass"
     ],
     "relatedCocktailIds": [
       "11961"
     ],
-    "sourceKey": "Pousse cafe glass"
+    "sourceKey": "Pousse Cafe Glass"
   },
   {
     "id": "ing-powdered-sugar",
@@ -23220,83 +22767,6 @@
   {
     "id": "glass-punch-bowl",
     "slug": "glass-punch-bowl",
-    "name": "Punch bowl",
-    "category": "glassware",
-    "subcategory": "Glassware",
-    "priceCents": 1799,
-    "currency": "usd",
-    "description": "Serve authentic pours in a proper Punch bowl.",
-    "longDescription": "This Punch bowl matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
-    "specs": [
-      {
-        "label": "Type",
-        "value": "Punch bowl"
-      },
-      {
-        "label": "Material",
-        "value": "Crystal-clear glass"
-      },
-      {
-        "label": "Set",
-        "value": "Sold individually"
-      },
-      {
-        "label": "Care",
-        "value": "Dishwasher safe (top rack)"
-      },
-      {
-        "label": "Used in",
-        "value": "7 recipes"
-      }
-    ],
-    "images": [
-      {
-        "angle": "hero",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Punch%20Bowl%20MET%20180787.jpg?width=800",
-        "alt": "Punch bowl — hero view"
-      },
-      {
-        "angle": "front",
-        "url": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80",
-        "alt": "Punch bowl — front view"
-      },
-      {
-        "angle": "side",
-        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
-        "alt": "Punch bowl — side view"
-      },
-      {
-        "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/wyrsxu1441554538.jpg",
-        "alt": "Punch bowl — detail view"
-      },
-      {
-        "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/rz5aun1504389701.jpg",
-        "alt": "Punch bowl — lifestyle view"
-      }
-    ],
-    "stock": 35,
-    "unit": "1 glass",
-    "brand": "ClearCraft",
-    "tags": [
-      "glassware",
-      "Punch bowl"
-    ],
-    "relatedCocktailIds": [
-      "14978",
-      "17120",
-      "12910",
-      "178313",
-      "12954",
-      "16041",
-      "16992"
-    ],
-    "sourceKey": "Punch bowl"
-  },
-  {
-    "id": "glass-punch-bowl",
-    "slug": "glass-punch-bowl",
     "name": "Punch Bowl",
     "category": "glassware",
     "subcategory": "Glassware",
@@ -23323,33 +22793,33 @@
       },
       {
         "label": "Used in",
-        "value": "1 recipes"
+        "value": "8 recipes"
       }
     ],
     "images": [
       {
         "angle": "hero",
-        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Punch%20Bowl%20MET%20180787.jpg?width=800",
+        "url": "https://www.thecocktaildb.com/images/media/drink/wyrsxu1441554538.jpg",
         "alt": "Punch Bowl — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/rz5aun1504389701.jpg",
         "alt": "Punch Bowl — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/mzgaqu1504389248.jpg",
         "alt": "Punch Bowl — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/wyrsxu1441554538.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/wpspsy1468875747.jpg",
         "alt": "Punch Bowl — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/rz5aun1504389701.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/7hcgyj1571687671.jpg",
         "alt": "Punch Bowl — lifestyle view"
       }
     ],
@@ -23361,7 +22831,14 @@
       "Punch Bowl"
     ],
     "relatedCocktailIds": [
-      "12890"
+      "14978",
+      "17120",
+      "12890",
+      "12910",
+      "178313",
+      "12954",
+      "16041",
+      "16992"
     ],
     "sourceKey": "Punch Bowl"
   },
@@ -25286,88 +24763,6 @@
   {
     "id": "glass-shot-glass",
     "slug": "glass-shot-glass",
-    "name": "Shot glass",
-    "category": "glassware",
-    "subcategory": "Glassware",
-    "priceCents": 3399,
-    "currency": "usd",
-    "description": "Serve authentic pours in a proper Shot glass.",
-    "longDescription": "This Shot glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
-    "specs": [
-      {
-        "label": "Type",
-        "value": "Shot glass"
-      },
-      {
-        "label": "Material",
-        "value": "Crystal-clear glass"
-      },
-      {
-        "label": "Set",
-        "value": "Sold individually"
-      },
-      {
-        "label": "Care",
-        "value": "Dishwasher safe (top rack)"
-      },
-      {
-        "label": "Used in",
-        "value": "26 recipes"
-      }
-    ],
-    "images": [
-      {
-        "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80",
-        "alt": "Shot glass — hero view"
-      },
-      {
-        "angle": "front",
-        "url": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80",
-        "alt": "Shot glass — front view"
-      },
-      {
-        "angle": "side",
-        "url": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=900&q=80",
-        "alt": "Shot glass — side view"
-      },
-      {
-        "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/5a3vg61504372070.jpg",
-        "alt": "Shot glass — detail view"
-      },
-      {
-        "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/yyrwty1468877498.jpg",
-        "alt": "Shot glass — lifestyle view"
-      }
-    ],
-    "stock": 35,
-    "unit": "1 glass",
-    "brand": "ClearCraft",
-    "tags": [
-      "glassware",
-      "Shot glass"
-    ],
-    "relatedCocktailIds": [
-      "15853",
-      "17060",
-      "15288",
-      "14229",
-      "13501",
-      "14610",
-      "13222",
-      "13395",
-      "14730",
-      "14538",
-      "13194",
-      "14466"
-    ],
-    "sourceKey": "Shot glass"
-  },
-  {
-    "id": "glass-shot-glass",
-    "slug": "glass-shot-glass",
     "name": "Shot Glass",
     "category": "glassware",
     "subcategory": "Glassware",
@@ -25394,33 +24789,33 @@
       },
       {
         "label": "Used in",
-        "value": "1 recipes"
+        "value": "27 recipes"
       }
     ],
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/5a3vg61504372070.jpg",
         "alt": "Shot Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/yyrwty1468877498.jpg",
         "alt": "Shot Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/rtpxqw1468877562.jpg",
         "alt": "Shot Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/5a3vg61504372070.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/xxsxqy1472668106.jpg",
         "alt": "Shot Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/yyrwty1468877498.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/tqpvqp1472668328.jpg",
         "alt": "Shot Glass — lifestyle view"
       }
     ],
@@ -25432,7 +24827,18 @@
       "Shot Glass"
     ],
     "relatedCocktailIds": [
-      "13328"
+      "15853",
+      "17060",
+      "15288",
+      "14229",
+      "13501",
+      "14610",
+      "13222",
+      "13395",
+      "14730",
+      "14538",
+      "13328",
+      "13194"
     ],
     "sourceKey": "Shot Glass"
   },
@@ -26121,7 +25527,7 @@
       },
       {
         "angle": "packaging",
-        "url": "https://www.thecocktaildb.com/images/media/drink/apex461643588115.jpg",
+        "url": "/cocktails/vodka-slime.webp",
         "alt": "Sprite — packaging view"
       }
     ],
@@ -29042,27 +28448,27 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/lnjoc81619696191.jpg",
         "alt": "Whiskey Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/twtbh51630406392.jpg",
         "alt": "Whiskey Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1575023782549-fea7c3d5b0d4?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/jgvn7p1582484435.jpg",
         "alt": "Whiskey Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/lnjoc81619696191.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/zaqa381504368758.jpg",
         "alt": "Whiskey Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/twtbh51630406392.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/e5zgao1582582378.jpg",
         "alt": "Whiskey Glass — lifestyle view"
       }
     ],
@@ -29081,17 +28487,17 @@
   {
     "id": "glass-whiskey-sour-glass",
     "slug": "glass-whiskey-sour-glass",
-    "name": "Whiskey sour glass",
+    "name": "Whiskey Sour Glass",
     "category": "glassware",
     "subcategory": "Glassware",
-    "priceCents": 1499,
+    "priceCents": 3199,
     "currency": "usd",
-    "description": "Serve authentic pours in a proper Whiskey sour glass.",
-    "longDescription": "This Whiskey sour glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
+    "description": "Serve authentic pours in a proper Whiskey Sour Glass.",
+    "longDescription": "This Whiskey Sour Glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
     "specs": [
       {
         "label": "Type",
-        "value": "Whiskey sour glass"
+        "value": "Whiskey Sour Glass"
       },
       {
         "label": "Material",
@@ -29113,28 +28519,28 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=900&q=80",
-        "alt": "Whiskey sour glass — hero view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/kxlgbi1504366100.jpg",
+        "alt": "Whiskey Sour Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=900&q=80",
-        "alt": "Whiskey sour glass — front view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/pwgtpa1504366376.jpg",
+        "alt": "Whiskey Sour Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1575023782549-fea7c3d5b0d4?auto=format&fit=crop&w=900&q=80",
-        "alt": "Whiskey sour glass — side view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/3qpv121504366699.jpg",
+        "alt": "Whiskey Sour Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/kxlgbi1504366100.jpg",
-        "alt": "Whiskey sour glass — detail view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/acuvjz1582482022.jpg",
+        "alt": "Whiskey Sour Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/pwgtpa1504366376.jpg",
-        "alt": "Whiskey sour glass — lifestyle view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/noxp7e1606769224.jpg",
+        "alt": "Whiskey Sour Glass — lifestyle view"
       }
     ],
     "stock": 35,
@@ -29142,7 +28548,7 @@
     "brand": "ClearCraft",
     "tags": [
       "glassware",
-      "Whiskey sour glass"
+      "Whiskey Sour Glass"
     ],
     "relatedCocktailIds": [
       "11129",
@@ -29158,7 +28564,7 @@
       "12308",
       "12370"
     ],
-    "sourceKey": "Whiskey sour glass"
+    "sourceKey": "Whiskey Sour Glass"
   },
   {
     "id": "ing-whisky",
@@ -29543,17 +28949,17 @@
   {
     "id": "glass-white-wine-glass",
     "slug": "glass-white-wine-glass",
-    "name": "White wine glass",
+    "name": "White Wine Glass",
     "category": "glassware",
     "subcategory": "Glassware",
-    "priceCents": 1899,
+    "priceCents": 1599,
     "currency": "usd",
-    "description": "Serve authentic pours in a proper White wine glass.",
-    "longDescription": "This White wine glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
+    "description": "Serve authentic pours in a proper White Wine Glass.",
+    "longDescription": "This White Wine Glass matches the glassware called for across Cocktale recipes. Clear walls, balanced stem or base, and dishwasher-safe construction for weeknight entertaining.",
     "specs": [
       {
         "label": "Type",
-        "value": "White wine glass"
+        "value": "White Wine Glass"
       },
       {
         "label": "Material",
@@ -29575,28 +28981,28 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80",
-        "alt": "White wine glass — hero view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/yqvvqs1475667388.jpg",
+        "alt": "White Wine Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1551538827-9c03746530ea?auto=format&fit=crop&w=900&q=80",
-        "alt": "White wine glass — front view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/qyr51e1504888618.jpg",
+        "alt": "White Wine Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80",
-        "alt": "White wine glass — side view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/xwxyux1441254243.jpg",
+        "alt": "White Wine Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/yqvvqs1475667388.jpg",
-        "alt": "White wine glass — detail view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/apneom1504370294.jpg",
+        "alt": "White Wine Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/qyr51e1504888618.jpg",
-        "alt": "White wine glass — lifestyle view"
+        "url": "https://www.thecocktaildb.com/images/media/drink/t0iugg1509556712.jpg",
+        "alt": "White Wine Glass — lifestyle view"
       }
     ],
     "stock": 35,
@@ -29604,14 +29010,14 @@
     "brand": "ClearCraft",
     "tags": [
       "glassware",
-      "White wine glass"
+      "White Wine Glass"
     ],
     "relatedCocktailIds": [
       "15346",
       "11936",
       "16967"
     ],
-    "sourceKey": "White wine glass"
+    "sourceKey": "White Wine Glass"
   },
   {
     "id": "ing-wild-turkey",
@@ -29803,27 +29209,27 @@
     "images": [
       {
         "angle": "hero",
-        "url": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/apneom1504370294.jpg",
         "alt": "Wine Glass — hero view"
       },
       {
         "angle": "front",
-        "url": "https://images.unsplash.com/photo-1551538827-9c03746530ea?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/yswuwp1469090992.jpg",
         "alt": "Wine Glass — front view"
       },
       {
         "angle": "side",
-        "url": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80",
+        "url": "https://www.thecocktaildb.com/images/media/drink/0108c41576797064.jpg",
         "alt": "Wine Glass — side view"
       },
       {
         "angle": "detail",
-        "url": "https://www.thecocktaildb.com/images/media/drink/apneom1504370294.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/ypl13s1504890158.jpg",
         "alt": "Wine Glass — detail view"
       },
       {
         "angle": "lifestyle",
-        "url": "https://www.thecocktaildb.com/images/media/drink/yswuwp1469090992.jpg",
+        "url": "https://www.thecocktaildb.com/images/media/drink/yqvvqs1475667388.jpg",
         "alt": "Wine Glass — lifestyle view"
       }
     ],
