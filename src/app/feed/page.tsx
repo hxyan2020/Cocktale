@@ -295,7 +295,7 @@ export default function FeedPage() {
     : "";
   const signalSource = preference
     ? [
-        `Collected signals: ${weatherSignal ? `${weatherSignal} · ` : ""}${preference.mood} mood · ${preference.flavor} flavor · ${preference.complexity} recipe · ${data.history.length} history events.`,
+        `Collected signals: ${weatherSignal ? `${weatherSignal} · ` : ""}${preference.mood} mood · ${preference.flavor} flavor · ${preference.complexity} recipe · ${data.history.length} cocktails.`,
         hasSharedLocation
           ? "Analysis process: weather affinity → mood match → flavor profile → recipe complexity → browsing history → popularity balance."
           : "Analysis process: mood match → flavor profile → recipe complexity → browsing history → popularity balance.",
