@@ -10,10 +10,30 @@ import { useI18n } from "@/components/LanguageProvider";
 import { CocktailDetail } from "@/components/CocktailDetail";
 import { TriedModal } from "@/components/TriedModal";
 import { useTranslatedTexts } from "@/components/useTranslatedContent";
+import { useCocktailImage } from "@/components/CocktailImageProvider";
 import { getCocktail } from "@/lib/cocktails";
 import type { Cocktail, JournalEntry } from "@/lib/types";
 
 type Tab = "collected" | "tried";
+
+function CocktailThumb({
+  cocktail,
+  className = "object-cover",
+}: {
+  cocktail: Cocktail;
+  className?: string;
+}) {
+  const imageSrc = useCocktailImage(cocktail);
+  return (
+    <Image
+      src={imageSrc}
+      alt={cocktail.name}
+      fill
+      className={className}
+      sizes="320px"
+    />
+  );
+}
 
 function CocktailIdentity({
   cocktail,
@@ -130,13 +150,7 @@ export default function JourneyPageClient() {
                   className="overflow-hidden rounded-[1.25rem] bg-[var(--surface)] text-left ring-1 ring-[var(--line)] transition hover:-translate-y-0.5 hover:shadow-lg"
                 >
                   <div className="relative h-36 w-full sm:h-44">
-                    <Image
-                      src={cocktail.image || "/cocktail-fallback.svg"}
-                      alt={cocktail.name}
-                      fill
-                      className="object-cover"
-                      sizes="320px"
-                    />
+                    <CocktailThumb cocktail={cocktail} />
                   </div>
                   <div className="p-3 sm:p-4">
                     <CocktailIdentity cocktail={cocktail} showOrigin />
@@ -160,13 +174,7 @@ export default function JourneyPageClient() {
                 className="flex gap-3 rounded-[1.25rem] bg-[var(--surface)] p-3 ring-1 ring-[var(--line)] sm:gap-4 sm:p-4"
               >
                 <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl sm:h-20 sm:w-20">
-                  <Image
-                    src={cocktail.image || "/cocktail-fallback.svg"}
-                    alt={cocktail.name}
-                    fill
-                    className="object-cover"
-                    sizes="80px"
-                  />
+                  <CocktailThumb cocktail={cocktail} />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-start justify-between gap-3">

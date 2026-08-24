@@ -9,6 +9,7 @@ import { GeoDefaultsBootstrap } from "@/components/GeoDefaultsBootstrap";
 import { HxViewershipBeacon } from "@/components/HxViewershipBeacon";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { MeasureUnitProvider } from "@/components/MeasureUnitProvider";
+import { CocktailImageProvider } from "@/components/CocktailImageProvider";
 import { rootMetadata, websiteJsonLd } from "@/lib/seo";
 import "./globals.css";
 
@@ -50,6 +51,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
         />
         <LanguageProvider>
+          <CocktailImageProvider>
           <MeasureUnitProvider>
             <CurrencyProvider>
               <GeoDefaultsBootstrap />
@@ -63,6 +65,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               </AuthProvider>
             </CurrencyProvider>
           </MeasureUnitProvider>
+          </CocktailImageProvider>
         </LanguageProvider>
       </body>
     </html>

@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { mergeCocktailGallery } from "@/lib/cocktail-gallery";
-import { getCocktail } from "@/lib/cocktails";
+import { getResolvedCocktail } from "@/lib/cocktails-server";
 import { fetchOpenverseCocktailPhotos } from "@/lib/openverse-cocktail-photos";
 import { fetchWikiCocktailPhotos } from "@/lib/wiki-cocktail-photos";
 
 export async function GET(req: NextRequest) {
   const id = req.nextUrl.searchParams.get("id")?.trim() || "";
-  const cocktail = getCocktail(id);
+  const cocktail = getResolvedCocktail(id);
   if (!cocktail) {
     return NextResponse.json({ photos: [] });
   }

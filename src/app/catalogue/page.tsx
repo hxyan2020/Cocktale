@@ -9,6 +9,7 @@ import { useI18n } from "@/components/LanguageProvider";
 import { CocktailDetail } from "@/components/CocktailDetail";
 import { TriedModal } from "@/components/TriedModal";
 import { useLocalizedCocktail, useTranslatedTexts } from "@/components/useTranslatedContent";
+import { useCocktailImage } from "@/components/CocktailImageProvider";
 import { cocktailCategories, searchCocktails } from "@/lib/cocktails";
 import {
   readCachedCoords,
@@ -60,6 +61,7 @@ function CatalogueCard({
     [cocktail],
   );
   const localized = useLocalizedCocktail(withFlags, visible);
+  const imageSrc = useCocktailImage(cocktail);
 
   useEffect(() => {
     const node = cardRef.current;
@@ -86,7 +88,7 @@ function CatalogueCard({
     >
       <div className="relative h-28 w-full bg-[#ebe8e0] min-[380px]:h-32 sm:h-40">
         <Image
-          src={cocktail.image || "/cocktail-fallback.svg"}
+          src={imageSrc}
           alt={localized.name}
           fill
           className="object-contain"

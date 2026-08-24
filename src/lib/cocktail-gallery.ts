@@ -1,4 +1,5 @@
 import { getAllCocktails } from "@/lib/cocktails";
+import type { CocktailImageOverrides } from "@/lib/cocktail-image-types";
 import type { Cocktail } from "@/lib/types";
 
 export type GalleryImage = {
@@ -29,7 +30,11 @@ function isSameDrinkName(a: string, b: string) {
 /**
  * Photos of this cocktail only — never ingredient pack shots or unrelated drinks.
  */
-export function getCocktailGallery(cocktail: Cocktail, limit = 6): GalleryImage[] {
+export function getCocktailGallery(
+  cocktail: Cocktail,
+  limit = 6,
+  overrides: CocktailImageOverrides = {},
+): GalleryImage[] {
   const out: GalleryImage[] = [];
   const seen = new Set<string>();
 
@@ -48,9 +53,22 @@ export function getCocktailGallery(cocktail: Cocktail, limit = 6): GalleryImage[
     });
   }
 
+  const curated = overrides[cocktail.id]?.gallery ?? [];
+  curated.forEach((url, index) => {
+    push({
+      id: `${cocktail.id}-admin-${index}`,
+      url,
+      alt: `${cocktail.name} — admin photo ${index + 1}`,
+      label: `Admin ${index + 1}`,
+    });
+  });
+
   for (const other of getAllCocktails()) {
     if (other.id === cocktail.id || !other.image) continue;
-    if (!isSameDrinkName(other.name, cocktail.name) && !isSameDrinkName(other.alternateName || "", cocktail.name)) {
+    if (
+      !isSameDrinkName(other.name, cocktail.name) &&
+      !isSameDrinkName(other.alternateName || "", cocktail.name)
+    ) {
       continue;
     }
     push({

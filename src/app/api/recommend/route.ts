@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAllCocktails } from "@/lib/cocktails";
+import { getAllResolvedCocktails } from "@/lib/cocktails-server";
 import { rankCocktails } from "@/lib/recommend";
 import { fetchWeather } from "@/lib/weather";
 import type {
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
         }
       : await fetchWeather(body.lat, body.lon);
 
-  const all = getAllCocktails();
+  const all = getAllResolvedCocktails();
   const limit = Math.min(Math.max(body.limit ?? 30, 1), all.length);
   const cursor = Math.max(0, body.cursor ?? 0);
 
@@ -62,6 +62,6 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
-  const all = getAllCocktails();
+  const all = getAllResolvedCocktails();
   return NextResponse.json({ count: all.length, sample: all.slice(0, 3) });
 }

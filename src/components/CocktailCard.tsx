@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Bookmark, Check } from "lucide-react";
 import type { Cocktail } from "@/lib/types";
 import { useI18n } from "@/components/LanguageProvider";
+import { useCocktailImage } from "@/components/CocktailImageProvider";
 import { useLocalizedCocktail } from "@/components/useTranslatedContent";
 
 type Props = {
@@ -23,6 +24,7 @@ export function CocktailCard({
 }: Props) {
   const { t } = useI18n();
   const localized = useLocalizedCocktail(cocktail);
+  const imageSrc = useCocktailImage(cocktail);
 
   return (
     <article className="relative flex h-full w-full flex-col overflow-hidden rounded-[1.5rem] bg-[var(--surface)] shadow-[0_18px_45px_rgba(28,22,16,0.18)] ring-1 ring-[var(--line)] sm:rounded-[1.75rem] sm:shadow-[0_24px_60px_rgba(28,22,16,0.18)]">
@@ -33,7 +35,7 @@ export function CocktailCard({
         aria-label={`${t("detail.theTale")}: ${localized.name}`}
       >
         <Image
-          src={cocktail.image || "/cocktail-fallback.svg"}
+          src={imageSrc}
           alt={localized.name}
           fill
           priority

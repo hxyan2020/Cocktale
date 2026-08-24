@@ -6,6 +6,7 @@ import Link from "next/link";
 import { X, Bookmark, Check, GlassWater, Wrench, ShoppingBag, ChevronDown } from "lucide-react";
 import type { Cocktail } from "@/lib/types";
 import { useI18n } from "@/components/LanguageProvider";
+import { useCocktailImage, useCocktailImages } from "@/components/CocktailImageProvider";
 import { useShop } from "@/components/useShop";
 import { useCart } from "@/components/CartProvider";
 import { useCurrency } from "@/components/CurrencyProvider";
@@ -55,11 +56,20 @@ export function CocktailDetail({
   const [galleryLoaded, setGalleryLoaded] = useState(false);
   const [failedGalleryIds, setFailedGalleryIds] = useState<Set<string>>(new Set());
   const localized = useLocalizedCocktail(cocktail);
+  const imageSrc = useCocktailImage(cocktail);
+  const { overrides } = useCocktailImages();
   useBodyScrollLock();
 
   const equipment = useMemo(() => inferEquipment(cocktail), [cocktail]);
   const recipeSteps = useMemo(() => expandMakeSteps(localized), [localized]);
-  const localGallery = useMemo(() => getCocktailGallery(cocktail, 6), [cocktail]);
+  const displayCocktail = useMemo(
+    () => ({ ...cocktail, image: imageSrc }),
+    [cocktail, imageSrc],
+  );
+  const localGallery = useMemo(
+    () => getCocktailGallery(displayCocktail, 6, overrides),
+    [displayCocktail, overrides],
+  );
   const gallery = useMemo(
     () =>
       mergeCocktailGallery(extraGallery, localGallery, 6).filter(
@@ -142,7 +152,7 @@ export function CocktailDetail({
         <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain">
         <div className="relative h-[min(38vh,15.5rem)] w-full sm:aspect-[4/3] sm:h-auto sm:min-h-80">
           <Image
-            src={cocktail.image || "/cocktail-fallback.svg"}
+            src={imageSrc}
             alt={localized.name}
             fill
             className="object-cover"

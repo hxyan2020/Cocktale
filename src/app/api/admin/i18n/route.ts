@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { requireAdminApi } from "@/lib/admin-auth";
 import { buildTranslationRows } from "@/lib/i18n-catalog";
 import { LOCALES } from "@/i18n/locales";
 import { loadOverrides, mergeLocaleStrings, parseLocale } from "@/lib/i18n-overrides";
@@ -12,6 +13,8 @@ const putSchema = z.object({
 });
 
 export async function GET() {
+  const { error } = await requireAdminApi();
+  if (error) return error;
   const overrides = loadOverrides();
   return NextResponse.json(
     {
@@ -24,6 +27,8 @@ export async function GET() {
 }
 
 export async function PUT(req: Request) {
+  const { error } = await requireAdminApi();
+  if (error) return error;
   const json = await req.json();
   const parsed = putSchema.safeParse(json);
   if (!parsed.success) {
