@@ -9,7 +9,7 @@ import { useI18n } from "@/components/LanguageProvider";
 import { useCocktailImage, useCocktailImages } from "@/components/CocktailImageProvider";
 import { useShop } from "@/components/useShop";
 import { useCart } from "@/components/CartProvider";
-import { useCurrency } from "@/components/CurrencyProvider";
+import { useProductPrices } from "@/components/ProductPriceProvider";
 import { expandMakeSteps, inferEquipment, preparationChecklistSteps } from "@/lib/make-guide";
 import {
   productImageClass,
@@ -48,7 +48,7 @@ export function CocktailDetail({
   const { t } = useI18n();
   const shop = useShop();
   const { addItem } = useCart();
-  const { format: formatMoney } = useCurrency();
+  const { formatProduct } = useProductPrices();
   const { unit } = useMeasureUnit();
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [shopOpen, setShopOpen] = useState(false);
@@ -405,7 +405,7 @@ export function CocktailDetail({
                               <LocalizedProductLabel product={p} />
                             </p>
                             <p className="text-xs text-[var(--ink-muted)]">
-                              {formatMoney(p.priceCents)}
+                              {formatProduct(p)}
                             </p>
                           </Link>
                           <button

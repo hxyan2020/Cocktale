@@ -10,6 +10,7 @@
     "audit:images": "tsx scripts/audit-cocktail-images.ts",
     "audit:recipes": "tsx scripts/audit-recipe-checklists.ts",
     "refresh:intros": "tsx scripts/refresh-cocktail-intros.ts",
+    "refresh:prices": "tsx scripts/refresh-product-prices.ts",
     "seed": "tsx scripts/seed-cocktails.ts",
     "seed:products": "tsx scripts/seed-products.ts",
     "seed:all": "npm run seed && npm run seed:products"

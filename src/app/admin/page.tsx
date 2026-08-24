@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ImageIcon, Languages, LogOut } from "lucide-react";
+import { ImageIcon, Languages, LogOut, Tags } from "lucide-react";
 import { AdminAuthGate } from "@/components/AdminAuthGate";
 
 export default function AdminHomePage() {
@@ -25,7 +25,7 @@ export default function AdminHomePage() {
               Control center
             </h1>
             <p className="mt-2 max-w-xl text-sm text-[var(--ink-soft)]">
-              Review cocktail photos, replace or remove images, and edit translations.
+              Review cocktail photos, city shelf prices, and translations.
             </p>
           </div>
           <button
@@ -49,6 +49,18 @@ export default function AdminHomePage() {
             </h2>
             <p className="mt-2 text-sm text-[var(--ink-soft)]">
               Browse every drink photo, paste a new URL, upload a file, or clear an image.
+            </p>
+          </Link>
+          <Link
+            href="/admin/prices"
+            className="rounded-[1.5rem] bg-[var(--surface)] p-5 ring-1 ring-[var(--line)] transition hover:ring-[var(--accent)]"
+          >
+            <Tags className="h-7 w-7 text-[var(--accent)]" />
+            <h2 className="mt-4 font-[family-name:var(--font-display)] text-2xl text-[var(--ink)]">
+              Product prices
+            </h2>
+            <p className="mt-2 text-sm text-[var(--ink-soft)]">
+              Review and edit SG, HK, Shanghai, NY, Paris, and Tokyo shelf prices.
             </p>
           </Link>
           <Link

@@ -8,7 +8,7 @@ import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
 import { CocktailDetail } from "@/components/CocktailDetail";
-import { useCurrency } from "@/components/CurrencyProvider";
+import { useProductPrices } from "@/components/ProductPriceProvider";
 import { TriedModal } from "@/components/TriedModal";
 import { useShop } from "@/components/useShop";
 import { useLocalizedProduct, useTranslatedTexts } from "@/components/useTranslatedContent";
@@ -28,7 +28,7 @@ export default function ProductDetailPage() {
   const params = useParams<{ slug: string }>();
   const { ready, collect, markTried, isCollected, requireAuth } = useAuth();
   const shop = useShop();
-  const { format: formatMoney } = useCurrency();
+  const { formatProduct } = useProductPrices();
   const { addItem } = useCart();
   const product = useMemo(() => getProductBySlug(params.slug), [params.slug]);
   const localizedProduct = useLocalizedProduct(product);
@@ -117,7 +117,7 @@ export default function ProductDetailPage() {
 
             <div className="sticky bottom-2 z-10 space-y-3 rounded-[1.25rem] bg-[var(--surface)]/95 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_12px_35px_rgba(0,0,0,0.22)] ring-1 ring-[var(--line)] backdrop-blur sm:static sm:space-y-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:ring-0 sm:backdrop-blur-none">
               <p className="text-2xl font-semibold text-[var(--ink)] sm:text-[var(--on-bg)]">
-                {formatMoney(product.priceCents)}
+                {formatProduct(product)}
               </p>
               <p className="text-sm text-[var(--ink-muted)] sm:text-[var(--on-bg-soft)]">
                 {product.stock > 0 ? `${shop.inStock} (${product.stock})` : shop.outOfStock}

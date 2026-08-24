@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
-import { useCurrency } from "@/components/CurrencyProvider";
+import { useProductPrices } from "@/components/ProductPriceProvider";
 import { useShop } from "@/components/useShop";
 import { useTranslatedTexts } from "@/components/useTranslatedContent";
 import { getProduct, productImageClass, productImageUnoptimized } from "@/lib/products";
@@ -17,7 +17,7 @@ export default function CartPage() {
   const { user, ready } = useAuth();
   const router = useRouter();
   const shop = useShop();
-  const { format: formatMoney } = useCurrency();
+  const { formatProduct, formatLine, formatUsdTotal, usdCents, lineUsdCents } = useProductPrices();
   const { items, setQty, removeItem, clearCart, saveOrder } = useCart();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -48,7 +48,7 @@ export default function CartPage() {
   );
 
   const subtotal = lines.reduce(
-    (sum, l) => sum + l.product.priceCents * l.item.quantity,
+    (sum, l) => sum + lineUsdCents(l.product, l.item.quantity),
     0,
   );
   const productNames = useMemo(() => lines.map((line) => line.product.name), [lines]);
@@ -115,7 +115,7 @@ export default function CartPage() {
         items: lines.map((l) => ({
           productId: l.product.id,
           name: l.product.name,
-          unitAmountCents: l.product.priceCents,
+          unitAmountCents: usdCents(l.product),
           quantity: l.item.quantity,
           image: l.product.images[0]?.url || "",
         })),
@@ -175,7 +175,7 @@ export default function CartPage() {
                     {localizedProductNames[lineIndex] || product.name}
                   </Link>
                   <p className="text-sm text-[var(--ink-muted)]">
-                    {formatMoney(product.priceCents)}
+                    {formatProduct(product)}
                   </p>
                   <div className="mt-2 flex flex-wrap items-center gap-2 sm:gap-3">
                     <label className="inline-flex items-center text-xs text-[var(--ink-muted)]">
@@ -199,7 +199,7 @@ export default function CartPage() {
                   </div>
                 </div>
                 <p className="col-start-2 text-end text-sm font-semibold text-[var(--ink)] sm:ms-auto">
-                  {formatMoney(product.priceCents * item.quantity)}
+                  {formatLine(product, item.quantity)}
                 </p>
               </div>
             ))}
@@ -208,7 +208,7 @@ export default function CartPage() {
               <div className="flex items-center justify-between rounded-2xl bg-[var(--chip)] px-4 py-3 sm:rounded-[1.25rem] sm:py-4">
                 <span className="text-sm text-[var(--ink-soft)]">{shop.subtotal}</span>
                 <span className="text-lg font-semibold text-[var(--ink)]">
-                  {formatMoney(subtotal)}
+                  {formatUsdTotal(subtotal)}
                 </span>
               </div>
 

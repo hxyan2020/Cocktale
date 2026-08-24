@@ -6,7 +6,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
-import { useCurrency } from "@/components/CurrencyProvider";
+import { useProductPrices } from "@/components/ProductPriceProvider";
 import { useShop } from "@/components/useShop";
 import { useLocalizedProduct } from "@/components/useTranslatedContent";
 import { productImageClass, productImageUnoptimized, searchProducts } from "@/lib/products";
@@ -20,14 +20,14 @@ function ProductCard({
   onAdd,
   addLabel,
   addedLabel,
-  formatMoney,
+  formatProduct,
 }: {
   product: Product;
   added: boolean;
   onAdd: () => void;
   addLabel: string;
   addedLabel: string;
-  formatMoney: (usdCents: number) => string;
+  formatProduct: (product: Pick<Product, "id" | "priceCents">) => string;
 }) {
   const cardRef = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
@@ -76,7 +76,7 @@ function ProductCard({
         </Link>
         <p className="line-clamp-2 text-xs text-[var(--ink-soft)]">{localized.description}</p>
         <p className="mt-auto text-sm font-semibold text-[var(--ink)]">
-          {formatMoney(product.priceCents)}
+          {formatProduct(product)}
         </p>
         <button
           type="button"
@@ -93,7 +93,7 @@ function ProductCard({
 export default function MarketPage() {
   const { ready } = useAuth();
   const shop = useShop();
-  const { format: formatMoney } = useCurrency();
+  const { formatProduct } = useProductPrices();
   const { addItem } = useCart();
   const [q, setQ] = useState("");
   const [category, setCategory] = useState<(typeof CATEGORIES)[number]>("all");
@@ -160,7 +160,7 @@ export default function MarketPage() {
               added={addedId === p.id}
               addLabel={shop.addToCart}
               addedLabel={shop.added}
-              formatMoney={formatMoney}
+              formatProduct={formatProduct}
               onAdd={() => {
                 addItem(p.id, 1);
                 setAddedId(p.id);

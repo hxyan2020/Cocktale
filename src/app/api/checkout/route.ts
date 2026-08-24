@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { loadProductPriceOverrides } from "@/lib/product-price-overrides";
+import { resolveProductUsdCents } from "@/lib/product-price-types";
 import { getProduct } from "@/lib/products";
 import { getStripe, randomSuffix, stripeConfigured } from "@/lib/stripe";
 
@@ -41,6 +43,7 @@ export async function POST(req: Request) {
 
     const { items, userId, email, name, successUrl, cancelUrl } = parsed.data;
 
+    const priceOverrides = loadProductPriceOverrides();
     const lineItems = [];
     for (const item of items) {
       const product = getProduct(item.productId);
@@ -56,14 +59,19 @@ export async function POST(req: Request) {
           { status: 400 },
         );
       }
-      lineItems.push({ product, quantity: item.quantity });
+      const unitAmountCents = resolveProductUsdCents(
+        product.id,
+        product.priceCents,
+        priceOverrides,
+      );
+      lineItems.push({ product, quantity: item.quantity, unitAmountCents });
     }
 
     const orderDraftId = `ord_${Date.now().toString(36)}_${randomSuffix(4)}`;
 
     if (!stripeConfigured()) {
       const subtotal = lineItems.reduce(
-        (sum, li) => sum + li.product.priceCents * li.quantity,
+        (sum, li) => sum + li.unitAmountCents * li.quantity,
         0,
       );
       return NextResponse.json({
@@ -75,7 +83,7 @@ export async function POST(req: Request) {
         lineItems: lineItems.map((li) => ({
           productId: li.product.id,
           name: li.product.name,
-          unitAmountCents: li.product.priceCents,
+          unitAmountCents: li.unitAmountCents,
           quantity: li.quantity,
           image: li.product.images[0]?.url || "",
         })),
@@ -97,7 +105,7 @@ export async function POST(req: Request) {
         quantity: li.quantity,
         price_data: {
           currency: "usd",
-          unit_amount: li.product.priceCents,
+          unit_amount: li.unitAmountCents,
           product_data: {
             name: li.product.name,
             description: li.product.description.slice(0, 400),
