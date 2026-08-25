@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
@@ -10,7 +11,7 @@ import { useCurrency } from "@/components/CurrencyProvider";
 import { useI18n } from "@/components/LanguageProvider";
 import { useShop } from "@/components/useShop";
 import { useTranslatedTexts } from "@/components/useTranslatedContent";
-import type { OrderStatus } from "@/lib/commerce-types";
+import type { Order, OrderStatus } from "@/lib/commerce-types";
 
 function trackingSteps(status: OrderStatus, shop: ReturnType<typeof useShop>) {
   const paid = status === "paid" || status === "fulfilled";
@@ -33,8 +34,34 @@ export default function OrderDetailPage() {
   const shop = useShop();
   const { locale } = useI18n();
   const { format: formatMoney } = useCurrency();
-  const { getOrder, hydrated } = useCart();
-  const order = getOrder(params.id);
+  const { getOrder, hydrated, saveOrder } = useCart();
+  const [order, setOrder] = useState(() => getOrder(params.id));
+
+  useEffect(() => {
+    if (!hydrated) return;
+    const local = getOrder(params.id);
+    if (local) setOrder(local);
+
+    let cancelled = false;
+    void (async () => {
+      try {
+        const res = await fetch(`/api/orders?id=${encodeURIComponent(params.id)}`, {
+          cache: "no-store",
+        });
+        if (!res.ok || cancelled) return;
+        const data = await res.json();
+        if (data.order && !cancelled) {
+          saveOrder(data.order);
+          setOrder(data.order);
+        }
+      } catch {
+        // keep local
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [hydrated, params.id, getOrder, saveOrder]);
   const orderTexts = order
     ? [order.status, ...order.items.map((item) => item.name)]
     : [];
@@ -79,6 +106,25 @@ export default function OrderDetailPage() {
         {order.shippingEmail && (
           <p className="mt-1 text-sm text-[var(--on-bg-soft)]">
             {order.shippingName} · {order.shippingEmail}
+          </p>
+        )}
+        {order.shippingAddress && (
+          <p className="mt-1 text-sm text-[var(--on-bg-soft)]">
+            {[
+              order.shippingAddress.line1,
+              order.shippingAddress.line2,
+              `${order.shippingAddress.city}${order.shippingAddress.state ? `, ${order.shippingAddress.state}` : ""} ${order.shippingAddress.postalCode}`,
+              order.shippingAddress.country,
+            ]
+              .filter(Boolean)
+              .join(", ")}
+          </p>
+        )}
+        {(order.carrier || order.trackingNumber) && (
+          <p className="mt-1 text-sm text-[var(--on-bg)]">
+            {order.carrier ? `${order.carrier}` : "Shipment"}
+            {order.trackingNumber ? ` · ${order.trackingNumber}` : ""}
+            {order.shippedAt ? ` · ${new Date(order.shippedAt).toLocaleDateString(locale)}` : ""}
           </p>
         )}
         {order.stripeSessionId && (

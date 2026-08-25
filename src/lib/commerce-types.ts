@@ -31,6 +31,8 @@ export type CartItem = {
 
 export type OrderStatus = "pending" | "paid" | "fulfilled" | "cancelled" | "refunded";
 
+export type PaymentStatus = "unpaid" | "paid" | "refunded";
+
 export type OrderLine = {
   productId: string;
   name: string;
@@ -39,11 +41,22 @@ export type OrderLine = {
   image: string;
 };
 
+export type ShippingAddress = {
+  line1: string;
+  line2?: string;
+  city: string;
+  state?: string;
+  postalCode: string;
+  country: string;
+};
+
 export type Order = {
   id: string;
   userId: string;
   createdAt: string;
+  updatedAt?: string;
   status: OrderStatus;
+  paymentStatus?: PaymentStatus;
   currency: "usd";
   subtotalCents: number;
   totalCents: number;
@@ -52,5 +65,21 @@ export type Order = {
   stripePaymentIntentId?: string | null;
   shippingName?: string;
   shippingEmail?: string;
+  shippingPhone?: string;
+  shippingAddress?: ShippingAddress;
+  carrier?: string;
+  trackingNumber?: string;
+  shippedAt?: string;
+  notes?: string;
   demo?: boolean;
 };
+
+export const ORDER_STATUSES = [
+  "pending",
+  "paid",
+  "fulfilled",
+  "cancelled",
+  "refunded",
+] as const;
+
+export const PAYMENT_STATUSES = ["unpaid", "paid", "refunded"] as const;

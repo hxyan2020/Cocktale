@@ -63,14 +63,19 @@ export default function OrderSuccessClient() {
 
         const paid = data.paymentStatus === "paid";
         const draftId = data.metadata?.orderDraftId as string | undefined;
+        const serverOrder = data.order as Order | undefined;
         const existing =
           findOrderBySession(sessionId) || (draftId ? getOrder(draftId) : undefined);
 
-        let finalId = existing?.id || draftId || `ord_${Date.now().toString(36)}`;
+        let finalId = serverOrder?.id || existing?.id || draftId || `ord_${Date.now().toString(36)}`;
 
-        if (existing) {
+        if (serverOrder) {
+          saveOrder(serverOrder);
+          finalId = serverOrder.id;
+        } else if (existing) {
           updateOrder(existing.id, {
             status: paid ? "paid" : existing.status,
+            paymentStatus: paid ? "paid" : existing.paymentStatus || "unpaid",
             stripeSessionId: sessionId,
             stripePaymentIntentId: data.paymentIntentId,
             totalCents: data.amountTotal ?? existing.totalCents,
@@ -85,6 +90,7 @@ export default function OrderSuccessClient() {
             userId: user?.id ?? "guest",
             createdAt: new Date().toISOString(),
             status: paid ? "paid" : "pending",
+            paymentStatus: paid ? "paid" : "unpaid",
             currency: "usd",
             subtotalCents: data.amountTotal || 0,
             totalCents: data.amountTotal || 0,

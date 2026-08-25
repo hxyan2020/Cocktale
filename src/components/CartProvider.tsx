@@ -73,7 +73,14 @@ function mergeCarts(primary: CartItem[], incoming: CartItem[]): CartItem[] {
 function mergeOrders(primary: Order[], incoming: Order[]): Order[] {
   const map = new Map<string, Order>();
   for (const order of [...incoming, ...primary]) {
-    map.set(order.id, order);
+    const existing = map.get(order.id);
+    if (!existing) {
+      map.set(order.id, order);
+      continue;
+    }
+    const existingTs = new Date(existing.updatedAt || existing.createdAt).getTime();
+    const nextTs = new Date(order.updatedAt || order.createdAt).getTime();
+    map.set(order.id, nextTs >= existingTs ? { ...existing, ...order } : { ...order, ...existing });
   }
   return [...map.values()].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
@@ -117,6 +124,27 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setItems(cart);
     setOrders(nextOrders);
     setHydrated(true);
+
+    let cancelled = false;
+    void (async () => {
+      try {
+        const res = await fetch(`/api/orders?userId=${encodeURIComponent(accountId)}`, {
+          cache: "no-store",
+        });
+        if (!res.ok || cancelled) return;
+        const data = (await res.json()) as { orders?: Order[] };
+        if (!data.orders?.length || cancelled) return;
+        const merged = mergeOrders(readOrders(accountId), data.orders);
+        writeOrders(accountId, merged);
+        if (!cancelled) setOrders(merged);
+      } catch {
+        // offline / first paint — keep local orders
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
   }, [accountId]);
 
   const persistCart = useCallback(

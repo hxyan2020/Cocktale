@@ -1,9 +1,13 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import type { Order, OrderLine } from "@/lib/commerce-types";
+import { createPendingOrder } from "@/lib/orders-store";
 import { loadProductPriceOverrides } from "@/lib/product-price-overrides";
 import { resolveProductUsdCents } from "@/lib/product-price-types";
 import { getProduct } from "@/lib/products";
 import { getStripe, randomSuffix, stripeConfigured } from "@/lib/stripe";
+
+export const dynamic = "force-dynamic";
 
 const bodySchema = z.object({
   items: z
@@ -44,7 +48,8 @@ export async function POST(req: Request) {
     const { items, userId, email, name, successUrl, cancelUrl } = parsed.data;
 
     const priceOverrides = loadProductPriceOverrides();
-    const lineItems = [];
+    const built: { product: NonNullable<ReturnType<typeof getProduct>>; quantity: number; unitAmountCents: number }[] =
+      [];
     for (const item of items) {
       const product = getProduct(item.productId);
       if (!product) {
@@ -64,29 +69,44 @@ export async function POST(req: Request) {
         product.priceCents,
         priceOverrides,
       );
-      lineItems.push({ product, quantity: item.quantity, unitAmountCents });
+      built.push({ product, quantity: item.quantity, unitAmountCents });
     }
 
-    const orderDraftId = `ord_${Date.now().toString(36)}_${randomSuffix(4)}`;
+    const orderId = `ord_${Date.now().toString(36)}_${randomSuffix(4)}`;
+    const orderLines: OrderLine[] = built.map((li) => ({
+      productId: li.product.id,
+      name: li.product.name,
+      unitAmountCents: li.unitAmountCents,
+      quantity: li.quantity,
+      image: li.product.images[0]?.url || "",
+    }));
+    const subtotal = orderLines.reduce((sum, li) => sum + li.unitAmountCents * li.quantity, 0);
+    const now = new Date().toISOString();
 
     if (!stripeConfigured()) {
-      const subtotal = lineItems.reduce(
-        (sum, li) => sum + li.unitAmountCents * li.quantity,
-        0,
-      );
+      const order: Order = {
+        id: orderId,
+        userId,
+        createdAt: now,
+        status: "paid",
+        paymentStatus: "paid",
+        currency: "usd",
+        subtotalCents: subtotal,
+        totalCents: subtotal,
+        items: orderLines,
+        shippingEmail: email,
+        shippingName: name,
+        demo: true,
+      };
+      createPendingOrder(order);
       return NextResponse.json({
         mode: "demo",
-        orderId: orderDraftId,
-        demoCheckoutUrl: `/orders/success?demo=1&orderId=${orderDraftId}`,
+        orderId,
+        demoCheckoutUrl: `/orders/success?demo=1&orderId=${orderId}`,
         subtotalCents: subtotal,
         currency: "usd",
-        lineItems: lineItems.map((li) => ({
-          productId: li.product.id,
-          name: li.product.name,
-          unitAmountCents: li.unitAmountCents,
-          quantity: li.quantity,
-          image: li.product.images[0]?.url || "",
-        })),
+        lineItems: orderLines,
+        order,
       });
     }
 
@@ -101,7 +121,26 @@ export async function POST(req: Request) {
       client_reference_id: userId,
       success_url: `${successUrl}${successUrl.includes("?") ? "&" : "?"}session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: cancelUrl,
-      line_items: lineItems.map((li) => ({
+      shipping_address_collection: {
+        allowed_countries: [
+          "US",
+          "SG",
+          "HK",
+          "CN",
+          "FR",
+          "JP",
+          "GB",
+          "AU",
+          "CA",
+          "DE",
+          "KR",
+          "TW",
+          "MY",
+          "TH",
+        ],
+      },
+      phone_number_collection: { enabled: true },
+      line_items: built.map((li) => ({
         quantity: li.quantity,
         price_data: {
           currency: "usd",
@@ -120,7 +159,7 @@ export async function POST(req: Request) {
       })),
       metadata: {
         userId,
-        orderDraftId,
+        orderDraftId: orderId,
         customerName: name || "",
       },
     });
@@ -129,11 +168,28 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Stripe did not return a checkout URL" }, { status: 502 });
     }
 
+    const pending: Order = {
+      id: orderId,
+      userId,
+      createdAt: now,
+      status: "pending",
+      paymentStatus: "unpaid",
+      currency: "usd",
+      subtotalCents: subtotal,
+      totalCents: subtotal,
+      items: orderLines,
+      stripeSessionId: session.id,
+      shippingEmail: email,
+      shippingName: name,
+    };
+    createPendingOrder(pending);
+
     return NextResponse.json({
       mode: "stripe",
       sessionId: session.id,
       url: session.url,
-      orderId: orderDraftId,
+      orderId,
+      order: pending,
     });
   } catch (error) {
     console.error("checkout error", error);

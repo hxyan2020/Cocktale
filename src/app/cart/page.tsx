@@ -90,6 +90,7 @@ export default function CartPage() {
           userId: buyer.id,
           createdAt: new Date().toISOString(),
           status: "paid",
+          paymentStatus: "paid",
           currency: "usd",
           subtotalCents: data.subtotalCents,
           totalCents: data.subtotalCents,
@@ -98,7 +99,7 @@ export default function CartPage() {
           shippingName: buyer.name,
           demo: true,
         };
-        saveOrder(order);
+        saveOrder(data.order || order);
         clearCart();
         router.push(`/orders/success?demo=1&orderId=${order.id}`);
         return;
@@ -109,6 +110,7 @@ export default function CartPage() {
         userId: buyer.id,
         createdAt: new Date().toISOString(),
         status: "pending",
+        paymentStatus: "unpaid",
         currency: "usd",
         subtotalCents: subtotal,
         totalCents: subtotal,
@@ -123,7 +125,7 @@ export default function CartPage() {
         shippingEmail: buyer.email,
         shippingName: buyer.name,
       };
-      saveOrder(pending);
+      saveOrder(data.order || pending);
       if (data.url) window.location.href = data.url;
       else throw new Error("Missing Stripe Checkout URL");
     } catch (e) {
