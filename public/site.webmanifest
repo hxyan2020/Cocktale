@@ -1,12 +1,13 @@
 {
-  "name": "Cocktale",
+  "name": "Cocktale — Cocktail Discovery & Home Bar",
   "short_name": "Cocktale",
-  "description": "Discover, collect, and taste cocktails matched to weather, mood, and your taste history.",
-  "start_url": "/feed",
+  "description": "What should I drink tonight? Personalized cocktail recommendations, classic recipes, tasting journal, and home bar shopping.",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#0b0908",
   "theme_color": "#0b0908",
   "lang": "en",
+  "categories": ["food", "lifestyle", "shopping"],
   "icons": [
     {
       "src": "/logo.png",

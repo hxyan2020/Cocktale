@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
+import type { Cocktail } from "@/lib/types";
+import type { Product } from "@/lib/commerce-types";
 
 export const SITE_URL = "https://cocktale.vercel.app";
 export const SITE_NAME = "Cocktale";
-export const SITE_TAGLINE = "Discover, collect, and taste cocktails matched to you";
+export const SITE_TAGLINE =
+  "What should I drink tonight? Cocktails matched to weather, mood, and taste";
 
 const DEFAULT_OG_IMAGE = {
   url: "/cocktail-backdrop.webp",
   width: 1200,
   height: 630,
-  alt: "Cocktale — cocktail discovery and tasting",
+  alt: "Cocktale — personalized cocktail discovery, recipes, and home bar shopping",
 };
 
 export type PageSeo = {
@@ -23,65 +26,79 @@ export type PageSeo = {
 
 export const PAGE_SEO = {
   home: {
-    title: "Personalized Cocktail Discovery, Recipes & Tasting Journal",
+    title: "What Cocktail Should I Drink Tonight?",
     description:
-      "Cocktale recommends cocktails by weather, mood, and taste history. Browse recipes, collect favorites, keep a tasting journal, and shop ingredients and bar tools.",
+      "Cocktale finds the right cocktail for tonight using local weather, your mood, and taste history. Browse classic recipes, keep a tasting journal, and shop ingredients, glassware, and bar tools.",
     path: "/",
     keywords: [
-      "cocktail discovery app",
+      "what cocktail should I drink tonight",
       "personalized cocktail recommendations",
-      "weather based cocktails",
-      "cocktail recipes",
+      "weather based cocktail suggestions",
+      "cocktail for my mood",
+      "cocktail discovery app",
+      "classic cocktail recipes",
       "cocktail tasting journal",
+      "home bar ingredients shop",
       "mixology app",
-      "cocktail ingredients shop",
+      "rainy day cocktails",
     ],
   },
   feed: {
-    title: "Tonight's Cocktail Recommendations",
+    title: "Tonight's Cocktail Picks for Your Mood & Weather",
     description:
-      "Swipe personalized cocktail recommendations ranked by local weather, mood, flavor preferences, recipe complexity, and your tasting history.",
+      "Swipe ranked cocktail recommendations for tonight — matched to local weather, mood, flavor preferences, recipe complexity, and what you have already tried.",
     path: "/feed",
     keywords: [
-      "cocktail recommendations",
-      "tonight's cocktails",
+      "cocktail recommendations for tonight",
       "weather cocktail pairing",
-      "personalized drinks",
+      "cocktail for my mood",
+      "rainy day cocktail ideas",
+      "hot weather cocktails",
+      "cozy cocktail suggestions",
       "swipe cocktail recipes",
+      "personalized drink picker",
       "AI cocktail suggestions",
     ],
   },
   catalogue: {
-    title: "Cocktail Recipe Catalogue & Mixology Library",
+    title: "Classic & Modern Cocktail Recipes Library",
     description:
-      "Browse the full Cocktale recipe library. Search classic and modern cocktails by name, ingredient, glassware, origin, or category.",
+      "Search hundreds of cocktail recipes by name, spirit, ingredient, glassware, origin, or category. From Negroni and Margarita to modern signatures — your mixology library.",
     path: "/catalogue",
     keywords: [
-      "cocktail recipe catalogue",
       "cocktail recipe library",
       "classic cocktail recipes",
+      "Negroni recipe",
+      "Margarita recipe",
+      "Old Fashioned recipe",
       "search cocktails by ingredient",
-      "mixology recipes",
-      "drink recipes database",
+      "IBA cocktail recipes",
+      "mixology recipe database",
+      "gin cocktails",
+      "whiskey cocktails",
+      "vodka cocktails",
     ],
   },
   market: {
-    title: "Cocktail Ingredients, Glassware & Bar Tools Market",
+    title: "Buy Cocktail Ingredients, Glassware & Bar Tools",
     description:
-      "Shop spirits, mixers, glassware, and bar tools for the cocktails you want to make. Curated products linked to Cocktale recipes.",
+      "Shop spirits, mixers, garnishes, cocktail glassware, and bar tools for the recipes you want to make. Build a home bar with products linked to Cocktale cocktails.",
     path: "/market",
     keywords: [
-      "buy cocktail ingredients",
-      "bar tools shop",
-      "cocktail glassware",
-      "mixer and spirits",
+      "buy cocktail ingredients online",
       "home bar supplies",
+      "cocktail glassware shop",
+      "bar tools jigger shaker",
+      "cocktail mixers and garnishes",
+      "spirits for cocktails",
+      "home bartender kit",
       "cocktail market",
     ],
   },
   cart: {
     title: "Shopping Cart",
-    description: "Review cocktail ingredients, glassware, and bar tools in your Cocktale cart before checkout.",
+    description:
+      "Review cocktail ingredients, glassware, and bar tools in your Cocktale cart before secure checkout.",
     path: "/cart",
     keywords: ["cocktail shopping cart", "bar tools cart"],
     index: false,
@@ -95,51 +112,54 @@ export const PAGE_SEO = {
     index: false,
   },
   contact: {
-    title: "Contact Cocktale Support",
+    title: "Contact Cocktale — Orders, Recipes & Account Help",
     description:
-      "Questions about an order, cocktail recipe, or your Cocktale account? Contact the Cocktale team for help with discovery, shopping, and tasting.",
+      "Need help with a market order, cocktail recipe, or your Cocktale account? Contact support for discovery, shopping, tasting journal, and checkout questions.",
     path: "/contact",
     keywords: [
       "contact cocktale",
-      "cocktail app support",
-      "cocktale help",
-      "cocktail order support",
+      "cocktail app customer support",
+      "cocktale order help",
+      "cocktail recipe questions",
+      "home bar shopping support",
     ],
   },
   terms: {
     title: "Terms of Use",
     description:
-      "Read the Cocktale terms of use covering accounts, cocktail recommendations, market purchases, and responsible drinking guidance.",
+      "Cocktale terms of use for accounts, cocktail recommendations, market purchases, and responsible drinking guidance.",
     path: "/terms",
     keywords: ["cocktale terms of use", "cocktail app terms"],
   },
   journey: {
-    title: "My Cocktail Journey & Tasting Journal",
+    title: "My Cocktail Collection & Tasting Journal",
     description:
-      "Track collected cocktails, tasting notes, dates you tried each drink, and the story of your personal cocktail journey with Cocktale.",
+      "Track cocktails you collected and tried, add tasting notes and dates, and see how your flavor preferences evolve on your personal cocktail journey.",
     path: "/journey",
     keywords: [
       "cocktail tasting journal",
-      "cocktail collection",
-      "drinks I tried",
-      "personal cocktail book",
-      "mixology journal",
-      "tasting notes app",
+      "cocktail collection tracker",
+      "drinks I have tried",
+      "cocktail tasting notes",
+      "personal mixology journal",
+      "saved cocktail favorites",
     ],
   },
   journal: {
     title: "Cocktail Tasting Journal",
     description:
-      "Log the cocktails you have tried with dates and tasting notes. Your Cocktale journal keeps every pour you actually tasted.",
+      "Log cocktails you have tried with dates and tasting notes. Continues in your Cocktale journey journal.",
     path: "/journal",
     keywords: ["cocktail journal", "tasting notes", "drinks tried"],
+    index: false,
   },
   book: {
-    title: "Your Collected Cocktail Book",
+    title: "Collected Cocktail Book",
     description:
-      "Revisit cocktails you collected on Cocktale — favorites saved to buy ingredients for, remake, and taste again.",
+      "Your saved cocktail favorites — open them from your Cocktale journey collection.",
     path: "/book",
-    keywords: ["cocktail collection book", "saved cocktail recipes", "favorite cocktails"],
+    keywords: ["cocktail collection book", "saved cocktail recipes"],
+    index: false,
   },
   orders: {
     title: "Your Cocktail Market Orders",
@@ -150,7 +170,7 @@ export const PAGE_SEO = {
   },
   orderSuccess: {
     title: "Order Confirmed",
-    description: "Your Cocktale market order was placed successfully. Track ingredients and bar tools headed your way.",
+    description: "Your Cocktale market order was placed successfully.",
     path: "/orders/success",
     index: false,
   },
@@ -168,13 +188,45 @@ export function absoluteUrl(path: string): string {
   return new URL(path, SITE_URL).toString();
 }
 
+export function slugifySegment(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+}
+
+/** SEO-friendly cocktail path: /cocktail/negroni-11003 */
+export function cocktailSeoPath(cocktail: Pick<Cocktail, "id" | "name">): string {
+  const slug = slugifySegment(cocktail.name) || "cocktail";
+  return `/cocktail/${slug}-${cocktail.id}`;
+}
+
+export function cocktailIdFromSeoSlug(slug: string): string | null {
+  const trimmed = slug.trim();
+  if (!trimmed) return null;
+  // Prefer custom-* ids preserved at the end
+  const customIdx = trimmed.lastIndexOf("-custom-");
+  if (customIdx >= 0) return trimmed.slice(customIdx + 1);
+  const dash = trimmed.lastIndexOf("-");
+  if (dash < 0) return trimmed;
+  return trimmed.slice(dash + 1) || null;
+}
+
 export function createPageMetadata(page: PageSeo, overrides?: Partial<Metadata>): Metadata {
   const index = page.index ?? true;
   const follow = page.follow ?? index;
-  const title = page.title.includes(SITE_NAME) ? page.title : page.title;
+  const title = page.title;
+  const fullTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
   const ogImage = page.ogImage
-    ? { url: page.ogImage, alt: page.title }
+    ? { url: page.ogImage, width: 1200, height: 630, alt: page.title }
     : DEFAULT_OG_IMAGE;
+  const ogImageAbs = {
+    ...ogImage,
+    url: absoluteUrl(typeof ogImage.url === "string" ? ogImage.url : String(ogImage.url)),
+  };
 
   return {
     title,
@@ -188,20 +240,49 @@ export function createPageMetadata(page: PageSeo, overrides?: Partial<Metadata>)
       locale: "en_US",
       url: absoluteUrl(page.path),
       siteName: SITE_NAME,
-      title: `${title} | ${SITE_NAME}`,
+      title: fullTitle,
       description: page.description,
-      images: [ogImage],
+      images: [ogImageAbs],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | ${SITE_NAME}`,
+      title: fullTitle,
       description: page.description,
-      images: [typeof ogImage.url === "string" ? ogImage.url : ogImage.url],
+      images: [ogImageAbs.url],
     },
     robots: index
       ? { index: true, follow: true }
       : { index: false, follow, googleBot: { index: false, follow } },
     ...overrides,
+  };
+}
+
+export function cocktailPageSeo(cocktail: Cocktail): PageSeo {
+  const spirits = cocktail.ingredients
+    .map((i) => i.name)
+    .slice(0, 4)
+    .join(", ");
+  const moods = cocktail.moods.slice(0, 3).join(", ");
+  return {
+    title: `${cocktail.name} Cocktail Recipe${cocktail.glass ? ` (${cocktail.glass})` : ""}`,
+    description:
+      cocktail.description?.trim() ||
+      `How to make a ${cocktail.name} cocktail${spirits ? ` with ${spirits}` : ""}. Ingredients, steps${cocktail.origin ? `, origin ${cocktail.origin}` : ""}${moods ? `, best for ${moods}` : ""}.`,
+    path: cocktailSeoPath(cocktail),
+    keywords: [
+      `${cocktail.name} cocktail recipe`,
+      `how to make ${cocktail.name}`,
+      cocktail.name,
+      cocktail.glass,
+      cocktail.category,
+      cocktail.origin,
+      ...cocktail.ingredients.slice(0, 5).map((i) => i.name),
+      ...cocktail.moods.slice(0, 3),
+      ...cocktail.flavorProfile.slice(0, 3),
+      "cocktail recipe",
+      "mixology",
+    ].filter(Boolean),
+    ogImage: cocktail.image?.startsWith("http") ? cocktail.image : undefined,
   };
 }
 
@@ -211,6 +292,8 @@ export function productPageSeo(product: {
   description: string;
   category: string;
   brand?: string;
+  subcategory?: string;
+  tags?: string[];
   images?: { url: string; alt: string }[];
 }): PageSeo {
   const categoryLabel =
@@ -224,19 +307,22 @@ export function productPageSeo(product: {
 
   const image = product.images?.[0];
   return {
-    title: `Buy ${product.name} — ${categoryLabel} for cocktails`,
+    title: `Buy ${product.name} Online — ${categoryLabel} for Home Bars`,
     description:
       product.description?.trim() ||
-      `Shop ${product.name}${product.brand ? ` by ${product.brand}` : ""} on Cocktale. Pair this ${categoryLabel} with cocktail recipes and build your home bar.`,
+      `Shop ${product.name}${product.brand ? ` by ${product.brand}` : ""} on Cocktale. Pair this ${categoryLabel} with cocktail recipes and stock your home bar.`,
     path: `/market/${product.slug}`,
     keywords: [
       `buy ${product.name}`,
+      `buy ${product.name} online`,
       product.name,
       categoryLabel,
+      product.subcategory || "",
       "cocktail ingredients",
-      "home bar",
+      "home bar supplies",
       "cocktale market",
       product.brand || "",
+      ...(product.tags || []).slice(0, 4),
     ].filter(Boolean),
     ogImage: image?.url,
   };
@@ -277,13 +363,18 @@ export function rootMetadata(): Metadata {
       siteName: SITE_NAME,
       title: `${SITE_NAME} — ${SITE_TAGLINE}`,
       description: home.description,
-      images: [DEFAULT_OG_IMAGE],
+      images: [
+        {
+          ...DEFAULT_OG_IMAGE,
+          url: absoluteUrl(DEFAULT_OG_IMAGE.url),
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${SITE_NAME} — ${SITE_TAGLINE}`,
       description: home.description,
-      images: [DEFAULT_OG_IMAGE.url],
+      images: [absoluteUrl(DEFAULT_OG_IMAGE.url)],
     },
     robots: {
       index: true,
@@ -304,6 +395,29 @@ export function rootMetadata(): Metadata {
     manifest: "/site.webmanifest",
   };
 }
+
+export const HOME_FAQS = [
+  {
+    question: "How does Cocktale recommend a cocktail for tonight?",
+    answer:
+      "Cocktale ranks recipes using local weather, the mood and flavors you choose, recipe complexity, and your tasting history so you get drinks that fit tonight—not a random list.",
+  },
+  {
+    question: "Can I browse classic cocktail recipes?",
+    answer:
+      "Yes. The catalogue includes classic and modern cocktails you can search by name, spirit, ingredient, glassware, origin, or category.",
+  },
+  {
+    question: "Does Cocktale include a tasting journal?",
+    answer:
+      "Your journey tracks cocktails you collect and try, with dates and tasting notes so you remember what you loved.",
+  },
+  {
+    question: "Can I buy ingredients and bar tools?",
+    answer:
+      "The Cocktale market sells spirits, mixers, glassware, and bar tools linked to the recipes you want to make at home.",
+  },
+] as const;
 
 export function websiteJsonLd() {
   return {
@@ -347,7 +461,126 @@ export function websiteJsonLd() {
           price: "0",
           priceCurrency: "USD",
         },
+        featureList: [
+          "Weather and mood based cocktail recommendations",
+          "Cocktail recipe catalogue",
+          "Tasting journal and collection",
+          "Ingredients and bar tools marketplace",
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${SITE_URL}/#faq`,
+        mainEntity: HOME_FAQS.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
       },
     ],
+  };
+}
+
+export function recipeJsonLd(cocktail: Cocktail) {
+  const image = cocktail.image?.startsWith("http")
+    ? cocktail.image
+    : cocktail.image
+      ? absoluteUrl(cocktail.image)
+      : absoluteUrl("/cocktail-backdrop.webp");
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Recipe",
+    name: `${cocktail.name} Cocktail`,
+    description: cocktail.description || `Recipe for a ${cocktail.name} cocktail.`,
+    image: [image],
+    recipeCategory: cocktail.category || "Cocktail",
+    recipeCuisine: cocktail.origin || undefined,
+    keywords: [...cocktail.tags, ...cocktail.flavorProfile, ...cocktail.moods]
+      .filter(Boolean)
+      .join(", "),
+    recipeIngredient: cocktail.ingredients.map((i) =>
+      i.measure ? `${i.measure} ${i.name}` : i.name,
+    ),
+    recipeInstructions: cocktail.instructions.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      text: step,
+    })),
+    recipeYield: "1 cocktail",
+    url: absoluteUrl(cocktailSeoPath(cocktail)),
+    mainEntityOfPage: absoluteUrl(cocktailSeoPath(cocktail)),
+    author: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+  };
+}
+
+export function itemListJsonLd(
+  name: string,
+  description: string,
+  items: Array<{ name: string; url: string; image?: string; position: number }>,
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name,
+    description,
+    numberOfItems: items.length,
+    itemListElement: items.map((item) => ({
+      "@type": "ListItem",
+      position: item.position,
+      url: item.url,
+      name: item.name,
+      image: item.image,
+    })),
+  };
+}
+
+export function breadcrumbJsonLd(crumbs: Array<{ name: string; path: string }>) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: crumbs.map((crumb, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: crumb.name,
+      item: absoluteUrl(crumb.path),
+    })),
+  };
+}
+
+export function productJsonLd(product: Product) {
+  const image = product.images[0]?.url;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.description,
+    sku: product.id,
+    brand: product.brand
+      ? { "@type": "Brand", name: product.brand }
+      : { "@type": "Brand", name: "Cocktale Market" },
+    category: product.category,
+    image: image ? [image.startsWith("http") ? image : absoluteUrl(image)] : undefined,
+    url: absoluteUrl(`/market/${product.slug}`),
+    offers: {
+      "@type": "Offer",
+      url: absoluteUrl(`/market/${product.slug}`),
+      priceCurrency: "USD",
+      price: (product.priceCents / 100).toFixed(2),
+      availability:
+        product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      seller: {
+        "@type": "Organization",
+        name: SITE_NAME,
+        url: SITE_URL,
+      },
+    },
   };
 }

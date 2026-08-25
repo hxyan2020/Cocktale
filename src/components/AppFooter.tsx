@@ -18,8 +18,38 @@ export function AppFooter() {
         <p className="text-center text-xs text-[var(--on-bg-muted)] sm:text-start">{t("footer.rights", { year })}</p>
         <nav
           className="flex flex-wrap items-center justify-center gap-1 sm:gap-2"
-          aria-label={t("footer.terms")}
+          aria-label="Site"
         >
+          <Link
+            href="/feed"
+            className={`inline-flex min-h-10 items-center rounded-full px-3 py-1.5 text-sm transition ${
+              pathname.startsWith("/feed")
+                ? "bg-[var(--foam)] text-[var(--ink)]"
+                : "text-[var(--on-bg-soft)] hover:bg-white/10 hover:text-[var(--on-bg)]"
+            }`}
+          >
+            Discover
+          </Link>
+          <Link
+            href="/catalogue"
+            className={`inline-flex min-h-10 items-center rounded-full px-3 py-1.5 text-sm transition ${
+              pathname.startsWith("/catalogue")
+                ? "bg-[var(--foam)] text-[var(--ink)]"
+                : "text-[var(--on-bg-soft)] hover:bg-white/10 hover:text-[var(--on-bg)]"
+            }`}
+          >
+            Recipes
+          </Link>
+          <Link
+            href="/market"
+            className={`inline-flex min-h-10 items-center rounded-full px-3 py-1.5 text-sm transition ${
+              pathname.startsWith("/market")
+                ? "bg-[var(--foam)] text-[var(--ink)]"
+                : "text-[var(--on-bg-soft)] hover:bg-white/10 hover:text-[var(--on-bg)]"
+            }`}
+          >
+            Market
+          </Link>
           <Link
             href="/terms"
             className={`inline-flex min-h-10 items-center rounded-full px-3 py-1.5 text-sm transition ${

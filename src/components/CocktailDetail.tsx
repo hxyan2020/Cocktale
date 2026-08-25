@@ -24,6 +24,7 @@ import { ItemInfoTrigger } from "@/components/ItemInfoTrigger";
 import { useLocalizedCocktail, useTranslatedTexts } from "@/components/useTranslatedContent";
 import type { Product } from "@/lib/commerce-types";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
+import { cocktailSeoPath } from "@/lib/seo";
 
 type Props = {
   cocktail: Cocktail;
@@ -178,6 +179,12 @@ export function CocktailDetail({
             <h2 id="cocktail-detail-title" className="mt-2 font-[family-name:var(--font-display)] text-2xl leading-tight text-[var(--ink)] sm:text-3xl">
               {localized.name}
             </h2>
+            <Link
+              href={cocktailSeoPath(cocktail)}
+              className="mt-2 inline-flex text-sm text-[var(--accent-deep)] underline-offset-2 hover:underline"
+            >
+              Open full recipe page
+            </Link>
             <p className="mt-1 text-sm text-[var(--ink-soft)]">{localized.origin}</p>
           </header>
 
