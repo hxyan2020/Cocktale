@@ -11,7 +11,7 @@ import { CocktailDetail } from "@/components/CocktailDetail";
 import { TriedModal } from "@/components/TriedModal";
 import { useTranslatedTexts } from "@/components/useTranslatedContent";
 import { useCocktailImage } from "@/components/CocktailImageProvider";
-import { getCocktail } from "@/lib/cocktails";
+import { useCocktailCatalog } from "@/components/CocktailCatalogProvider";
 import type { Cocktail, JournalEntry } from "@/lib/types";
 
 type Tab = "collected" | "tried";
@@ -64,6 +64,7 @@ export default function JourneyPageClient() {
   const { ready, data, collect, markTried, isCollected, requireAuth, editJournal, deleteJournal } =
     useAuth();
   const { t, locale } = useI18n();
+  const { getCocktail } = useCocktailCatalog();
   const router = useRouter();
   const search = useSearchParams();
   const [tab, setTab] = useState<Tab>(search.get("tab") === "tried" ? "tried" : "collected");
@@ -81,7 +82,7 @@ export default function JourneyPageClient() {
       data.collected
         .map((c) => ({ meta: c, cocktail: getCocktail(c.cocktailId) }))
         .filter((x): x is { meta: (typeof data.collected)[0]; cocktail: Cocktail } => !!x.cocktail),
-    [data.collected],
+    [data.collected, getCocktail],
   );
 
   const entries = useMemo(
@@ -89,7 +90,7 @@ export default function JourneyPageClient() {
       data.journal
         .map((entry) => ({ entry, cocktail: getCocktail(entry.cocktailId) }))
         .filter((x): x is { entry: JournalEntry; cocktail: Cocktail } => !!x.cocktail),
-    [data.journal],
+    [data.journal, getCocktail],
   );
 
   const formatDate = (iso: string) =>

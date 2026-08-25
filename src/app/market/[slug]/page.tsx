@@ -9,10 +9,10 @@ import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
 import { CocktailDetail } from "@/components/CocktailDetail";
 import { useProductPrices } from "@/components/ProductPriceProvider";
+import { useCocktailCatalog } from "@/components/CocktailCatalogProvider";
 import { TriedModal } from "@/components/TriedModal";
 import { useShop } from "@/components/useShop";
 import { useLocalizedProduct, useTranslatedTexts } from "@/components/useTranslatedContent";
-import { getCocktail } from "@/lib/cocktails";
 import { getProductBySlug, productImageClass, productImageUnoptimized } from "@/lib/products";
 import type { Cocktail } from "@/lib/types";
 
@@ -29,6 +29,7 @@ export default function ProductDetailPage() {
   const { ready, collect, markTried, isCollected, requireAuth } = useAuth();
   const shop = useShop();
   const { formatProduct } = useProductPrices();
+  const { getCocktail } = useCocktailCatalog();
   const { addItem } = useCart();
   const product = useMemo(() => getProductBySlug(params.slug), [params.slug]);
   const localizedProduct = useLocalizedProduct(product);

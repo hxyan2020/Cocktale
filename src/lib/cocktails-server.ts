@@ -1,11 +1,16 @@
 import "server-only";
 
-import { getAllCocktails, getCocktail } from "@/lib/cocktails";
+import { getAllCocktails, getCocktail, isCocktailDrink } from "@/lib/cocktails";
 import {
   getCocktailImageOverride,
   loadCocktailImageOverrides,
   resolveStoredCocktailImageUrl,
 } from "@/lib/cocktail-image-overrides";
+import {
+  listCocktailsFromProfiles,
+  resolveCocktailFromProfiles,
+} from "@/lib/cocktail-profile-types";
+import { loadCocktailProfiles } from "@/lib/cocktail-profiles";
 import type { Cocktail } from "@/lib/types";
 
 function withResolvedImage(cocktail: Cocktail): Cocktail {
@@ -15,13 +20,21 @@ function withResolvedImage(cocktail: Cocktail): Cocktail {
   };
 }
 
+function catalogBase(id: string): Cocktail | undefined {
+  return getCocktail(id);
+}
+
 export function getResolvedCocktail(id: string): Cocktail | undefined {
-  const cocktail = getCocktail(id);
-  return cocktail ? withResolvedImage(cocktail) : undefined;
+  const profiles = loadCocktailProfiles();
+  const resolved = resolveCocktailFromProfiles(id, catalogBase(id), profiles);
+  return resolved ? withResolvedImage(resolved) : undefined;
 }
 
 export function getAllResolvedCocktails(): Cocktail[] {
-  return getAllCocktails().map(withResolvedImage);
+  const profiles = loadCocktailProfiles();
+  return listCocktailsFromProfiles(getAllCocktails(), profiles)
+    .filter(isCocktailDrink)
+    .map(withResolvedImage);
 }
 
 export function getAllCocktailsForAdmin(): Array<
@@ -30,27 +43,87 @@ export function getAllCocktailsForAdmin(): Array<
     overrideImage?: string | null;
     gallery: string[];
     hasOverride: boolean;
+    hasImageOverride: boolean;
+    hasContentOverride: boolean;
+    isCustom: boolean;
+    isDeleted: boolean;
   }
 > {
-  const overrides = loadCocktailImageOverrides();
-  return getAllCocktails().map((cocktail) => {
-    const override = overrides[cocktail.id];
+  const imageOverrides = loadCocktailImageOverrides();
+  const profiles = loadCocktailProfiles();
+  const deleted = new Set(profiles.deleted);
+
+  type AdminRow = Cocktail & {
+    catalogImage: string;
+    overrideImage?: string | null;
+    gallery: string[];
+    hasOverride: boolean;
+    hasImageOverride: boolean;
+    hasContentOverride: boolean;
+    isCustom: boolean;
+    isDeleted: boolean;
+  };
+
+  const rows: AdminRow[] = [];
+  const seen = new Set<string>();
+
+  const pushRow = (
+    cocktail: Cocktail,
+    opts: { catalogImage: string; isCustom: boolean; isDeleted: boolean },
+  ) => {
+    if (seen.has(cocktail.id)) return;
+    seen.add(cocktail.id);
+    const override = imageOverrides[cocktail.id];
     const hasImageOverride = Boolean(
       override && Object.prototype.hasOwnProperty.call(override, "image"),
     );
-    return {
+    const hasContentOverride = Boolean(profiles.overrides[cocktail.id]);
+    rows.push({
       ...withResolvedImage(cocktail),
-      catalogImage: cocktail.image,
+      catalogImage: opts.catalogImage,
       overrideImage: hasImageOverride ? (override?.image ?? null) : undefined,
       gallery: override?.gallery ?? [],
-      hasOverride: Boolean(
-        override && (hasImageOverride || (override.gallery?.length ?? 0) > 0),
-      ),
-    };
-  });
+      hasImageOverride,
+      hasContentOverride,
+      hasOverride:
+        hasImageOverride || (override?.gallery?.length ?? 0) > 0 || hasContentOverride,
+      isCustom: opts.isCustom,
+      isDeleted: opts.isDeleted,
+    });
+  };
+
+  for (const cocktail of getAllCocktails()) {
+    const patched = resolveCocktailFromProfiles(cocktail.id, cocktail, {
+      ...profiles,
+      deleted: [],
+    });
+    if (!patched) continue;
+    pushRow(patched, {
+      catalogImage: cocktail.image,
+      isCustom: false,
+      isDeleted: deleted.has(cocktail.id),
+    });
+  }
+
+  for (const custom of Object.values(profiles.customs)) {
+    const patched = resolveCocktailFromProfiles(custom.id, custom, {
+      ...profiles,
+      deleted: [],
+    });
+    if (!patched) continue;
+    pushRow(patched, {
+      catalogImage: custom.image,
+      isCustom: true,
+      isDeleted: deleted.has(custom.id),
+    });
+  }
+
+  return rows;
 }
 
 export function getCatalogCocktail(id: string) {
+  const profiles = loadCocktailProfiles();
+  if (profiles.customs[id]) return profiles.customs[id];
   return getCocktail(id);
 }
 

@@ -35,17 +35,17 @@ const patchSchema = z.object({
 function adminCocktailPayload(id: string) {
   const catalog = getCatalogCocktail(id);
   if (!catalog) return null;
-  const resolved = getResolvedCocktail(id)!;
+  const resolved = getResolvedCocktail(id) || catalog;
   const override = getCocktailImageOverride(id);
   const hasImageOverride = Boolean(
     override && Object.prototype.hasOwnProperty.call(override, "image"),
   );
   return {
     id: catalog.id,
-    name: catalog.name,
-    category: catalog.category,
-    glass: catalog.glass,
-    image: resolved.image,
+    name: resolved.name,
+    category: resolved.category,
+    glass: resolved.glass,
+    image: resolved.image || catalog.image,
     catalogImage: catalog.image,
     overrideImage: hasImageOverride ? (override?.image ?? null) : undefined,
     gallery: override?.gallery ?? [],

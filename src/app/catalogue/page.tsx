@@ -10,7 +10,7 @@ import { CocktailDetail } from "@/components/CocktailDetail";
 import { TriedModal } from "@/components/TriedModal";
 import { useLocalizedCocktail, useTranslatedTexts } from "@/components/useTranslatedContent";
 import { useCocktailImage } from "@/components/CocktailImageProvider";
-import { cocktailCategories, searchCocktails } from "@/lib/cocktails";
+import { useCocktailCatalog } from "@/components/CocktailCatalogProvider";
 import {
   readCachedCoords,
   readGeolocationPermission,
@@ -114,6 +114,7 @@ function CatalogueCard({
 export default function CataloguePage() {
   const { user, ready, data, collect, markTried, isCollected, requireAuth } = useAuth();
   const { t } = useI18n();
+  const { searchCocktails, cocktailCategories } = useCocktailCatalog();
   const accountId = user?.id ?? "guest";
   const [q, setQ] = useState("");
   const [category, setCategory] = useState("all");
@@ -200,7 +201,7 @@ export default function CataloguePage() {
     maybeAdvanceRankOffset(accountId, "catalogue", SHIFT_PER_VISIT, ranked.length);
   }, [accountId, ranked.length]);
 
-  const categories = useMemo(() => cocktailCategories(), []);
+  const categories = useMemo(() => cocktailCategories(), [cocktailCategories]);
   const { texts: categoryLabels } = useTranslatedTexts(categories, "cocktail-categories");
 
   const list = useMemo(() => {
@@ -217,7 +218,7 @@ export default function CataloguePage() {
     }
 
     return rotateRanked(filtered, visitOffset);
-  }, [q, category, ranked, visitOffset]);
+  }, [q, category, ranked, visitOffset, searchCocktails]);
 
   if (!ready) return null;
 

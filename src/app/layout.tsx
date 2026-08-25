@@ -10,6 +10,7 @@ import { HxViewershipBeacon } from "@/components/HxViewershipBeacon";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { MeasureUnitProvider } from "@/components/MeasureUnitProvider";
 import { CocktailImageProvider } from "@/components/CocktailImageProvider";
+import { CocktailCatalogProvider } from "@/components/CocktailCatalogProvider";
 import { ProductPriceProvider } from "@/components/ProductPriceProvider";
 import { rootMetadata, websiteJsonLd } from "@/lib/seo";
 import "./globals.css";
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
         <LanguageProvider>
           <CocktailImageProvider>
+          <CocktailCatalogProvider>
           <MeasureUnitProvider>
             <CurrencyProvider>
               <ProductPriceProvider>
@@ -68,6 +70,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               </ProductPriceProvider>
             </CurrencyProvider>
           </MeasureUnitProvider>
+          </CocktailCatalogProvider>
           </CocktailImageProvider>
         </LanguageProvider>
       </body>

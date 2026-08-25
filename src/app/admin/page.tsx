@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ImageIcon, Languages, LogOut, Package, Tags } from "lucide-react";
+import { BookOpen, ImageIcon, Languages, LogOut, Package, Tags } from "lucide-react";
 import { AdminAuthGate } from "@/components/AdminAuthGate";
 
 export default function AdminHomePage() {
@@ -25,7 +25,7 @@ export default function AdminHomePage() {
               Control center
             </h1>
             <p className="mt-2 max-w-xl text-sm text-[var(--ink-soft)]">
-              Manage orders, payments, shipping, photos, prices, and translations.
+              Manage cocktails, orders, payments, shipping, photos, prices, and translations.
             </p>
           </div>
           <button
@@ -49,6 +49,18 @@ export default function AdminHomePage() {
             </h2>
             <p className="mt-2 text-sm text-[var(--ink-soft)]">
               See every customer order, confirm payment, edit shipping, add tracking, and mark shipped.
+            </p>
+          </Link>
+          <Link
+            href="/admin/cocktails"
+            className="rounded-[1.5rem] bg-[var(--surface)] p-5 ring-1 ring-[var(--line)] transition hover:ring-[var(--accent)]"
+          >
+            <BookOpen className="h-7 w-7 text-[var(--accent)]" />
+            <h2 className="mt-4 font-[family-name:var(--font-display)] text-2xl text-[var(--ink)]">
+              Cocktail profiles
+            </h2>
+            <p className="mt-2 text-sm text-[var(--ink-soft)]">
+              View, edit, add, or delete full cocktail recipes, stories, and tags.
             </p>
           </Link>
           <Link
