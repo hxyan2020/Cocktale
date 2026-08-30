@@ -116,7 +116,11 @@ export default async function CocktailRecipePage({ params }: Props) {
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 768px"
-              unoptimized={imageSrc.startsWith("http")}
+              unoptimized={
+                imageSrc.startsWith("http") ||
+                imageSrc.startsWith("data:") ||
+                imageSrc.startsWith("/api/")
+              }
               priority
             />
           </div>

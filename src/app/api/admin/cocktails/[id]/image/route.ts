@@ -1,5 +1,3 @@
-import { mkdirSync, writeFileSync } from "fs";
-import { join } from "path";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { requireAdminApi } from "@/lib/admin-auth";
@@ -15,25 +13,24 @@ import {
   cocktailImageSlotCount,
   remainingCocktailImageSlots,
 } from "@/lib/cocktail-image-types";
+import { isAllowedCocktailImageRef, storeCocktailUpload } from "@/lib/cocktail-upload-store";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 type RouteContext = { params: Promise<{ id: string }> };
 
+const imageRefSchema = z.union([
+  z.string().url(),
+  z.string().regex(/^\/.+/),
+  z.string().regex(/^data:image\/[a-zA-Z0-9.+-]+;base64,/),
+  z.literal(""),
+  z.null(),
+]);
+
 const patchSchema = z.object({
-  image: z
-    .union([
-      z.string().url(),
-      z.string().regex(/^\/.+/),
-      z.literal(""),
-      z.null(),
-    ])
-    .optional(),
-  gallery: z
-    .array(z.union([z.string().url(), z.string().regex(/^\/.+/)]))
-    .max(MAX_COCKTAIL_IMAGES)
-    .optional(),
+  image: imageRefSchema.optional(),
+  gallery: z.array(imageRefSchema).max(MAX_COCKTAIL_IMAGES).optional(),
   restore: z.boolean().optional(),
 });
 
@@ -94,7 +91,13 @@ export async function PATCH(req: Request, context: RouteContext) {
       patch.image = parsed.data.image ?? null;
     }
     if (parsed.data.gallery) {
-      const gallery = [...new Set(parsed.data.gallery.map((url) => url.trim()).filter(Boolean))];
+      const gallery = [
+        ...new Set(
+          parsed.data.gallery
+            .map((url) => (typeof url === "string" ? url.trim() : ""))
+            .filter((url) => url && isAllowedCocktailImageRef(url)),
+        ),
+      ];
       const resolved = getResolvedCocktail(id) || catalog;
       const primary =
         Object.prototype.hasOwnProperty.call(patch, "image")
@@ -137,31 +140,21 @@ export async function POST(req: Request, context: RouteContext) {
   }
 
   const bytes = Buffer.from(await file.arrayBuffer());
-  const ext =
-    file.type === "image/png"
-      ? "png"
-      : file.type === "image/webp"
-        ? "webp"
-        : file.type === "image/gif"
-          ? "gif"
-          : "jpg";
-  const safeId = id.replace(/[^a-zA-Z0-9_-]/g, "");
-  const filename = `${safeId}-${Date.now()}.${ext}`;
-  const dir = join(process.cwd(), "public", "cocktails");
+  let stored;
   try {
-    mkdirSync(dir, { recursive: true });
-    writeFileSync(join(dir, filename), bytes);
-  } catch {
+    stored = await storeCocktailUpload({
+      cocktailId: id,
+      bytes,
+      contentType: file.type || "image/jpeg",
+    });
+  } catch (err) {
     return NextResponse.json(
-      {
-        error:
-          "Could not write image on this host. Use an image URL instead, or deploy on a writable filesystem.",
-      },
+      { error: (err as Error).message || "Upload failed" },
       { status: 500 },
     );
   }
 
-  const publicUrl = `/cocktails/${filename}`;
+  const publicUrl = stored.url;
   const resolved = getResolvedCocktail(id) || getCatalogCocktail(id);
   if (target === "gallery") {
     const existing = getCocktailImageOverride(id)?.gallery ?? [];
@@ -177,7 +170,12 @@ export async function POST(req: Request, context: RouteContext) {
     upsertCocktailImageOverride(id, { image: publicUrl });
   }
 
-  return NextResponse.json({ ok: true, url: publicUrl, cocktail: adminCocktailPayload(id) });
+  return NextResponse.json({
+    ok: true,
+    url: publicUrl,
+    storage: stored.storage,
+    cocktail: adminCocktailPayload(id),
+  });
 }
 
 export async function DELETE(_req: Request, context: RouteContext) {

@@ -33,7 +33,14 @@ export function productImageClass(url: string, kind: "card" | "hero" | "thumb" =
 }
 
 export function productImageUnoptimized(url: string) {
-  return url.includes("commons.wikimedia.org") || url.includes("upload.wikimedia.org");
+  return (
+    url.startsWith("data:") ||
+    url.startsWith("/api/media/") ||
+    url.endsWith(".svg") ||
+    url.includes("commons.wikimedia.org") ||
+    url.includes("upload.wikimedia.org") ||
+    url.includes("blob.vercel-storage.com")
+  );
 }
 
 export function equipmentImageUrl(sourceKey: string): string | undefined {

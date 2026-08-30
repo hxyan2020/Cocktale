@@ -35,6 +35,11 @@ const nextConfig: NextConfig = {
         hostname: "commons.wikimedia.org",
         pathname: "/wiki/**",
       },
+      {
+        protocol: "https",
+        hostname: "*.public.blob.vercel-storage.com",
+        pathname: "/**",
+      },
     ],
   },
 };

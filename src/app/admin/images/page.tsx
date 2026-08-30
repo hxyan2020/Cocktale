@@ -13,6 +13,7 @@ import {
   Trash2,
   Upload,
 } from "lucide-react";
+import { productImageUnoptimized } from "@/lib/products";
 
 type AdminCocktail = {
   id: string;
@@ -269,9 +270,7 @@ export default function AdminImagesPage() {
                       fill
                       className="object-cover"
                       sizes="(max-width:768px) 50vw, 20vw"
-                      unoptimized={
-                        cocktail.image.startsWith("http") || cocktail.image.endsWith(".svg")
-                      }
+                      unoptimized={productImageUnoptimized(cocktail.image || "")}
                     />
                     {cocktail.hasOverride && (
                       <span className="absolute start-2 top-2 rounded-full bg-black/70 px-2 py-0.5 text-[10px] text-white">
@@ -314,9 +313,7 @@ export default function AdminImagesPage() {
                   fill
                   className="object-cover"
                   sizes="384px"
-                  unoptimized={
-                    selected.image.startsWith("http") || selected.image.endsWith(".svg")
-                  }
+                  unoptimized={productImageUnoptimized(selected.image || "")}
                 />
               </div>
 
