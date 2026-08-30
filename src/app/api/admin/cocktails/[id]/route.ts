@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { requireAdminApi } from "@/lib/admin-auth";
-import { clearCocktailImageOverride } from "@/lib/cocktail-image-overrides";
+import {
+  clearCocktailImageOverride,
+  getCocktailImageOverride,
+} from "@/lib/cocktail-image-overrides";
 import { WEATHER_BUCKETS } from "@/lib/cocktail-profile-types";
 import {
   clearCocktailContentOverride,
@@ -99,12 +102,22 @@ function detailPayload(id: string) {
 
   if (!cocktail) return null;
 
+  const imageOverride = getCocktailImageOverride(id);
+  const hasImageOverride = Boolean(
+    imageOverride &&
+      (Object.prototype.hasOwnProperty.call(imageOverride, "image") ||
+        (imageOverride.gallery?.length ?? 0) > 0),
+  );
+
   return {
     cocktail,
     catalog: isCustom ? null : getCatalogCocktail(id),
     isCustom,
     isDeleted,
     hasContentOverride: Boolean(profiles.overrides[id]),
+    gallery: imageOverride?.gallery ?? [],
+    catalogImage: isCustom ? null : getCatalogCocktail(id)?.image ?? null,
+    hasImageOverride,
   };
 }
 

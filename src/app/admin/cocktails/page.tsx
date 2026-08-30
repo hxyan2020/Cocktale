@@ -12,7 +12,13 @@ import {
   Save,
   Search,
   Trash2,
+  Upload,
 } from "lucide-react";
+import {
+  MAX_COCKTAIL_IMAGES,
+  cocktailImageSlotCount,
+  remainingCocktailImageSlots,
+} from "@/lib/cocktail-image-types";
 import { WEATHER_BUCKETS } from "@/lib/cocktail-profile-types";
 import type { Cocktail } from "@/lib/types";
 import { productImageClass, productImageUnoptimized } from "@/lib/products";
@@ -155,6 +161,10 @@ export default function AdminCocktailsPage() {
   } | null>(null);
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState("");
+  const [gallery, setGallery] = useState<string[]>([]);
+  const [galleryUrlDraft, setGalleryUrlDraft] = useState("");
+  const [imageBusy, setImageBusy] = useState(false);
+  const [imageStatus, setImageStatus] = useState("");
 
   const load = useCallback(async (q = query, deleted = includeDeleted) => {
     setLoading(true);
@@ -189,6 +199,9 @@ export default function AdminCocktailsPage() {
     }
     setSelectedId(id);
     setDraft(cocktailToDraft(data.cocktail));
+    setGallery(Array.isArray(data.gallery) ? data.gallery : []);
+    setGalleryUrlDraft("");
+    setImageStatus("");
     setMeta({
       isCustom: Boolean(data.isCustom),
       isDeleted: Boolean(data.isDeleted),
@@ -206,7 +219,159 @@ export default function AdminCocktailsPage() {
     setSelectedId(null);
     setMeta({ isCustom: true, isDeleted: false, hasContentOverride: false });
     setDraft(emptyDraft());
+    setGallery([]);
+    setGalleryUrlDraft("");
+    setImageStatus("");
     setStatus("");
+  }
+
+  const imageSlotCount = useMemo(
+    () => cocktailImageSlotCount(draft.image, gallery),
+    [draft.image, gallery],
+  );
+  const imageSlotsLeft = useMemo(
+    () => remainingCocktailImageSlots(draft.image, gallery),
+    [draft.image, gallery],
+  );
+
+  async function persistGallery(nextGallery: string[]) {
+    if (!selectedId) return;
+    setImageBusy(true);
+    setImageStatus("");
+    try {
+      const res = await fetch(`/api/admin/cocktails/${selectedId}/image`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ gallery: nextGallery }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Could not update gallery");
+      setGallery(data.cocktail?.gallery ?? nextGallery);
+      setImageStatus("Gallery updated.");
+      await load();
+      window.dispatchEvent(new Event("cocktale:cocktail-images-updated"));
+    } catch (err) {
+      setImageStatus((err as Error).message);
+    } finally {
+      setImageBusy(false);
+    }
+  }
+
+  async function savePrimaryImageUrl() {
+    if (!selectedId) return;
+    setImageBusy(true);
+    setImageStatus("");
+    try {
+      const res = await fetch(`/api/admin/cocktails/${selectedId}/image`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image: draft.image.trim() || null }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Could not save primary image");
+      if (data.cocktail?.image) {
+        setDraft((d) => ({ ...d, image: data.cocktail.image }));
+      }
+      setImageStatus("Primary image saved.");
+      await load();
+      window.dispatchEvent(new Event("cocktale:cocktail-images-updated"));
+    } catch (err) {
+      setImageStatus((err as Error).message);
+    } finally {
+      setImageBusy(false);
+    }
+  }
+
+  async function uploadImageFiles(files: FileList | File[], target: "primary" | "gallery") {
+    if (!selectedId || creating) return;
+    const list = Array.from(files).filter((file) => file.type.startsWith("image/"));
+    if (!list.length) return;
+
+    setImageBusy(true);
+    setImageStatus("");
+    try {
+      if (target === "gallery" && imageSlotsLeft < 1) {
+        throw new Error(`This cocktail already has ${MAX_COCKTAIL_IMAGES} images.`);
+      }
+
+      const toUpload =
+        target === "primary" ? list.slice(0, 1) : list.slice(0, imageSlotsLeft);
+
+      for (const file of toUpload) {
+        const body = new FormData();
+        body.set("file", file);
+        body.set("target", target);
+        const res = await fetch(`/api/admin/cocktails/${selectedId}/image`, {
+          method: "POST",
+          body,
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Upload failed");
+        if (target === "primary" && data.url) {
+          setDraft((d) => ({ ...d, image: data.url }));
+        }
+        if (target === "gallery" && data.cocktail?.gallery) {
+          setGallery(data.cocktail.gallery);
+        }
+      }
+
+      setImageStatus(
+        toUpload.length > 1
+          ? `${toUpload.length} photos uploaded.`
+          : target === "gallery"
+            ? "Gallery photo uploaded."
+            : "Primary photo uploaded.",
+      );
+      await load();
+      window.dispatchEvent(new Event("cocktale:cocktail-images-updated"));
+    } catch (err) {
+      setImageStatus((err as Error).message);
+    } finally {
+      setImageBusy(false);
+    }
+  }
+
+  async function removeGalleryImage(index: number) {
+    const next = gallery.filter((_, i) => i !== index);
+    await persistGallery(next);
+  }
+
+  async function addGalleryUrl() {
+    const url = galleryUrlDraft.trim();
+    if (!url || !selectedId) return;
+    if (imageSlotsLeft < 1) {
+      setImageStatus(`Maximum ${MAX_COCKTAIL_IMAGES} images reached.`);
+      return;
+    }
+    if (gallery.includes(url) || draft.image.trim() === url) {
+      setImageStatus("That image is already in use.");
+      return;
+    }
+    await persistGallery([...gallery, url]);
+    setGalleryUrlDraft("");
+  }
+
+  async function setGalleryAsPrimary(url: string) {
+    setDraft((d) => ({ ...d, image: url }));
+    if (!selectedId) return;
+    setImageBusy(true);
+    setImageStatus("");
+    try {
+      const res = await fetch(`/api/admin/cocktails/${selectedId}/image`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image: url }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Could not set primary image");
+      setImageStatus("Primary image updated.");
+      await load();
+      window.dispatchEvent(new Event("cocktale:cocktail-images-updated"));
+    } catch (err) {
+      setImageStatus((err as Error).message);
+    } finally {
+      setImageBusy(false);
+    }
   }
 
   async function save() {
@@ -329,8 +494,8 @@ export default function AdminCocktailsPage() {
               Cocktail profiles
             </h1>
             <p className="mt-2 max-w-2xl text-sm text-[var(--ink-soft)]">
-              View, edit, add, or delete full cocktail profiles — recipe, story, tags, and more.
-              Image gallery remains under Cocktail images.
+              View, edit, add, or delete full cocktail profiles — recipe, story, tags, and up to{" "}
+              {MAX_COCKTAIL_IMAGES} photos per drink.
             </p>
           </div>
           <button
@@ -556,6 +721,140 @@ export default function AdminCocktailsPage() {
                   </label>
                 </div>
 
+                <div className="rounded-2xl border border-[var(--line)] bg-[var(--bg)]/60 p-4">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <p className="text-xs font-medium text-[var(--ink-muted)]">
+                        Cocktail photos
+                      </p>
+                      <p className="mt-1 text-[11px] text-[var(--ink-muted)]">
+                        {imageSlotCount}/{MAX_COCKTAIL_IMAGES} used · primary + gallery
+                      </p>
+                    </div>
+                    {creating ? (
+                      <p className="text-[11px] text-[var(--ink-muted)]">
+                        Save the cocktail first to upload photos.
+                      </p>
+                    ) : (
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          disabled={imageBusy || saving}
+                          onClick={() => void savePrimaryImageUrl()}
+                          className="rounded-full bg-[var(--chip)] px-3 py-1.5 text-xs disabled:opacity-50"
+                        >
+                          Save primary URL
+                        </button>
+                        <label className="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-[var(--chip)] px-3 py-1.5 text-xs disabled:opacity-50">
+                          <Upload className="h-3.5 w-3.5" />
+                          Upload primary
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            disabled={creating || imageBusy || saving}
+                            onChange={(e) => {
+                              const files = e.target.files;
+                              if (files?.length) void uploadImageFiles(files, "primary");
+                              e.target.value = "";
+                            }}
+                          />
+                        </label>
+                        <label className="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-[var(--chip)] px-3 py-1.5 text-xs disabled:opacity-50">
+                          <Upload className="h-3.5 w-3.5" />
+                          Upload gallery
+                          <input
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            className="hidden"
+                            disabled={
+                              creating || imageBusy || saving || imageSlotsLeft < 1
+                            }
+                            onChange={(e) => {
+                              const files = e.target.files;
+                              if (files?.length) void uploadImageFiles(files, "gallery");
+                              e.target.value = "";
+                            }}
+                          />
+                        </label>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4">
+                    <div className="relative aspect-square overflow-hidden rounded-xl bg-[var(--chip)] ring-2 ring-[var(--accent)]">
+                      <Image
+                        src={draft.image || "/cocktail-fallback.svg"}
+                        alt="Primary"
+                        fill
+                        className={productImageClass(draft.image || "", "thumb")}
+                        sizes="120px"
+                        unoptimized={productImageUnoptimized(draft.image || "")}
+                      />
+                      <span className="absolute start-1.5 top-1.5 rounded-full bg-black/70 px-2 py-0.5 text-[10px] text-white">
+                        Primary
+                      </span>
+                    </div>
+                    {gallery.map((url, index) => (
+                      <div
+                        key={`${url}-${index}`}
+                        className="group relative aspect-square overflow-hidden rounded-xl bg-[var(--chip)] ring-1 ring-[var(--line)]"
+                      >
+                        <Image
+                          src={url}
+                          alt={`Gallery ${index + 1}`}
+                          fill
+                          className={productImageClass(url, "thumb")}
+                          sizes="120px"
+                          unoptimized={productImageUnoptimized(url)}
+                        />
+                        <div className="absolute inset-x-0 bottom-0 flex flex-wrap gap-1 bg-black/55 p-1.5 opacity-0 transition group-hover:opacity-100">
+                          <button
+                            type="button"
+                            disabled={imageBusy}
+                            onClick={() => void setGalleryAsPrimary(url)}
+                            className="rounded bg-white/90 px-1.5 py-0.5 text-[10px] text-[var(--ink)]"
+                          >
+                            Set primary
+                          </button>
+                          <button
+                            type="button"
+                            disabled={imageBusy}
+                            onClick={() => void removeGalleryImage(index)}
+                            className="rounded bg-white/90 px-1.5 py-0.5 text-[10px] text-red-800"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {!creating ? (
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <input
+                        value={galleryUrlDraft}
+                        onChange={(e) => setGalleryUrlDraft(e.target.value)}
+                        placeholder="Add gallery image URL"
+                        className="min-w-[220px] flex-1 rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-sm"
+                      />
+                      <button
+                        type="button"
+                        disabled={imageBusy || imageSlotsLeft < 1 || !galleryUrlDraft.trim()}
+                        onClick={() => void addGalleryUrl()}
+                        className="rounded-full bg-[var(--ink)] px-4 py-2 text-xs text-[var(--foam)] disabled:opacity-50"
+                      >
+                        Add URL
+                      </button>
+                    </div>
+                  ) : null}
+
+                  {imageStatus ? (
+                    <p className="mt-3 text-xs text-[var(--accent-deep)]">{imageStatus}</p>
+                  ) : null}
+                </div>
+
                 <label className="block text-xs">
                   <span className="text-[var(--ink-muted)]">Description</span>
                   <textarea
@@ -718,16 +1017,6 @@ export default function AdminCocktailsPage() {
                     })}
                   </div>
                 </div>
-
-                {selected ? (
-                  <p className="text-[10px] text-[var(--ink-muted)]">
-                    For gallery uploads, open{" "}
-                    <Link href="/admin/images" className="underline">
-                      Cocktail images
-                    </Link>
-                    .
-                  </p>
-                ) : null}
 
                 <button
                   type="button"

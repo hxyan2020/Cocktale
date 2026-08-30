@@ -10,6 +10,11 @@ import {
   getCocktailImageOverride,
   upsertCocktailImageOverride,
 } from "@/lib/cocktail-image-overrides";
+import {
+  MAX_COCKTAIL_IMAGES,
+  cocktailImageSlotCount,
+  remainingCocktailImageSlots,
+} from "@/lib/cocktail-image-types";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -27,6 +32,7 @@ const patchSchema = z.object({
     .optional(),
   gallery: z
     .array(z.union([z.string().url(), z.string().regex(/^\/.+/)]))
+    .max(MAX_COCKTAIL_IMAGES)
     .optional(),
   restore: z.boolean().optional(),
 });
@@ -82,12 +88,25 @@ export async function PATCH(req: Request, context: RouteContext) {
   if (parsed.data.restore) {
     clearCocktailImageOverride(id);
   } else {
+    const catalog = getCatalogCocktail(id);
     const patch: { image?: string | null; gallery?: string[] } = {};
     if (Object.prototype.hasOwnProperty.call(parsed.data, "image")) {
       patch.image = parsed.data.image ?? null;
     }
     if (parsed.data.gallery) {
-      patch.gallery = [...new Set(parsed.data.gallery.map((url) => url.trim()).filter(Boolean))];
+      const gallery = [...new Set(parsed.data.gallery.map((url) => url.trim()).filter(Boolean))];
+      const resolved = getResolvedCocktail(id) || catalog;
+      const primary =
+        Object.prototype.hasOwnProperty.call(patch, "image")
+          ? patch.image || cocktailFallbackImage()
+          : resolved?.image || catalog?.image || cocktailFallbackImage();
+      if (cocktailImageSlotCount(primary, gallery) > MAX_COCKTAIL_IMAGES) {
+        return NextResponse.json(
+          { error: `A cocktail can have at most ${MAX_COCKTAIL_IMAGES} images (including primary).` },
+          { status: 400 },
+        );
+      }
+      patch.gallery = gallery;
     }
     upsertCocktailImageOverride(id, patch);
   }
@@ -143,8 +162,16 @@ export async function POST(req: Request, context: RouteContext) {
   }
 
   const publicUrl = `/cocktails/${filename}`;
+  const resolved = getResolvedCocktail(id) || getCatalogCocktail(id);
   if (target === "gallery") {
     const existing = getCocktailImageOverride(id)?.gallery ?? [];
+    const primary = resolved?.image || cocktailFallbackImage();
+    if (remainingCocktailImageSlots(primary, existing) < 1) {
+      return NextResponse.json(
+        { error: `Gallery is full (${MAX_COCKTAIL_IMAGES} images max including primary).` },
+        { status: 400 },
+      );
+    }
     upsertCocktailImageOverride(id, { gallery: [...existing, publicUrl] });
   } else {
     upsertCocktailImageOverride(id, { image: publicUrl });
