@@ -365,6 +365,9 @@ export function rootMetadata(): Metadata {
     publisher: SITE_NAME,
     category: "Food & Drink",
     keywords: home.keywords,
+    verification: {
+      google: "WpbQm4GoCTxdzgBNFI0PYrCGCC-g80HtMHe5Kw-guFw",
+    },
     alternates: {
       canonical: SITE_URL,
     },
