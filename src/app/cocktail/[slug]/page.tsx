@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { AppNav } from "@/components/AppNav";
 import { getAllResolvedCocktails, getResolvedCocktail } from "@/lib/cocktails-server";
+import { hubsForCocktail } from "@/lib/cocktail-hubs";
 import {
   breadcrumbJsonLd,
   cocktailIdFromSeoSlug,
@@ -45,6 +46,9 @@ export default async function CocktailRecipePage({ params }: Props) {
   if (!cocktail) notFound();
 
   const canonicalSlug = cocktailSeoPath(cocktail).replace(/^\/cocktail\//, "");
+  if (slug !== canonicalSlug) {
+    permanentRedirect(cocktailSeoPath(cocktail));
+  }
   const imageSrc = cocktail.image?.startsWith("http")
     ? cocktail.image
     : cocktail.image || "/cocktail-backdrop.webp";
@@ -155,6 +159,23 @@ export default async function CocktailRecipePage({ params }: Props) {
                 {cocktail.story}
               </p>
             </section>
+          ) : null}
+
+          {hubsForCocktail(cocktail).length > 0 ? (
+            <nav className="mt-10" aria-label="Related guides">
+              <h2 className="font-[family-name:var(--font-display)] text-2xl">Guides</h2>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {hubsForCocktail(cocktail).map((hub) => (
+                  <Link
+                    key={hub.slug}
+                    href={`/cocktails/${hub.slug}`}
+                    className="rounded-full border border-white/20 px-3 py-1.5 text-xs text-[var(--on-bg)] hover:bg-white/10"
+                  >
+                    {hub.keywords[0]}
+                  </Link>
+                ))}
+              </div>
+            </nav>
           ) : null}
 
           {(cocktail.moods.length > 0 || cocktail.flavorProfile.length > 0) && (

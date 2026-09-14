@@ -1,7 +1,7 @@
 {
-  "name": "Cocktale — Cocktail Discovery & Home Bar",
+  "name": "Cocktale — What Cocktail Should I Drink Tonight?",
   "short_name": "Cocktale",
-  "description": "What should I drink tonight? Personalized cocktail recommendations, classic recipes, tasting journal, and home bar shopping.",
+  "description": "Personalized cocktail recommendations by weather and mood, 440+ classic recipes, tasting journal, and home-bar shopping for ingredients and bar tools.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0b0908",

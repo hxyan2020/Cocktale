@@ -1,5 +1,12 @@
 ﻿import type { Metadata } from "next";
-import { createPageMetadata, PAGE_SEO, absoluteUrl, itemListJsonLd } from "@/lib/seo";
+import {
+  createPageMetadata,
+  PAGE_SEO,
+  absoluteUrl,
+  breadcrumbJsonLd,
+  collectionPageJsonLd,
+  itemListJsonLd,
+} from "@/lib/seo";
 import { getAllProducts } from "@/lib/products";
 
 export const metadata: Metadata = createPageMetadata(PAGE_SEO.market);
@@ -19,6 +26,25 @@ export default function MarketLayout({ children }: { children: React.ReactNode }
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "Market", path: "/market" },
+            ]),
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            collectionPageJsonLd(PAGE_SEO.market.title, PAGE_SEO.market.description, "/market"),
+          ),
+        }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(listLd) }}

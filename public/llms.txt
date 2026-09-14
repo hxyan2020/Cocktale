@@ -1,0 +1,18 @@
+# Cocktale
+
+> Personalized cocktail discovery for home bartenders. Match a drink to tonight's weather and mood, open the full recipe, keep a tasting journal, and shop ingredients or bar tools.
+
+Site: https://cocktale.vercel.app
+
+## For people
+
+- What should I drink tonight? → https://cocktale.vercel.app/feed
+- Classic cocktail recipes A–Z → https://cocktale.vercel.app/catalogue
+- Gin / whiskey / vodka / rum / tequila guides → https://cocktale.vercel.app/cocktails/gin
+- Home bar shop → https://cocktale.vercel.app/market
+- Tasting journal → https://cocktale.vercel.app/journey
+- Contact → https://cocktale.vercel.app/contact
+
+## Notes
+
+Recipes are for adults of legal drinking age. Drink responsibly.

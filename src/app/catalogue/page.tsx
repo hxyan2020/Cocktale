@@ -2,7 +2,10 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Search } from "lucide-react";
+import { cocktailSeoPath } from "@/lib/seo";
+import { COCKTAIL_HUBS } from "@/lib/cocktail-hubs";
 import { AppNav } from "@/components/AppNav";
 import { useAuth } from "@/components/AuthProvider";
 import { useI18n } from "@/components/LanguageProvider";
@@ -54,7 +57,7 @@ function CatalogueCard({
   cocktail: Cocktail;
   onSelect: (cocktail: Cocktail) => void;
 }) {
-  const cardRef = useRef<HTMLButtonElement | null>(null);
+  const cardRef = useRef<HTMLAnchorElement | null>(null);
   const [visible, setVisible] = useState(false);
   const withFlags = useMemo(
     () => ({ ...cocktail, origin: formatOrigin(cocktail.origin) }),
@@ -80,10 +83,13 @@ function CatalogueCard({
   }, [visible]);
 
   return (
-    <button
+    <Link
       ref={cardRef}
-      type="button"
-      onClick={() => onSelect(cocktail)}
+      href={cocktailSeoPath(cocktail)}
+      onClick={(e) => {
+        e.preventDefault();
+        onSelect(cocktail);
+      }}
       className="flex h-full min-h-52 flex-col overflow-hidden rounded-[1.15rem] bg-[var(--surface)] text-left ring-1 ring-[var(--line)] transition hover:-translate-y-0.5 hover:shadow-lg"
     >
       <div className="relative h-28 w-full bg-[#ebe8e0] min-[380px]:h-32 sm:h-40">
@@ -107,7 +113,7 @@ function CatalogueCard({
           {localized.origin ? ` · ${localized.origin}` : ""}
         </p>
       </div>
-    </button>
+    </Link>
   );
 }
 
@@ -232,6 +238,17 @@ export default function CataloguePage() {
         <p className="mt-2 max-w-2xl text-sm text-[var(--on-bg-soft)] sm:text-base">
           {t("catalogue.subtitle")}
         </p>
+        <nav className="mt-4 flex flex-wrap gap-2" aria-label="Cocktail guides">
+          {COCKTAIL_HUBS.map((hub) => (
+            <Link
+              key={hub.slug}
+              href={`/cocktails/${hub.slug}`}
+              className="rounded-full bg-white/10 px-3 py-1.5 text-xs text-[var(--on-bg)] hover:bg-white/20"
+            >
+              {hub.keywords[0]}
+            </Link>
+          ))}
+        </nav>
 
         <div className="relative mt-5">
           <Search className="pointer-events-none absolute start-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--ink-muted)]" />

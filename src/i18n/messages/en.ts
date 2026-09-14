@@ -198,8 +198,8 @@ export const en: Messages = {
   },
   feed: {
     forUser: "For {name}",
-    title: "Tonight's pours",
-    rankingHint: "Ranked by weather · popularity · your browsing history",
+    title: "Tonight's cocktail picks, matched to weather and mood",
+    rankingHint: "Ranked by local weather, mood, flavor, and drinks you have already tried",
     anyMood: "Any mood",
     loading: "Opening the bar…",
     openingBar: "Opening the bar…",
@@ -276,13 +276,14 @@ export const en: Messages = {
     collectedOn: "Collected {date}",
   },
   journey: {
-    title: "My cocktail journey",
+    title: "Your cocktail collection and tasting journal",
     collected: "Collected",
     tried: "Cocktails I tried",
   },
   catalogue: {
-    title: "Catalogue",
-    subtitle: "Every pour, ranked for you — a different slice each visit, most relevant first.",
+    title: "Cocktail recipes A–Z, from the classics to modern signatures",
+    subtitle:
+      "Search classic and modern cocktails by name, spirit, ingredient, glass, or origin — Old Fashioned, Margarita, Espresso Martini, Negroni, and 440+ more.",
     searchPlaceholder: "Search cocktails…",
     count: "{n} cocktails",
     empty: "No cocktails match that search.",
@@ -290,7 +291,8 @@ export const en: Messages = {
   },
   journal: {
     title: "Cocktail journal",
-    subtitle: "Dates, notes, and everything you've actually tasted.",
+    subtitle:
+      "Log dates and tasting notes for drinks you have actually made — Cocktale uses that history to sharpen tonight's picks.",
     empty: "No tastings yet. Tap Tried on a cocktail card to start your journal.",
     triedOn: "Tried {date}",
     addNote: "Add a tasting note…",
@@ -308,15 +310,16 @@ export const en: Messages = {
     rights: "© {year} Cocktale. All rights reserved.",
   },
   contact: {
-    title: "Contact us",
-    subtitle: "Questions about an order, a recipe, or your account? Reach the Cocktale team directly.",
+    title: "Get help with an order, a recipe, or your account",
+    subtitle:
+      "Message Cocktale for market orders, refunds, a recipe that looks wrong, sign-in trouble, or a drink you think we are missing. We reply within one business day — no account required.",
     customerService: "Customer service",
     telegram: "Message us on Telegram",
     email: "Email",
     hours: "We typically reply within one business day.",
   },
   terms: {
-    title: "Terms of use",
+    title: "Terms of use and responsible drinking",
     updated: "Last updated: 15 August 2026",
   },
   content: {

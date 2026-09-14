@@ -114,6 +114,9 @@ export default function JourneyPageClient() {
         <h1 className="font-[family-name:var(--font-display)] text-2xl text-[var(--on-bg)] sm:text-3xl">
           {t("journey.title")}
         </h1>
+        <p className="mt-2 max-w-2xl text-sm text-[var(--on-bg-muted)]">
+          {t("journal.subtitle")}
+        </p>
 
         <div className="mt-5 inline-flex w-full max-w-lg rounded-full bg-[var(--chip)] p-1">
           <button

@@ -341,6 +341,7 @@ export default function FeedPage() {
             <h1 className="mt-1 font-[family-name:var(--font-display)] text-2xl text-[var(--on-bg)] sm:text-3xl">
               {t("feed.title")}
             </h1>
+            <p className="mt-2 max-w-xl text-sm text-[var(--on-bg-muted)]">{t("feed.rankingHint")}</p>
           </div>
           {weather && locationStatus === "granted" && (
             <div className="inline-flex max-w-full items-center gap-2 rounded-full bg-[var(--surface)] px-3 py-1.5 text-xs text-[var(--ink-soft)] ring-1 ring-[var(--line)] sm:px-4 sm:py-2 sm:text-sm">

@@ -69,8 +69,9 @@ export const EN_SHOP_MESSAGES: ShopMessages = {
   market: "Market",
   cart: "Cart",
   orders: "Orders",
-  title: "Cocktale Market",
-  subtitle: "Ingredients, glassware, and bar tools from every recipe—priced and ready to ship.",
+  title: "Everything you need to build a home bar",
+  subtitle:
+    "Spirits, mixers, syrups, bitters, garnishes, cocktail glassware, and bar tools — each product links to the recipes that use it, with prices for Singapore, Hong Kong, Shanghai, New York, Paris, and Tokyo.",
   searchPlaceholder: "Search products…",
   all: "All",
   ingredients: "Ingredients",

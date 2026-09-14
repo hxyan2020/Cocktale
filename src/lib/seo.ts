@@ -26,73 +26,75 @@ export type PageSeo = {
 
 export const PAGE_SEO = {
   home: {
-    title: "What Cocktail Should I Drink Tonight?",
+    title: "What Should I Drink Tonight? Cocktails by Mood",
     description:
-      "Cocktale finds the right cocktail for tonight using local weather, your mood, and taste history. Browse classic recipes, keep a tasting journal, and shop ingredients, glassware, and bar tools.",
+      "Not sure what to drink tonight? Cocktale matches cocktails to your local weather, mood, and taste, with 440+ recipes, a tasting journal, and a home-bar shop.",
     path: "/",
     keywords: [
       "what cocktail should I drink tonight",
-      "personalized cocktail recommendations",
-      "weather based cocktail suggestions",
-      "cocktail for my mood",
-      "cocktail discovery app",
+      "what should I drink tonight",
+      "cocktail recommendations",
+      "cocktail generator",
+      "drink picker",
       "classic cocktail recipes",
-      "cocktail tasting journal",
-      "home bar ingredients shop",
-      "mixology app",
-      "rainy day cocktails",
+      "old fashioned recipe",
+      "margarita recipe",
+      "espresso martini recipe",
+      "home bartender",
+      "weather based cocktail suggestions",
     ],
   },
   feed: {
-    title: "Tonight's Cocktail Picks for Your Mood & Weather",
+    title: "Tonight's Cocktail Picks by Weather & Mood",
     description:
-      "Swipe ranked cocktail recommendations for tonight — matched to local weather, mood, flavor preferences, recipe complexity, and what you have already tried.",
+      "Get tonight's cocktail picks ranked by your local weather, mood, flavor preferences, and what you've already tried. Swipe to save the ones you want to make.",
     path: "/feed",
     keywords: [
-      "cocktail recommendations for tonight",
-      "weather cocktail pairing",
-      "cocktail for my mood",
-      "rainy day cocktail ideas",
+      "cocktails for tonight",
       "hot weather cocktails",
-      "cozy cocktail suggestions",
-      "swipe cocktail recipes",
+      "summer cocktails",
+      "winter cocktails",
+      "rainy day cocktail ideas",
+      "cozy cocktails",
+      "refreshing cocktails",
+      "cocktails by mood",
       "personalized drink picker",
-      "AI cocktail suggestions",
     ],
   },
   catalogue: {
-    title: "Classic & Modern Cocktail Recipes Library",
+    title: "Cocktail Recipes A–Z: Classic & Modern Drinks",
     description:
-      "Search hundreds of cocktail recipes by name, spirit, ingredient, glassware, origin, or category. From Negroni and Margarita to modern signatures — your mixology library.",
+      "Browse 440+ classic and modern cocktail recipes. Search by name, spirit, ingredient, glass, or origin — from the Old Fashioned and Margarita to Negroni.",
     path: "/catalogue",
     keywords: [
-      "cocktail recipe library",
+      "cocktail recipes",
       "classic cocktail recipes",
-      "Negroni recipe",
-      "Margarita recipe",
-      "Old Fashioned recipe",
-      "search cocktails by ingredient",
-      "IBA cocktail recipes",
-      "mixology recipe database",
-      "gin cocktails",
-      "whiskey cocktails",
-      "vodka cocktails",
+      "cocktail recipe list",
+      "easy cocktail recipes",
+      "old fashioned recipe",
+      "margarita recipe",
+      "espresso martini recipe",
+      "mojito recipe",
+      "negroni recipe",
+      "cocktails A-Z",
+      "cocktails by ingredient",
     ],
   },
   market: {
     title: "Buy Cocktail Ingredients, Glassware & Bar Tools",
     description:
-      "Shop spirits, mixers, garnishes, cocktail glassware, and bar tools for the recipes you want to make. Build a home bar with products linked to Cocktale cocktails.",
+      "Shop spirits, mixers, syrups, garnishes, glassware, and bar tools for the cocktails you want to make. Products pair with Cocktale recipes.",
     path: "/market",
     keywords: [
+      "home bar essentials",
+      "cocktail kit",
+      "bar tools set",
+      "cocktail glassware",
       "buy cocktail ingredients online",
-      "home bar supplies",
-      "cocktail glassware shop",
-      "bar tools jigger shaker",
-      "cocktail mixers and garnishes",
-      "spirits for cocktails",
+      "cocktail shaker",
+      "jigger",
+      "whiskey glasses",
       "home bartender kit",
-      "cocktail market",
     ],
   },
   cart: {
@@ -100,49 +102,47 @@ export const PAGE_SEO = {
     description:
       "Review cocktail ingredients, glassware, and bar tools in your Cocktale cart before secure checkout.",
     path: "/cart",
-    keywords: ["cocktail shopping cart", "bar tools cart"],
+    keywords: ["cocktail shopping cart", "home bar cart"],
     index: false,
   },
   login: {
-    title: "Sign In to Your Cocktail Journey",
+    title: "Sign In to Save Cocktails & Tasting Notes",
     description:
-      "Sign in to Cocktale to save collected cocktails, sync your tasting journal, and unlock personalized drink recommendations.",
+      "Sign in to Cocktale to save collected cocktails, sync your tasting journal, and unlock weather- and mood-based drink recommendations.",
     path: "/login",
-    keywords: ["cocktale login", "cocktail app sign in"],
+    keywords: ["cocktale login", "cocktail journal sign in"],
     index: false,
   },
   contact: {
-    title: "Contact Cocktale — Orders, Recipes & Account Help",
+    title: "Contact Support — Orders, Recipes & Accounts",
     description:
-      "Need help with a market order, cocktail recipe, or your Cocktale account? Contact support for discovery, shopping, tasting journal, and checkout questions.",
+      "Questions about a market order, a cocktail recipe, or your account? Reach the Cocktale team and we'll reply within one business day.",
     path: "/contact",
     keywords: [
       "contact cocktale",
-      "cocktail app customer support",
-      "cocktale order help",
-      "cocktail recipe questions",
-      "home bar shopping support",
+      "cocktale support",
+      "cocktail order help",
+      "hello@cocktale.app",
     ],
   },
   terms: {
-    title: "Terms of Use",
+    title: "Terms of Use & Responsible Drinking Policy",
     description:
-      "Cocktale terms of use for accounts, cocktail recommendations, market purchases, and responsible drinking guidance.",
+      "Cocktale terms of use covering accounts, personalized recommendations, market purchases, refunds, age limits, and responsible-drinking guidance.",
     path: "/terms",
-    keywords: ["cocktale terms of use", "cocktail app terms"],
+    keywords: ["cocktale terms of use", "responsible drinking", "cocktail app terms"],
   },
   journey: {
-    title: "My Cocktail Collection & Tasting Journal",
+    title: "Cocktail Tasting Journal & Collection Tracker",
     description:
-      "Track cocktails you collected and tried, add tasting notes and dates, and see how your flavor preferences evolve on your personal cocktail journey.",
+      "Track every cocktail you've collected and tried, add tasting notes and dates, and watch your flavor profile shift over time in your own tasting journal.",
     path: "/journey",
     keywords: [
       "cocktail tasting journal",
-      "cocktail collection tracker",
-      "drinks I have tried",
       "cocktail tasting notes",
-      "personal mixology journal",
+      "drinks I've tried tracker",
       "saved cocktail favorites",
+      "personal mixology journal",
     ],
   },
   journal: {
@@ -150,7 +150,7 @@ export const PAGE_SEO = {
     description:
       "Log cocktails you have tried with dates and tasting notes. Continues in your Cocktale journey journal.",
     path: "/journal",
-    keywords: ["cocktail journal", "tasting notes", "drinks tried"],
+    keywords: ["cocktail journal", "tasting notes"],
     index: false,
   },
   book: {
@@ -158,14 +158,14 @@ export const PAGE_SEO = {
     description:
       "Your saved cocktail favorites — open them from your Cocktale journey collection.",
     path: "/book",
-    keywords: ["cocktail collection book", "saved cocktail recipes"],
+    keywords: ["saved cocktail recipes"],
     index: false,
   },
   orders: {
     title: "Your Cocktail Market Orders",
     description: "View Cocktale market order history for cocktail ingredients, glassware, and bar tools.",
     path: "/orders",
-    keywords: ["cocktale orders", "cocktail ingredient orders"],
+    keywords: ["cocktale orders"],
     index: false,
   },
   orderSuccess: {
@@ -257,30 +257,37 @@ export function createPageMetadata(page: PageSeo, overrides?: Partial<Metadata>)
   };
 }
 
+export function recipeTitle(name: string): string {
+  const budget = 49 - name.length;
+  if (budget >= 37) return `${name} Recipe: Ingredients & How to Make It`;
+  if (budget >= 25) return `${name} Cocktail Recipe & Method`;
+  if (budget >= 16) return `${name} Cocktail Recipe`;
+  return `${name} Recipe`;
+}
+
 export function cocktailPageSeo(cocktail: Cocktail): PageSeo {
-  const spirits = cocktail.ingredients
-    .map((i) => i.name)
-    .slice(0, 4)
-    .join(", ");
-  const moods = cocktail.moods.slice(0, 3).join(", ");
+  const fallback = `How to make a ${cocktail.name}: exact measures, step-by-step method, glassware, flavor notes, and what to drink it with — plus where to buy the bottles.`;
+  const custom = cocktail.description?.trim();
+  const description =
+    custom && custom.length >= 110 && custom.length <= 170
+      ? custom
+      : fallback;
   return {
-    title: `${cocktail.name} Cocktail Recipe${cocktail.glass ? ` (${cocktail.glass})` : ""}`,
-    description:
-      cocktail.description?.trim() ||
-      `How to make a ${cocktail.name} cocktail${spirits ? ` with ${spirits}` : ""}. Ingredients, steps${cocktail.origin ? `, origin ${cocktail.origin}` : ""}${moods ? `, best for ${moods}` : ""}.`,
+    title: recipeTitle(cocktail.name),
+    description,
     path: cocktailSeoPath(cocktail),
     keywords: [
+      `${cocktail.name} recipe`,
       `${cocktail.name} cocktail recipe`,
-      `how to make ${cocktail.name}`,
+      `how to make a ${cocktail.name}`,
+      `${cocktail.name} ingredients`,
+      `best ${cocktail.name} recipe`,
       cocktail.name,
       cocktail.glass,
       cocktail.category,
-      cocktail.origin,
       ...cocktail.ingredients.slice(0, 5).map((i) => i.name),
-      ...cocktail.moods.slice(0, 3),
-      ...cocktail.flavorProfile.slice(0, 3),
-      "cocktail recipe",
-      "mixology",
+      "classic cocktail recipes",
+      "home bartender",
     ].filter(Boolean),
     ogImage: cocktail.image?.startsWith("http") ? cocktail.image : undefined,
   };
@@ -306,11 +313,16 @@ export function productPageSeo(product: {
           : "cocktail ingredient";
 
   const image = product.images?.[0];
+  const nameBudget = 49 - product.name.length;
+  const title =
+    nameBudget >= 26
+      ? `${product.name} — Buy Online for Cocktails`
+      : nameBudget >= 14
+        ? `Buy ${product.name} Online`
+        : product.name;
   return {
-    title: `Buy ${product.name} Online — ${categoryLabel} for Home Bars`,
-    description:
-      product.description?.trim() ||
-      `Shop ${product.name}${product.brand ? ` by ${product.brand}` : ""} on Cocktale. Pair this ${categoryLabel} with cocktail recipes and stock your home bar.`,
+    title,
+    description: `Buy ${product.name} on Cocktale — ${categoryLabel} for home bars, with local pricing and the cocktail recipes that use it. In stock and ready to ship.`,
     path: `/market/${product.slug}`,
     keywords: [
       `buy ${product.name}`,
@@ -398,24 +410,34 @@ export function rootMetadata(): Metadata {
 
 export const HOME_FAQS = [
   {
-    question: "How does Cocktale recommend a cocktail for tonight?",
+    question: "What cocktail should I drink tonight?",
     answer:
-      "Cocktale ranks recipes using local weather, the mood and flavors you choose, recipe complexity, and your tasting history so you get drinks that fit tonight—not a random list.",
+      "Pick by conditions, not a random list. Hot weather suits tall citrus drinks such as a Mojito or highball; cold weather suits stirred drinks such as an Old Fashioned, Manhattan, or Negroni. Cocktale ranks recipes from your local weather, mood, and tasting history.",
   },
   {
-    question: "Can I browse classic cocktail recipes?",
+    question: "What is the most popular cocktail in the world?",
     answer:
-      "Yes. The catalogue includes classic and modern cocktails you can search by name, spirit, ingredient, glassware, origin, or category.",
+      "It depends on ordered versus searched. The Margarita is the most-ordered drink in bars worldwide (Bacardi Cocktail Trends Report 2026). In US Google searches, the Old Fashioned leads at about 415,000 monthly queries, ahead of the Margarita and Espresso Martini.",
   },
   {
-    question: "Does Cocktale include a tasting journal?",
+    question: "What are the basic cocktails every home bartender should know?",
     answer:
-      "Your journey tracks cocktails you collect and try, with dates and tasting notes so you remember what you loved.",
+      "Old Fashioned, Martini, Daiquiri, Margarita, Whiskey Sour, and Negroni. Together they cover stirred-spirit, shaken-sour, and bitter-aperitif templates most other drinks riff on.",
   },
   {
-    question: "Can I buy ingredients and bar tools?",
+    question: "What bar tools do I need at home?",
     answer:
-      "The Cocktale market sells spirits, mixers, glassware, and bar tools linked to the recipes you want to make at home.",
+      "A shaker, jigger, strainer, bar spoon, and citrus juicer cover most classic recipes. Measurement accuracy matters more than glassware when you are starting out. Shop those tools in the Cocktale market.",
+  },
+  {
+    question: "Should I shake or stir a cocktail?",
+    answer:
+      "Stir drinks made only of spirits, such as a Martini or Manhattan, so they stay clear. Shake anything with juice, egg, or dairy so it chills and aerates properly.",
+  },
+  {
+    question: "Can I buy ingredients and bar tools on Cocktale?",
+    answer:
+      "Yes. The market sells spirits, mixers, glassware, and bar tools linked to the recipes you want to make, with prices shown for Singapore, Hong Kong, Shanghai, New York, Paris, and Tokyo.",
   },
 ] as const;
 
@@ -428,8 +450,20 @@ export function websiteJsonLd() {
         "@id": `${SITE_URL}/#organization`,
         name: SITE_NAME,
         url: SITE_URL,
-        logo: absoluteUrl("/logo.png"),
+        logo: {
+          "@type": "ImageObject",
+          url: absoluteUrl("/logo.png"),
+          width: 512,
+          height: 512,
+        },
         description: SITE_TAGLINE,
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "customer support",
+          email: "hello@cocktale.app",
+          availableLanguage: ["English"],
+          areaServed: ["SG", "HK", "CN", "US", "FR", "JP"],
+        },
         sameAs: [],
       },
       {
@@ -510,7 +544,9 @@ export function recipeJsonLd(cocktail: Cocktail) {
       position: index + 1,
       text: step,
     })),
-    recipeYield: "1 cocktail",
+    recipeYield: "1 serving",
+    prepTime: "PT5M",
+    totalTime: "PT8M",
     url: absoluteUrl(cocktailSeoPath(cocktail)),
     mainEntityOfPage: absoluteUrl(cocktailSeoPath(cocktail)),
     author: {
@@ -552,6 +588,40 @@ export function breadcrumbJsonLd(crumbs: Array<{ name: string; path: string }>) 
       name: crumb.name,
       item: absoluteUrl(crumb.path),
     })),
+  };
+}
+
+export function contactPageJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: PAGE_SEO.contact.title,
+    description: PAGE_SEO.contact.description,
+    url: absoluteUrl("/contact"),
+    mainEntity: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+      email: "hello@cocktale.app",
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer support",
+        telephone: "+65-9131-9481",
+        email: "hello@cocktale.app",
+        availableLanguage: ["English"],
+      },
+    },
+  };
+}
+
+export function collectionPageJsonLd(name: string, description: string, path: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name,
+    description,
+    url: absoluteUrl(path),
+    isPartOf: { "@id": `${SITE_URL}/#website` },
   };
 }
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getProductBySlug } from "@/lib/products";
-import { createPageMetadata, productJsonLd, productPageSeo } from "@/lib/seo";
+import { breadcrumbJsonLd, createPageMetadata, productJsonLd, productPageSeo } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -28,10 +28,24 @@ export default async function ProductSlugLayout({ children, params }: Props) {
   return (
     <>
       {product ? (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd(product)) }}
-        />
+        <>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(
+                breadcrumbJsonLd([
+                  { name: "Home", path: "/" },
+                  { name: "Market", path: "/market" },
+                  { name: product.name, path: `/market/${product.slug}` },
+                ]),
+              ),
+            }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd(product)) }}
+          />
+        </>
       ) : null}
       {children}
     </>

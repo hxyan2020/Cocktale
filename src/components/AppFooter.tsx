@@ -33,12 +33,24 @@ export function AppFooter() {
           <Link
             href="/catalogue"
             className={`inline-flex min-h-10 items-center rounded-full px-3 py-1.5 text-sm transition ${
-              pathname.startsWith("/catalogue")
+              pathname.startsWith("/catalogue") || pathname.startsWith("/cocktails")
                 ? "bg-[var(--foam)] text-[var(--ink)]"
                 : "text-[var(--on-bg-soft)] hover:bg-white/10 hover:text-[var(--on-bg)]"
             }`}
           >
             Recipes
+          </Link>
+          <Link
+            href="/cocktails/whiskey"
+            className="inline-flex min-h-10 items-center rounded-full px-3 py-1.5 text-sm text-[var(--on-bg-soft)] hover:bg-white/10 hover:text-[var(--on-bg)]"
+          >
+            Whiskey
+          </Link>
+          <Link
+            href="/cocktails/gin"
+            className="inline-flex min-h-10 items-center rounded-full px-3 py-1.5 text-sm text-[var(--on-bg-soft)] hover:bg-white/10 hover:text-[var(--on-bg)]"
+          >
+            Gin
           </Link>
           <Link
             href="/market"

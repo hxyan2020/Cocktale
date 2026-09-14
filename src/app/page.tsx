@@ -10,6 +10,7 @@ import {
   itemListJsonLd,
 } from "@/lib/seo";
 import { getAllResolvedCocktails } from "@/lib/cocktails-server";
+import { COCKTAIL_HUBS } from "@/lib/cocktail-hubs";
 
 export const metadata: Metadata = createPageMetadata(PAGE_SEO.home);
 
@@ -34,10 +35,32 @@ const FEATURES = [
   },
 ] as const;
 
+const FEATURED_RECIPE_NAMES = [
+  "Old Fashioned",
+  "Margarita",
+  "Espresso Martini",
+  "Mojito",
+  "Moscow Mule",
+  "Manhattan",
+  "Pina Colada",
+  "Martini",
+  "White Russian",
+  "Negroni",
+  "Daiquiri",
+  "Whiskey Sour",
+];
+
 export default function HomePage() {
-  const popular = getAllResolvedCocktails()
-    .slice()
-    .sort((a, b) => b.popularity - a.popularity)
+  const all = getAllResolvedCocktails();
+  const popular = FEATURED_RECIPE_NAMES.map((name) =>
+    all.find((c) => c.name.toLowerCase() === name.toLowerCase()),
+  )
+    .filter((c): c is NonNullable<typeof c> => Boolean(c))
+    .concat(
+      all
+        .filter((c) => !FEATURED_RECIPE_NAMES.some((n) => n.toLowerCase() === c.name.toLowerCase()))
+        .sort((a, b) => b.popularity - a.popularity),
+    )
     .slice(0, 12);
 
   const listLd = itemListJsonLd(
@@ -74,8 +97,10 @@ export default function HomePage() {
           What cocktail should you drink tonight?
         </h1>
         <p className="mt-4 max-w-xl text-base leading-relaxed text-[var(--on-bg-muted)] sm:text-lg">
-          Personalized recommendations from weather and mood, a searchable recipe library, a
-          tasting journal, and a market for ingredients and bar tools.
+          Tell Cocktale how you feel and it ranks 440+ classic and modern cocktails against
+          your local weather, mood, and drinks you have already tried. Hot and humid gets
+          something tall and citrus-forward. Cold and dark gets something stirred. Every
+          pick opens a full recipe — and you can buy what you are missing.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link
@@ -115,12 +140,23 @@ export default function HomePage() {
       <section className="border-t border-white/10">
         <div className="mx-auto w-full max-w-5xl px-5 py-14 sm:px-8">
           <h2 className="font-[family-name:var(--font-display)] text-2xl text-[var(--on-bg)]">
-            Popular cocktail recipes
+            Most-searched cocktail recipes
           </h2>
           <p className="mt-2 max-w-2xl text-sm text-[var(--on-bg-muted)]">
-            Jump into full recipes with ingredients and steps — then save favorites on your
-            journey.
+            The drinks people look up most — Old Fashioned, Margarita, Espresso Martini, Mojito,
+            and other classics — with ingredients and a full method.
           </p>
+          <nav className="mt-5 flex flex-wrap gap-2" aria-label="Cocktail guides">
+            {COCKTAIL_HUBS.map((hub) => (
+              <Link
+                key={hub.slug}
+                href={`/cocktails/${hub.slug}`}
+                className="rounded-full border border-white/15 px-3 py-1.5 text-xs text-[var(--on-bg)] hover:bg-white/10"
+              >
+                {hub.keywords[0]}
+              </Link>
+            ))}
+          </nav>
           <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {popular.map((cocktail) => (
               <li key={cocktail.id}>
@@ -160,6 +196,15 @@ export default function HomePage() {
               </div>
             ))}
           </dl>
+          <p className="mt-10 text-xs leading-relaxed text-[var(--on-bg-muted)]">
+            Recipes are curated for home bartenders from classic specifications and verified
+            ingredient lists. Drink only if you are of legal age where you live, and never drink
+            and drive.{" "}
+            <Link href="/terms" className="text-[var(--on-bg-accent)] underline-offset-4 hover:underline">
+              Terms and responsible-drinking guidance
+            </Link>
+            .
+          </p>
         </div>
       </section>
     </main>

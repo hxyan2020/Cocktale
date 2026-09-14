@@ -1,9 +1,9 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { breadcrumbJsonLd, createPageMetadata, PAGE_SEO } from "@/lib/seo";
 
-export const metadata: Metadata = createPageMetadata(PAGE_SEO.feed);
+export const metadata: Metadata = createPageMetadata(PAGE_SEO.journey);
 
-export default function FeedLayout({ children }: { children: React.ReactNode }) {
+export default function JourneyLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <script
@@ -12,7 +12,7 @@ export default function FeedLayout({ children }: { children: React.ReactNode }) 
           __html: JSON.stringify(
             breadcrumbJsonLd([
               { name: "Home", path: "/" },
-              { name: "Tonight's picks", path: "/feed" },
+              { name: "Journey", path: "/journey" },
             ]),
           ),
         }}
