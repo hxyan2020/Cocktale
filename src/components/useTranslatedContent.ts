@@ -7,7 +7,7 @@ import { useI18n } from "@/components/LanguageProvider";
 import type { Product } from "@/lib/commerce-types";
 import type { Cocktail } from "@/lib/types";
 
-const CACHE_PREFIX = "cocktale:content-i18n:v1:";
+const CACHE_PREFIX = "cocktale:content-i18n:v2:";
 const pendingTranslations = new Map<string, Promise<string[]>>();
 
 function hash(value: string) {

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { isLocaleCode } from "@/i18n/locales";
+import { needsTranslation, splitProtected } from "@/lib/translation-protect";
 
 const requestSchema = z.object({
   locale: z.string(),
@@ -94,13 +95,25 @@ export async function POST(request: Request) {
     }
 
     for (const batch of batches) {
-      const output = await translateBatch(
-        batch.map((entry) => entry.text),
-        locale,
-      );
-      output.forEach((translated, batchIndex) => {
+      const pieces = batch.map((entry) => splitProtected(entry.text));
+      const free: string[] = [];
+      for (const parts of pieces) {
+        for (const part of parts) {
+          if (needsTranslation(part)) free.push(part.text);
+        }
+      }
+      const output = free.length > 0 ? await translateBatch(free, locale) : [];
+      let cursor = 0;
+      pieces.forEach((parts, batchIndex) => {
+        const rebuilt = parts
+          .map((part) => {
+            if (!needsTranslation(part)) return part.text;
+            const translated = output[cursor++] || part.text;
+            return translated;
+          })
+          .join("");
         const source = batch[batchIndex];
-        translations[source.index] = translated || source.text;
+        translations[source.index] = rebuilt || source.text;
         cache.set(`${locale}\u0000${source.text}`, translations[source.index]);
       });
     }
