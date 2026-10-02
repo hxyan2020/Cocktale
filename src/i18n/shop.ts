@@ -63,6 +63,8 @@ export type ShopMessages = {
   stripeSession: string;
   demoLabel: string;
   guest: string;
+  utensilSetsTitle: string;
+  utensilSetsSubtitle: string;
 };
 
 export const EN_SHOP_MESSAGES: ShopMessages = {
@@ -129,6 +131,9 @@ export const EN_SHOP_MESSAGES: ShopMessages = {
   stripeSession: "Stripe session",
   demoLabel: "demo",
   guest: "Guest",
+  utensilSetsTitle: "Buy every utensil in one order",
+  utensilSetsSubtitle:
+    "Basic set, professional set, or the fullest set — one checkout instead of picking tools one by one.",
 };
 
 const catalogs: Partial<Record<LocaleCode, ShopMessages>> = {
@@ -178,6 +183,8 @@ const catalogs: Partial<Record<LocaleCode, ShopMessages>> = {
     trackPreparing: "备货中",
     trackFulfilled: "已发货/完成",
     trackPending: "等待付款",
+    utensilSetsTitle: "一次买齐全套器具",
+    utensilSetsSubtitle: "基础套装、专业套装，或最全套装——一次结账，不用逐件挑选。",
   },
 };
 

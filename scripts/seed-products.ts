@@ -706,6 +706,126 @@ function toolImages(sourceKey: string, name: string): ProductImage[] {
   return gallery(name, pool, ["hero", "front", "side", "detail", "lifestyle"]);
 }
 
+const BASIC_UTENSILS = [
+  "Japanese-Style Jigger",
+  "Weighted Cocktail Shaker Set",
+  "Twisted Bar Spoon",
+  "Hawthorne Strainer",
+  "Hardwood Muddler",
+];
+const PROFESSIONAL_UTENSILS = [
+  ...BASIC_UTENSILS,
+  "Japanese Mixing Glass",
+  "Fine-Mesh Cocktail Strainer",
+  "Hand Citrus Press",
+  "Garnish Knife & Board Set",
+  "Y-Peeler for Twists",
+  "Aluminum Ice Scoop",
+  "Bar Teaspoon Set",
+  "Channel Knife & Zester",
+  "Microplane Zester",
+];
+const FULLEST_UTENSILS = [
+  ...PROFESSIONAL_UTENSILS,
+  "Bar Blender 1000W",
+  "Gooseneck Electric Kettle",
+  "Glass Punch Bowl (4 L)",
+  "Punch Ladle",
+  "Compact Espresso Maker",
+  "Handheld Milk Frother",
+];
+
+function utensilSetProduct(opts: {
+  id: string;
+  slug: string;
+  name: string;
+  priceCents: number;
+  separateCents: number;
+  pieces: string[];
+  description: string;
+  photos: string[];
+}): SeedProduct {
+  const save = ((opts.separateCents - opts.priceCents) / 100).toFixed(2);
+  const separate = (opts.separateCents / 100).toFixed(2);
+  return {
+    id: opts.id,
+    slug: opts.slug,
+    name: opts.name,
+    category: "utensil",
+    subcategory: "Utensil sets",
+    priceCents: opts.priceCents,
+    currency: "usd",
+    description: opts.description,
+    longDescription: `${opts.name} ships every piece in one box: ${opts.pieces.join(", ")}. Bought separately these tools are $${separate}. The set is $${(opts.priceCents / 100).toFixed(2)} — you save $${save}.`,
+    specs: [
+      { label: "Pieces", value: String(opts.pieces.length) },
+      { label: "Bought separately", value: `$${separate}` },
+      { label: "You save", value: `$${save}` },
+      { label: "Includes", value: opts.pieces.join(", ") },
+    ],
+    images: gallery(opts.name, opts.photos, ["hero", "front", "side", "detail", "lifestyle"]),
+    stock: 40,
+    unit: `${opts.pieces.length}-piece set`,
+    brand: "BarForge",
+    tags: ["utensil", "set", "bundle"],
+    relatedCocktailIds: [],
+    sourceKey: opts.id,
+  };
+}
+
+function utensilSetProducts(): SeedProduct[] {
+  return [
+    utensilSetProduct({
+      id: "set-utensil-basic",
+      slug: "utensil-set-basic",
+      name: "Basic Utensil Set",
+      priceCents: 7999,
+      separateCents: 9895,
+      pieces: BASIC_UTENSILS,
+      description: "The five tools for shaking, stirring, and measuring — one box instead of five checkouts.",
+      photos: [
+        wiki("Bartools.jpg"),
+        wiki("Jigger.jpg"),
+        wiki("Bartools2.jpg"),
+        wiki("Muddler.jpg"),
+        wiki("Straining a cocktail.jpg"),
+      ],
+    }),
+    utensilSetProduct({
+      id: "set-utensil-professional",
+      slug: "utensil-set-professional",
+      name: "Professional Utensil Set",
+      priceCents: 21999,
+      separateCents: 26686,
+      pieces: PROFESSIONAL_UTENSILS,
+      description: "Stirred drinks, fine straining, and garnish prep — the working home-bar kit in one order.",
+      photos: [
+        wiki("Pouring from a mixing glass.jpg"),
+        wiki("Double straining a cocktail.jpg"),
+        wiki("Lemon squeezing.jpg"),
+        wiki("Bartools.jpg"),
+        wiki("Using a jigger.jpg"),
+      ],
+    }),
+    utensilSetProduct({
+      id: "set-utensil-fullest",
+      slug: "utensil-set-fullest",
+      name: "Fullest Utensil Set",
+      priceCents: 49999,
+      separateCents: 61880,
+      pieces: FULLEST_UTENSILS,
+      description: "Every bar utensil in the shop — blender, espresso, punch service, and the full hand-tool kit.",
+      photos: [
+        wiki("Kitchen utensils-01.jpg"),
+        wiki("Espresso machine 1.jpg"),
+        wiki("Piña Coladas made in home kitchen blender - 1.jpg"),
+        wiki("Punch Bowl MET 180787.jpg"),
+        wiki("Bartools2.jpg"),
+      ],
+    }),
+  ];
+}
+
 function glassImages(name: string, cocktails: Cocktail[]): ProductImage[] {
   const family = glassFamily(name);
   const exact = cocktailPhotos(
@@ -862,6 +982,8 @@ function main() {
       sourceKey: id,
     });
   }
+
+  products.push(...utensilSetProducts());
 
   // Accessories bundle
   products.push({

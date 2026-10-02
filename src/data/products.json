@@ -1,5 +1,203 @@
 [
   {
+    "id": "set-utensil-basic",
+    "slug": "utensil-set-basic",
+    "name": "Basic Utensil Set",
+    "category": "utensil",
+    "subcategory": "Utensil sets",
+    "priceCents": 7999,
+    "currency": "usd",
+    "description": "The five tools for shaking, stirring, and measuring — one box instead of five checkouts.",
+    "longDescription": "Basic Utensil Set ships every piece in one box: Japanese-Style Jigger, Weighted Cocktail Shaker Set, Twisted Bar Spoon, Hawthorne Strainer, Hardwood Muddler. Bought separately these tools are $98.95. The set is $79.99 — you save $18.96.",
+    "specs": [
+      {
+        "label": "Pieces",
+        "value": "5"
+      },
+      {
+        "label": "Bought separately",
+        "value": "$98.95"
+      },
+      {
+        "label": "You save",
+        "value": "$18.96"
+      },
+      {
+        "label": "Includes",
+        "value": "Japanese-Style Jigger, Weighted Cocktail Shaker Set, Twisted Bar Spoon, Hawthorne Strainer, Hardwood Muddler"
+      }
+    ],
+    "images": [
+      {
+        "angle": "hero",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Bartools.jpg?width=800",
+        "alt": "Basic Utensil Set — hero view"
+      },
+      {
+        "angle": "front",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Jigger.jpg?width=800",
+        "alt": "Basic Utensil Set — front view"
+      },
+      {
+        "angle": "side",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Bartools2.jpg?width=800",
+        "alt": "Basic Utensil Set — side view"
+      },
+      {
+        "angle": "detail",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Muddler.jpg?width=800",
+        "alt": "Basic Utensil Set — detail view"
+      },
+      {
+        "angle": "lifestyle",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Straining%20a%20cocktail.jpg?width=800",
+        "alt": "Basic Utensil Set — lifestyle view"
+      }
+    ],
+    "stock": 40,
+    "unit": "5-piece set",
+    "brand": "BarForge",
+    "tags": [
+      "utensil",
+      "set",
+      "bundle"
+    ],
+    "relatedCocktailIds": [],
+    "sourceKey": "set-utensil-basic"
+  },
+  {
+    "id": "set-utensil-professional",
+    "slug": "utensil-set-professional",
+    "name": "Professional Utensil Set",
+    "category": "utensil",
+    "subcategory": "Utensil sets",
+    "priceCents": 21999,
+    "currency": "usd",
+    "description": "Stirred drinks, fine straining, and garnish prep — the working home-bar kit in one order.",
+    "longDescription": "Professional Utensil Set ships every piece in one box: Japanese-Style Jigger, Weighted Cocktail Shaker Set, Twisted Bar Spoon, Hawthorne Strainer, Hardwood Muddler, Japanese Mixing Glass, Fine-Mesh Cocktail Strainer, Hand Citrus Press, Garnish Knife & Board Set, Y-Peeler for Twists, Aluminum Ice Scoop, Bar Teaspoon Set, Channel Knife & Zester, Microplane Zester. Bought separately these tools are $266.86. The set is $219.99 — you save $46.87.",
+    "specs": [
+      {
+        "label": "Pieces",
+        "value": "14"
+      },
+      {
+        "label": "Bought separately",
+        "value": "$266.86"
+      },
+      {
+        "label": "You save",
+        "value": "$46.87"
+      },
+      {
+        "label": "Includes",
+        "value": "Japanese-Style Jigger, Weighted Cocktail Shaker Set, Twisted Bar Spoon, Hawthorne Strainer, Hardwood Muddler, Japanese Mixing Glass, Fine-Mesh Cocktail Strainer, Hand Citrus Press, Garnish Knife & Board Set, Y-Peeler for Twists, Aluminum Ice Scoop, Bar Teaspoon Set, Channel Knife & Zester, Microplane Zester"
+      }
+    ],
+    "images": [
+      {
+        "angle": "hero",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Pouring%20from%20a%20mixing%20glass.jpg?width=800",
+        "alt": "Professional Utensil Set — hero view"
+      },
+      {
+        "angle": "front",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Double%20straining%20a%20cocktail.jpg?width=800",
+        "alt": "Professional Utensil Set — front view"
+      },
+      {
+        "angle": "side",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Lemon%20squeezing.jpg?width=800",
+        "alt": "Professional Utensil Set — side view"
+      },
+      {
+        "angle": "detail",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Bartools.jpg?width=800",
+        "alt": "Professional Utensil Set — detail view"
+      },
+      {
+        "angle": "lifestyle",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Using%20a%20jigger.jpg?width=800",
+        "alt": "Professional Utensil Set — lifestyle view"
+      }
+    ],
+    "stock": 40,
+    "unit": "14-piece set",
+    "brand": "BarForge",
+    "tags": [
+      "utensil",
+      "set",
+      "bundle"
+    ],
+    "relatedCocktailIds": [],
+    "sourceKey": "set-utensil-professional"
+  },
+  {
+    "id": "set-utensil-fullest",
+    "slug": "utensil-set-fullest",
+    "name": "Fullest Utensil Set",
+    "category": "utensil",
+    "subcategory": "Utensil sets",
+    "priceCents": 49999,
+    "currency": "usd",
+    "description": "Every bar utensil in the shop — blender, espresso, punch service, and the full hand-tool kit.",
+    "longDescription": "Fullest Utensil Set ships every piece in one box: Japanese-Style Jigger, Weighted Cocktail Shaker Set, Twisted Bar Spoon, Hawthorne Strainer, Hardwood Muddler, Japanese Mixing Glass, Fine-Mesh Cocktail Strainer, Hand Citrus Press, Garnish Knife & Board Set, Y-Peeler for Twists, Aluminum Ice Scoop, Bar Teaspoon Set, Channel Knife & Zester, Microplane Zester, Bar Blender 1000W, Gooseneck Electric Kettle, Glass Punch Bowl (4 L), Punch Ladle, Compact Espresso Maker, Handheld Milk Frother. Bought separately these tools are $618.80. The set is $499.99 — you save $118.81.",
+    "specs": [
+      {
+        "label": "Pieces",
+        "value": "20"
+      },
+      {
+        "label": "Bought separately",
+        "value": "$618.80"
+      },
+      {
+        "label": "You save",
+        "value": "$118.81"
+      },
+      {
+        "label": "Includes",
+        "value": "Japanese-Style Jigger, Weighted Cocktail Shaker Set, Twisted Bar Spoon, Hawthorne Strainer, Hardwood Muddler, Japanese Mixing Glass, Fine-Mesh Cocktail Strainer, Hand Citrus Press, Garnish Knife & Board Set, Y-Peeler for Twists, Aluminum Ice Scoop, Bar Teaspoon Set, Channel Knife & Zester, Microplane Zester, Bar Blender 1000W, Gooseneck Electric Kettle, Glass Punch Bowl (4 L), Punch Ladle, Compact Espresso Maker, Handheld Milk Frother"
+      }
+    ],
+    "images": [
+      {
+        "angle": "hero",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kitchen%20utensils-01.jpg?width=800",
+        "alt": "Fullest Utensil Set — hero view"
+      },
+      {
+        "angle": "front",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Espresso%20machine%201.jpg?width=800",
+        "alt": "Fullest Utensil Set — front view"
+      },
+      {
+        "angle": "side",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Pi%C3%B1a%20Coladas%20made%20in%20home%20kitchen%20blender%20-%201.jpg?width=800",
+        "alt": "Fullest Utensil Set — side view"
+      },
+      {
+        "angle": "detail",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Punch%20Bowl%20MET%20180787.jpg?width=800",
+        "alt": "Fullest Utensil Set — detail view"
+      },
+      {
+        "angle": "lifestyle",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Bartools2.jpg?width=800",
+        "alt": "Fullest Utensil Set — lifestyle view"
+      }
+    ],
+    "stock": 40,
+    "unit": "20-piece set",
+    "brand": "BarForge",
+    "tags": [
+      "utensil",
+      "set",
+      "bundle"
+    ],
+    "relatedCocktailIds": [],
+    "sourceKey": "set-utensil-fullest"
+  },
+  {
     "id": "ing-151-proof-rum",
     "slug": "ingredient-151-proof-rum",
     "name": "151 proof rum",

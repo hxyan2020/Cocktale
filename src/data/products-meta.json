@@ -1,10 +1,10 @@
 {
   "generatedAt": "2026-08-12T12:47:48.280Z",
-  "count": 396,
+  "count": 391,
   "byCategory": {
     "ingredient": 335,
-    "utensil": 20,
-    "glassware": 39,
+    "utensil": 23,
+    "glassware": 31,
     "accessory": 2
   }
 }

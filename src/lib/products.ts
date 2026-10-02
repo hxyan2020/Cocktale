@@ -10,6 +10,16 @@ export const products = [...new Map(rawProducts.map((product) => [product.id, pr
 const byId = new Map(products.map((p) => [p.id, p]));
 const bySlug = new Map(products.map((p) => [p.slug, p]));
 
+export const UTENSIL_SET_IDS = [
+  "set-utensil-basic",
+  "set-utensil-professional",
+  "set-utensil-fullest",
+] as const;
+
+export function getUtensilSets(): Product[] {
+  return UTENSIL_SET_IDS.map((id) => byId.get(id)).filter((product): product is Product => !!product);
+}
+
 export function getAllProducts(): Product[] {
   return products;
 }

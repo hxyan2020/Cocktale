@@ -9,7 +9,7 @@ import { useCart } from "@/components/CartProvider";
 import { useProductPrices } from "@/components/ProductPriceProvider";
 import { useShop } from "@/components/useShop";
 import { useLocalizedProduct } from "@/components/useTranslatedContent";
-import { productImageClass, productImageUnoptimized, searchProducts } from "@/lib/products";
+import { getUtensilSets, productImageClass, productImageUnoptimized, searchProducts } from "@/lib/products";
 import type { Product } from "@/lib/commerce-types";
 
 const CATEGORIES = ["all", "ingredient", "utensil", "glassware", "accessory"] as const;
@@ -99,7 +99,14 @@ export default function MarketPage() {
   const [category, setCategory] = useState<(typeof CATEGORIES)[number]>("all");
   const [addedId, setAddedId] = useState<string | null>(null);
 
-  const list = useMemo(() => searchProducts(q, category), [q, category]);
+  const sets = useMemo(() => getUtensilSets(), []);
+  const showSets = (category === "all" || category === "utensil") && q.trim() === "";
+  const list = useMemo(() => {
+    const found = searchProducts(q, category);
+    if (!showSets) return found;
+    const featured = new Set(sets.map((product) => product.id));
+    return found.filter((product) => !featured.has(product.id));
+  }, [q, category, showSets, sets]);
 
   const catLabel = (c: string) => {
     if (c === "all") return shop.all;
@@ -145,8 +152,34 @@ export default function MarketPage() {
           </div>
         </div>
 
+        {showSets && (
+          <section className="mt-6">
+            <h2 className="font-[family-name:var(--font-display)] text-xl text-[var(--on-bg)] sm:text-2xl">
+              {shop.utensilSetsTitle}
+            </h2>
+            <p className="mt-1 max-w-2xl text-sm text-[var(--on-bg-soft)]">{shop.utensilSetsSubtitle}</p>
+            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+              {sets.map((p) => (
+                <ProductCard
+                  key={p.id}
+                  product={p}
+                  added={addedId === p.id}
+                  addLabel={shop.addToCart}
+                  addedLabel={shop.added}
+                  formatProduct={formatProduct}
+                  onAdd={() => {
+                    addItem(p.id, 1);
+                    setAddedId(p.id);
+                    setTimeout(() => setAddedId(null), 1200);
+                  }}
+                />
+              ))}
+            </div>
+          </section>
+        )}
+
         <p className="mt-4 text-xs text-[var(--on-bg-muted)]">
-          {shop.productCount.replace("{n}", String(list.length))}
+          {shop.productCount.replace("{n}", String(list.length + (showSets ? sets.length : 0)))}
         </p>
 
         <div
