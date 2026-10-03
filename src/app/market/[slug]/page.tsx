@@ -13,6 +13,7 @@ import { useCocktailCatalog } from "@/components/CocktailCatalogProvider";
 import { TriedModal } from "@/components/TriedModal";
 import { useShop } from "@/components/useShop";
 import { useLocalizedProduct, useTranslatedTexts } from "@/components/useTranslatedContent";
+import { EditablePassage, IdeaStamp } from "@/components/EditablePassage";
 import { getProductBySlug, productImageClass, productImageUnoptimized } from "@/lib/products";
 import type { Cocktail } from "@/lib/types";
 
@@ -111,6 +112,7 @@ export default function ProductDetailPage() {
               <h1 className="mt-1 break-words font-[family-name:var(--font-display)] text-3xl leading-tight text-[var(--on-bg)] sm:text-4xl">
                 {displayProduct.name}
               </h1>
+              <IdeaStamp kind="product" id={product.id} tone="dark" />
               <p className="mt-2 text-sm text-[var(--on-bg-muted)]">
                 {shop.brand}: {product.brand} · {shop.unit}: {displayProduct.unit}
               </p>
@@ -137,9 +139,17 @@ export default function ProductDetailPage() {
               </button>
             </div>
 
-            <p className="text-[15px] leading-relaxed text-[var(--on-bg-soft)]">
-              {displayProduct.longDescription}
-            </p>
+            <EditablePassage
+              kind="product"
+              id={product.id}
+              name={product.name}
+              field="longDescription"
+              label="Description"
+              text={displayProduct.longDescription}
+              source={product.longDescription}
+              tone="dark"
+              className="text-[15px] leading-relaxed text-[var(--on-bg-soft)]"
+            />
 
             <div>
               <h2 className="text-sm font-semibold text-[var(--on-bg)]">{shop.specs}</h2>

@@ -25,6 +25,7 @@ import { useLocalizedCocktail, useTranslatedTexts } from "@/components/useTransl
 import type { Product } from "@/lib/commerce-types";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import { cocktailSeoPath } from "@/lib/seo";
+import { EditablePassage, IdeaStamp, useAdminSession } from "@/components/EditablePassage";
 
 type Props = {
   cocktail: Cocktail;
@@ -57,6 +58,7 @@ export function CocktailDetail({
   const [galleryLoaded, setGalleryLoaded] = useState(false);
   const [failedGalleryIds, setFailedGalleryIds] = useState<Set<string>>(new Set());
   const localized = useLocalizedCocktail(cocktail);
+  const admin = useAdminSession();
   const imageSrc = useCocktailImage(cocktail);
   const { overrides } = useCocktailImages();
   useBodyScrollLock();
@@ -185,7 +187,22 @@ export function CocktailDetail({
             >
               Open full recipe page
             </Link>
-            <p className="mt-1 text-sm text-[var(--ink-soft)]">{localized.origin}</p>
+            <IdeaStamp kind="cocktail" id={cocktail.id} />
+            <p className="mt-1 text-sm text-[var(--ink-soft)]">
+              {admin ? (
+                <EditablePassage
+                  kind="cocktail"
+                  id={cocktail.id}
+                  name={cocktail.name}
+                  field="origin"
+                  label="Origin"
+                  text={cocktail.origin}
+                  as="span"
+                />
+              ) : (
+                localized.origin
+              )}
+            </p>
           </header>
 
           {galleryLoaded && gallery.length > 1 && (
@@ -252,9 +269,19 @@ export function CocktailDetail({
 
           <section>
             <h3 className="text-sm font-semibold text-[var(--ink)]">{t("detail.theTale")}</h3>
-            <p className="mt-2 text-[15px] leading-relaxed text-[var(--ink-soft)]">
-              {localized.story}
-            </p>
+            {admin ? (
+              <EditablePassage
+                kind="cocktail"
+                id={cocktail.id}
+                name={cocktail.name}
+                field="story"
+                label="Story"
+                text={cocktail.story}
+                className="mt-2 text-[15px] leading-relaxed text-[var(--ink-soft)]"
+              />
+            ) : (
+              <p className="mt-2 text-[15px] leading-relaxed text-[var(--ink-soft)]">{localized.story}</p>
+            )}
           </section>
 
           <section className="grid gap-4 sm:grid-cols-2">
@@ -345,7 +372,27 @@ export function CocktailDetail({
           <section>
             <h3 className="text-sm font-semibold text-[var(--ink)]">{t("detail.stepByStep")}</h3>
             <ol className="mt-3 space-y-3">
-              {steps.map((step, i) => (
+              {admin
+                ? cocktail.instructions.map((step, i) => (
+                    <li
+                      key={`source-${i}-${step.slice(0, 24)}`}
+                      className="flex gap-3 rounded-2xl bg-[var(--bg)] p-3 ring-1 ring-[var(--line)]"
+                    >
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--ink)] text-sm font-semibold text-[var(--foam)]">
+                        {i + 1}
+                      </span>
+                      <EditablePassage
+                        kind="cocktail"
+                        id={cocktail.id}
+                        name={cocktail.name}
+                        field={`instruction:${i}`}
+                        label={`Step ${i + 1}`}
+                        text={step}
+                        className="min-w-0 pt-1 text-sm leading-relaxed text-[var(--ink-soft)]"
+                      />
+                    </li>
+                  ))
+                : steps.map((step, i) => (
                 <li
                   key={`${i}-${step.slice(0, 24)}`}
                   className="flex gap-3 rounded-2xl bg-[var(--bg)] p-3 ring-1 ring-[var(--line)]"

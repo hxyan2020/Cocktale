@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { AppNav } from "@/components/AppNav";
+import { EditablePassage, IdeaStamp } from "@/components/EditablePassage";
 import { getAllResolvedCocktails, getResolvedCocktail } from "@/lib/cocktails-server";
 import { hubsForCocktail } from "@/lib/cocktail-hubs";
 import {
@@ -103,13 +104,35 @@ export default async function CocktailRecipePage({ params }: Props) {
             <h1 className="font-[family-name:var(--font-display)] text-4xl leading-tight sm:text-5xl">
               {cocktail.name}
             </h1>
+            <IdeaStamp kind="cocktail" id={cocktail.id} tone="dark" />
             <p className="text-sm text-[var(--on-bg-muted)]">
-              {[cocktail.glass, cocktail.category, cocktail.origin].filter(Boolean).join(" · ")}
+              {cocktail.glass}
+              {cocktail.category ? ` · ${cocktail.category}` : ""}
+              {cocktail.origin ? " · " : ""}
+              {cocktail.origin ? (
+                <EditablePassage
+                  kind="cocktail"
+                  id={cocktail.id}
+                  name={cocktail.name}
+                  field="origin"
+                  label="Origin"
+                  text={cocktail.origin}
+                  tone="dark"
+                  as="span"
+                />
+              ) : null}
             </p>
             {cocktail.description ? (
-              <p className="max-w-2xl text-base leading-relaxed text-[var(--on-bg-soft)]">
-                {cocktail.description}
-              </p>
+              <EditablePassage
+                kind="cocktail"
+                id={cocktail.id}
+                name={cocktail.name}
+                field="description"
+                label="Description"
+                text={cocktail.description}
+                tone="dark"
+                className="max-w-2xl text-base leading-relaxed text-[var(--on-bg-soft)]"
+              />
             ) : null}
           </header>
 
@@ -146,8 +169,18 @@ export default async function CocktailRecipePage({ params }: Props) {
           <section className="mt-10">
             <h2 className="font-[family-name:var(--font-display)] text-2xl">How to make it</h2>
             <ol className="mt-4 list-decimal space-y-3 pl-5 text-sm leading-relaxed text-[var(--on-bg-soft)] sm:text-base">
-              {cocktail.instructions.map((step) => (
-                <li key={step}>{step}</li>
+              {cocktail.instructions.map((step, index) => (
+                <EditablePassage
+                  key={`${index}-${step.slice(0, 24)}`}
+                  kind="cocktail"
+                  id={cocktail.id}
+                  name={cocktail.name}
+                  field={`instruction:${index}`}
+                  label={`Step ${index + 1}`}
+                  text={step}
+                  tone="dark"
+                  as="li"
+                />
               ))}
             </ol>
           </section>
@@ -155,9 +188,16 @@ export default async function CocktailRecipePage({ params }: Props) {
           {cocktail.story ? (
             <section className="mt-10">
               <h2 className="font-[family-name:var(--font-display)] text-2xl">Story</h2>
-              <p className="mt-3 text-sm leading-relaxed text-[var(--on-bg-muted)] sm:text-base">
-                {cocktail.story}
-              </p>
+              <EditablePassage
+                kind="cocktail"
+                id={cocktail.id}
+                name={cocktail.name}
+                field="story"
+                label="Story"
+                text={cocktail.story}
+                tone="dark"
+                className="mt-3 text-sm leading-relaxed text-[var(--on-bg-muted)] sm:text-base"
+              />
             </section>
           ) : null}
 

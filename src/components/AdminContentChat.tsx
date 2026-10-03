@@ -30,13 +30,16 @@ const QUICK: { mode: AssistMode; label: string }[] = [
   { mode: "verify", label: "Double-check the details" },
 ];
 
-export function IdeaProvenance({ editorial }: { editorial: CocktailEditorial | null }) {
+export function IdeaProvenance({
+  editorial,
+  tone = "light",
+}: {
+  editorial: CocktailEditorial | null;
+  tone?: "light" | "dark";
+}) {
+  const color = tone === "dark" ? "text-[var(--on-bg-muted)]" : "text-[var(--ink-muted)]";
   if (!editorial || (editorial.createdBy === "catalog" && !editorial.updatedAt)) {
-    return (
-      <p className="mt-2 text-xs text-[var(--ink-muted)]">
-        Created from the catalog · not edited yet
-      </p>
-    );
+    return <p className={`mt-2 text-xs ${color}`}>Created from the catalog · not edited yet</p>;
   }
 
   const created =
@@ -48,7 +51,7 @@ export function IdeaProvenance({ editorial }: { editorial: CocktailEditorial | n
     : "Last modified —";
 
   return (
-    <p className="mt-2 text-xs leading-relaxed text-[var(--ink-muted)]">
+    <p className={`mt-2 text-xs leading-relaxed ${color}`}>
       {created}
       <span className="px-1.5">·</span>
       {modified}
@@ -56,11 +59,19 @@ export function IdeaProvenance({ editorial }: { editorial: CocktailEditorial | n
   );
 }
 
-export function FieldProvenance({ stamp }: { stamp?: FieldStamp }) {
+export function FieldProvenance({
+  stamp,
+  tone = "light",
+}: {
+  stamp?: FieldStamp;
+  tone?: "light" | "dark";
+}) {
   if (!stamp) return null;
+  const color = tone === "dark" ? "text-[var(--on-bg-muted)]" : "text-[var(--ink-muted)]";
   return (
-    <span className="text-[10px] font-normal text-[var(--ink-muted)]">
-      Last modified {formatStampTime(stamp.updatedAt)} · {sourceLabel(stamp.source)}
+    <span className={`text-[10px] font-normal ${color}`}>
+      Created {formatStampTime(stamp.createdAt)} · last modified {formatStampTime(stamp.updatedAt)} ·{" "}
+      {sourceLabel(stamp.source)}
     </span>
   );
 }
