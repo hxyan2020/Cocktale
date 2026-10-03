@@ -2,6 +2,23 @@ import type { Cocktail, WeatherBucket } from "@/lib/types";
 
 export type CocktailContentPatch = Partial<Omit<Cocktail, "id">>;
 
+export type EditSource = "human" | "ai" | "catalog";
+
+export type FieldStamp = {
+  createdAt: string;
+  updatedAt: string;
+  source: "human" | "ai";
+};
+
+/** Who wrote an idea, and when it was created or last changed. */
+export type CocktailEditorial = {
+  createdAt: string | null;
+  createdBy: EditSource;
+  updatedAt: string | null;
+  updatedBy: EditSource;
+  fields: Record<string, FieldStamp>;
+};
+
 export type CocktailProfilesStore = {
   /** Sparse edits on catalog cocktails (and patches on customs). */
   overrides: Record<string, CocktailContentPatch>;
@@ -9,6 +26,7 @@ export type CocktailProfilesStore = {
   customs: Record<string, Cocktail>;
   /** Soft-deleted cocktail ids (catalog or custom). */
   deleted: string[];
+  editorial: Record<string, CocktailEditorial>;
 };
 
 export const WEATHER_BUCKETS: WeatherBucket[] = [
@@ -21,7 +39,7 @@ export const WEATHER_BUCKETS: WeatherBucket[] = [
 ];
 
 export function emptyProfilesStore(): CocktailProfilesStore {
-  return { overrides: {}, customs: {}, deleted: [] };
+  return { overrides: {}, customs: {}, deleted: [], editorial: {} };
 }
 
 export function normalizeProfilesStore(raw: unknown): CocktailProfilesStore {
@@ -37,7 +55,68 @@ export function normalizeProfilesStore(raw: unknown): CocktailProfilesStore {
   if (Array.isArray(data.deleted)) {
     base.deleted = [...new Set(data.deleted.filter((id) => typeof id === "string"))];
   }
+  if (data.editorial && typeof data.editorial === "object") {
+    base.editorial = { ...data.editorial };
+  }
   return base;
+}
+
+export function touchEditorial(
+  current: CocktailEditorial | undefined,
+  source: "human" | "ai",
+  fields: string[],
+  mode: "create" | "catalog" | "update",
+): CocktailEditorial {
+  const now = new Date().toISOString();
+  const base: CocktailEditorial =
+    current ??
+    (mode === "create"
+      ? {
+          createdAt: now,
+          createdBy: "human",
+          updatedAt: now,
+          updatedBy: "human",
+          fields: {},
+        }
+      : {
+          createdAt: null,
+          createdBy: "catalog",
+          updatedAt: null,
+          updatedBy: "catalog",
+          fields: {},
+        });
+
+  const nextFields = { ...base.fields };
+  for (const field of fields) {
+    const prev = nextFields[field];
+    nextFields[field] = {
+      createdAt: prev?.createdAt ?? now,
+      updatedAt: now,
+      source,
+    };
+  }
+
+  const changed = fields.length > 0;
+  return {
+    createdAt: base.createdAt,
+    createdBy: base.createdBy,
+    updatedAt: changed ? now : base.updatedAt,
+    updatedBy: changed ? source : base.updatedBy,
+    fields: nextFields,
+  };
+}
+
+export function formatStampTime(iso: string | null) {
+  if (!iso) return "";
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
+}
+
+export function sourceLabel(source: EditSource) {
+  if (source === "ai") return "suggested by AI";
+  if (source === "human") return "by human";
+  return "from the catalog";
 }
 
 export function mergeCocktailContent(

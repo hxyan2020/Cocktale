@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { requireAdminApi } from "@/lib/admin-auth";
 import { emptyCocktailDraft, slugifyCocktailId, WEATHER_BUCKETS } from "@/lib/cocktail-profile-types";
-import { upsertCustomCocktail } from "@/lib/cocktail-profiles";
+import { getCocktailEditorial, loadCocktailProfiles, recordCocktailEdit, upsertCustomCocktail } from "@/lib/cocktail-profiles";
 import { getAllCocktailsForAdmin, getResolvedCocktail } from "@/lib/cocktails-server";
 import type { Cocktail } from "@/lib/types";
 
@@ -35,6 +35,15 @@ const cocktailBodySchema = z.object({
     .max(10),
   popularity: z.number().min(0).max(100),
   flavorProfile: z.array(z.string()).max(40),
+  edits: z
+    .array(
+      z.object({
+        field: z.string().max(80),
+        source: z.enum(["human", "ai"]),
+      }),
+    )
+    .max(40)
+    .optional(),
 });
 
 export async function GET(req: Request) {
@@ -45,6 +54,7 @@ export async function GET(req: Request) {
   const q = (searchParams.get("q") || "").trim().toLowerCase();
   const includeDeleted = searchParams.get("includeDeleted") === "1";
 
+  const editorial = loadCocktailProfiles().editorial;
   const rows = getAllCocktailsForAdmin()
     .filter((cocktail) => {
       if (!includeDeleted && cocktail.isDeleted) return false;
@@ -73,6 +83,7 @@ export async function GET(req: Request) {
       hasContentOverride: cocktail.hasContentOverride,
       hasImageOverride: cocktail.hasImageOverride,
       hasOverride: cocktail.hasOverride,
+      editorial: editorial[cocktail.id] ?? null,
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
@@ -122,5 +133,13 @@ export async function POST(req: Request) {
   }
 
   upsertCustomCocktail(cocktail);
-  return NextResponse.json({ ok: true, cocktail: getResolvedCocktail(id) });
+  recordCocktailEdit(id, "human", ["description", "story", "origin"], "create");
+  for (const edit of parsed.data.edits ?? []) {
+    recordCocktailEdit(id, edit.source, [edit.field], "update");
+  }
+  return NextResponse.json({
+    ok: true,
+    cocktail: getResolvedCocktail(id),
+    editorial: getCocktailEditorial(id) ?? null,
+  });
 }

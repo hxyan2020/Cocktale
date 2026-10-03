@@ -22,6 +22,16 @@ import {
 import { WEATHER_BUCKETS } from "@/lib/cocktail-profile-types";
 import type { Cocktail } from "@/lib/types";
 import { productImageClass, productImageUnoptimized } from "@/lib/products";
+import {
+  AdminContentChat,
+  FieldProvenance,
+  IdeaProvenance,
+  type AssistSelection,
+} from "@/components/AdminContentChat";
+import {
+  touchEditorial,
+  type CocktailEditorial,
+} from "@/lib/cocktail-profile-types";
 
 type ListRow = {
   id: string;
@@ -35,6 +45,7 @@ type ListRow = {
   isDeleted: boolean;
   hasContentOverride: boolean;
   hasImageOverride: boolean;
+  editorial: CocktailEditorial | null;
 };
 
 type Draft = {
@@ -165,6 +176,9 @@ export default function AdminCocktailsPage() {
   const [galleryUrlDraft, setGalleryUrlDraft] = useState("");
   const [imageBusy, setImageBusy] = useState(false);
   const [imageStatus, setImageStatus] = useState("");
+  const [editorial, setEditorial] = useState<CocktailEditorial | null>(null);
+  const [edits, setEdits] = useState<{ field: string; source: "human" | "ai" }[]>([]);
+  const [assist, setAssist] = useState<AssistSelection | null>(null);
 
   const load = useCallback(async (q = query, deleted = includeDeleted) => {
     setLoading(true);
@@ -207,6 +221,9 @@ export default function AdminCocktailsPage() {
       isDeleted: Boolean(data.isDeleted),
       hasContentOverride: Boolean(data.hasContentOverride),
     });
+    setEditorial(data.editorial ?? null);
+    setEdits([]);
+    setAssist(null);
   }, []);
 
   const selected = useMemo(
@@ -223,6 +240,89 @@ export default function AdminCocktailsPage() {
     setGalleryUrlDraft("");
     setImageStatus("");
     setStatus("");
+    setEditorial(null);
+    setEdits([]);
+    setAssist(null);
+  }
+
+  function noteEdit(field: string, source: "human" | "ai") {
+    setEdits((prev) => [...prev.filter((edit) => edit.field !== field), { field, source }]);
+    setEditorial((prev) =>
+      touchEditorial(prev ?? undefined, source, [field], prev ? "update" : creating ? "create" : "catalog"),
+    );
+  }
+
+  function captureSelection(
+    field: string,
+    label: string,
+    value: string,
+    element: HTMLTextAreaElement | HTMLInputElement,
+  ) {
+    const start = element.selectionStart ?? 0;
+    const end = element.selectionEnd ?? 0;
+    const live = element.value || value;
+    const text = live.slice(start, end);
+    if (!text.trim() || end <= start) return;
+    const box = element.getBoundingClientRect();
+    setAssist({
+      field,
+      label,
+      text,
+      start,
+      end,
+      surrounding: live,
+      top: box.bottom,
+      left: box.left,
+    });
+  }
+
+  function applyAssist(replacement: string) {
+    if (!assist) return;
+    const current =
+      assist.field === "description"
+        ? draft.description
+        : assist.field === "story"
+          ? draft.story
+          : assist.field === "origin"
+            ? draft.origin
+            : assist.field.startsWith("instruction:")
+              ? draft.instructions[Number(assist.field.slice("instruction:".length))] || ""
+              : "";
+    let start = assist.start;
+    let end = assist.end;
+    if (current.slice(start, end) !== assist.text) {
+      const found = current.indexOf(assist.text);
+      if (found < 0) return;
+      start = found;
+      end = found + assist.text.length;
+    }
+    const nextValue = current.slice(0, start) + replacement + current.slice(end);
+    if (assist.field === "description") setDraft((d) => ({ ...d, description: nextValue }));
+    else if (assist.field === "story") setDraft((d) => ({ ...d, story: nextValue }));
+    else if (assist.field === "origin") setDraft((d) => ({ ...d, origin: nextValue }));
+    else if (assist.field.startsWith("instruction:")) {
+      const index = Number(assist.field.slice("instruction:".length));
+      setDraft((d) => {
+        const instructions = [...d.instructions];
+        instructions[index] = nextValue;
+        return { ...d, instructions };
+      });
+    }
+    const nextEdits = [...edits.filter((edit) => edit.field !== assist.field), { field: assist.field, source: "ai" as const }];
+    noteEdit(assist.field, "ai");
+    setAssist(null);
+    if (!creating && selectedId) {
+      const nextDraft = { ...draft };
+      if (assist.field === "description") nextDraft.description = nextValue;
+      else if (assist.field === "story") nextDraft.story = nextValue;
+      else if (assist.field === "origin") nextDraft.origin = nextValue;
+      else if (assist.field.startsWith("instruction:")) {
+        const index = Number(assist.field.slice("instruction:".length));
+        nextDraft.instructions = [...draft.instructions];
+        nextDraft.instructions[index] = nextValue;
+      }
+      void save(nextDraft, nextEdits);
+    }
   }
 
   const imageSlotCount = useMemo(
@@ -374,26 +474,31 @@ export default function AdminCocktailsPage() {
     }
   }
 
-  async function save() {
+  async function save(
+    nextDraft = draft,
+    nextEdits = edits,
+  ) {
     setSaving(true);
     setStatus("");
     try {
-      const payload = draftToPayload(draft);
+      const payload = draftToPayload(nextDraft);
       if (!payload.name) throw new Error("Name is required");
       const res = creating
         ? await fetch("/api/admin/cocktails", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
+            body: JSON.stringify({ ...payload, edits: nextEdits }),
           })
         : await fetch(`/api/admin/cocktails/${selectedId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
+            body: JSON.stringify({ ...payload, edits: nextEdits }),
           });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Save failed");
       setStatus(creating ? "Cocktail created." : "Cocktail saved.");
+      if (data.editorial) setEditorial(data.editorial);
+      setEdits([]);
       const id = data.cocktail?.id || selectedId;
       await load();
       if (id) await loadDetail(id);
@@ -577,8 +682,9 @@ export default function AdminCocktailsPage() {
                         </span>
                         <span className="block truncate text-[10px] text-[var(--ink-muted)]">
                           {row.category} · {row.glass}
-                          {row.isCustom ? " · custom" : ""}
-                          {row.hasContentOverride ? " · edited" : ""}
+                          {row.editorial?.updatedAt
+                            ? ` · ${row.editorial.updatedBy === "ai" ? "AI" : "human"} ${new Date(row.editorial.updatedAt).toLocaleDateString()}`
+                            : " · catalog"}
                           {row.isDeleted ? " · deleted" : ""}
                         </span>
                       </span>
@@ -603,6 +709,7 @@ export default function AdminCocktailsPage() {
                     {selectedId ? (
                       <p className="mt-1 font-mono text-[10px] text-[var(--ink-muted)]">{selectedId}</p>
                     ) : null}
+                    <IdeaProvenance editorial={editorial} />
                     {meta?.isDeleted ? (
                       <p className="mt-1 text-xs text-red-700">Soft-deleted — restore to show on site.</p>
                     ) : null}
@@ -675,10 +782,18 @@ export default function AdminCocktailsPage() {
                     />
                   </label>
                   <label className="block text-xs">
-                    <span className="text-[var(--ink-muted)]">Origin</span>
+                    <span className="flex items-center justify-between gap-2 text-[var(--ink-muted)]">
+                      Origin
+                      <FieldProvenance stamp={editorial?.fields.origin} />
+                    </span>
                     <input
                       value={draft.origin}
-                      onChange={(e) => setDraft((d) => ({ ...d, origin: e.target.value }))}
+                      onChange={(e) => {
+                        setDraft((d) => ({ ...d, origin: e.target.value }));
+                        noteEdit("origin", "human");
+                      }}
+                      onMouseUp={(e) => captureSelection("origin", "origin", draft.origin, e.currentTarget)}
+                      onKeyUp={(e) => captureSelection("origin", "origin", draft.origin, e.currentTarget)}
                       className="mt-1 w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2 text-sm"
                     />
                   </label>
@@ -855,20 +970,43 @@ export default function AdminCocktailsPage() {
                   ) : null}
                 </div>
 
+                <p className="text-xs text-[var(--ink-muted)]">
+                  Select a word or paragraph in the origin, description, story, or steps to edit it with AI.
+                </p>
                 <label className="block text-xs">
-                  <span className="text-[var(--ink-muted)]">Description</span>
+                  <span className="flex items-center justify-between gap-2 text-[var(--ink-muted)]">
+                    Description
+                    <FieldProvenance stamp={editorial?.fields.description} />
+                  </span>
                   <textarea
                     value={draft.description}
-                    onChange={(e) => setDraft((d) => ({ ...d, description: e.target.value }))}
+                    onChange={(e) => {
+                      setDraft((d) => ({ ...d, description: e.target.value }));
+                      noteEdit("description", "human");
+                    }}
+                    onMouseUp={(e) =>
+                      captureSelection("description", "description", draft.description, e.currentTarget)
+                    }
+                    onKeyUp={(e) =>
+                      captureSelection("description", "description", draft.description, e.currentTarget)
+                    }
                     rows={3}
                     className="mt-1 w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2 text-sm"
                   />
                 </label>
                 <label className="block text-xs">
-                  <span className="text-[var(--ink-muted)]">Story</span>
+                  <span className="flex items-center justify-between gap-2 text-[var(--ink-muted)]">
+                    Story
+                    <FieldProvenance stamp={editorial?.fields.story} />
+                  </span>
                   <textarea
                     value={draft.story}
-                    onChange={(e) => setDraft((d) => ({ ...d, story: e.target.value }))}
+                    onChange={(e) => {
+                      setDraft((d) => ({ ...d, story: e.target.value }));
+                      noteEdit("story", "human");
+                    }}
+                    onMouseUp={(e) => captureSelection("story", "story", draft.story, e.currentTarget)}
+                    onKeyUp={(e) => captureSelection("story", "story", draft.story, e.currentTarget)}
                     rows={5}
                     className="mt-1 w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2 text-sm"
                   />
@@ -938,18 +1076,38 @@ export default function AdminCocktailsPage() {
                   <div className="space-y-2">
                     {draft.instructions.map((step, index) => (
                       <div key={index} className="flex gap-2">
-                        <textarea
-                          value={step}
-                          onChange={(e) =>
-                            setDraft((d) => {
-                              const instructions = [...d.instructions];
-                              instructions[index] = e.target.value;
-                              return { ...d, instructions };
-                            })
-                          }
-                          rows={2}
-                          className="w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2 text-sm"
-                        />
+                        <div className="min-w-0 flex-1">
+                          <FieldProvenance stamp={editorial?.fields[`instruction:${index}`]} />
+                          <textarea
+                            value={step}
+                            onChange={(e) => {
+                              setDraft((d) => {
+                                const instructions = [...d.instructions];
+                                instructions[index] = e.target.value;
+                                return { ...d, instructions };
+                              });
+                              noteEdit(`instruction:${index}`, "human");
+                            }}
+                            onMouseUp={(e) =>
+                              captureSelection(
+                                `instruction:${index}`,
+                                `step ${index + 1}`,
+                                step,
+                                e.currentTarget,
+                              )
+                            }
+                            onKeyUp={(e) =>
+                              captureSelection(
+                                `instruction:${index}`,
+                                `step ${index + 1}`,
+                                step,
+                                e.currentTarget,
+                              )
+                            }
+                            rows={2}
+                            className="mt-1 w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2 text-sm"
+                          />
+                        </div>
                         <button
                           type="button"
                           onClick={() =>
@@ -1040,6 +1198,14 @@ export default function AdminCocktailsPage() {
             )}
           </div>
         </div>
+        {assist ? (
+          <AdminContentChat
+            selection={assist}
+            cocktailName={draft.name}
+            onClose={() => setAssist(null)}
+            onAccept={applyAssist}
+          />
+        ) : null}
       </main>
     </AdminAuthGate>
   );

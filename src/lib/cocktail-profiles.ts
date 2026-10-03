@@ -6,7 +6,9 @@ import {
   emptyProfilesStore,
   mergeCocktailContent,
   normalizeProfilesStore,
+  touchEditorial,
   type CocktailContentPatch,
+  type CocktailEditorial,
   type CocktailProfilesStore,
 } from "@/lib/cocktail-profile-types";
 import type { Cocktail } from "@/lib/types";
@@ -83,9 +85,11 @@ export function deleteCocktailProfile(id: string, options?: { isCatalog: boolean
   if (isCustom) {
     delete store.customs[id];
     delete store.overrides[id];
+    delete store.editorial[id];
     store.deleted = store.deleted.filter((x) => x !== id);
   } else {
     delete store.overrides[id];
+    delete store.editorial[id];
     if (!store.deleted.includes(id)) store.deleted.push(id);
   }
   // options reserved for callers that know catalog vs custom
@@ -102,6 +106,33 @@ export function restoreDeletedCocktail(id: string) {
 
 export function replaceCustomCocktail(cocktail: Cocktail) {
   return upsertCustomCocktail(cocktail);
+}
+
+export function getCocktailEditorial(id: string): CocktailEditorial | undefined {
+  return loadCocktailProfiles().editorial[id];
+}
+
+export function saveCocktailEditorial(id: string, editorial: CocktailEditorial) {
+  const store = structuredClone(loadCocktailProfiles());
+  store.editorial[id] = editorial;
+  saveCocktailProfiles(store);
+  return editorial;
+}
+
+export function clearCocktailEditorial(id: string) {
+  const store = structuredClone(loadCocktailProfiles());
+  delete store.editorial[id];
+  saveCocktailProfiles(store);
+}
+
+export function recordCocktailEdit(
+  id: string,
+  source: "human" | "ai",
+  fields: string[],
+  mode: "create" | "catalog" | "update",
+) {
+  const current = loadCocktailProfiles().editorial[id];
+  return saveCocktailEditorial(id, touchEditorial(current, source, fields, mode));
 }
 
 export function applyPatchToCustomOrOverride(

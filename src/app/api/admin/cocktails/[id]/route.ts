@@ -8,8 +8,11 @@ import {
 import { WEATHER_BUCKETS } from "@/lib/cocktail-profile-types";
 import {
   clearCocktailContentOverride,
+  clearCocktailEditorial,
   deleteCocktailProfile,
+  getCocktailEditorial,
   loadCocktailProfiles,
+  recordCocktailEdit,
   restoreDeletedCocktail,
   upsertCocktailContentOverride,
   upsertCustomCocktail,
@@ -50,6 +53,15 @@ const cocktailBodySchema = z.object({
   flavorProfile: z.array(z.string()).max(40),
   restoreContent: z.boolean().optional(),
   restoreDeleted: z.boolean().optional(),
+  edits: z
+    .array(
+      z.object({
+        field: z.string().max(80),
+        source: z.enum(["human", "ai"]),
+      }),
+    )
+    .max(40)
+    .optional(),
 });
 
 function sanitize(data: z.infer<typeof cocktailBodySchema>, id: string, existingImage: string): Cocktail {
@@ -118,6 +130,7 @@ function detailPayload(id: string) {
     gallery: imageOverride?.gallery ?? [],
     catalogImage: isCustom ? null : getCatalogCocktail(id)?.image ?? null,
     hasImageOverride,
+    editorial: getCocktailEditorial(id) ?? null,
   };
 }
 
@@ -156,6 +169,7 @@ export async function PUT(req: Request, context: RouteContext) {
       );
     }
     clearCocktailContentOverride(id);
+    clearCocktailEditorial(id);
     return NextResponse.json({ ok: true, ...detailPayload(id) });
   }
 
@@ -179,6 +193,19 @@ export async function PUT(req: Request, context: RouteContext) {
     const { id: _id, ...patch } = cocktail;
     void _id;
     upsertCocktailContentOverride(id, patch);
+  }
+
+  const edits = parsed.data.edits ?? [];
+  if (edits.length) {
+    let mode: "create" | "catalog" | "update" = profiles.editorial[id]
+      ? "update"
+      : isCustom
+        ? "create"
+        : "catalog";
+    for (const edit of edits) {
+      recordCocktailEdit(id, edit.source, [edit.field], mode);
+      mode = "update";
+    }
   }
 
   return NextResponse.json({ ok: true, ...detailPayload(id) });
