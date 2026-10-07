@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import type { ShippingAddress } from "@/lib/commerce-types";
+import { notifyOrderPaid } from "@/lib/order-notifications";
 import {
   getOrderById,
   getOrderByStripeSession,
@@ -9,18 +9,6 @@ import {
 import { getStripe, stripeConfigured } from "@/lib/stripe";
 
 export const dynamic = "force-dynamic";
-
-function addressFromStripe(addr: Record<string, string | null | undefined> | null | undefined): ShippingAddress | undefined {
-  if (!addr?.line1 || !addr.city || !addr.postal_code || !addr.country) return undefined;
-  return {
-    line1: addr.line1,
-    line2: addr.line2 || undefined,
-    city: addr.city,
-    state: addr.state || undefined,
-    postalCode: addr.postal_code,
-    country: addr.country,
-  };
-}
 
 /** Confirm a Stripe Checkout session and sync the server order. */
 export async function GET(req: Request) {
@@ -51,34 +39,10 @@ export async function GET(req: Request) {
         ? session.payment_intent
         : session.payment_intent?.id ?? null;
 
-    const raw = session as unknown as {
-      shipping_details?: {
-        name?: string | null;
-        address?: Record<string, string | null | undefined> | null;
-      } | null;
-      collected_information?: {
-        shippingDetails?: {
-          name?: string | null;
-          address?: Record<string, string | null | undefined> | null;
-        } | null;
-      } | null;
-    };
-
-    const shippingDetails =
-      raw.collected_information?.shippingDetails || raw.shipping_details || null;
-
-    const shippingName =
-      shippingDetails?.name ||
-      session.customer_details?.name ||
-      session.metadata?.customerName ||
-      undefined;
-    const shippingEmail =
-      session.customer_details?.email || session.customer_email || undefined;
-    const shippingPhone = session.customer_details?.phone || undefined;
-    const shippingAddress = addressFromStripe(
-      shippingDetails?.address ||
-        (session.customer_details?.address as Record<string, string | null | undefined> | null),
-    );
+    const payerName = session.customer_details?.name || session.metadata?.customerName || undefined;
+    const payerEmail = session.customer_details?.email || session.customer_email || undefined;
+    const stripeCustomerId =
+      typeof session.customer === "string" ? session.customer : session.customer?.id || null;
 
     let order =
       getOrderByStripeSession(sessionId) || (draftId ? getOrderById(draftId) : undefined);
@@ -90,12 +54,11 @@ export async function GET(req: Request) {
           paymentStatus: paid ? "paid" : order.paymentStatus || "unpaid",
           stripeSessionId: sessionId,
           stripePaymentIntentId: paymentIntentId,
+          stripeCustomerId: stripeCustomerId || order.stripeCustomerId,
           subtotalCents: session.amount_total ?? order.subtotalCents,
           totalCents: session.amount_total ?? order.totalCents,
-          shippingName: shippingName || order.shippingName,
-          shippingEmail: shippingEmail || order.shippingEmail,
-          shippingPhone: shippingPhone || order.shippingPhone,
-          shippingAddress: shippingAddress || order.shippingAddress || null,
+          shippingName: order.shippingName || payerName,
+          shippingEmail: order.shippingEmail || payerEmail,
         }) || order;
     } else {
       const lineItems =
@@ -127,12 +90,14 @@ export async function GET(req: Request) {
         items: lineItems,
         stripeSessionId: sessionId,
         stripePaymentIntentId: paymentIntentId,
-        shippingName,
-        shippingEmail,
-        shippingPhone,
-        shippingAddress,
+        stripeCustomerId,
+        preferences: session.metadata?.preferences,
+        shippingName: payerName,
+        shippingEmail: payerEmail,
       });
     }
+
+    if (paid && order) await notifyOrderPaid(order);
 
     return NextResponse.json({
       id: session.id,
@@ -140,8 +105,8 @@ export async function GET(req: Request) {
       paymentStatus: session.payment_status,
       amountTotal: session.amount_total,
       currency: session.currency,
-      customerEmail: shippingEmail,
-      customerName: shippingName,
+      customerEmail: payerEmail,
+      customerName: payerName,
       metadata: session.metadata,
       paymentIntentId,
       lineItems:

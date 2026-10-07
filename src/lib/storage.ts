@@ -4,6 +4,7 @@ import type {
   BrowseEvent,
   CollectionItem,
   JournalEntry,
+  LoginMethod,
   SessionUser,
   SurveyPreferences,
   UserData,
@@ -85,15 +86,29 @@ export function registerUser(name: string, email: string, password: string): Ses
     email: normalized,
     password,
     createdAt: new Date().toISOString(),
+    provider: "password",
+    lastLoginMethod: "password",
   };
   users.push(profile);
   writeUsers(users);
   localStorage.setItem(DATA_PREFIX + profile.id, JSON.stringify(emptyUserData()));
+  return persistSession(profile);
+}
+
+function persistSession(profile: UserProfile, method?: LoginMethod): SessionUser {
+  const lastLoginMethod =
+    method ||
+    profile.lastLoginMethod ||
+    (profile.googleId ? "google" : profile.phone ? "sms" : "password");
   const session: SessionUser = {
     id: profile.id,
     name: profile.name,
     email: profile.email,
     createdAt: profile.createdAt,
+    provider: profile.provider || (profile.googleId ? "google" : profile.phone ? "sms" : "password"),
+    lastLoginMethod,
+    picture: profile.picture,
+    phone: profile.phone,
   };
   setSession(session);
   return session;
@@ -102,16 +117,95 @@ export function registerUser(name: string, email: string, password: string): Ses
 export function loginUser(email: string, password: string): SessionUser {
   const users = readUsers();
   const normalized = email.trim().toLowerCase();
-  const found = users.find((u) => u.email === normalized && u.password === password);
+  const found = users.find((u) => u.email === normalized);
   if (!found) throw new Error("INVALID_CREDENTIALS");
-  const session: SessionUser = {
-    id: found.id,
-    name: found.name,
-    email: found.email,
-    createdAt: found.createdAt,
-  };
-  setSession(session);
-  return session;
+  if (!found.password) throw new Error(found.phone && !found.googleId ? "SMS_ONLY" : "GOOGLE_ONLY");
+  if (found.password !== password) throw new Error("INVALID_CREDENTIALS");
+  found.lastLoginMethod = "password";
+  writeUsers(users);
+  return persistSession(found, "password");
+}
+
+export type GoogleProfile = {
+  email: string;
+  name: string;
+  picture?: string;
+  googleId: string;
+};
+
+export function loginWithGoogle(profile: GoogleProfile): SessionUser {
+  const users = readUsers();
+  const normalized = profile.email.trim().toLowerCase();
+  if (!normalized) throw new Error("GOOGLE_FAILED");
+
+  let found = users.find((u) => u.googleId === profile.googleId || u.email === normalized);
+  if (!found) {
+    found = {
+      id: uid(),
+      name: profile.name.trim() || "Guest",
+      email: normalized,
+      password: "",
+      createdAt: new Date().toISOString(),
+      provider: "google",
+      lastLoginMethod: "google",
+      googleId: profile.googleId,
+      picture: profile.picture,
+    };
+    users.push(found);
+    writeUsers(users);
+    localStorage.setItem(DATA_PREFIX + found.id, JSON.stringify(emptyUserData()));
+    return persistSession(found, "google");
+  }
+
+  found.googleId = profile.googleId;
+  if (profile.picture) found.picture = profile.picture;
+  if (profile.name.trim() && found.name === "Guest") found.name = profile.name.trim();
+  found.provider = found.password || found.phone ? "both" : "google";
+  found.lastLoginMethod = "google";
+  writeUsers(users);
+  return persistSession(found, "google");
+}
+
+export function loginWithSms(phone: string): SessionUser {
+  const users = readUsers();
+  const normalized = phone.trim();
+  if (!normalized) throw new Error("SMS_FAILED");
+
+  let found = users.find((u) => u.phone === normalized);
+  if (!found) {
+    found = {
+      id: uid(),
+      name: normalized,
+      email: "",
+      password: "",
+      createdAt: new Date().toISOString(),
+      provider: "sms",
+      lastLoginMethod: "sms",
+      phone: normalized,
+    };
+    users.push(found);
+    writeUsers(users);
+    localStorage.setItem(DATA_PREFIX + found.id, JSON.stringify(emptyUserData()));
+    return persistSession(found, "sms");
+  }
+
+  found.phone = normalized;
+  found.provider = found.password || found.googleId ? "both" : "sms";
+  found.lastLoginMethod = "sms";
+  writeUsers(users);
+  return persistSession(found, "sms");
+}
+
+export function changePassword(userId: string, currentPassword: string, nextPassword: string): SessionUser {
+  if (nextPassword.length < 4) throw new Error("PASSWORD_SHORT");
+  const users = readUsers();
+  const found = users.find((u) => u.id === userId);
+  if (!found) throw new Error("INVALID_CREDENTIALS");
+  if (found.password && found.password !== currentPassword) throw new Error("WRONG_PASSWORD");
+  found.password = nextPassword;
+  found.provider = found.googleId ? "both" : "password";
+  writeUsers(users);
+  return persistSession(found);
 }
 
 export function logoutUser() {
@@ -223,6 +317,7 @@ export function ensureDemoUser(): void {
     email: "demo@cocktale.app",
     password: "demo",
     createdAt: new Date().toISOString(),
+    provider: "password",
   };
   writeUsers([...users, profile]);
   if (!localStorage.getItem(DATA_PREFIX + profile.id)) {

@@ -13,12 +13,15 @@ import {
 import type { SessionUser, SurveyPreferences, UserData } from "@/lib/types";
 import {
   addJournalEntry,
+  changePassword,
   emptyUserData,
   ensureDemoUser,
   getSession,
   getGuestData,
   getUserData,
   loginUser,
+  loginWithGoogle,
+  loginWithSms,
   logoutUser,
   registerUser,
   removeJournalEntry,
@@ -28,6 +31,7 @@ import {
   toggleCollect,
   trackBrowse,
   updateJournalNote,
+  type GoogleProfile,
 } from "@/lib/storage";
 
 type AuthContextValue = {
@@ -36,7 +40,10 @@ type AuthContextValue = {
   ready: boolean;
   loginSeed: string;
   login: (email: string, password: string) => void;
+  loginGoogle: (profile: GoogleProfile) => void;
+  loginSms: (phone: string) => void;
   register: (name: string, email: string, password: string) => void;
+  updatePassword: (currentPassword: string, nextPassword: string) => void;
   logout: () => void;
   refreshData: () => void;
   collect: (cocktailId: string) => void;
@@ -100,6 +107,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(session);
     setData(getUserData(session.id));
     setLoginSeed(createLoginSeed(session.id));
+  }, []);
+
+  const loginGoogle = useCallback((profile: GoogleProfile) => {
+    const session = loginWithGoogle(profile);
+    setUser(session);
+    setData(getUserData(session.id));
+    setLoginSeed(createLoginSeed(session.id));
+  }, []);
+
+  const loginSms = useCallback((phone: string) => {
+    const session = loginWithSms(phone);
+    setUser(session);
+    setData(getUserData(session.id));
+    setLoginSeed(createLoginSeed(session.id));
+  }, []);
+
+  const updatePassword = useCallback((currentPassword: string, nextPassword: string) => {
+    const session = getSession();
+    if (!session) throw new Error("INVALID_CREDENTIALS");
+    const next = changePassword(session.id, currentPassword, nextPassword);
+    setUser(next);
   }, []);
 
   const register = useCallback((name: string, email: string, password: string) => {
@@ -240,7 +268,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       ready,
       loginSeed,
       login,
+      loginGoogle,
+      loginSms,
       register,
+      updatePassword,
       logout,
       refreshData,
       collect,
@@ -261,7 +292,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       ready,
       loginSeed,
       login,
+      loginGoogle,
+      loginSms,
       register,
+      updatePassword,
       logout,
       refreshData,
       collect,

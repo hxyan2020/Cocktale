@@ -27,6 +27,16 @@ export type ShopMessages = {
   remove: string;
   subtotal: string;
   checkout: string;
+  orderPreferences: string;
+  orderPreferencesHint: string;
+  orderPreferencesRequired: string;
+  receiptEmail: string;
+  receiptEmailHint: string;
+  receiptEmailRequired: string;
+  shippingLater: string;
+  yourPreference: string;
+  shippingPending: string;
+  customerService: string;
   continueShopping: string;
   ordersTitle: string;
   ordersEmpty: string;
@@ -95,6 +105,16 @@ export const EN_SHOP_MESSAGES: ShopMessages = {
   remove: "Remove",
   subtotal: "Subtotal",
   checkout: "Checkout with Stripe",
+  orderPreferences: "Preference / specifications",
+  orderPreferencesHint: "Size, gift note, substitutions, or anything we must not miss.",
+  orderPreferencesRequired: "Add your preference or specifications before checkout.",
+  receiptEmail: "Email for the order confirmation",
+  receiptEmailHint: "you@email.com",
+  receiptEmailRequired: "Add an email so we can send the order confirmation.",
+  shippingLater: "You do not enter a shipping address here. Cocktale adds the address and tracking number after payment, and they show on this order.",
+  yourPreference: "Your preference",
+  shippingPending: "Shipping details are added by Cocktale after payment.",
+  customerService: "Customer service",
   continueShopping: "Continue shopping",
   ordersTitle: "Purchase history",
   ordersEmpty: "No orders yet. Complete a checkout to see them here.",
@@ -161,6 +181,16 @@ const catalogs: Partial<Record<LocaleCode, ShopMessages>> = {
     cartTitle: "购物车",
     cartEmpty: "购物车是空的。去市集为吧台补货吧。",
     checkout: "通过 Stripe 结账",
+    orderPreferences: "偏好 / 规格",
+    orderPreferencesHint: "尺寸、赠言、替换，或任何备货时不能漏掉的要求。",
+    orderPreferencesRequired: "结账前请填写偏好或规格。",
+    receiptEmail: "接收订单确认的邮箱",
+    receiptEmailHint: "you@email.com",
+    receiptEmailRequired: "请填写邮箱，以便发送订单确认。",
+    shippingLater: "这里不需要填写收货地址。付款后由 Cocktale 录入地址和物流单号，并显示在订单上。",
+    yourPreference: "你的偏好",
+    shippingPending: "付款后由 Cocktale 填写物流信息。",
+    customerService: "客服",
     continueShopping: "继续购物",
     ordersTitle: "购买记录",
     ordersEmpty: "还没有订单。完成结账后会显示在这里。",

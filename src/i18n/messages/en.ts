@@ -26,6 +26,59 @@ export type Messages = {
     submitSignIn: string;
     submitRegister: string;
     demoHint: string;
+    pageTitle?: string;
+    continueWithGoogle?: string;
+    orUseEmail?: string;
+    googleFailed?: string;
+    googleUnavailable?: string;
+    continueWithSms?: string;
+    smsTitle?: string;
+    smsHint?: string;
+    smsCountry?: string;
+    smsNumber?: string;
+    smsNumberPlaceholder?: string;
+    smsWillText?: string;
+    smsCode?: string;
+    smsSend?: string;
+    smsVerify?: string;
+    smsCodeSent?: string;
+    smsChangeNumber?: string;
+    smsCancel?: string;
+    smsFailed?: string;
+  };
+  profile?: {
+    title: string;
+    subtitle: string;
+    tabAccount: string;
+    tabPassword: string;
+    tabPurchases: string;
+    loggedInAs: string;
+    memberSince: string;
+    signedInWithGoogle: string;
+    signedInWithEmail: string;
+    signedInWithBoth: string;
+    signedInWithSms?: string;
+    passwordOnlyHint?: string;
+    logout: string;
+    currentPassword: string;
+    newPassword: string;
+    confirmPassword: string;
+    savePassword: string;
+    setPassword: string;
+    passwordUpdated: string;
+    googleOnlyHint: string;
+    purchasesEmpty: string;
+    paymentManagement: string;
+    paymentHint: string;
+    managePayments?: string;
+    enabledPayments?: string;
+    savedPayments?: string;
+    noSavedPayments?: string;
+    noMembership?: string;
+    shippingTracker: string;
+    noTracking: string;
+    viewOrder: string;
+    contactBilling: string;
   };
   home: {
     loading: string;
@@ -160,6 +213,10 @@ export type Messages = {
     emailExists: string;
     passwordShort: string;
     invalidCredentials: string;
+    googleOnly?: string;
+    smsOnly?: string;
+    passwordMismatch?: string;
+    wrongPassword?: string;
   };
 };
 
@@ -192,6 +249,61 @@ export const en: Messages = {
     submitSignIn: "Enter the bar",
     submitRegister: "Join Cocktale",
     demoHint: "Demo: demo@cocktale.app / demo",
+    pageTitle: "Log In",
+    continueWithGoogle: "Continue with Google",
+    orUseEmail: "or use email and password",
+    googleFailed: "Google sign-in did not finish. Please try again.",
+    googleUnavailable: "Google sign-in is not configured on this site yet.",
+    continueWithSms: "Continue with SMS",
+    smsTitle: "Sign in with your phone",
+    smsHint: "Choose any country calling code, then we will text a 6-digit code.",
+    smsCountry: "Country",
+    smsNumber: "Mobile number",
+    smsNumberPlaceholder: "National number",
+    smsWillText: "We will text:",
+    smsCode: "SMS code",
+    smsSend: "Send SMS code",
+    smsVerify: "Verify and sign in",
+    smsCodeSent: "Code sent. Check your messages.",
+    smsChangeNumber: "Use a different number",
+    smsCancel: "Cancel",
+    smsFailed: "SMS sign-in did not finish. Please try again.",
+  },
+  profile: {
+    title: "My Profile",
+    subtitle: "Your account, password, and market orders live here.",
+    tabAccount: "Logged in account",
+    tabPassword: "Reset password",
+    tabPurchases: "Purchases & shipping",
+    loggedInAs: "Logged in as",
+    memberSince: "Member since {date}",
+    signedInWithGoogle: "Signed in with Google",
+    signedInWithEmail: "Signed in with email and password",
+    signedInWithBoth: "Google and email/password are both linked",
+    signedInWithSms: "Signed in with phone (SMS)",
+    passwordOnlyHint: "Password reset is only available after you log in with email and password.",
+    logout: "Log out",
+    currentPassword: "Current password",
+    newPassword: "New password",
+    confirmPassword: "Confirm new password",
+    savePassword: "Update password",
+    setPassword: "Set a password",
+    passwordUpdated: "Password updated.",
+    googleOnlyHint:
+      "You signed in with Google. Set a password if you also want to log in with email.",
+    purchasesEmpty: "No purchases yet. Checkout from the market to see orders here.",
+    paymentManagement: "Payment management",
+    paymentHint:
+      "Stripe Checkout charges the payment methods enabled on this account, including cards and wallets. Saved methods can be updated after a payment.",
+    managePayments: "Manage payment methods",
+    enabledPayments: "Methods Stripe can charge",
+    savedPayments: "Saved payment methods",
+    noSavedPayments: "Saved cards and wallets appear here after a Stripe payment.",
+    noMembership: "Cocktale does not sell a membership. Each order is charged on its own.",
+    shippingTracker: "Shipping tracker",
+    noTracking: "Tracking details appear after the order ships.",
+    viewOrder: "Open order",
+    contactBilling: "Contact support about this payment",
   },
   home: {
     loading: "Cocktale",
@@ -329,5 +441,9 @@ export const en: Messages = {
     emailExists: "An account with this email already exists.",
     passwordShort: "Password must be at least 4 characters.",
     invalidCredentials: "Invalid email or password.",
+    googleOnly: "This account uses Google sign-in. Continue with Google, or set a password first.",
+    smsOnly: "This account uses SMS sign-in. Continue with SMS, or set a password first.",
+    passwordMismatch: "New passwords do not match.",
+    wrongPassword: "Current password is incorrect.",
   },
 };

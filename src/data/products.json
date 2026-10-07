@@ -1,5 +1,33 @@
 [
   {
+    "id": "checkout-test-pour",
+    "slug": "checkout-test-pour",
+    "name": "Checkout test pour",
+    "category": "accessory",
+    "subcategory": "Order test",
+    "priceCents": 10,
+    "currency": "usd",
+    "description": "A 0.10 USD item for placing a real test order. Not a drink.",
+    "longDescription": "Add this to the cart, write the preference we should see in the order, and pay 0.10 USD. Cocktale records the order so payment, admin fulfillment, and the confirmation email can be checked. Stripe declines card charges under 0.50 USD, so this price confirms the order record rather than a live card capture.",
+    "specs": [
+      { "label": "Purpose", "value": "Payment test only" },
+      { "label": "Price", "value": "USD 0.10" }
+    ],
+    "images": [
+      {
+        "angle": "hero",
+        "url": "/logo.png",
+        "alt": "Cocktale checkout test"
+      }
+    ],
+    "stock": 999,
+    "unit": "each",
+    "brand": "Cocktale",
+    "tags": ["test", "checkout"],
+    "relatedCocktailIds": [],
+    "sourceKey": "checkout-test-pour"
+  },
+  {
     "id": "set-utensil-basic",
     "slug": "utensil-set-basic",
     "name": "Basic Utensil Set",

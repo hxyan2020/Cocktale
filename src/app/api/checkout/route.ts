@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import type { Order, OrderLine } from "@/lib/commerce-types";
-import { createPendingOrder } from "@/lib/orders-store";
+import { notifyOrderPaid } from "@/lib/order-notifications";
+import { createPendingOrder, listOrders } from "@/lib/orders-store";
 import { loadProductPriceOverrides } from "@/lib/product-price-overrides";
 import { resolveProductUsdCents } from "@/lib/product-price-types";
 import { getProduct } from "@/lib/products";
@@ -19,8 +20,9 @@ const bodySchema = z.object({
     )
     .min(1),
   userId: z.string(),
-  email: z.string().email().optional(),
+  email: z.string().email(),
   name: z.string().optional(),
+  preferences: z.string().trim().min(1).max(2000),
   successUrl: z.string().url(),
   cancelUrl: z.string().url(),
 });
@@ -45,7 +47,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid checkout payload" }, { status: 400 });
     }
 
-    const { items, userId, email, name, successUrl, cancelUrl } = parsed.data;
+    const { items, userId, email, name, preferences, successUrl, cancelUrl } = parsed.data;
 
     const priceOverrides = loadProductPriceOverrides();
     const built: { product: NonNullable<ReturnType<typeof getProduct>>; quantity: number; unitAmountCents: number }[] =
@@ -94,11 +96,13 @@ export async function POST(req: Request) {
         subtotalCents: subtotal,
         totalCents: subtotal,
         items: orderLines,
+        preferences,
         shippingEmail: email,
         shippingName: name,
         demo: true,
       };
       createPendingOrder(order);
+      await notifyOrderPaid(order);
       return NextResponse.json({
         mode: "demo",
         orderId,
@@ -115,31 +119,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Stripe not configured" }, { status: 500 });
     }
 
+    const priorCustomer = listOrders({ userId }).find((order) => order.stripeCustomerId)?.stripeCustomerId;
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
-      customer_email: email,
+      ...(priorCustomer
+        ? { customer: priorCustomer }
+        : { customer_email: email, customer_creation: "always" as const }),
       client_reference_id: userId,
       success_url: `${successUrl}${successUrl.includes("?") ? "&" : "?"}session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: cancelUrl,
-      shipping_address_collection: {
-        allowed_countries: [
-          "US",
-          "SG",
-          "HK",
-          "CN",
-          "FR",
-          "JP",
-          "GB",
-          "AU",
-          "CA",
-          "DE",
-          "KR",
-          "TW",
-          "MY",
-          "TH",
-        ],
-      },
-      phone_number_collection: { enabled: true },
       line_items: built.map((li) => ({
         quantity: li.quantity,
         price_data: {
@@ -161,6 +149,7 @@ export async function POST(req: Request) {
         userId,
         orderDraftId: orderId,
         customerName: name || "",
+        preferences: preferences.slice(0, 450),
       },
     });
 
@@ -178,7 +167,10 @@ export async function POST(req: Request) {
       subtotalCents: subtotal,
       totalCents: subtotal,
       items: orderLines,
+      preferences,
       stripeSessionId: session.id,
+      stripeCustomerId:
+        typeof session.customer === "string" ? session.customer : priorCustomer || null,
       shippingEmail: email,
       shippingName: name,
     };

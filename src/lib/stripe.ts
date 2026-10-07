@@ -11,10 +11,13 @@ export function getStripe(): Stripe | null {
   return stripe;
 }
 
+export function stripeSecretKey() {
+  return process.env.STRIPE_SECRET_KEY || "";
+}
+
 export function stripeConfigured() {
-  // Hosted Checkout Sessions only need the secret key.
-  // Publishable key is optional until Stripe.js / Payment Element is used.
-  return Boolean(process.env.STRIPE_SECRET_KEY);
+  // Live Checkout only. A test key must not charge this shop.
+  return stripeSecretKey().startsWith("sk_live_");
 }
 
 export function randomSuffix(len = 8) {

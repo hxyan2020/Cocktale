@@ -61,8 +61,12 @@ export type Order = {
   subtotalCents: number;
   totalCents: number;
   items: OrderLine[];
+  preferences?: string;
   stripeSessionId?: string;
   stripePaymentIntentId?: string | null;
+  stripeCustomerId?: string | null;
+  confirmationEmailSentAt?: string;
+  shippingNoticeSentFor?: string;
   shippingName?: string;
   shippingEmail?: string;
   shippingPhone?: string;

@@ -77,6 +77,8 @@ export function listOrders(filters?: {
         o.carrier,
         o.stripeSessionId,
         o.stripePaymentIntentId,
+        o.preferences,
+        o.stripeCustomerId,
         ...o.items.map((i) => i.name),
       ]
         .filter(Boolean)
@@ -122,6 +124,9 @@ export type OrderPatch = {
   notes?: string | null;
   stripeSessionId?: string;
   stripePaymentIntentId?: string | null;
+  stripeCustomerId?: string | null;
+  confirmationEmailSentAt?: string;
+  shippingNoticeSentFor?: string;
   subtotalCents?: number;
   totalCents?: number;
 };
@@ -141,6 +146,15 @@ export function patchOrder(id: string, patch: OrderPatch): Order | null {
   if (patch.stripeSessionId !== undefined) next.stripeSessionId = patch.stripeSessionId;
   if (patch.stripePaymentIntentId !== undefined) {
     next.stripePaymentIntentId = patch.stripePaymentIntentId;
+  }
+  if (patch.stripeCustomerId !== undefined) {
+    next.stripeCustomerId = patch.stripeCustomerId;
+  }
+  if (patch.confirmationEmailSentAt !== undefined) {
+    next.confirmationEmailSentAt = patch.confirmationEmailSentAt;
+  }
+  if (patch.shippingNoticeSentFor !== undefined) {
+    next.shippingNoticeSentFor = patch.shippingNoticeSentFor;
   }
   if (patch.subtotalCents !== undefined) next.subtotalCents = patch.subtotalCents;
   if (patch.totalCents !== undefined) next.totalCents = patch.totalCents;

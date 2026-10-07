@@ -23,15 +23,23 @@ export type Cocktail = {
 
 export type WeatherBucket = Cocktail["weatherAffinity"][number];
 
+export type LoginMethod = "password" | "google" | "sms";
+export type AuthProviderKind = LoginMethod | "both";
+
 export type UserProfile = {
   id: string;
   name: string;
   email: string;
   password: string;
   createdAt: string;
+  provider?: AuthProviderKind;
+  lastLoginMethod?: LoginMethod;
+  googleId?: string;
+  picture?: string;
+  phone?: string;
 };
 
-export type SessionUser = Omit<UserProfile, "password">;
+export type SessionUser = Omit<UserProfile, "password" | "googleId">;
 
 export type BrowseEvent = {
   cocktailId: string;

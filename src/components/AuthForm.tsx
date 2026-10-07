@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { useAuth } from "@/components/AuthProvider";
+import { GoogleSignInButton } from "@/components/GoogleSignInButton";
+import { PhoneSignIn } from "@/components/PhoneSignIn";
 import { useI18n } from "@/components/LanguageProvider";
 
 type Props = {
@@ -16,11 +18,29 @@ export function AuthForm({ onSuccess }: Props) {
   const [email, setEmail] = useState("demo@cocktale.app");
   const [password, setPassword] = useState("demo");
   const [error, setError] = useState("");
+  const [googleConfigured, setGoogleConfigured] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/auth/google/status", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!cancelled) setGoogleConfigured(Boolean(data?.configured));
+      })
+      .catch(() => {
+        if (!cancelled) setGoogleConfigured(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   function mapError(code: string) {
     if (code === "EMAIL_EXISTS") return t("errors.emailExists");
     if (code === "PASSWORD_SHORT") return t("errors.passwordShort");
     if (code === "INVALID_CREDENTIALS") return t("errors.invalidCredentials");
+    if (code === "GOOGLE_ONLY") return t("errors.googleOnly");
+    if (code === "SMS_ONLY") return t("errors.smsOnly");
     return code;
   }
 
@@ -38,6 +58,19 @@ export function AuthForm({ onSuccess }: Props) {
 
   return (
     <>
+      <GoogleSignInButton configured={googleConfigured} />
+      {googleConfigured === false && (
+        <p className="mt-2 text-center text-xs text-[var(--ink-muted)]">
+          {t("login.googleUnavailable")}
+        </p>
+      )}
+      <PhoneSignIn onSuccess={onSuccess} />
+      <div className="my-5 flex items-center gap-3 text-[11px] uppercase tracking-[0.16em] text-[var(--ink-muted)]">
+        <span className="h-px flex-1 bg-[var(--line)]" />
+        {t("login.orUseEmail")}
+        <span className="h-px flex-1 bg-[var(--line)]" />
+      </div>
+
       <div className="mb-6 flex gap-2 rounded-full bg-[var(--chip)] p-1">
         <button
           type="button"

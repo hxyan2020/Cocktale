@@ -21,7 +21,15 @@ export default function CartPage() {
   const { items, setQty, removeItem, clearCart, saveOrder } = useCart();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [preferences, setPreferences] = useState("");
+  const [receiptEmail, setReceiptEmail] = useState("");
   const [checkoutMode, setCheckoutMode] = useState<"demo" | "stripe" | null>(null);
+
+  useEffect(() => {
+    if (user?.email?.includes("@")) {
+      setReceiptEmail((current) => current || user.email);
+    }
+  }, [user?.email]);
 
   useEffect(() => {
     fetch("/api/checkout")
@@ -60,9 +68,19 @@ export default function CartPage() {
 
   async function checkout() {
     if (lines.length === 0) return;
+    const note = preferences.trim();
+    const email = receiptEmail.trim();
+    if (!note) {
+      setError(shop.orderPreferencesRequired);
+      return;
+    }
+    if (!email.includes("@")) {
+      setError(shop.receiptEmailRequired);
+      return;
+    }
     setBusy(true);
     setError("");
-    const buyer = user ?? { id: "guest", email: "guest@cocktale.app", name: shop.guest };
+    const buyer = user ?? { id: "guest", email, name: shop.guest };
     try {
       const origin = window.location.origin;
       const res = await fetch("/api/checkout", {
@@ -70,8 +88,9 @@ export default function CartPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           userId: buyer.id,
-          email: buyer.email,
+          email,
           name: buyer.name,
+          preferences: note,
           items: lines.map((l) => ({
             productId: l.product.id,
             quantity: l.item.quantity,
@@ -95,7 +114,8 @@ export default function CartPage() {
           subtotalCents: data.subtotalCents,
           totalCents: data.subtotalCents,
           items: orderLines,
-          shippingEmail: buyer.email,
+          preferences: note,
+          shippingEmail: email,
           shippingName: buyer.name,
           demo: true,
         };
@@ -121,8 +141,9 @@ export default function CartPage() {
           quantity: l.item.quantity,
           image: l.product.images[0]?.url || "",
         })),
+        preferences: note,
         stripeSessionId: data.sessionId,
-        shippingEmail: buyer.email,
+        shippingEmail: email,
         shippingName: buyer.name,
       };
       saveOrder(data.order || pending);
@@ -207,6 +228,31 @@ export default function CartPage() {
             ))}
 
             <div className="sticky bottom-2 z-10 space-y-2 rounded-[1.25rem] bg-[var(--surface)]/95 p-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_12px_35px_rgba(0,0,0,0.22)] ring-1 ring-[var(--line)] backdrop-blur sm:static sm:space-y-4 sm:bg-transparent sm:p-0 sm:pb-0 sm:shadow-none sm:ring-0">
+              <label className="block px-1 text-sm text-[var(--ink)]">
+                {shop.orderPreferences}
+                <textarea
+                  required
+                  value={preferences}
+                  onChange={(e) => setPreferences(e.target.value)}
+                  rows={3}
+                  maxLength={2000}
+                  placeholder={shop.orderPreferencesHint}
+                  className="mt-1 w-full rounded-2xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2 text-base text-[var(--ink)] sm:text-sm"
+                />
+              </label>
+              <label className="block px-1 text-sm text-[var(--ink)]">
+                {shop.receiptEmail}
+                <input
+                  type="email"
+                  required
+                  value={receiptEmail}
+                  onChange={(e) => setReceiptEmail(e.target.value)}
+                  placeholder={shop.receiptEmailHint}
+                  className="mt-1 min-h-11 w-full rounded-2xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2 text-base text-[var(--ink)] sm:text-sm"
+                />
+              </label>
+              <p className="px-1 text-xs text-[var(--ink-muted)]">{shop.shippingLater}</p>
+
               <div className="flex items-center justify-between rounded-2xl bg-[var(--chip)] px-4 py-3 sm:rounded-[1.25rem] sm:py-4">
                 <span className="text-sm text-[var(--ink-soft)]">{shop.subtotal}</span>
                 <span className="text-lg font-semibold text-[var(--ink)]">

@@ -3,10 +3,11 @@
 import { Mail, MessageCircle } from "lucide-react";
 import { AppNav } from "@/components/AppNav";
 import { useI18n } from "@/components/LanguageProvider";
-
-const PHONE_DISPLAY = "+65 9131 9481";
-const TELEGRAM_URL = "https://t.me/+6591319481";
-const EMAIL = "hello@cocktale.app";
+import {
+  CUSTOMER_SERVICE_PHONE,
+  CUSTOMER_SERVICE_URL,
+  SUPPORT_EMAIL,
+} from "@/lib/support";
 
 export default function ContactPage() {
   const { t } = useI18n();
@@ -22,7 +23,7 @@ export default function ContactPage() {
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           <a
-            href={TELEGRAM_URL}
+            href={CUSTOMER_SERVICE_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="group rounded-[1.5rem] bg-[var(--surface)] p-6 ring-1 ring-[var(--line)] transition hover:-translate-y-0.5 hover:shadow-lg"
@@ -34,7 +35,7 @@ export default function ContactPage() {
               {t("contact.customerService")}
             </p>
             <p className="mt-1 font-[family-name:var(--font-display)] text-2xl text-[var(--ink)]">
-              {PHONE_DISPLAY}
+              {CUSTOMER_SERVICE_PHONE}
             </p>
             <p className="mt-2 text-sm text-[var(--accent-deep)] group-hover:underline">
               {t("contact.telegram")}
@@ -42,7 +43,7 @@ export default function ContactPage() {
           </a>
 
           <a
-            href={`mailto:${EMAIL}`}
+            href={`mailto:${SUPPORT_EMAIL}`}
             className="group rounded-[1.5rem] bg-[var(--surface)] p-6 ring-1 ring-[var(--line)] transition hover:-translate-y-0.5 hover:shadow-lg"
           >
             <div className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--chip)] text-[var(--accent-deep)]">
@@ -52,7 +53,7 @@ export default function ContactPage() {
               {t("contact.email")}
             </p>
             <p className="mt-1 break-all font-[family-name:var(--font-display)] text-2xl text-[var(--ink)]">
-              {EMAIL}
+              {SUPPORT_EMAIL}
             </p>
             <p className="mt-2 text-sm text-[var(--ink-soft)]">{t("contact.hours")}</p>
           </a>

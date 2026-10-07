@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
-import type { ShippingAddress } from "@/lib/commerce-types";
+import { notifyOrderPaid } from "@/lib/order-notifications";
 import {
   getOrderById,
   getOrderByStripeSession,
@@ -13,19 +13,11 @@ import { getStripe, stripeConfigured } from "@/lib/stripe";
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-function addressFromStripe(addr: Stripe.Address | null | undefined): ShippingAddress | undefined {
-  if (!addr?.line1 || !addr.city || !addr.postal_code || !addr.country) return undefined;
-  return {
-    line1: addr.line1,
-    line2: addr.line2 || undefined,
-    city: addr.city,
-    state: addr.state || undefined,
-    postalCode: addr.postal_code,
-    country: addr.country,
-  };
+function customerId(session: Stripe.Checkout.Session) {
+  return typeof session.customer === "string" ? session.customer : session.customer?.id || null;
 }
 
-function applyPaidSession(session: Stripe.Checkout.Session) {
+async function applyPaidSession(session: Stripe.Checkout.Session) {
   const sessionId = session.id;
   const draftId = session.metadata?.orderDraftId || undefined;
   const paymentIntentId =
@@ -33,42 +25,28 @@ function applyPaidSession(session: Stripe.Checkout.Session) {
       ? session.payment_intent
       : session.payment_intent?.id ?? null;
 
-  const raw = session as unknown as {
-    shipping_details?: {
-      name?: string | null;
-      address?: Stripe.Address | null;
-    } | null;
-  };
-  const shipping = raw.shipping_details;
-
-  const shippingName =
-    shipping?.name || session.customer_details?.name || session.metadata?.customerName || undefined;
-  const shippingEmail = session.customer_details?.email || session.customer_email || undefined;
-  const shippingPhone = session.customer_details?.phone || undefined;
-  const shippingAddress = addressFromStripe(
-    shipping?.address || session.customer_details?.address,
-  );
+  const payerName = session.customer_details?.name || session.metadata?.customerName || undefined;
+  const payerEmail = session.customer_details?.email || session.customer_email || undefined;
 
   const existing =
     getOrderByStripeSession(sessionId) || (draftId ? getOrderById(draftId) : undefined);
 
+  let order = existing;
   if (existing) {
-    patchOrder(existing.id, {
-      status: existing.status === "fulfilled" ? "fulfilled" : "paid",
-      paymentStatus: "paid",
-      stripeSessionId: sessionId,
-      stripePaymentIntentId: paymentIntentId,
-      subtotalCents: session.amount_total ?? existing.subtotalCents,
-      totalCents: session.amount_total ?? existing.totalCents,
-      shippingName: shippingName || existing.shippingName,
-      shippingEmail: shippingEmail || existing.shippingEmail,
-      shippingPhone: shippingPhone || existing.shippingPhone,
-      shippingAddress: shippingAddress || existing.shippingAddress || null,
-    });
-    return;
-  }
-
-  upsertOrder({
+    order =
+      patchOrder(existing.id, {
+        status: existing.status === "fulfilled" ? "fulfilled" : "paid",
+        paymentStatus: "paid",
+        stripeSessionId: sessionId,
+        stripePaymentIntentId: paymentIntentId,
+        stripeCustomerId: customerId(session) || existing.stripeCustomerId,
+        subtotalCents: session.amount_total ?? existing.subtotalCents,
+        totalCents: session.amount_total ?? existing.totalCents,
+        shippingName: existing.shippingName || payerName,
+        shippingEmail: existing.shippingEmail || payerEmail,
+      }) || existing;
+  } else {
+    order = upsertOrder({
     id: draftId || `ord_${Date.now().toString(36)}`,
     userId: session.metadata?.userId || session.client_reference_id || "guest",
     createdAt: new Date((session.created || Date.now() / 1000) * 1000).toISOString(),
@@ -80,11 +58,16 @@ function applyPaidSession(session: Stripe.Checkout.Session) {
     items: [],
     stripeSessionId: sessionId,
     stripePaymentIntentId: paymentIntentId,
-    shippingName,
-    shippingEmail,
-    shippingPhone,
-    shippingAddress,
+    stripeCustomerId: customerId(session),
+    preferences: session.metadata?.preferences,
+    shippingName: payerName,
+    shippingEmail: payerEmail,
   });
+  }
+
+  if (order && (session.payment_status === "paid" || session.status === "complete")) {
+    await notifyOrderPaid(order);
+  }
 }
 
 export async function POST(req: Request) {
@@ -119,11 +102,11 @@ export async function POST(req: Request) {
     if (event.type === "checkout.session.completed") {
       const session = event.data.object as Stripe.Checkout.Session;
       if (session.payment_status === "paid" || session.status === "complete") {
-        applyPaidSession(session);
+        await applyPaidSession(session);
       }
     }
     if (event.type === "checkout.session.async_payment_succeeded") {
-      applyPaidSession(event.data.object as Stripe.Checkout.Session);
+      await applyPaidSession(event.data.object as Stripe.Checkout.Session);
     }
     if (event.type === "charge.refunded") {
       const charge = event.data.object as Stripe.Charge;

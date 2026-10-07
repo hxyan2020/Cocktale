@@ -1,15 +1,17 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   motion,
   useMotionValue,
   useTransform,
   type PanInfo,
 } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { Cocktail } from "@/lib/types";
 import { CocktailCard } from "@/components/CocktailCard";
 import { useI18n } from "@/components/LanguageProvider";
+import { useTranslatedTexts } from "@/components/useTranslatedContent";
 
 type Props = {
   cocktail: Cocktail | null;
@@ -33,6 +35,11 @@ export function SwipeDeck({
   onTried,
 }: Props) {
   const { t, dir } = useI18n();
+  const { texts: navLabels } = useTranslatedTexts(
+    ["Previous cocktail", "Next cocktail"],
+    "swipe-deck-nav",
+  );
+  const [desktop, setDesktop] = useState(false);
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-10, 10]);
   const opacity = useTransform(x, [-220, -80, 0, 80, 220], [0.4, 1, 1, 1, 0.4]);
@@ -50,6 +57,14 @@ export function SwipeDeck({
     },
     [forward, x],
   );
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px)");
+    const sync = () => setDesktop(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
 
   const handleDragEnd = useCallback(
     (_: unknown, info: PanInfo) => {
@@ -74,34 +89,56 @@ export function SwipeDeck({
     );
   }
 
+  const navButtonClass =
+    "hidden h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[var(--on-bg-accent)]/50 bg-black/45 text-[var(--on-bg)] shadow-lg backdrop-blur transition hover:bg-[var(--on-bg-accent)] hover:text-[var(--ink)] disabled:pointer-events-none disabled:opacity-30 md:inline-flex";
+
   return (
-    <div className="relative mx-auto w-full max-w-[420px]">
-      <div className="relative h-[min(32rem,calc(100svh-14.5rem))] sm:h-[min(680px,78vh)]">
-        <div className="absolute inset-0 translate-y-2 rounded-[1.5rem] bg-[var(--chip)]/80 ring-1 ring-[var(--line)] sm:translate-x-2 sm:translate-y-3 sm:rounded-[1.75rem]" />
-        <motion.div
-          key={cocktail.id}
-          style={{ x, rotate, opacity }}
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.9}
-          onDragEnd={handleDragEnd}
-          initial={{ opacity: 0, scale: 0.96, x: exitX || 40 * forward }}
-          animate={{ opacity: 1, scale: 1, x: 0 }}
-          transition={{ type: "spring", stiffness: 320, damping: 28 }}
-          className="absolute inset-0 cursor-grab active:cursor-grabbing"
-        >
-          <CocktailCard
-            cocktail={cocktail}
-            collected={collected}
-            onOpen={onOpen}
-            onCollect={onCollect}
-            onTried={onTried}
-          />
-        </motion.div>
+    <div className="relative mx-auto flex w-full max-w-[420px] items-center justify-center md:max-w-3xl md:gap-8">
+      <button
+        type="button"
+        aria-label={navLabels[0]}
+        onClick={() => finishSwipe(-1, onSwipePrev)}
+        disabled={!canGoBack}
+        className={navButtonClass}
+      >
+        <ChevronLeft className="h-7 w-7 rtl:scale-x-[-1]" />
+      </button>
+      <div className="relative w-full max-w-[420px]">
+        <div className="relative h-[min(32rem,calc(100svh-14.5rem))] sm:h-[min(680px,78vh)]">
+          <div className="absolute inset-0 translate-y-2 rounded-[1.5rem] bg-[var(--chip)]/80 ring-1 ring-[var(--line)] sm:translate-x-2 sm:translate-y-3 sm:rounded-[1.75rem]" />
+          <motion.div
+            key={cocktail.id}
+            style={{ x, rotate, opacity }}
+            drag={desktop ? false : "x"}
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.9}
+            onDragEnd={handleDragEnd}
+            initial={{ opacity: 0, scale: 0.96, x: exitX || (desktop ? 0 : 40 * forward) }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ type: "spring", stiffness: 320, damping: 28 }}
+            className={`absolute inset-0 ${desktop ? "" : "cursor-grab active:cursor-grabbing"}`}
+          >
+            <CocktailCard
+              cocktail={cocktail}
+              collected={collected}
+              onOpen={onOpen}
+              onCollect={onCollect}
+              onTried={onTried}
+            />
+          </motion.div>
+        </div>
+        <p className="mt-3 px-2 text-center text-xs leading-snug tracking-wide text-[var(--on-bg-muted)] sm:text-[var(--ink-muted)] md:hidden">
+          {t("card.swipeHint")}
+        </p>
       </div>
-      <p className="mt-3 px-2 text-center text-xs leading-snug tracking-wide text-[var(--on-bg-muted)] sm:text-[var(--ink-muted)]">
-        {t("card.swipeHint")}
-      </p>
+      <button
+        type="button"
+        aria-label={navLabels[1]}
+        onClick={() => finishSwipe(1, onSwipeNext)}
+        className={navButtonClass}
+      >
+        <ChevronRight className="h-7 w-7 rtl:scale-x-[-1]" />
+      </button>
     </div>
   );
 }

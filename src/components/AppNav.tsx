@@ -78,7 +78,7 @@ function NavMenu({
 
 export function AppNav() {
   const pathname = usePathname();
-  const { user, logout, requireAuth } = useAuth();
+  const { user, logout } = useAuth();
   const { t } = useI18n();
   const shop = useShop();
   const { count } = useCart();
@@ -183,32 +183,31 @@ export function AppNav() {
             </Link>
             <div className="my-1 border-t border-[var(--line)]" />
             {user ? (
-              <button
-                type="button"
-                className={menuItemClass}
-                onClick={() => {
-                  setOpenMenu(null);
-                  logout();
-                }}
-              >
-                <LogOut className="h-4 w-4 shrink-0 text-[var(--accent-deep)]" />
-                <span className="min-w-0 truncate">
+              <>
+                <Link href="/login" className={menuItemClass} onClick={() => setOpenMenu(null)}>
+                  <UserRound className="h-4 w-4 shrink-0 text-[var(--accent-deep)]" />
+                  <span className="min-w-0 truncate">
+                    {t("profile.title")}
+                    {user.name ? ` · ${user.name}` : ""}
+                  </span>
+                </Link>
+                <button
+                  type="button"
+                  className={menuItemClass}
+                  onClick={() => {
+                    setOpenMenu(null);
+                    logout();
+                  }}
+                >
+                  <LogOut className="h-4 w-4 shrink-0 text-[var(--accent-deep)]" />
                   {t("nav.signOut")}
-                  {user.name ? ` · ${user.name}` : ""}
-                </span>
-              </button>
+                </button>
+              </>
             ) : (
-              <button
-                type="button"
-                className={menuItemClass}
-                onClick={() => {
-                  setOpenMenu(null);
-                  requireAuth();
-                }}
-              >
+              <Link href="/login" className={menuItemClass} onClick={() => setOpenMenu(null)}>
                 <LogIn className="h-4 w-4 shrink-0 text-[var(--accent-deep)]" />
-                {t("login.signIn")}
-              </button>
+                {t("login.pageTitle")}
+              </Link>
             )}
           </NavMenu>
 

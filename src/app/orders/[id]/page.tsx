@@ -12,6 +12,7 @@ import { useI18n } from "@/components/LanguageProvider";
 import { useShop } from "@/components/useShop";
 import { useTranslatedTexts } from "@/components/useTranslatedContent";
 import type { Order, OrderStatus } from "@/lib/commerce-types";
+import { CUSTOMER_SERVICE_LABEL, CUSTOMER_SERVICE_URL } from "@/lib/support";
 
 function trackingSteps(status: OrderStatus, shop: ReturnType<typeof useShop>) {
   const paid = status === "paid" || status === "fulfilled";
@@ -108,7 +109,15 @@ export default function OrderDetailPage() {
             {order.shippingName} · {order.shippingEmail}
           </p>
         )}
-        {order.shippingAddress && (
+        {order.preferences && (
+          <p className="mt-3 rounded-2xl bg-[var(--surface)] px-4 py-3 text-sm text-[var(--ink)] ring-1 ring-[var(--line)]">
+            <span className="block text-xs uppercase tracking-wide text-[var(--ink-muted)]">
+              {shop.yourPreference}
+            </span>
+            <span className="mt-1 block whitespace-pre-wrap">{order.preferences}</span>
+          </p>
+        )}
+        {order.shippingAddress ? (
           <p className="mt-1 text-sm text-[var(--on-bg-soft)]">
             {[
               order.shippingAddress.line1,
@@ -119,6 +128,8 @@ export default function OrderDetailPage() {
               .filter(Boolean)
               .join(", ")}
           </p>
+        ) : (
+          <p className="mt-3 text-sm text-[var(--on-bg-soft)]">{shop.shippingPending}</p>
         )}
         {(order.carrier || order.trackingNumber) && (
           <p className="mt-1 text-sm text-[var(--on-bg)]">
@@ -127,6 +138,16 @@ export default function OrderDetailPage() {
             {order.shippedAt ? ` · ${new Date(order.shippedAt).toLocaleDateString(locale)}` : ""}
           </p>
         )}
+        <p className="mt-3 text-sm">
+          <a
+            href={CUSTOMER_SERVICE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[var(--on-bg-accent)] underline"
+          >
+            {shop.customerService}: {CUSTOMER_SERVICE_LABEL}
+          </a>
+        </p>
         {order.stripeSessionId && (
           <p className="mt-1 break-all text-xs text-[var(--on-bg-muted)]">
             {shop.stripeSession}: {order.stripeSessionId}

@@ -71,7 +71,7 @@ const SECTIONS: { heading: string; body: string[] }[] = [
   {
     heading: "10. Contact",
     body: [
-      "Questions about these Terms: hello@cocktale.app, or customer service on Telegram at +65 9131 9481.",
+      "Questions about these Terms: hello@cocktale.app, or customer service on Telegram at +65 8802 3346.",
     ],
   },
 ];

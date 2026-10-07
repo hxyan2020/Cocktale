@@ -293,9 +293,11 @@ export default function FeedPage() {
       ? `${weather.bucket}, ${Math.round(weather.tempC)}°C`
       : "weather loading"
     : "";
+  const cocktailCountLabel = `${data.history.length} cocktails`;
   const signalSource = preference
     ? [
-        `Collected signals: ${weatherSignal ? `${weatherSignal} · ` : ""}${preference.mood} mood · ${preference.flavor} flavor · ${preference.complexity} recipe · ${data.history.length} cocktails.`,
+        `Collected signals: ${weatherSignal ? `${weatherSignal} · ` : ""}${preference.mood} mood · ${preference.flavor} flavor · ${preference.complexity} recipe · `,
+        cocktailCountLabel,
         hasSharedLocation
           ? "Analysis process: weather affinity → mood match → flavor profile → recipe complexity → browsing history → popularity balance."
           : "Analysis process: mood match → flavor profile → recipe complexity → browsing history → popularity balance.",
@@ -341,7 +343,6 @@ export default function FeedPage() {
             <h1 className="mt-1 font-[family-name:var(--font-display)] text-2xl text-[var(--on-bg)] sm:text-3xl">
               {t("feed.title")}
             </h1>
-            <p className="mt-2 max-w-xl text-sm text-[var(--on-bg-muted)]">{t("feed.rankingHint")}</p>
           </div>
           {weather && locationStatus === "granted" && (
             <div className="inline-flex max-w-full items-center gap-2 rounded-full bg-[var(--surface)] px-3 py-1.5 text-xs text-[var(--ink-soft)] ring-1 ring-[var(--line)] sm:px-4 sm:py-2 sm:text-sm">
@@ -430,8 +431,13 @@ export default function FeedPage() {
               <Sparkles className="h-3.5 w-3.5 text-[var(--on-bg-accent)]" />
               AI match
             </div>
-            <p>{signalCopy[0] || signalSource[0]}</p>
-            <p className="mt-1 text-[var(--on-bg-muted)]">{signalCopy[1] || signalSource[1]}</p>
+            <p>
+              {signalCopy[0] || signalSource[0]}
+              <span className="font-semibold text-[var(--on-bg-accent)]">
+                {signalCopy[1] || signalSource[1]}
+              </span>
+            </p>
+            <p className="mt-1 text-[var(--on-bg-muted)]">{signalCopy[2] || signalSource[2]}</p>
             <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
               <div className="h-full w-full rounded-full bg-[var(--on-bg-accent)]" />
             </div>

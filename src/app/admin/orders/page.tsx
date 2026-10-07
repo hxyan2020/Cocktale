@@ -125,7 +125,12 @@ export default function AdminOrdersPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Update failed");
-      setStatusMsg(okMessage);
+      const emailNote = data.shippingEmailSent
+        ? " Confirmation email sent with the shipping number."
+        : data.shippingEmailError
+          ? ` Shipping saved, but the email was not sent (${data.shippingEmailError}).`
+          : "";
+      setStatusMsg(okMessage + emailNote);
       await load();
       setSelectedId(selected.id);
     } catch (err) {
@@ -410,6 +415,15 @@ export default function AdminOrdersPage() {
                       <option value="refunded">refunded</option>
                     </select>
                   </label>
+                </div>
+
+                <div className="rounded-xl border border-[var(--line)] bg-[var(--chip)] px-3 py-3">
+                  <p className="text-xs font-semibold tracking-wide text-[var(--accent-deep)] uppercase">
+                    Customer preference / specifications
+                  </p>
+                  <p className="mt-2 whitespace-pre-wrap text-sm text-[var(--ink)]">
+                    {selected.preferences?.trim() || "No preference was submitted with this order."}
+                  </p>
                 </div>
 
                 <div>

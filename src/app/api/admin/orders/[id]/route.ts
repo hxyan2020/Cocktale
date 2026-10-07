@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { requireAdminApi } from "@/lib/admin-auth";
 import { ORDER_STATUSES, PAYMENT_STATUSES } from "@/lib/commerce-types";
+import { notifyOrderShipped } from "@/lib/order-notifications";
 import { getOrderById, patchOrder } from "@/lib/orders-store";
 import { getStripe, stripeConfigured } from "@/lib/stripe";
 
@@ -70,22 +71,6 @@ export async function PATCH(req: Request, context: RouteContext) {
           typeof session.payment_intent === "string"
             ? session.payment_intent
             : session.payment_intent?.id ?? null;
-        const shipping = (
-          session as {
-            shipping_details?: {
-              name?: string | null;
-              address?: {
-                line1?: string | null;
-                line2?: string | null;
-                city?: string | null;
-                state?: string | null;
-                postal_code?: string | null;
-                country?: string | null;
-              } | null;
-            } | null;
-          }
-        ).shipping_details;
-
         patchOrder(id, {
           status: paid
             ? existing.status === "fulfilled" || existing.status === "cancelled" || existing.status === "refunded"
@@ -94,22 +79,17 @@ export async function PATCH(req: Request, context: RouteContext) {
             : existing.status,
           paymentStatus: paid ? "paid" : existing.paymentStatus || "unpaid",
           stripePaymentIntentId: pi,
+          stripeCustomerId:
+            typeof session.customer === "string"
+              ? session.customer
+              : session.customer?.id || existing.stripeCustomerId,
           totalCents: session.amount_total ?? existing.totalCents,
           subtotalCents: session.amount_total ?? existing.subtotalCents,
-          shippingName: shipping?.name || session.customer_details?.name || existing.shippingName,
           shippingEmail:
-            session.customer_details?.email || session.customer_email || existing.shippingEmail,
-          shippingPhone: session.customer_details?.phone || existing.shippingPhone,
-          shippingAddress: shipping?.address?.line1
-            ? {
-                line1: shipping.address.line1,
-                line2: shipping.address.line2 || undefined,
-                city: shipping.address.city || "",
-                state: shipping.address.state || undefined,
-                postalCode: shipping.address.postal_code || "",
-                country: shipping.address.country || "",
-              }
-            : undefined,
+            existing.shippingEmail ||
+            session.customer_details?.email ||
+            session.customer_email ||
+            undefined,
         });
       } catch (err) {
         console.error("refresh from stripe", err);
@@ -118,6 +98,7 @@ export async function PATCH(req: Request, context: RouteContext) {
     }
   }
 
+  const previousTracking = existing.trackingNumber || "";
   const order = patchOrder(id, {
     status: data.status,
     paymentStatus: data.paymentStatus,
@@ -131,5 +112,18 @@ export async function PATCH(req: Request, context: RouteContext) {
     notes: data.notes,
   });
 
-  return NextResponse.json({ ok: true, order });
+  let shippingEmailSent = false;
+  let shippingEmailError: string | undefined;
+  if (order && (order.trackingNumber || "") !== previousTracking && order.trackingNumber) {
+    const notice = await notifyOrderShipped(order);
+    shippingEmailSent = notice.sent;
+    if ("error" in notice) shippingEmailError = notice.error;
+  }
+
+  return NextResponse.json({
+    ok: true,
+    order: getOrderById(id) || order,
+    shippingEmailSent,
+    shippingEmailError,
+  });
 }

@@ -106,11 +106,11 @@ export const PAGE_SEO = {
     index: false,
   },
   login: {
-    title: "Sign In to Save Cocktails & Tasting Notes",
+    title: "Log In",
     description:
-      "Sign in to Cocktale to save collected cocktails, sync your tasting journal, and unlock weather- and mood-based drink recommendations.",
+      "Log in to Cocktale to save collected cocktails, sync your tasting journal, and unlock weather- and mood-based drink recommendations.",
     path: "/login",
-    keywords: ["cocktale login", "cocktail journal sign in"],
+    keywords: ["cocktale login", "cocktale log in", "cocktail journal sign in"],
     index: false,
   },
   contact: {
@@ -463,6 +463,7 @@ export function websiteJsonLd() {
         contactPoint: {
           "@type": "ContactPoint",
           contactType: "customer support",
+          telephone: "+65-8802-3346",
           email: "hello@cocktale.app",
           availableLanguage: ["English"],
           areaServed: ["SG", "HK", "CN", "US", "FR", "JP"],
@@ -609,7 +610,7 @@ export function contactPageJsonLd() {
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "customer support",
-        telephone: "+65-9131-9481",
+        telephone: "+65-8802-3346",
         email: "hello@cocktale.app",
         availableLanguage: ["English"],
       },
